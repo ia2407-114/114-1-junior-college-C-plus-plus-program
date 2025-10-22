@@ -1,0 +1,28 @@
+#include <stdio.h>
+
+int main()
+{
+    int  n = 1;      //a=c(1+r)^n//  //c為本金,r為年利率,aa為目標//
+    double c,r,aims;
+
+    printf("請輸入本金:");
+    scanf("%lf", &c);
+    printf("請輸入年利率:");
+    scanf("%lf", &r);
+    printf("請輸入你的存款目標:");
+    scanf("%lf", &aims);
+    
+    double a=c;
+    
+    while (a < aims) {
+        n++;
+         a= a * (1 + r);
+        printf("在第%d年時本利合為:%lf",n,a);
+
+    }
+
+    printf("在第%d年時將達到你的存款目標", n);
+
+
+    return 0;
+}
