@@ -1,0 +1,41 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\User\\source\\repos\\1022-2\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{5923E7A5-5A70-4329-9C05-587CA4F72EF5}|1022-2\\1022-2.vcxproj|C:\\Users\\User\\source\\repos\\1022-2\\1022-2\\1022HW2.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{5923E7A5-5A70-4329-9C05-587CA4F72EF5}|1022-2\\1022-2.vcxproj|solutionrelative:1022-2\\1022HW2.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "1022HW2.cpp",
+              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\1022-2\\1022-2\\1022HW2.cpp",
+              "RelativeDocumentMoniker": "1022-2\\1022HW2.cpp",
+              "ToolTip": "C:\\Users\\User\\source\\repos\\1022-2\\1022-2\\1022HW2.cpp",
+              "RelativeToolTip": "1022-2\\1022HW2.cpp",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAACAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-10-22T07:53:08.73Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
