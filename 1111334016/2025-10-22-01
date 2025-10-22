@@ -1,0 +1,27 @@
+題目1: 從鍵盤輸入本金(p=10000) 年利率(r=0.05)，
+以及存款目標(aims)印出每年底(複利)本利合 直到達成存款目標，
+讓使用者知道幾年才能達成目標
+
+#include <stdio.h>
+
+int main() {
+    int i = 0;
+    double p, r, aims;
+
+    printf("你的本金? ");
+    scanf_s("%lf", &p);
+    printf("你的利率? ");
+    scanf_s("%lf", &r);
+    printf("你的存款目標是多少? ");
+    scanf_s("%lf", &aims);
+
+    while (p < aims) {  // 本金未達目標時持續計算，不符合停止
+        p = p * (1 + r);
+        i = i + 1;
+        printf("第 %d 年的本利合為 %lf\n", i, p);
+    }
+
+    printf("第 %d 年才能達成目標\n", i);
+
+    return 0;
+}
