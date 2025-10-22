@@ -1,0 +1,24 @@
+#include <stdio.h>
+
+int main() {
+    double p, r, aims; // 本金、利率、目標
+    int year = 0;      // 年數計數器
+
+    printf("請輸入本金 p: ");
+    scanf("%lf", &p);
+    printf("請輸入年利率 r (例如 0.05 表示5%%): ");
+    scanf("%lf", &r);
+    printf("請輸入存款目標 aims: ");
+    scanf("%lf", &aims);
+
+    double total = p;  // 初始金額
+
+    while (total < aims) {
+        total = total * (1 + r); // 複利計算
+        year++;
+        printf("第 %d 年年底本利合: %.2f\n", year, total);
+    }
+
+    printf("達成目標共需要 %d 年。\n", year);
+    return 0;
+}
