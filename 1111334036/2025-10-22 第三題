@@ -2,7 +2,7 @@
 
 int main()
 {
-    float aims, years = 0, r = 0.05, add = 0.0, c;
+    float aims, years = 0, r, add = 0.0, c;
     int i;
     printf("請輸入本金\n");
     scanf_s("%f", &c);
@@ -24,3 +24,4 @@ int main()
     }
     printf("共存了%.1f元，需要%.0f年\n", c, years);
 }
+
