@@ -11,7 +11,7 @@ int main()
 	printf("請輸入目標金額\n");
 	scanf_s("%f", &aims);
 	printf("請輸入每一年底要再存多少錢進戶頭\n");
-	scanf_s("%d", &add);
+	scanf_s("%f", &add);
 	while (c < aims)
 	{
 		years += 1;
@@ -21,3 +21,4 @@ int main()
 	}
 	printf("共存了%.1f元，需要%.0f年", c, years);
 }
+
