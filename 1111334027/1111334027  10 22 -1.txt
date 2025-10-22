@@ -1,0 +1,18 @@
+#include<stdio.h>
+int main()
+{
+	double p, r;
+	int aims, year;
+	printf("請輸入本金:\n");
+	scanf_s("%", &p);
+	printf("請輸入年利率:\n");
+	scanf_s("%f", &r);
+	printf("請輸入目標金額:\n");
+	scanf_s("%d", &aims);
+	for (year = 0; p < aims; year++)
+	{
+		p = p * (1 + r);
+	}
+	printf("將要花至少%d年才能達到目標金額", year);
+	return 0;
+}

@@ -5,8 +5,7 @@
 
 int main() {
     int n;
-    double pi = 0.0;
-    int count = 0;
+    result =4
 
     printf("請輸入項目數量 n：");
     scanf_s("%d", &n);
@@ -17,19 +16,17 @@ int main() {
         }
 
         // 奇數分母才計算
-        double term = 4.0 / i;
+        
 
-        if (count % 2 == 0) {
-            pi += term;        // 偶數項加
+        if (i%4==1) {
+           result=result+(4.0/i);       // 偶數項加;3mod4=3
         }
         else {
-            pi -= term;        // 奇數項減
+           result=result-(4.0/i);       // 奇數項減
         }
 
-        count++;               // 計算項目數量
-    }
 
-    printf("根據 %d 項計算，pi 的近似值為：%.10f\n", n, pi);
+    printf("根據 %d 項計算，pi 的近似值為：%.10f\n", n, result);
 
     return 0;
 }

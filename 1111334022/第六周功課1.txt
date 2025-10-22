@@ -1,0 +1,19 @@
+#include<stdio.h>
+int main() {
+	float p, r, aims,n;
+	printf("輸入本金");
+	scanf_s("%f", &p);
+	printf("輸入年利率");
+	scanf_s("%f", &r);
+	printf("輸入存款目標");
+	scanf_s("%f", &aims);
+	for ( n = 1;; n++) {
+		p = p * (1 + r );
+		printf("第%d年有%.2f元\n", n, p);
+		if (p >= aims) {
+			printf("需要存%d年\n", n);
+			break;
+		}
+	}
+	return 0;
+}

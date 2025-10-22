@@ -1,0 +1,57 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\User\\source\\repos\\251022-1\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{366F1B17-416F-4F94-BC98-96318B5D251F}|251022-1\\251022-1.vcxproj|C:\\Users\\User\\source\\repos\\251022-1\\251022-1\\251022-1.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{366F1B17-416F-4F94-BC98-96318B5D251F}|251022-1\\251022-1.vcxproj|solutionrelative:251022-1\\251022-1.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\ucrt\\stdio.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 2,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "stdio.h",
+              "DocumentMoniker": "C:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\ucrt\\stdio.h",
+              "RelativeDocumentMoniker": "..\\..\\..\\..\\..\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\ucrt\\stdio.h",
+              "ToolTip": "C:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\ucrt\\stdio.h",
+              "RelativeToolTip": "..\\..\\..\\..\\..\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\ucrt\\stdio.h",
+              "ViewState": "AgIAADcEAAAAAAAAAAAiwEoEAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2025-10-22T07:45:40.151Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "251022-1.cpp",
+              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\251022-1\\251022-1\\251022-1.cpp",
+              "RelativeDocumentMoniker": "251022-1\\251022-1.cpp",
+              "ToolTip": "C:\\Users\\User\\source\\repos\\251022-1\\251022-1\\251022-1.cpp",
+              "RelativeToolTip": "251022-1\\251022-1.cpp",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-10-22T05:38:08.873Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

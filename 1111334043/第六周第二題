@@ -1,0 +1,34 @@
+#include <stdio.h>
+
+int main() {
+    double principal, rate, deposit, target;
+    int year = 0;
+    double amount;
+
+    printf("請輸入本金: ");
+    scanf_s("%lf", &principal);
+    printf("請輸入年利率 (例如 0.05 表示5%%): ");
+    scanf_s("%lf", &rate);
+    printf("請輸入每年底定期定額存入金額: ");
+    scanf_s("%lf", &deposit);
+    printf("請輸入存款目標金額: ");
+    scanf_s("%lf", &target);
+
+    amount = principal;
+
+    printf("年數\t本利合\n");
+
+    while (amount < target) {     
+        amount = amount * (1 + rate);
+        amount = amount + deposit;
+
+        year++;
+
+        printf("%d\t%.2f\n", year, amount);
+    }
+
+    printf("達成目標需 %d 年\n", year);
+
+    return 0;
+}
+

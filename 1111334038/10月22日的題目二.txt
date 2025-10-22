@@ -1,0 +1,34 @@
+#include <stdio.h>
+int main()
+{
+    //題目 2: 從鍵盤輸入本金(p=10000) 年利率(r=0.05)，每個年底定期定額存入金額，以及存款目標(aims)印出每年底(複利)本利合 直到達成存款目標，讓使用者知道幾年才能達成目標*****注意!計算次方項時，不得使用庫存函數pow(, )!
+    double p, r, aims;
+    double amount;
+    int year = 0;
+
+    // 輸入本金、年利率與目標金額
+    printf("請輸入本金 (例如 10000): ");
+    scanf_s("%lf", &p);
+
+    printf("請輸入年利率 (例如 0.05 代表 5%%): ");
+    scanf_s("%lf", &r);
+
+    printf("請輸入存款目標金額: ");
+    scanf_s("%lf", &aims);
+
+    // 初始金額設為本金
+    amount = p;
+
+    printf("\n年數\t本利合計\n");
+
+    // 計算複利直到達成目標
+    while (amount < aims) {
+        year++;                         // 年數加1
+        amount = amount * (1 + r);      // 複利計算
+        printf("%d\t%.2f\n", year, amount); // 印出本利合
+    }
+
+    printf("\n達成目標需時 %d 年。\n", year);
+
+    return 0;
+}
