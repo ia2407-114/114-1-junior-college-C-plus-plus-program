@@ -1,0 +1,24 @@
+#include <stdio.h>
+
+
+
+int main(void) {
+	double p, r, aim, monthlym;
+	int y = 0;
+	printf("請輸入本金(10000):\n");
+	scanf_s("%lf", &p);
+	printf("請輸入年利率(0.05):\n");
+	scanf_s("%lf", &r);
+	printf("請輸入每月定存金額:\n");
+	scanf_s("%lf", &monthlym);
+	printf("請輸入想存到的金額:\n");
+	scanf_s("%lf", &aim);
+	while (p < aim) {
+		y++;
+		p = p + (monthlym)*12;
+		p = p * (1 + r);
+		printf("第%d年%.2f\n", y, p);
+	}
+	printf("需要%d年才能達成目標", y);
+	return 0;
+}
