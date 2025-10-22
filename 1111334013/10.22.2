@@ -1,0 +1,30 @@
+#include <stdio.h>
+
+int main()
+{
+    double p, r, d, aims; //本金 利率 每年存入 目標金額
+    int year = 0;
+
+    printf("請輸入本金:");
+    scanf_s("%lf", &p);
+
+    printf("請輸入年利率:");
+    scanf_s("%lf", &r);
+
+    printf("請輸入每年定期存入的金額:");
+    scanf_s("%lf", &d);
+
+    printf("請輸入目標金額:");
+    scanf_s("%lf", &aims);
+
+    while (p < aims) {
+        p = p * (1 + r); //讓本金生利息
+        p = p + d; //存入固定金額
+        year++;
+        printf("第 %d 年後的本利合: %.2F \n", year, p);
+    }
+
+    printf("\n達成目標共需 %d 年! \n", year);
+
+    return 0;
+}

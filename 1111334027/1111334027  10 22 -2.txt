@@ -1,0 +1,22 @@
+#include <stdio.h>
+int main()
+{
+	int p , aims, da , years=0 ;
+	float r ;
+	printf("請輸入本金:\n");
+	scanf_s("%d", &p);
+	printf("請輸入年利率:\n");
+	scanf_s("%f", &r);
+	printf("請輸入你的目標金額:\n");
+	scanf_s("%d", &aims);
+	printf("請輸入年底定額存入戶頭金額\n");
+	scanf_s("%d", &da);
+	while (p < aims)
+	{
+		years += 1;
+		p = p * r;
+		p = p + da;
+		printf("第%d年存了%d元\n", years, p);
+	}
+	printf("共存了%d元，將要花%d年", p, years);
+}
