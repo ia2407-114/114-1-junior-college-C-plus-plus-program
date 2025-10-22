@@ -17,8 +17,9 @@ int main()
 		years += 1;
 		c = c * r;
 		c = c + add;
-		printf("第%d年存了%d元\n", years, c);
+		printf("第%.0f年存了%.1f元\n", years, c);
 	}
-	printf("共存了%d元，需要%d年", c, years);
+	printf("共存了%.1f元，需要%.0f年", c, years);
 }
+
 
