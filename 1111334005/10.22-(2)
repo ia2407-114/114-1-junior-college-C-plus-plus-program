@@ -19,8 +19,8 @@ int main() {
     double total = p;
 
     while (total < aims) {
-        total = total * (1 + r);  // 複利
-        total += add;              // 每年底再存入金額
+        total = total * (1 + r); 
+        total += add;             
         year++;
         printf("第 %d 年本利合: %.2f\n", year, total);
     }
