@@ -1,0 +1,22 @@
+#include <stdio.h>
+
+int main()
+{
+    float aims, years = 0, r = 0.05, add = 0.0, c = 10000.0;
+    int i;
+    printf("本金 10000, 利率5 percent, 請輸入你的目標金額\n");
+    scanf_s("%f", &aims);
+    printf("請輸入每一月底要再存多少錢進戶頭\n");
+    scanf_s("%f", &add);
+    while (c < aims)
+    {
+        for (i = 1; i <= 12; i++)
+        {
+            c = c * (1 + r / 12); 
+            c += add;             
+        }
+        years += 1;
+        printf("第%.0f年存了%.1f元\n", years, c);
+    }
+    printf("共存了%.1f元，需要%.0f年\n", c, years);
+}
