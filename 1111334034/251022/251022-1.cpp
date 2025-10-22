@@ -1,0 +1,22 @@
+#include <stdio.h>
+
+int main(void) {
+	double p, r, aims;
+
+	printf("本金: ");
+	scanf_s("%lf", &p);
+	
+	printf("利率: ");
+	scanf_s("%lf", &r);
+	
+	printf("目標金額: ");
+	scanf_s("%lf", &aims);
+
+	int i = 1;
+	while (p < aims) {
+		p += (double)p * r;
+		printf("第%d年，本利合: %g\n", i, p);
+		i++;
+	}
+	return 0;
+}
