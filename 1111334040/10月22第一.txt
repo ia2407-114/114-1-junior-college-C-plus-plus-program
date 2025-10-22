@@ -1,0 +1,24 @@
+#include <stdio.h>
+int main()
+{
+    double p, r, aims;
+    double balance;
+    int years = 0;
+
+    printf("輸入本金\n");
+    scanf_s("%lf", &p);
+    printf("輸入年利率\n");
+    scanf_s("%lf", &r);
+    printf("輸入目標\n");
+    scanf_s("%lf", &aims);
+
+    balance = p;
+    while (balance < aims) {
+        years++;
+        balance = balance * (1.0 + r);
+        printf("year %d: %.2f\n", years, balance);
+    }
+    printf("達成目標 %f，共花 %d 年\n", aims, years);
+
+    return 0;
+}
