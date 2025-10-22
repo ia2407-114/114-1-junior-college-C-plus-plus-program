@@ -1,0 +1,32 @@
+#include <stdio.h>
+
+int main() {
+    double p, r, deposit, aims; // 本金、年利率、每月定存金額、目標
+    int year = 0;
+    int month; // 月份計算用
+
+    printf("請輸入本金 p: ");
+    scanf("%lf", &p);
+    printf("請輸入年利率 r (例如 0.05 表示5%%): ");
+    scanf("%lf", &r);
+    printf("請輸入每月定期定額存入金額: ");
+    scanf("%lf", &deposit);
+    printf("請輸入存款目標 aims: ");
+    scanf("%lf", &aims);
+
+    double total = p;
+    double monthlyRate = r / 12.0; // 月利率
+
+    // 每月計算，直到達標
+    while (total < aims) {
+        year++;
+        for (month = 1; month <= 12; month++) {
+            total = total * (1 + monthlyRate); // 每月複利
+            total += deposit;                   // 每月底存入
+        }
+        printf("第 %d 年年底本利合: %.2f\n", year, total);
+    }
+
+    printf("達成目標共需要 %d 年。\n", year);
+    return 0;
+}
