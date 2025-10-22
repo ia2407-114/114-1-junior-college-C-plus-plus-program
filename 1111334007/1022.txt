@@ -1,0 +1,30 @@
+#include <stdio.h>
+
+int main() {
+	double p, r, aims;
+	int year = 0;
+
+	printf("請輸入本金: ");
+	scanf_s("%lf", &p);
+	printf("請輸入年利率: ");
+	scanf_s("%lf", &r);
+	printf("請輸入存款目標: ");
+	scanf_s("%lf", &aims);
+
+	printf("存款增長情況\n");
+	printf("年份\t本利和\n");
+
+	double current = p;
+
+	while (current < aims) {
+		year++;
+		current = current * (1 + r);
+
+		printf("%d\t%.2f\n", year, current);
+	}
+
+	printf("\n達成目標！\n");
+	printf("需要 %d 年才能達成存款目標 %.2f\n", year, aims);
+
+	return 0;
+}
