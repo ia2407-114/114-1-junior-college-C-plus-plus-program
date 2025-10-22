@@ -2,8 +2,12 @@
 
 int main()
 {
-    float aims, years = 0, r = 0.05, add = 0.0, c = 10000.0;
+    float aims, years = 0, r = 0.05, add = 0.0, c;
     int i;
+    printf("請輸入本金\n");
+    scanf_s("%f", &c);
+    printf("請輸入利率\n");
+    scanf_s("%f", &r);
     printf("本金 10000, 利率5 percent, 請輸入你的目標金額\n");
     scanf_s("%f", &aims);
     printf("請輸入每一月底要再存多少錢進戶頭\n");
@@ -20,3 +24,4 @@ int main()
     }
     printf("共存了%.1f元，需要%.0f年\n", c, years);
 }
+
