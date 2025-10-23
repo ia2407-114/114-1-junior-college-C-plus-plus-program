@@ -1,23 +1,22 @@
 #include  <stdio.h>
 int main()
 {
-	int year = 1;
-	double p, r, aims,sum;
+	int year = 0;
+	double p, r, aims, cost;
 	printf("輸入本金:\n");
 	scanf_s("%lf", &p);
 	printf("輸入年利率:\n");
 	scanf_s("%lf", &r);
+	printf("輸入每年年底定期儲蓄金額:\n");
+	scanf_s("%lf", &cost);
 	printf("輸入存款目標:\n");
 	scanf_s("%lf", &aims);
-	sum = 10000;
 	while (p <= aims)
 	{
-		p = p * (1 + r);
-		printf("第%d年的結存為%lf\n", year, p);
-		p = p + sum;
+		p = p * (1 + r) + cost;
 		year++;
-		
-	}
-	
+		printf("第%d年的結存為%lf\n", year, p);
+	} 
+	printf("第%d年完成目標\n", year);
 	return 0;
 }
