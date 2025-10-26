@@ -1,0 +1,27 @@
+#include<stdio.h>
+int main() {
+	float p,r,a,aims  ;
+	int i;
+	printf("輸入本金");
+	scanf_s("%f", &p);
+	printf("輸入年利率");
+	scanf_s("%f", &r);
+	printf("輸入年底定存");
+	scanf_s("%f", &a);
+	printf("輸入存款目標");
+	scanf_s("%f", &aims);
+	for (i = 1; ; i++) {
+		if (i == 1) {
+			p = p * (1 + r);
+			printf("第%d年本利和%.2f\n", i, p);
+			continue;
+		}
+		p = p * (1 + r);
+		p = p + a;
+		printf("第%d年本利和%.2f\n", i, p);
+		if (p >= aims) {
+			printf("達成目標%d年\n", i);
+			break;
+		}		
+	}
+	return 0;	
