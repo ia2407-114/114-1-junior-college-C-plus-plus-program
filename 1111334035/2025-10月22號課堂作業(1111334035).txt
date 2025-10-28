@@ -1,0 +1,112 @@
+#include <stdio.h>
+int main() {
+    double p ;  // 本金
+    double r ;   // 年利率
+    double aims;       // 目標
+    int years = 0;     // 年數
+
+    printf("請輸入本金：");
+    scanf_s("%lf", &p);
+
+    printf("輸入年利率：");
+    scanf_s("%lf", &r);
+
+    printf("請輸入存款目標金額：");
+    scanf_s("%lf", &aims);
+
+
+    while (p < aims) {
+        p = p * (1 + r);   // 本金加上利息
+        years++;           // 年數 +1
+        printf("第 %d 年的本利合為：%.2lf\n", years, p);
+    }
+    printf("達成目標共需 %d 年。\n", years);
+    return 0;
+}
+
+
+第二題
+
+#include <stdio.h>
+
+int main() {
+    double p;        // 本金
+    double r;        // 年利率
+    double deposit;  // 每年定期定額存入金額
+    double aims;     // 存款目標
+    int years = 0;   // 年數
+
+    printf("請輸入本金：");
+    scanf_s("%lf", &p);
+
+    printf("輸入年利率：");
+    scanf_s("%lf", &r);
+
+    printf("輸入每年定期定額存入金額：");
+    scanf_s("%lf", &deposit);
+
+    printf("輸入存款目標金額：");
+    scanf_s("%lf", &aims);
+
+    printf("\n年份\t本利合\n");
+
+    // 用迴圈逐年計算，不使用 pow()
+    while (p < aims) {
+        p = p * (1 + r) + deposit; // 複利+定期定額
+        years++;
+        printf("%d\t%.2lf\n", years, p);
+    }
+
+    printf("\n達成目標共需 %d 年。\n", years);
+    return 0;
+}
+
+第三題
+
+#include <stdio.h>
+
+int main() {
+    double p;        // 本金
+    double r;        // 年利率
+    double deposit;  // 每月定期定額存入金額
+    double aims;     // 存款目標
+    int years = 0;   // 年數
+    int months = 0;  // 累積月數
+
+    printf("請輸入本金：");
+    scanf_s("%lf", &p);
+
+    printf("請輸入年利率：");
+    scanf_s("%lf", &r);
+
+    printf("請輸入每月定期定額存入金額：");
+    scanf_s("%lf", &deposit);
+
+    printf("請輸入存款目標金額：");
+    scanf_s("%lf", &aims);
+
+    printf("\n年份\t本利合\n");
+
+
+    // 每月計算複利 + 定期定額，直到達成目標
+    while (p < aims) {
+        // 每月複利 + 定期定額
+        p = p * (1 + r / 12) + deposit;
+        months++;
+
+        // 每 12 個月（年底）印出一次
+        if (months % 12 == 0) {
+            years++;
+            printf("%d\t%.2lf\n", years, p);
+        }
+    }
+
+    // 若最後未滿一年 也算進去
+    if (months % 12 != 0)
+        years = months / 12 + 1;
+
+    printf("\n達成目標共需 %d 年 (%d 個月)。\n", years, months);
+
+    return 0;
+}
+
