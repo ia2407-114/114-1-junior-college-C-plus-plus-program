@@ -1,24 +1,16 @@
 #include<stdio.h>
+float calculate(float hight,float weight)
+{
+	return weight / (hight * hight);
+}
 int main()
 {
-float w, h, bmi;
-printf("請輸入你的體重(單位公斤)\n");
-scanf_s(" % f", &w);
-printf("請輸入身高(單位為公尺)\n");
-scanf_s(" % f", &h);
-bmi = w / (h * h);
-printf("BMI為%f\n", bmi);
-if (bmi < 18.5)
-printf("BMI檢測結果為體重過輕");
-else if (bmi < 24.9)
-printf("BMI檢測結果為體重正常");
-else if (bmi < 29.9)
-printf("BMI檢測結果為過重");
-else if (bmi < 34.9)
-printf("BMI檢測結果為輕度肥胖");
-else if (bmi < 39.9)
-printf("BMI檢測結果為中度肥胖");
-else if (bmi < 40)
-printf("BMI檢測結果為重度肥胖");
-return 0;
+	float weight, hight, bmi;
+	printf("請輸入身高、體重 包含小數點後一位\n");
+	scanf_s(" %f, %f", &weight, &hight);
+	printf("你的bmi指數為%.1f", calculate(hight, weight));
+}
+float caculate(float hight, float weight)
+{
+	return weight / (hight * hight);
 }
