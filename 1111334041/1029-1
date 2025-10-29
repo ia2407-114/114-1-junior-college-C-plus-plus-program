@@ -1,0 +1,39 @@
+題目1:請根據第三周的題目，將BMI的計算過程寫成一個副程式，要傳入浮點數的身高與體重，並且傳回BMI值為浮點數，最後由主程式印出結果
+#include <stdio.h>
+
+// 副程式：計算BMI，傳回浮點數
+float calcBMI(float height, float weight) {
+    float bmi;
+    bmi = weight / (height * height);
+    return bmi;
+}
+
+int main(void) {
+    float height, weight, bmi;
+
+    printf("請輸入身高(公尺): ");
+    scanf("%f", &height);
+    printf("請輸入體重(公斤): ");
+    scanf("%f", &weight);
+
+    // 呼叫副程式計算BMI
+    bmi = calcBMI(height, weight);
+
+    printf("您的BMI值為: %.2f\n", bmi);
+
+    // 使用 if, else if 判斷BMI等級
+    if (bmi < 18.5)
+        printf("體重過輕\n");
+    else if (bmi < 24)
+        printf("正常範圍\n");
+    else if (bmi < 27)
+        printf("過重\n");
+    else if (bmi < 30)
+        printf("輕度肥胖\n");
+    else if (bmi < 35)
+        printf("中度肥胖\n");
+    else
+        printf("重度肥胖\n");
+
+    return 0;
+}

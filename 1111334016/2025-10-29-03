@@ -1,0 +1,39 @@
+
+//題目3，承上一周的題目2，寫一個副程式，傳入本金int (p=10000) 年利率double (r=0.05)，每個年底定期定額存入金額int ，
+//以及存款目標int(aims)，.傳回年數，在主程式印出要存幾年才能達成目標
+
+#include <stdio.h>
+int like(double p, double r, int money, double aims);
+int main()
+{
+
+    int i = 0, money;
+    double p, r, aims;
+
+    printf("你的本金? ");
+    scanf_s("%lf", &p);
+    printf("你的利率? ");
+    scanf_s("%lf", &r);
+    printf_s("你每年底定期存入的金額? ");
+    scanf_s("%d", &money);
+    printf("你的存款目標是多少? ");
+    scanf_s("%lf", &aims);
+
+    
+    printf("第 %d 年才能達成目標\n", like( p,  r,  money, aims));
+
+    return 0;
+}
+    
+
+
+int like(double p, double r, int money, double aims) 
+    {
+        int i = 0;
+        while (p < aims) {  // 本金未達目標時持續計算，不符合停止
+            p = p * (1 + r) + money;
+            i = i + 1;
+        }
+
+            return i;
+     }

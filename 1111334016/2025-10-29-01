@@ -1,0 +1,24 @@
+
+//題目1:請根據第三周的題目，將BMI的計算過程寫成一個副程式，要傳入浮點數的身高與體重，並且傳回BMI值為浮點數，最後由主程式印出結果
+
+#include <stdio.h>
+double mbti(int kg, float m);
+int main()
+{
+	int kg;
+	float m;
+	printf_s("請輸入你的體重(公斤) 身高(公尺)\n");
+	scanf_s("%d %f",&kg,&m);
+	printf_s("%f", mbti(kg, m));
+	return 0;
+	}
+	
+	 
+	double mbti(int kg, float m)
+	{
+		double result;
+		result= kg / (m * m);
+		
+		
+		return result;
+	}

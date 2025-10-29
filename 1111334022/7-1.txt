@@ -1,0 +1,30 @@
+#include <stdio.h>
+void bmi(float kg, float m) {
+	float a;
+	a = kg / (m * m);
+	printf("你的BMI是%.2f", a);
+	if (a < 18.5)
+		printf("你的體重過輕");
+	else if (a <= 24.9)
+		printf("你的正常體重");
+	else if (a <= 29.9)
+		printf("你的過重");
+	else if (a <= 34.9)
+		printf("你的輕度肥胖");
+	else if (a <= 39.9)
+		printf("你的中度肥胖");
+	else if (a >= 40)
+		printf("你的重度肥胖");
+	
+}
+int main() {
+	float kg, m, a;
+	printf("輸入體重");
+	scanf_s("%f", &kg);
+	printf("輸入身高(公尺)");
+	scanf_s("%f", &m);
+	bmi(kg, m);
+
+
+	return 0;
+}

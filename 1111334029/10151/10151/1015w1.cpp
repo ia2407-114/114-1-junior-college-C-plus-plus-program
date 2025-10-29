@@ -3,14 +3,14 @@ int main(void)
 {
 	double kg = 0.0;
 	int cost = 0;
-	printf("½Ğ¿é¤J­«¶q\n");
+	printf("è«‹è¼¸å…¥é‡é‡\n");
 	scanf_s("%lf", & kg);
 	if (kg <= 2) {
 		cost = 60;
-		printf("%d¤¸\n", cost);
+		printf("%då…ƒ\n", cost);
 	}
 	else {
 		cost =((kg - 2) * 35) + 60;
-		printf("%d¤¸", cost);
+		printf("%då…ƒ", cost);
 	}
 }

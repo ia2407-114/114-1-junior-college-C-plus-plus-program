@@ -1,0 +1,36 @@
+#include <stdio.h>
+int calcyears(int p, double r, int add, int aims);
+
+int main() {
+    int p, add, aims, years;
+    double r;
+
+    printf("請輸入本金:");
+    scanf_s("%d", &p);
+
+    printf("請輸入年利率:");
+    scanf_s("%lf", &r);
+
+    printf("請輸入每年底定期存入金額:");
+    scanf_s("%d", &add);
+
+    printf("請輸入目標金額:");
+    scanf_s("%d", &aims);
+
+    years = calcyears(p, r, add, aims);
+
+    printf("需要 %d 年才能達成目標\n", years);
+
+        return 0;
+}
+int calcyears(int p,double r,int add,int aims) {
+    double total = p;
+    int years = 0;
+
+    while (total < aims) {
+        total = total * (1 + r);
+        total = total + add;
+        years++;
+    }
+    return years;
+}

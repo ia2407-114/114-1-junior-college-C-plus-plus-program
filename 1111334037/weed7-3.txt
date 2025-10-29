@@ -1,0 +1,38 @@
+#include <stdio.h>
+
+// 宣告副程式 (傳入整數 fact，回傳 double 階乘值)
+double factorial(int fact);
+
+int main(void) {
+    int fact, n;
+    double fact_result, e = 1.0;
+    printf("請輸入一個整數 fact (<13): ");
+    scanf("%d", &fact);
+    if (fact >= 13 || fact < 0) {
+        printf("輸入錯誤！fact 必須為 0 ~ 12。\n");
+        return 1;
+    }
+    fact_result = factorial(fact);
+    printf("%d 的階乘為: %.0lf\n", fact, fact_result);
+
+    printf("請輸入所需的項目數量 n (<13): ");
+    scanf("%d", &n);
+
+    if (n >= 13 || n < 0) {
+        printf("輸入錯誤！n 必須為 0 ~ 12。\n");
+        return 1;
+    }
+    for (int i = 1; i <= n; i++) {
+        e += 1.0 / factorial(i);
+    }
+    printf("以 %d 項計算的 e 近似值為: %.10lf\n", n, e);
+
+    return 0;
+}
+double factorial(int fact) {
+    double ans = 1.0;
+    for (int i = 1; i <= fact; i++) {
+        ans *= i;
+    }
+    return ans;
+}
