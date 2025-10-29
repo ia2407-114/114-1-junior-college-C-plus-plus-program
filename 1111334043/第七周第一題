@@ -14,7 +14,18 @@ int main()
     bmi = BMI(height, weight);
 
     printf("您的BMI為：%.2f\n", bmi);
-
+    if (bmi < 18.5)
+        printf("體重過輕");
+    else if (bmi <= 24.9)
+        printf("正常體重");
+    else if (bmi <= 29.9)
+        printf("過重");
+    else if (bmi <= 34.9)
+        printf("輕度肥胖");
+    else if (bmi <= 39.9)
+        printf("中度肥胖");
+    else if (bmi >= 40)
+        printf("種度肥胖(病態肥胖)");
     return 0;
 }
 float BMI(float height, float weight)
