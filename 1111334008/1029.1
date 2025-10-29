@@ -10,10 +10,10 @@ int main() {
 
     // 輸入身高與體重
     printf("請輸入身高（公尺）：");
-    scanf("%f", &height);
+    scanf_s("%f", &height);
 
     printf("請輸入體重（公斤）：");
-    scanf("%f", &weight);
+    scanf_s("%f", &weight);
 
     // 呼叫副程式計算 BMI
     bmi = calculateBMI(height, weight);
