@@ -1,0 +1,41 @@
+#include <stdio.h>
+
+// 副程式：計算達成目標所需年數
+int calculateYears(int p, double r, int yearlyDeposit, int aims) {
+    double total = p;
+    int years = 0;
+
+    while (total < aims) {
+        // 每年年底先加上定期定額，再計算利息
+        total = (total + yearlyDeposit) * (1 + r);
+        years++;
+    }
+
+    return years;
+}
+
+int main() {
+    int p = 10000;           // 本金
+    double r;                // 年利率
+    int yearlyDeposit;       // 每年定期定額存入金額
+    int aims;                // 存款目標
+    int years;               // 所需年數
+
+    // 輸入年利率、定期定額金額與目標金額
+    printf("請輸入年利率（例如 0.05 表示 5%%）：");
+    scanf_s("%lf", &r);
+
+    printf("請輸入每年定期定額存入金額：");
+    scanf_s("%d", &yearlyDeposit);
+
+    printf("請輸入存款目標金額：");
+    scanf_s("%d", &aims);
+
+    // 呼叫副程式計算所需年數
+    years = calculateYears(p, r, yearlyDeposit, aims);
+
+    // 印出結果
+    printf("達成目標需要 %d 年。\n", years);
+
+    return 0;
+}
