@@ -1,0 +1,45 @@
+#include <stdio.h>
+
+// 函式原型（宣告）
+int years_to_goal(double p, double r, double yl, double aims);
+
+int main(void)
+{
+    double p, r, yl, aims;
+    int year;
+
+    printf("輸入本金: ");
+    scanf_s("%lf", &p);
+
+    printf("輸入年利率: ");
+    scanf_s("%lf", &r);
+
+    printf("輸入年底定期存入金額: ");
+    scanf_s("%lf", &yl);
+
+    printf("輸入存款目標: ");
+    scanf_s("%lf", &aims);
+
+    // 呼叫函式
+    year = years_to_goal(p, r, yl, aims);
+
+    printf("共需要 %d 年才能達到目標。\n", year);
+
+    return 0;
+}
+
+//  計算達標所需年數的函式
+int years_to_goal(double p, double r, double yl, double aims)
+{
+    int year = 0;
+
+    while (p < aims)
+    {
+        year++;
+        p += yl;        // 每年年底定存
+        p += p * r;     // 加上利息
+        printf("第 %d 年本利合為 %.2lf\n", year, p);
+    }
+
+    return year;
+}
