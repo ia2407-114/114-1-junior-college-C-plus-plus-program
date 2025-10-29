@@ -1,0 +1,29 @@
+#include <stdio.h>
+
+double factorial(int fact);
+
+int main() {
+	int fact, n;
+	double factValue, e = 1.0;
+
+	printf("請輸入一個整數 fact (<13):)");
+	scanf_s("%d", &fact);
+
+	factValue = factorial(fact);
+	printf("%d 的階乘為: %0.1f\n", fact, factValue);
+
+	printf("請輸入項目數量 n(<13):)");
+	scanf_s("%d", &n);
+	for (int i = 1; i <= n; i++) {
+		e += 1.0 / factorial(i);
+	}
+	return 0;
+}
+double factorial(int fact) {
+	double result = 1.0;
+	for (int i = 1; i <= fact; i++) {
+		result *= i;
+
+	}
+	return result;
+}
