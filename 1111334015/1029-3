@@ -1,0 +1,35 @@
+#include <stdio.h>
+
+int yearsToReach(int p, double r, int deposit, int aims);
+
+int main() {
+    int p = 10000;    
+    double r = 0.05; 
+    int deposit;      
+    int aims;        
+    int years;        
+
+    printf("請輸入每年底定期存入金額: ");
+    scanf_s("%d", &deposit);
+    printf("請輸入存款目標: ");
+    scanf_s("%d", &aims);
+
+    years = yearsToReach(p, r, deposit, aims);
+
+    printf("需要 %d 年才能達成目標。\n", years);
+
+    return 0;
+}
+
+int yearsToReach(int p, double r, int deposit, int aims) {
+    double total = p; 
+    int year = 0;
+
+    while (total < aims) {
+        total = total * (1 + r) + deposit; 
+        year++;
+        printf("第 %d 年年底的本利合為: %.2lf\n", year, total);
+    }
+
+    return year;
+}
