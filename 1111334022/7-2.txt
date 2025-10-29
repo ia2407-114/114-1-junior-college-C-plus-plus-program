@@ -1,0 +1,34 @@
+#include <stdio.h>
+void ok(int fact) {
+	int i,f=1;
+	for (i = 1; i <= fact; i++)
+	{
+		f = f * i;
+	}
+	printf("%d階乘結果是%d\n", fact, f);
+}
+void q(int n) {
+	int fact2, i2; double e, t;
+	e = 1.0, t = 1.0;
+	for (i2 = 1; i2 <= n; i2++)
+	{
+		t = t / i2;
+		e = e + t;
+	}
+	printf("e的近似值為：%.6f\n", e);
+}
+
+int main()
+{
+	int fact;
+	printf("請輸入階乘值，請輸入小於13的數字\n");
+	scanf_s("%d", &fact);
+	ok(fact);
+
+
+	int n;
+	printf("請輸入項目數 n，請輸入小於13的數字\n");
+	scanf_s("%d", &n);
+	q(n);
+	return 0;
+}
