@@ -1,0 +1,24 @@
+#include <stdio.h>
+
+double f(int fact);
+
+int main()
+{
+    int fact;
+
+    printf("請輸入整數 fact (<13)：");
+    scanf_s("%d", &fact);
+
+    double result = f(fact);  
+
+    printf("%d 的階乘 = %.0f\n", fact, result);
+    return 0;
+}
+double f(int fact)
+{
+    double result = 1.0;
+    for (int i = 1; i <= fact; i++) {
+        result *= i;
+    }
+    return result;
+}

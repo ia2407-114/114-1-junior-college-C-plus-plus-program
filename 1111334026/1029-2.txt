@@ -1,0 +1,26 @@
+#include <stdio.h>
+
+int factt(int fact);
+
+int main()
+{
+    int fact;
+
+    printf("請輸入一個整數 fact（< 13）：");
+    scanf_s("%d", &fact);
+
+    printf("%d! = %d\n", fact, factt(fact));
+
+    return 0;
+}
+
+int factt(int fact)
+{
+    int fact_result = 1;
+
+    for (int i = 1; i <= fact; i++) {
+        fact_result *= i;
+    }
+
+    return fact_result;
+}

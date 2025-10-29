@@ -1,0 +1,21 @@
+#include <stdio.h>
+
+float calcBMI(float height, float weight);
+
+int main(void) {
+    float height, weight, bmi;
+    printf("請輸入身高(公尺): ");
+    scanf("%f", &height);
+    printf("請輸入體重(公斤): ");
+    scanf("%f", &weight);
+    bmi = calcBMI(height, weight);
+
+    printf("您的BMI值為: %.2f\n", bmi);
+
+    return 0;
+}
+float calcBMI(float height, float weight) {
+    float bmi;
+    bmi = weight / (height * height);
+    return bmi;
+}

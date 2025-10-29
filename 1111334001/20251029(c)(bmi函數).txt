@@ -1,0 +1,26 @@
+#include <stdio.h>
+float bmi(double G, double M);
+
+int main()
+{
+    
+    float g, m;
+
+    printf("請輸入你的體重(公斤):");
+    scanf_s("%f", &g);
+    printf("請輸入你的體重(公尺):");
+    scanf_s("%f", &m);
+    
+    printf("你的BMI為:%f",bmi(g,m));
+
+    return 0;
+}
+
+
+     float bmi(double G,double M)
+    {
+         float B=0;
+        B = (G / (M * M));
+
+        return B;
+    }

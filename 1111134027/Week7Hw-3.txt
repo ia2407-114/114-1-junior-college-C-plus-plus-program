@@ -1,0 +1,33 @@
+#include <stdio.h>
+#include <stdlib.h>
+int main(){
+
+float p;
+float r;
+float aims;
+float deposit;
+int load(int p, double r, int deposit, int aims);
+printf("請輸入本金\n");
+scanf_s("%f", &p);
+printf("請輸入年利率\n");
+scanf_s("%f", &r);
+printf("請輸入年底存入金額\n");
+scanf_s("%f", &deposit);
+printf("請輸入存款目標\n");
+scanf_s("%f", &aims);
+
+printf("預計需%d年來達成目標", load(p, r, deposit, aims));
+return 0;
+}
+
+int load(int p, double r, int deposit, int aims) {
+	float sum;
+	int i = 0;
+	sum = p;
+	while (sum < aims) {
+		i++;
+		sum = sum + deposit;
+		sum = sum * (1 + r);
+	}
+	return i;
+}

@@ -1,0 +1,27 @@
+
+//題目2，承上一周的題目，寫一個副程式，傳入整數fact並計算fact的階乘值(double)傳回給主程式印出結果
+
+#include <stdio.h>
+int like(int fact);
+int main()
+{
+	int fact = 0;//輸入一個要算出階層值的數字
+
+	    
+	printf_s("請輸入一個整數小於13:");
+	scanf_s("%d", &fact);
+printf_s("fact的階層值為%d\n",like(fact));
+	
+
+	return 0;
+}
+int like(int fact) {
+	int i = 0;      //算出階層值
+	int g = 1;
+	while (i < fact)
+	{
+		i = i + 1;
+		g = g * i;
+	}
+	return g;
+}

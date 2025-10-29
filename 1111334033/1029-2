@@ -1,0 +1,21 @@
+#include <stdio.h>
+double factorial(int fact);
+
+int main()
+{
+	int fact;
+	double result;
+	printf("輸入fact值:(<13)\n");
+	scanf_s("%d", &fact);
+
+	result = factorial(fact);
+	printf("fact階乘值為:%f\n", result);
+	return 0;
+}
+	double factorial(int fact) {
+		double total = 1;
+		for (int i = 1; i <= fact; i++) {
+			total = total * i;
+		}
+		return total;
+	}

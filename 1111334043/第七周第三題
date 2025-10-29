@@ -1,0 +1,35 @@
+#include <stdio.h>
+
+int yearss(int p, double r, int deposit, int aims);
+int main()
+{
+    int p = 10000;      
+    double r = 0.05;    
+    int deposit, aims;
+
+    printf("每年定期存入金額: ");
+    scanf_s("%d", &deposit);
+
+    printf("存款目標: ");
+    scanf_s("%d", &aims);
+
+    int years = yearss(p, r, deposit, aims);
+
+    printf("需要 %d 年才能達成存款目標。\n", years);
+
+    return 0;
+}
+int yearss(int p, double r, int deposit, int aims)
+{
+    int year = 0;
+    double total = p;
+
+    while (total < aims)
+    {
+        total = total * (1 + r) + deposit;
+        year++;
+        printf("第 %d 年，本利合計 = %.2f\n", year, total);
+    }
+
+    return year;
+}
