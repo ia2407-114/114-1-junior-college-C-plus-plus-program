@@ -1,0 +1,35 @@
+//題目2，承上一周的題目，寫一個副程式，傳入整數fact並計算fact的階乘值(double)傳回給主程式印出結果
+#include <stdio.h>
+
+// 副程式：計算階乘
+double factorial(int n) {
+    double result = 1;
+    int i;
+    for (i = 1; i <= n; i++) {
+        result = result * i;
+    }
+    return result;
+}
+
+int main() {
+    int fact, n, i;
+    double e = 1.0; // e的初始值為1 (對應 1/0!)
+
+    printf("請輸入一個整數 fact (<13): ");
+    scanf_s("%d", &fact);
+
+    // 呼叫副程式計算階乘
+    printf("%d 的階乘為: %.0lf\n", fact, factorial(fact));
+
+    printf("請輸入所需的項目數量 n (<13): ");
+    scanf_s("%d", &n);
+
+    // 計算 e 的近似值
+    for (i = 1; i < n; i++) {
+        e = e + 1.0 / factorial(i);
+    }
+
+    printf("e 的近似值為: %.6lf\n", e);
+
+    return 0;
+}

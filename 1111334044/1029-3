@@ -1,0 +1,46 @@
+//題目3，承上一周的題目2，寫一個副程式，傳入本金int (p=10000) 年利率double (r=0.05)，每個年底定期定額存入金額int ，以及存款目標int(aims)，.傳回年數，在主程式印出要存幾年才能達成目標
+#include <stdio.h>
+
+int yearsToReachGoal(int p, double r, int deposit, int aims);
+// 副程式：計算達成目標所需的年數
+int yearsToReachGoal(int p, double r, int deposit, int aims){
+    double total = p;  // 本利合金額
+    int years = 0;
+
+    // 每年進行複利計算，直到超過目標
+    while (total < aims) {
+        years++;
+        total = total * (1 + r) + deposit; // 不使用pow，用乘法模擬每年複利
+        printf("第 %d 年底的本利合為: %.2lf\n", years, total);
+    }
+
+    return years;
+}
+
+int main() {
+    int p;         // 本金
+    double r;      // 年利率
+    int deposit;   // 每年底存入金額
+    int aims;      // 存款目標
+    int years;     // 結果（需要幾年）
+
+    // 輸入資料
+    printf("請輸入本金(p): ");
+    scanf_s("%d", &p);
+
+    printf("請輸入年利率(r): ");
+    scanf_s("%lf", &r);
+
+    printf("請輸入每年底定期存入的金額: ");
+    scanf_s("%d", &deposit);
+
+    printf("請輸入存款目標金額(aims): ");
+    scanf_s("%d", &aims);
+
+    // 呼叫副程式
+    years = yearsToReachGoal(p, r, deposit, aims);
+
+    printf("\n需要 %d 年才能達成目標。\n", years);
+
+    return 0;
+}
