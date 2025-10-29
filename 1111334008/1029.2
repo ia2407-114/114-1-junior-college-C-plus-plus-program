@@ -1,0 +1,36 @@
+#include <stdio.h>
+
+// 計算階乘
+double factorial(int fact) {
+    double result = 1.0;
+    for (int i = 1; i <= fact; i++) {
+        result *= i;
+    }
+    return result;
+}
+
+int main() {
+    int fact, n;
+    double factResult, eApprox = 1.0;
+
+    // 輸入階乘的整數（限制小於13）
+    printf("請輸入一個整數 fact（小於13）：");
+    scanf_s("%d", &fact);
+
+    // 輸入項目數量 n（限制小於13）
+    printf("請輸入項目數量 n（小於13）：");
+    scanf_s("%d", &n);
+
+    // 計算 fact 的階乘
+    factResult = factorial(fact);
+    printf("%d 的階乘為：%.0f\n", fact, factResult);
+
+    // 計算 e 的近似值
+    for (int i = 1; i <= n; i++) {
+        eApprox += 1.0 / factorial(i);
+    }
+
+    printf("使用 %d 項計算出的 e 近似值為：%.10f\n", n, eApprox);
+
+    return 0;
+}
