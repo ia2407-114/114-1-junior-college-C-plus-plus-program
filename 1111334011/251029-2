@@ -1,0 +1,48 @@
+#include <stdio.h>
+
+// 宣告副程式 (函式原型)
+double factorial(int fact);
+
+int main() {
+    double p, r, deposit, aims; // 本金、利率、定期定額金額、目標
+    int year = 0;
+
+    printf("請輸入本金 p: ");
+    scanf("%lf", &p);
+    printf("請輸入年利率 r (例如 0.05 表示5%%): ");
+    scanf("%lf", &r);
+    printf("請輸入每年定期定額存入金額: ");
+    scanf("%lf", &deposit);
+    printf("請輸入存款目標 aims: ");
+    scanf("%lf", &aims);
+
+    double total = p;
+
+    while (total < aims) {
+        total = total * (1 + r); // 每年底複利
+        total += deposit;        // 每年底存入金額
+        year++;
+        printf("第 %d 年年底本利合: %.2f\n", year, total);
+    }
+
+    printf("達成目標共需要 %d 年。\n", year);
+
+    // === 額外：階乘計算 ===
+    int n;
+    printf("\n請輸入一個整數 n，用來計算 n! 階乘: ");
+    scanf("%d", &n);
+
+    double result = factorial(n);
+    printf("%d! = %.0f\n", n, result);
+
+    return 0;
+}
+
+// 副程式：計算階乘，傳入整數 fact，回傳 double
+double factorial(int fact) {
+    double ans = 1;
+    for (int i = 1; i <= fact; i++) {
+        ans *= i;
+    }
+    return ans;
+}
