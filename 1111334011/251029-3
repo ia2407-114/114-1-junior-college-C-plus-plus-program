@@ -1,0 +1,45 @@
+#include <stdio.h>
+
+// 副程式原型：傳回達成目標所需年數
+int yearsToReachGoal(int p, double r, int deposit, int aims);
+
+int main() {
+    int p, deposit, aims;
+    double r;
+
+    printf("請輸入本金 p: ");
+    scanf("%d", &p);
+    printf("請輸入年利率 r (例如 0.05 表示5%%): ");
+    scanf("%lf", &r);
+    printf("請輸入每月定期定額存入金額: ");
+    scanf("%d", &deposit);
+    printf("請輸入存款目標 aims: ");
+    scanf("%d", &aims);
+
+    // 呼叫副程式，取得達標年數
+    int years = yearsToReachGoal(p, r, deposit, aims);
+
+    printf("\n達成目標共需要 %d 年。\n", years);
+
+    return 0;
+}
+
+// ===== 副程式定義 =====
+// 功能：計算達到目標所需的年數
+int yearsToReachGoal(int p, double r, int deposit, int aims) {
+    double total = p;
+    double monthlyRate = r / 12.0; // 月利率
+    int year = 0;
+    int month;
+
+    while (total < aims) {
+        year++;
+        for (month = 1; month <= 12; month++) {
+            total = total * (1 + monthlyRate); // 每月複利
+            total += deposit;                   // 每月月底存入
+        }
+        printf("第 %d 年年底本利合: %.2f\n", year, total);
+    }
+
+    return year; // 傳回需要的年數
+}
