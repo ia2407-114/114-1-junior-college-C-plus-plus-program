@@ -1,0 +1,40 @@
+#include <stdio.h>
+int main() {
+	int fact, n, i;
+	double factvalue, evalue;
+
+	printf("請輸入一個整數fact(<13):");
+	scanf_s("%d", &fact);
+
+	if (fact >= 13 || fact < 0) {
+		printf("輸入錯誤, fact必須介於0~12 \n");
+		return 0;
+	}
+
+	factvalue = fac(fact);
+	printf("%d 的乘階為: %.0f\n", fact, factvalue);
+
+	printf("請輸入項目數量(<13):");
+	scanf_s("%d", &n);
+
+	if (n >= 13 || n < 0) {
+		printf("輸入錯誤, n必須介於0~12 \n");
+		return 0;
+	}
+
+	evalue = 1.0;
+	for (i = 1; i <= n; i++) {
+		evalue = evalue + 1.0 / fac(i);
+	}
+
+	printf("e的近似值(n=%d):%.6f\n", n, evalue);
+	return 0;
+}
+double fac(int fact) {
+	double result = 1;
+	int i;
+	for (i = 1; i <= fact; i++) {
+		result = result * i;
+	}
+	return result;
+}
