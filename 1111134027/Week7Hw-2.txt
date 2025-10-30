@@ -1,31 +1,23 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+double load(int fact); 
+
 int main() {
-	int fact, n;
-	int j;
-	
-	double e = 1.0;
-	double load(int fact);
+    int fact;
+    printf("請輸入一個整數 fact (<13):\n");
+    scanf_s("%d", &fact);
 
-	printf("請輸入一個整數 fact (<13):\n");
-	scanf_s("%d", &fact);
+    printf("%d! = %.0f\n", fact, load(fact));
 
-
-	
-	printf("%d! = %1f\n", fact,load(fact));
-
-
-	return 0;
+    return 0;
 }
 
-double load(int fact){
-	    int i;
-	    double factorial;
-	   	factorial = 1;
-		for (i = 1; i <= fact; i++) {
-			factorial *= i;
-		}
-		return factorial;
-
+double load(int fact) {
+    int i;
+    double factorial = 1;
+    for (i = 1; i <= fact; i++) {
+        factorial *= i;
+    }
+    return factorial;
 }
