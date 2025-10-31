@@ -1,0 +1,49 @@
+#include <stdio.h>
+
+double factorial(int fact);
+
+int main(void) {
+    int fact, n;
+    int i, j;
+    double e = 1.0;  
+    double fact_value; 
+
+    printf("請輸入一個整數 fact（<13）：");
+    scanf_s("%d", &fact);
+
+    if (fact >= 13 || fact < 0) {
+        printf("錯誤：請輸入 0 到 12 之間的整數。\n");
+        return 1;
+    }
+
+    fact_value = factorial(fact);
+
+    printf("%d 的階乘為：%.0f\n", fact, fact_value);
+
+    printf("請輸入 e 的項目數量 n（<13）：");
+    scanf_s("%d", &n);
+
+    if (n >= 13 || n < 1) {
+        printf("錯誤：請輸入 1 到 12 之間的整數。\n");
+        return 1;
+    }
+
+    for (i = 1; i < n; i++) {
+        e += 1.0 / factorial(i); 
+    }
+
+    printf("使用 %d 項計算的 e 近似值為：%.10f\n", n, e);
+
+    return 0;
+}
+
+double factorial(int fact) {
+    double result = 1.0;
+    int i;
+
+    for (i = 1; i <= fact; i++) {
+        result *= i;
+    }
+
+    return result; 
+}
