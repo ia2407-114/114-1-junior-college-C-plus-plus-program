@@ -3,16 +3,16 @@ float BMI(float height, float weight);//函數的原型宣告
 
 int main()
 {
-	float h, w, num;
+	float height, weight, num;
 	printf("輸入你的身高(公尺)\n");
-	scanf_s("%f", &h);
+	scanf_s("%f", &height);
 	printf("輸入你的體重(公斤)\n");
-	scanf_s("%f", &w);
-	num = BMI(h, w);//呼叫函數
+	scanf_s("%f", &weight);
+	num = BMI(height, weight);//呼叫函數
 	printf("你的BMI值為:%f\n", num);
 	return 0;
 }
-float BMI(float height, float weight){//函數定義
+float BMI(float height, float weight) {//函數定義
 	float bmi;
 	bmi = weight / (height * height);
 	return bmi;
