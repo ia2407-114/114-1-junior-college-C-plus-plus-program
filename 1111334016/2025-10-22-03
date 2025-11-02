@@ -5,7 +5,7 @@
 
 int main() {
     
-        int i = 0,money;
+        int i = 1,money;
         double p, r, aims;
 
         printf("你的本金? ");
