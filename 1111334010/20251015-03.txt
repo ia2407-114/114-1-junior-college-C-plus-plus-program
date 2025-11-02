@@ -1,0 +1,25 @@
+#include <stdio.h>
+
+int main() {
+	int i, j = 1, n;
+	double pi = 0.0;
+
+	printf("請輸入項目數量n:\t");
+	scanf_s("%d", &n);
+
+	for (i = 1;i <= n * 2;i++) {
+		if (i % 2 == 0) {
+			continue;
+		}
+
+		if (j % 2 == 1)
+			pi += 4.0 / i;
+		else
+			pi -= 4.0 / i;
+
+		j++;
+	}
+
+	printf("pi 的近似值 = %lf\n", &pi);
+	return 0;
+}
