@@ -6,9 +6,9 @@ int main()
     double e=1,h=1;
     
     printf("請輸入一個<13的整數:");
-    scanf("%d",&fact);
+    scanf_s("%d",&fact);
     printf("請輸入所需項目數量(n<13):");
-    scanf("%d",&n);
+    scanf_s("%d",&n);
     
     
     while(i<fact){
@@ -17,7 +17,7 @@ int main()
     }
     
     printf("fact的階乘值:");
-    scanf("%d",&a);
+    scanf_s("%d",&a);
     
     while(b<n){
         b++;
@@ -26,7 +26,8 @@ int main()
     }
     
     printf("e的近似值為:");
-    scanf("%d",&e);
+    scanf_s("%d",&e);
 
     return 0;
+
 }
