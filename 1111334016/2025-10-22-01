@@ -5,7 +5,7 @@
 #include <stdio.h>
 
 int main() {
-    int i = 0;
+    int i = 1;
     double p, r, aims;
 
     printf("你的本金? ");
