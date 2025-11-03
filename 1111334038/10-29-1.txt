@@ -1,0 +1,15 @@
+#include <stdio.h>
+
+float calculate(float height, float weight);
+
+int main()
+{
+	float height, weight, BMI;
+	printf("請輸入身高(公尺)、體重(公斤)，包含小數點後一位\n");
+	scanf_s("%f %f", &height, &weight);
+	printf("你的BMI指數為%.1f", calculate(height, weight));
+}
+float calculate(float height, float weight)
+{
+	return weight / (height * height);
+}
