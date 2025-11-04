@@ -2,28 +2,22 @@
 
 int main()
 {
-    double p, r, deposit, aims;
-    double balance;
-    int years = 0;
-
-    printf("輸入本金: ");
-    scanf_s("%lf", &p);
-    printf("輸入年利率: ");
-    scanf_s("%lf", &r);
-    printf("輸入每年定期定額存入金額: ");
-    scanf_s("%lf", &deposit);
-    printf("輸入目標金額: ");
-    scanf_s("%lf", &aims);
-
-    balance = p;
-
-    while (balance < aims) {
-        years++;
-        balance = balance * (1.0 + r) + deposit;
-        printf("第 %d 年底: %.2f\n", years, balance);
-    }
-
-    printf("達成目標 %.2f，共花 %d 年\n", aims, years);
-
-    return 0;
+	float aims, r, deposit, c;
+	int years = 0;
+	printf("請輸入本金\n");
+	scanf_s("%f", &c);
+	printf("請輸入利率\n");
+	scanf_s("%f", &r);
+	printf("請輸入目標金額\n");
+	scanf_s("%f", &aims);
+	printf("請輸入每一年底要再存多少錢進戶頭\n");
+	scanf_s("%f", &deposit);
+	while (c < aims)
+	{
+		years ++;
+		c = c + deposit;
+		c = c * (1 + r);
+		printf("第%d年存了%.1f元\n", years, c);
+	}
+	printf("共存了%.1f元，需要%d年", c, years);
 }
