@@ -1,0 +1,22 @@
+#include <stdio.h>
+
+int a(int fact);
+
+int main()
+{
+    int fact;
+    printf("請輸入階乘值: ");
+    scanf_s("%d", &fact);
+
+    printf("%d 階乘結果是 %d\n", fact, a(fact));
+    return 0;
+}
+int a(int fact)
+{
+    int f = 1;
+    for (int i = 1; i <= fact; i++)
+    {
+        f = f * i;
+    }
+    return f;
+}
