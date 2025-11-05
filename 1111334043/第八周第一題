@@ -1,0 +1,78 @@
+#include<stdio.h>
+double get_pi(int n);
+double ball_volume(double r, double pi);
+double ball_area(double r, double pi);
+double cylinder_volume(double r, double h, double pi);
+double cylinder_area(double r, double h, double pi);
+double circle_area(double r, double pi);
+double circle_long(double r, double pi);
+int main()
+{
+    int n;
+    double r, h;
+    double pi;
+
+    printf("請輸入用來近似π的迭代次數 n: ");
+    scanf_s("%d", &n);
+
+    pi = get_pi(n);
+    printf("近似 π = %.10f\n\n", pi);
+
+    printf("請輸入半徑 r: ");
+    scanf_s("%lf", &r);
+    printf("請輸入圓柱高度 h: ");
+    scanf_s("%lf", &h);
+    printf("\n");
+
+    printf("球體積 = %.6f\n", ball_volume(r, pi));
+    printf("球表面積 = %.6f\n", ball_area(r, pi));
+    printf("圓柱體積 = %.6f\n", cylinder_volume(r, h, pi));
+    printf("圓柱表面積 = %.6f\n", cylinder_area(r, h, pi));
+    printf("圓面積 = %.6f\n", circle_area(r, pi));
+    printf("圓周長 = %.6f\n", circle_long(r, pi));
+
+    return 0;
+}
+double get_pi(int n) 
+{
+    double pi = 0.0;
+    int i;
+    for (i = 0; i < n; i++) 
+    {
+        if (i % 2 == 0)
+            pi += 1.0 / (2.0 * i + 1.0);
+        else
+            pi -= 1.0 / (2.0 * i + 1.0);
+    }
+    pi *= 4.0;
+    return pi;
+}
+double ball_volume(double r, double pi)
+{
+    return (4.0 / 3.0) * pi * r * r * r;
+}
+
+double  ball_area(double r, double pi)
+{
+    return 4.0 * pi * r * r;
+}
+
+double cylinder_volume(double r, double h, double pi)
+{
+    return pi * r * r * h;
+}
+
+double cylinder_area(double r, double h, double pi)
+{
+    return 2.0 * pi * r * (h + r);
+}
+
+double circle_area(double r, double pi)
+{
+    return pi * r * r;
+}
+
+double circle_long(double r, double pi) 
+{
+    return 2.0 * pi * r;
+}
