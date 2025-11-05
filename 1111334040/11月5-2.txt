@@ -45,11 +45,11 @@ double c2(double pi, double r)
 }
 double c3(double pi, double r)
 {
-    return (4/3)*pi * r * r*r;
+    return (4.0/3.0)*pi * r * r*r;
 }
 double c4(double pi, double r)
 {
-    return 4*pi * r ;
+    return 4*pi * r*r ;
 }
 double c5(double pi, double r,double h)
 {
