@@ -5,7 +5,6 @@ float a(float aims, float years, float r, float deposit, float c);
 int main()
 {
 	float aims, years = 0, r, deposit, c;
-	int i;
 	printf("請輸入本金\n");
 	scanf_s("%f", &c);
 	printf("請輸入利率\n");
@@ -26,4 +25,5 @@ float a(float aims, float years, float r, float deposit, float c)
 
 	}
 	return years;
+
 }
