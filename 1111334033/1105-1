@@ -4,6 +4,8 @@ double ballv(double pi, double r);
 double balls(double pi, double r);
 double V(double pi, double r,int h);
 double S(double pi, double r, int h);
+double c(double pi, double r);
+double C(double pi, double r);
 int main()
 {
 	int n,h;
@@ -18,6 +20,8 @@ int main()
 	printf("球表面積為:%lf\n",balls(pi(n),r));
 	printf("圓柱體積為:%lf\n", V(pi(n), r, h));
 	printf("圓柱表面積為:%lf\n", S(pi(n), r, h));
+	printf("圓周長為:%lf\n", c(pi(n), r));
+	printf("圓面積為:%lf\n", C(pi(n), r));
 }
 double pi(int n)
 {
@@ -49,5 +53,15 @@ double V(double pi, double r, int h) {
 double S(double pi, double r, int h) {
 	double ans;
 	ans = (2 * pi * r * r) + (2 * pi * r * h);
+	return ans;
+}
+double c(double pi, double r) {
+	double ans;
+	ans = 2 * r * pi;
+	return ans;
+}
+double C(double pi, double r) {
+	double ans;
+	ans = r * r * pi;
 	return ans;
 }
