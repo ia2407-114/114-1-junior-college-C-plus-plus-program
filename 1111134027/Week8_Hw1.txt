@@ -1,0 +1,67 @@
+#include <stdio.h>
+#include <math.h>
+
+double getPi(int n);
+double circumference(double r, double pi);
+double circleArea(double r, double pi);
+double sphervolume(double r, double pi);
+double sphereSurface(double r, double pi);
+double CylinderVolume(double r, double pi, double h);
+double CylinderSurface(double r, double pi, double h);
+
+int main() {
+    int n;
+    double r, h;
+    printf("請輸入計算pi的項數 n:\n");
+    scanf_s("%d", &n);
+    printf("請輸入半徑r:\n");
+    scanf_s("%lf", &r);
+    printf("請輸入圓柱高度h:\n");
+    scanf_s("%lf", &h);
+
+    double pi = getPi(n);
+
+    printf("近似pi = %.10f\n", pi);
+    printf("圓周長 = %.6f\n", circumference(r, pi));
+    printf("圓面積 = %.6f\n", circleArea(r, pi));
+    printf("球體積 = %.6f\n", sphervolume(r, pi));
+    printf("球表面積 = %.6f\n", sphereSurface(r, pi));
+    printf("圓柱體積 = %.6f\n", CylinderVolume(r, pi, h));
+    printf("圓柱表面積 = %.6f\n", CylinderSurface(r, pi, h));
+
+    return 0;
+}
+
+double getPi(int n) {
+    double pi = 0.0;
+    double sign = 1.0;
+    for (int i = 0; i < n; i++) {
+        pi += sign / (2 * i + 1);
+        sign = -sign;
+    }
+    return pi * 4;
+}
+
+double circumference(double r, double pi) {
+    return 2 * pi * r;
+}
+
+double circleArea(double r, double pi) {
+    return pi * r * r;
+}
+
+double sphervolume(double r, double pi) {
+    return (4.0 / 3.0) * pi * pow(r, 3);
+}
+
+double sphereSurface(double r, double pi) {
+    return 4 * pi * r * r;
+}
+
+double CylinderVolume(double r, double pi, double h) {
+    return pi * r * r * h;
+}
+
+double CylinderSurface(double r, double pi, double h) {
+    return 2 * pi * r * (r + h);
+}
