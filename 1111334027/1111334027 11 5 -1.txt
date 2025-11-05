@@ -1,0 +1,28 @@
+#include <stdio.h>
+int years(float p, float r, float da, float aims);
+int main()
+{
+    float p, r, aims, da;
+    printf("請輸入本金:\n");
+    scanf_s("%f", &p);
+    printf("請輸入年利率(例如0.05代表5%%):\n");
+    scanf_s("%f", &r);
+    printf("請輸入你的目標金額:\n");
+    scanf_s("%f", &aims);
+    printf("請輸入年底定額存入金額:\n");
+    scanf_s("%f", &da);
+    int y = years(p, r, da, aims);
+    printf("共存了%.2f元，將要花%d年。\n", aims, y);
+    return 0;
+}
+int years(float p, float r, float da, float aims)
+{
+    int y = 0;
+    while (p < aims)
+    {
+        p = p * (1 + r);
+        p = p + da;
+        y++;
+    }
+    return y;
+}
