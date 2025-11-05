@@ -1,0 +1,73 @@
+#include <stdio.h>
+
+double pi(double);
+double ul(double,int);
+double um(double,int);
+double chj(double,int);
+double chm(double,double);
+double drm(double,int,int);
+double drt(double,int,int);
+
+int main()
+{
+    int r,n,h;
+    printf("請輸入圓體半徑:");
+    scanf_s("%d",&r);
+    printf("請輸入pi項目總數:");
+    scanf_s("%d", &n);
+    printf("請輸入圓柱體高度:");
+    scanf_s("%d", &h);
+
+
+    printf("圓周長:%lf \n",ul(pi(n),r));
+    printf("圓面積:%lf \n",um(pi(n), r));
+    printf("球體積:%lf \n",chj(pi(n), r));
+    printf("球表面面積:%lf \n",chm(pi(n), um(pi(n), r)));
+    printf("圓柱體積:%lf \n",drt(pi(n),r,h));
+    printf("圓柱表面積:%lf \n",drm(pi(n), r, h));
+        return 0;
+}
+
+double pi(double n) {
+        int i;
+        double pi_approx = 0.0;
+        double sign = 1.0;
+
+        for (i = 0; i < n; i++) {
+            double denominator = 2.0 * i + 1.0;
+            pi_approx += sign * (4.0 / denominator);
+            sign *= -1.0;
+        }
+
+        return pi_approx;
+ }
+double ul(double p,int r){
+    double a;
+    a = 2 * p * r;
+    return a;
+}
+double um(double p, int r) {
+    double a;
+    a = p * r * r;
+    return a;
+}
+double chj(double p, int r) {
+    double a;
+    a = (4/3)*p*r;
+    return a;
+}
+double chm(double p,double um) {
+    double a;
+    a =4*um;
+    return a;
+}
+double drt(double p, int r, int h) {
+    double a;
+    a = p*r*r*h;
+    return a;
+}
+double drm(double p, int r,int h) {
+    double a;
+    a =2*p*r*r+2*p*r*h;
+    return a;
+}
