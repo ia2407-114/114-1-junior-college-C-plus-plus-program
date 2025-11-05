@@ -1,0 +1,37 @@
+
+#include<stdio.h>
+
+void play(void);
+
+int main(void) {
+    printf("主程式開始，呼叫 play()。\n");
+    play(); // 呼叫副程式
+    printf("play() 執行完畢，回到主程式。\n");
+    return 0;
+}
+
+// 第三段：函式定義（這裡可以定義變數）
+void play(void) {
+    float p = 10000;     // 本金
+    double r = 0.05;     // 年利率
+    int deposit;         // 每年底定期定額存入
+    int aims;            // 存款目標
+    double total;
+    int year = 0;
+
+    printf("請輸入每年底定期定額金額:\t");
+    scanf_s("%d", &deposit);
+    printf("請輸入存款目標金額:\t");
+    scanf_s("%d", &aims);
+
+    total = p;
+
+    while (total < aims) {
+        total = total * (1 + r);
+        total += deposit;
+        year++;
+        printf("第 %d 年 本利合: %.2f\n", year, total);
+    }
+
+    printf("需要 %d 年才能達成目標。\n", year);
+}
