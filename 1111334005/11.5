@@ -1,0 +1,64 @@
+#include <stdio.h>
+#include <math.h>
+
+// 1. 求 pi 近似值
+double getPi(int n) {
+    double pi = 0.0;
+    for (int k = 0; k < n; k++)
+        pi += pow(-1, k) / (2 * k + 1);
+    return 4 * pi;
+}
+
+// 2. 球體積
+double sphereVolume(double r, double pi) {
+    return 4.0 / 3.0 * pi * pow(r, 3);
+}
+
+// 3. 球表面積
+double sphereArea(double r, double pi) {
+    return 4 * pi * pow(r, 2);
+}
+
+// 4. 圓柱體積
+double cylinderVolume(double r, double h, double pi) {
+    return pi * pow(r, 2) * h;
+}
+
+// 5. 圓柱表面積
+double cylinderArea(double r, double h, double pi) {
+    return 2 * pi * r * (h + r);
+}
+
+// 6. 圓面積
+double circleArea(double r, double pi) {
+    return pi * pow(r, 2);
+}
+
+// 7. 圓周長
+double circlePerimeter(double r, double pi) {
+    return 2 * pi * r;
+}
+
+int main() {
+    int n;
+    double r, h, pi;
+
+    printf("請輸入計算項目總數n: ");
+    scanf_s("%d", &n);
+    pi = getPi(n);
+
+    printf("請輸入半徑r: ");
+    scanf_s("%lf", &r);
+    printf("請輸入高度h: ");
+    scanf_s("%lf", &h);
+
+    printf("\npi 近似值 = %.6f\n", pi);
+    printf("球體積 = %.6f\n", sphereVolume(r, pi));
+    printf("球表面積 = %.6f\n", sphereArea(r, pi));
+    printf("圓柱體積 = %.6f\n", cylinderVolume(r, h, pi));
+    printf("圓柱表面積 = %.6f\n", cylinderArea(r, h, pi));
+    printf("圓面積 = %.6f\n", circleArea(r, pi));
+    printf("圓周長 = %.6f\n", circlePerimeter(r, pi));
+
+    return 0;
+}
