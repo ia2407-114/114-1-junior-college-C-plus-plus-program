@@ -1,0 +1,92 @@
+#include <stdio.h>
+
+/* 副程式：計算需要幾年才能達成目標
+   規則：每年先以年利率 r 計算利息（複利），然後在年底存入 deposit。
+   例如：
+     year1_end = p * (1 + r) + deposit
+     year2_end = year1_end * (1 + r) + deposit
+   回傳值：所需的整數年數 (int)。若 aim <= p，則回傳 0 年。 */
+int years_to_goal(double p, double r, double deposit, double aim) {
+    if (aim <= p) return 0;  // 已達成，0 年
+
+    double balance = p;
+    int years = 0;
+
+    /* 迴圈直到達成或超過目標 */
+    while (balance < aim) {
+        years++;
+        balance = balance * (1.0 + r);  // 本金加利息 (複利)
+        balance += deposit;             // 年底定期定額存入
+        /* 為避免無窮迴圈，理論上可以檢查 deposit 與 r 同時為 0 的情況 */
+        if (years > 1000000) { // 安全檢查：若超過一百萬年就放棄
+            break;
+        }
+    }
+
+    return years;
+}
+
+int main(void) {
+    double p;       // 本金
+    double r;       // 年利率 (例如 0.05 代表 5%)
+    double deposit; // 每年年底定期定額
+    double aim;     // 存款目標
+
+    printf("請輸入本金 p (例如 10000): ");
+    if (scanf_s("%lf", &p) != 1) {
+        printf("輸入錯誤。\n");
+        return 1;
+    }
+
+    printf("請輸入年利率 r (例如 0.05 表示 5%%): ");
+    if (scanf_s("%lf", &r) != 1) {
+        printf("輸入錯誤。\n");
+        return 1;
+    }
+
+    printf("請輸入每年年底定期定額存入金額 deposit (例如 1000): ");
+    if (scanf_s("%lf", &deposit) != 1) {
+        printf("輸入錯誤。\n");
+        return 1;
+    }
+
+    printf("請輸入存款目標 aim (例如 50000): ");
+    if (scanf_s("%lf", &aim) != 1) {
+        printf("輸入錯誤。\n");
+        return 1;
+    }
+
+    /* 呼叫副程式計算需要幾年 */
+    int needed_years = years_to_goal(p, r, deposit, aim);
+
+    if (needed_years == 0 && aim <= p) {
+        printf("\n目標已達成：本金 %.2f 已經 >= 目標 %.2f，所需年數 = 0\n", p, aim);
+        return 0;
+    }
+    /* 印出每年底的本利合直到達成目標（格式化為兩位小數） */
+    printf("\n每年底本利合 (利息先計算，然後存入定期定額)：\n");
+    double balance = p;
+    int year = 0;
+    while (balance < aim) {
+        year++;
+        balance = balance * (1.0 + r); // 計複利
+        balance += deposit;            // 年底存入
+        printf("第 %2d 年末：%.2f\n", year, balance);
+        if (year > 1000000) { // 同樣的安全檢查
+            printf("計算中斷：超過安全上限年數。\n");
+            break;
+        }
+    }
+
+    if (balance >= aim) {
+        printf("\n達成目標 (%.2f) 於第 %d 年，當年年末餘額 = %.2f\n", aim, year, balance);
+    }
+    else {
+        printf("\n未能在安全年限內達成目標。\n");
+    }
+
+    /* 顯示從副程式回傳的年數（驗證用） */
+    printf("副程式回傳所需年數 = %d\n", needed_years);
+
+    return 0;
+}
