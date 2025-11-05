@@ -1,0 +1,73 @@
+//題目1.承繼上週題目3，建立七個副程式，其中一個利用傳入整數n求出pi的近似值，
+//剩下六個函數利用第一個函數傳回的pi值分別計算出: 球體積、球表面積、圓柱體積、圓柱表面積，並將個別結果傳回主程式並且印出
+#include <stdio.h>
+double pi(int);
+double circle(int);      //圓周長
+double circle1(int);     //圓面積
+double ball(int);         //球體積
+double ball1(int);        //球表面積
+double ball2(int, int);  //圓柱體積
+double ball3(int, int);  //圓柱表面積
+int main()
+{
+    int r, h,n;
+    printf("請輸入半徑");
+    scanf_s("%d", &r);
+    printf("請輸入高度");
+    scanf_s("%d", &h);
+    printf("請輸入n值");
+    scanf_s("%d", &n);
+    printf("圓周長為%lf\n", circle(r));
+    printf("圓面積為%lf\n", circle(r));
+    printf("球體積為%lf\n", ball(r));
+    printf("球表面積為%lf\n", ball1(r));
+    printf("圓柱體積為%lf\n", ball2(r,h));
+    printf("圓柱表面積為%lf\n", ball3(r,h));
+    return 0;
+}
+
+double pi(int n) {
+    int i;
+    int approx = 0.0;
+    double sign = 1.0;
+    for (i = 0; i < n; i++) {
+        double denominator = 2.0 * i + 1.0;
+        approx = approx + sign * (4.0 / denominator);
+        sign = sign * (-1.0);
+    }
+    return approx;
+}
+
+double circle(int r) {  //圓周長
+    double result;
+    result = 2 * pi(r) * r;
+    return result;
+}
+    double circle1(int r) {  //圓面積
+        double result;
+        result = pi(r) * r*r;
+        return result;
+}
+double ball(int r) {  //球體積
+    double result;
+    result = (4 / 3) * pi(r) * r * r * r;
+    return result;
+}
+
+double ball1(int r) {  //球表面積
+    double result;
+    result = 4  * pi(r) * r * r ;
+    return result;
+}
+
+double ball2(int r, int h) {  //圓柱體積
+    double result;
+    result = pi(r) * r * r * h;
+    return result;
+}
+
+    double ball3(int r, int h) {  //圓柱表面積
+        double result;
+        result = 2*pi(r) * r * r+2*pi(r)*r*h;
+        return result;
+}
