@@ -1,0 +1,41 @@
+#include <stdio.h>
+
+//副程式原型宣告
+int calcYears(double p, double r, double deposit, double aim);
+
+int main() {
+    double p, r, deposit, aim;
+    int years;
+
+    printf("請輸入本金(p)：");
+    scanf_s("%lf", &p);
+    printf("請輸入年利率(r)：");
+    scanf_s("%lf", &r);
+    printf("請輸入每年定期存入金額(deposit)：");
+    scanf_s("%lf", &deposit);
+    printf("請輸入存款目標(aim)：");
+    scanf_s("%lf", &aim);
+
+    //呼叫副程式計算年數
+    years = calcYears(p, r, deposit, aim);
+
+    printf("達成存款目標需要 %d 年。\n", years);
+
+    return 0;
+}
+
+
+//副程式：計算達成目標所需年數
+
+int calcYears(double p, double r, double deposit, double aim) {
+    double amount = p; //初始本金
+    int year = 0;
+
+    while (amount < aim) {
+        amount = amount * (1 + r) + deposit;  //複利加定期存入
+        year++;
+        printf("第 %d 年年底，本利和 = %.2f\n", year, amount);
+    }
+
+    return year; //回傳所需年數
+}
