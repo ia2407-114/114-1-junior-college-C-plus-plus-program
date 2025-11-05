@@ -1,0 +1,26 @@
+﻿#include <stdio.h>
+
+int main(void)
+{
+	int chinese, math, IC;
+
+	printf("請輸入你的國文成績:\n");
+	scanf_s("%d", &chinese);
+	printf("請輸入你的數學成績:\n");
+	scanf_s("%d", &math);
+	printf("請輸入你的計概成績:\n");
+	scanf_s("%d", &IC);
+
+	int sum = chinese + math + IC;
+	printf("你的學期總成績是是: %d\n", sum);
+	double avg = (double)sum / 3;
+	printf("你的學期平均成績是: %g\n", avg);
+
+	if (avg >= 60) {
+		printf("恭喜通過!");
+	}
+	else {
+		printf("再加油!");
+	}
+	return 0;
+}
