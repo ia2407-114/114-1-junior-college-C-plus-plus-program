@@ -1,0 +1,9 @@
+#include <stdio.h>
+int main()
+{
+	int fact;
+	printf("請輸入一個小於13的整數:\n");
+	scanf_s("%d",&fact);
+
+	return 0;
+}

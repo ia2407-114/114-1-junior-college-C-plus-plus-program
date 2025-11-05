@@ -1,0 +1,32 @@
+#include <stdio.h>
+void play(void);
+float BMI(float weight,float height );
+int main()
+{
+	float weight, height, result;
+	play();
+	printf("請輸入體重: 身高: \n");
+	scanf_s("%f %f", &weight ,&height);
+	result = BMI(height, weight);
+	printf("您的BMI為:%.2f:\n",result);
+	if (result < 18.5)
+		printf("體重過輕\n");
+	else if (result < 24.9)
+		printf("正常體重\n");
+	else if (result < 29.9)
+		printf("過重\n");
+	else if (result < 34.9)
+		printf("輕度肥胖\n");
+	else if (result < 39.9)
+		printf("中度肥胖\n");
+	else 
+		printf("重度肥胖\n");
+	return 0;
+	void play(void);
+{
+	printf("===BMI=== 計算程式\n");
+}
+float BMI(float weight, float height);
+{
+	return weight / (height * height);
+}

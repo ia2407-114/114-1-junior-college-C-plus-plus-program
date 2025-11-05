@@ -1,0 +1,26 @@
+#include <stdio.h>
+int main()
+{
+	int a,b,c;
+	int sum, max, min;
+	float avg = 0;
+	printf("請輸入一個整數1:\n");
+	scanf_s("%d",& a);
+	printf("請輸入一個整數2:\n");
+	scanf_s("%d", & b);
+	printf("請輸入一個整數3:\n");
+	scanf_s("%d", & c);
+	sum = (a + b + c);
+	printf("總和:%d\n",sum);
+	avg = (float)(a+b+c)/3;
+	printf("平均:%f\n", avg);
+	max = a;
+	if (b > a) max = b;
+	if (c > a) max = c;
+	printf("最大值:%d\n", max);
+	min = a;
+	if (b<a) min = b;
+	if (c<a) min = c;
+	printf("最小值:%d\n", min);
+	return 0;
+}

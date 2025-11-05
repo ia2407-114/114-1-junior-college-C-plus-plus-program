@@ -1,0 +1,30 @@
+#include <stdio.h>
+float num(float n, float fact); 
+void play(float n, float fact); 
+int main() {
+
+	float n; 
+	float fact = 1; 
+
+	play(n, fact);
+	printf("請輸入一個整數(<13):\n");
+	scanf_s("%f", &n);
+
+	fact = num(n, fact); 
+	play(n, fact); 
+
+	return 0;
+}
+
+float num(float n, float fact) { 
+	int i;
+	for (i = 1; i <= n; i++) {
+		fact = fact * i; 
+	}
+	return fact;
+}
+
+void play(float n, float fact) 
+{
+	printf("%.0f! = %.0f\n", n, fact);
+}
