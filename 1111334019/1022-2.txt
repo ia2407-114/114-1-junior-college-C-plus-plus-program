@@ -1,0 +1,21 @@
+#include <stdio.h>
+int main() {
+    double p,r,aims;
+    double a=0;
+    int years = 0; 
+    printf("請輸入本金:\n");
+    scanf_s("%lf", &p);
+    printf("輸入年利率:\n");
+    scanf_s("%lf", &r);
+    printf("請輸入每年底定期定額金額:");
+    scanf_s("%lf", &a);
+    printf("請輸入存款目標金額:");
+    scanf_s("%lf", &aims);
+    while (p < aims) {
+        p = p * (1 + r)+a;  
+        years++;    
+        printf("第 %d 年的本利合為：%.2lf\n", years, p);
+    }
+    printf("達成目標共需 %d 年。\n", years);
+    return 0;
+}

@@ -1,0 +1,29 @@
+#include <stdio.h>
+
+double a(double aims, double years, double r, double deposit, double c);
+
+int main()
+{
+    double aims, years = 0, r, deposit, c;
+    int i;
+    printf("請輸入本金\n");
+    scanf_s("%lf", &c);
+    printf("請輸入利率\n");
+    scanf_s("%lf", &r);
+    printf("請輸入目標金額\n");
+    scanf_s("%lf", &aims);
+    printf("請輸入每一年底要再存多少錢進戶頭\n");
+    scanf_s("%lf", &deposit);
+    printf("需要%.0f年", a(aims, years, r, deposit, c));
+}
+double a(double aims, double years, double r, double deposit, double c)
+{
+    while (c < aims)
+    {
+        years += 1;
+        c = c + deposit;
+        c = c * (1 + r);
+
+    }
+    return years;
+}

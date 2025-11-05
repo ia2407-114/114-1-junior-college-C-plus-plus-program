@@ -1,0 +1,76 @@
+#include<stdio.h>
+
+double pi(int n);
+double circlelengh(double, double);
+double circleaear(double, double);
+double ballVol(double, double);
+double ballarea(double, double);
+double cyVol(double, double, double);
+double cyarea(double, double, double);
+
+int main()
+{
+	int n;
+	double r;
+	double h;
+	printf("請輸入球體半徑:");
+	scanf_s("%lf", &r);
+	printf("請輸入項目總數量:");
+	scanf_s("%d", &n);
+	printf("請輸入球體高度:");
+	scanf_s("%lf", &h);
+	printf("球的圓周長為%lf\n", circlelengh(pi(n), r));
+	printf("球的圓面積為%lf\n", circleaear(pi(n), r));
+	printf("球的球體積為%lf\n", ballVol(pi(n), r));
+	printf("球的球表面積為%lf\n", ballarea(pi(n), r));
+	printf("球的圓柱體積為%lf\n", cyVol(pi(n), r, h));
+	printf("球的圓柱體表面積為%lf\n", cyarea(pi(n), r, h));
+
+	return 0;
+}
+
+double pi(int n) {
+	int i;
+	double pi_approx = 0.0;
+	double sign = 1.0;
+
+	for (i = 0; i < n; i++) {
+		double denominator = 2.0 * i + 1.0;
+		pi_approx += sign * (4.0 / denominator);
+		sign *= -1.0;
+	}
+
+	return pi_approx;
+}
+
+
+
+double circlelengh(double pi, double r)
+{
+	return 2 * pi * r;
+}
+
+double circleaear(double pi, double r)
+{
+	return pi * r * r;
+}
+
+double ballVol(double pi, double r)
+{
+	return(4.0 / 3) * pi * r * r * r;
+}
+
+double ballarea(double pi, double r)
+{
+	return 4.0 * pi * r * r;
+}
+
+double cyVol(double pi, double r, double h)
+{
+	return pi * r * r * h;
+}
+
+double cyarea(double pi, double r, double h)
+{
+	return ((2 * pi * r * r) + (2 * pi * r) * h);
+}

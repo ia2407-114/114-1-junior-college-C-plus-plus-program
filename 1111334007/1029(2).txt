@@ -1,0 +1,34 @@
+
+#include<stdio.h>
+
+//n, fact的順序要跟後面一樣
+float num(float n, float fact); //宣告函式num，後面會定義
+void play(float n, float fact); //宣告函式play，他的參數&回傳型別
+
+int main() {
+
+	float n; //算幾階層
+	float fact = 1; //階層起始值
+	
+	play(n, fact);
+	printf("請輸入一個整數(<13):\n");
+	scanf_s("%f", &n);
+
+	fact = num(n, fact); //呼叫num()函式來計算階層
+	play(n, fact); //呼叫play()函式
+
+	return 0;
+}
+
+float num(float n, float fact) { //宣告num()，接收兩個參數
+	int i;
+	for (i = 1; i <= n; i++) {
+		fact = fact * i; //每次fact都要乘上i
+	}
+	return fact;
+}
+
+void play(float n, float fact) //宣告play()
+{
+	printf("%.0f! = %.0f\n", n, fact);
+}

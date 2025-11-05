@@ -1,0 +1,41 @@
+#include <stdio.h>
+
+int calculateYears(int p, double r, int deposit, int aims);
+
+int main(void) {
+    int p, deposit, aims;
+    double r;
+    int years;
+
+    printf("請輸入本金：");
+    scanf_s("%d", &p);
+
+    printf("請輸入年利率（例如輸入 0.05 代表 5%%）：");
+    scanf_s("%lf", &r);
+
+    printf("請輸入每年定期存入金額：");
+    scanf_s("%d", &deposit);
+
+    printf("請輸入存款目標：");
+    scanf_s("%d", &aims);
+
+    years = calculateYears(p, r, deposit, aims);
+
+    printf("\n達成目標需要 %d 年。\n", years);
+
+    return 0;
+}
+
+int calculateYears(int p, double r, int deposit, int aims) {
+    double amount = p; 
+    int year = 0;
+
+    while (amount < aims) {
+        year++;
+        amount += deposit;     
+        amount = amount * (1 + r); 
+        printf("第 %d 年的結存為 %.2f\n", year, amount);
+    }
+
+    return year; 
+}

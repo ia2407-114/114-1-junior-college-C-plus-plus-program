@@ -1,0 +1,67 @@
+#include <stdio.h>
+double pi(int n);
+double ballv(double pi, double r);
+double balls(double pi, double r);
+double V(double pi, double r,int h);
+double S(double pi, double r, int h);
+double c(double pi, double r);
+double C(double pi, double r);
+int main()
+{
+	int n,h;
+	double r;
+	printf("輸入n的值:\n");
+	scanf_s("%d", &n);
+	printf("輸入半徑長度:\n");
+	scanf_s("%lf", &r);
+	printf("輸入圓柱高度:\n");
+    scanf_s("%d", &h);
+	printf("球體積為:%lf\n", ballv(pi(n), r));
+	printf("球表面積為:%lf\n",balls(pi(n),r));
+	printf("圓柱體積為:%lf\n", V(pi(n), r, h));
+	printf("圓柱表面積為:%lf\n", S(pi(n), r, h));
+	printf("圓周長為:%lf\n", c(pi(n), r));
+	printf("圓面積為:%lf\n", C(pi(n), r));
+}
+double pi(int n)
+{
+	int i;
+	double pi_approx = 0.0;
+	double sign = 1.0;
+	for (i = 0; i < n; i++) {
+		double denominator = 2.0 * i + 1.0;
+		pi_approx = pi_approx + sign * (4.0 / denominator);
+		sign = sign * -1.0;
+	}
+	return pi_approx;
+}
+double ballv(double pi, double r) {
+	double ans;
+	ans = (4.0 / 3) * pi * r * r * r;
+	return ans;
+}
+double balls(double pi, double r) {
+	double ans;
+	ans = 4 * pi * r * r;
+	return ans;
+}
+double V(double pi, double r, int h) {
+	double ans;
+	ans = pi * r * r * h;
+	return ans;
+}
+double S(double pi, double r, int h) {
+	double ans;
+	ans = (2 * pi * r * r) + (2 * pi * r * h);
+	return ans;
+}
+double c(double pi, double r) {
+	double ans;
+	ans = 2 * r * pi;
+	return ans;
+}
+double C(double pi, double r) {
+	double ans;
+	ans = r * r * pi;
+	return ans;
+}

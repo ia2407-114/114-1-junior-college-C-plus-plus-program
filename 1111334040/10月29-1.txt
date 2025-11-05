@@ -1,43 +1,15 @@
 #include <stdio.h>
 
-float calc_BMI(float weight, float height);
-void show_BMI_result(float bmi);
+float BMI(float height, float weight);
 
-int main(void)
+int main()
 {
-    float kg, m, bmi;
-
-    printf("請輸入體重(公斤): ");
-    scanf_s("%f", &kg);
-
-    printf("請輸入身高(公尺): ");
-    scanf_s("%f", &m);
-
-    bmi = calc_BMI(kg, m);
-
-    printf("你的BMI為: %.2f\n", bmi);
-    show_BMI_result(bmi);
-
-    return 0;
+	float height, weight;
+	printf("請輸入身高、體重，\n");
+	scanf_s("%f %f", &height, &weight);
+	printf("你的BMI指數為%.1f", BMI(height, weight));
 }
-
-float calc_BMI(float weight, float height)
+float BMI(float height, float weight)
 {
-    return weight / (height * height);
-}
-
-void show_BMI_result(float bmi)
-{
-    if (bmi < 18.5)
-        printf("體重過輕\n");
-    else if (bmi <= 24.9)
-        printf("正常體重\n");
-    else if (bmi <= 29.9)
-        printf("過重\n");
-    else if (bmi <= 34.9)
-        printf("輕度肥胖\n");
-    else if (bmi <= 39.9)
-        printf("中度肥胖\n");
-    else
-        printf("重度肥胖\n");
+	return weight / (height * height);
 }

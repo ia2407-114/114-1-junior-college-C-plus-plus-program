@@ -1,0 +1,27 @@
+#include <stdio.h>
+double factorial(int fact) {
+    double result = 1;
+    for (int i = 1; i <= fact; i++) {
+        result *= i;
+    }
+    return result; 
+}
+
+int main() {
+    int fact, n;
+    double e = 1.0;
+    printf("請輸入一個整數 fact (<13)：");
+    scanf_s("%d", &fact);
+    double fact_result = factorial(fact);
+    printf("%d! = %.0lf\n", fact, fact_result);
+    printf("請輸入所需的項目數量 n (<13)：");
+    scanf_s("%d", &n);
+    for (int i = 1; i <= n; i++) {
+        e += 1.0 / factorial(i); 
+    }
+    printf("e 的近似值為：%.10lf\n", e);
+
+    return 0;
+}
+
+

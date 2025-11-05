@@ -1,0 +1,33 @@
+#include <stdio.h>
+
+int main()
+{
+    int fact,n,a=1,b=0,i=0;
+    double e=1,h=1;
+    
+    printf("請輸入一個<13的整數:");
+    scanf_s("%d",&fact);
+    printf("請輸入所需項目數量(n<13):");
+    scanf_s("%d",&n);
+    
+    
+    while(i<fact){
+        i++;
+        a=a*i;
+    }
+    
+    printf("fact的階乘值:");
+    scanf_s("%d",&a);
+    
+    while(b<n){
+        b++;
+        h=h*(1/(double)h);
+        e=e+h;
+    }
+    
+    printf("e的近似值為:");
+    scanf_s("%d",&e);
+
+    return 0;
+
+}

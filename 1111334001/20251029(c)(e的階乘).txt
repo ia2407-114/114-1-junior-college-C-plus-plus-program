@@ -1,0 +1,26 @@
+#include <stdio.h>
+    int e(int fact);
+int main()
+{
+	int fact = 0;
+
+	    
+	printf("請輸入一個整數小於13:");
+	scanf_s("%d", &fact);
+    printf("fact的階層值為%d\n",e(fact));
+	
+
+	return 0;
+}
+
+
+    int e(int fact) {
+	int i = 0;      
+	int g = 1;
+	while (i < fact)
+	{
+		i++;
+		g = g * i;
+	}
+	return g;
+}

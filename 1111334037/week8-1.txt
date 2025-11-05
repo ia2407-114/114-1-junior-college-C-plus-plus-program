@@ -1,0 +1,59 @@
+#include <stdio.h>
+
+double pi(int n);
+double boll(double pi, double r);
+double boll2(double pi, double r);
+double boll3(double pi, double r, double h);
+double boll4(double pi, double r, double h);
+int main()
+{
+	int n,r,h;
+	printf("請輸入球項目:");
+	scanf_s("%d", &n);
+    printf("請輸入球半徑:");
+    scanf_s("%d", &r);
+    printf("請輸入球柱高:");
+    scanf_s("%d", &h);
+    printf("pi值為:%.2f\n", pi( n));
+    printf("球體積:%.2f\n" ,boll(pi(n),r));
+    printf("球表面積:%.2f\n", boll2(pi(n), r));
+    printf("圓柱體積:%.2f\n", boll3(pi(n), r,h));
+    printf("圓柱表面積:%.2f\n", boll4(pi(n), r,h));
+
+
+
+	return 0;
+}
+
+double boll(double pi, double r)
+{
+    return (4.0 / 3) * pi * r * r * r;
+}
+double boll2(double pi, double r)
+{
+    return 4.0 * pi * r * r;
+}
+double boll3(double pi, double r, double h)
+{
+    return pi * r * r * h;
+
+}
+double boll4(double pi, double r, double h)
+{
+    return 2 * pi * r * r + 2 * pi*r * h;
+
+
+}
+double pi(int n) {
+    int i;
+    double pi_approx = 0.0;
+    double sign = 1.0;
+
+    for (i = 0; i < n; i++) {
+        double denominator = 2.0 * i + 1.0;
+        pi_approx += sign * (4.0 / denominator);
+        sign *= -1.0;
+    }
+
+    return pi_approx;
+}
