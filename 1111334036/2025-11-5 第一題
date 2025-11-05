@@ -1,10 +1,10 @@
 #include <stdio.h>
 
-double pi(double);								/*定義 PI 值*/
-double Calculate_ball(double, double);			/*球的體積*/
-double Area(double, double);					/*球的表面積*/
-double Pillar(double, double, double);			/*圓柱體體積*/
-double Area_pillar(double, double, double);		/*圓柱體面積*/
+double pi(double);								
+double Calculate_ball(double, double);			
+double Area(double, double);					
+double Pillar(double, double, double);			
+double Area_pillar(double, double, double);		
 
 int main()
 {
@@ -21,7 +21,7 @@ int main()
 	printf("圓柱體積為%f\n", Pillar(pi(n), r, height));
 	printf("圓柱體表面積為%f\n", Area_pillar(pi(n), r, height));
 }
-double pi(double n)								/*計算 pi 近似值*/
+double pi(double n)								
 {
 	int i;
 	double pi_approx = 0.0;
@@ -34,25 +34,25 @@ double pi(double n)								/*計算 pi 近似值*/
 	}
 	return pi_approx;
 }
-double Calculate_ball(double pi, double r)			/*球的體積*/
+double Calculate_ball(double pi, double r)			
 {
 	double answer;
-	answer = (4.0 / 3)* pi * r * r * r;
+	answer = (4.0 / 3) * pi * r * r * r;
 	return answer;
 }
-double Area(double pi, double r)					/*球的表面積*/
+double Area(double pi, double r)					
 {
 	double answer;
 	answer = 4 * pi * r * r;
 	return answer;
 }
-double Pillar(double pi, double r, double height)	/*圓柱體體積*/
+double Pillar(double pi, double r, double height)	
 {
 	double answer;
 	answer = r * r * height * pi;
 	return answer;
 }
-double Area_pillar(double pi, double r, double height)	/*圓柱體表面積*/
+double Area_pillar(double pi, double r, double height)	
 {
 	double answer;
 	answer = (2 * pi * r * r) + (2 * pi * r * height);
