@@ -1,0 +1,77 @@
+//題目1. 承繼上週題目3，建立七個副程式，其中一個利用傳入整數n求出pi的近似值，剩下六個函數利用第一個函數傳回的pi值分別計算出: 球體積、球表面積、圓柱體積、圓柱表面積，並將個別結果傳回主程式並且印出
+
+#include <stdio.h>
+
+double calcPi(int n);
+double sphereVol(double pi, double r);
+double sphereArea(double pi, double r);
+double cylVol(double pi, double r, double h);
+double cylArea(double pi, double r, double h);
+double cylLatArea(double pi, double r, double h);
+double cylBaseArea(double pi, double r);
+
+// 1. 計算 π 的近似值
+double calcPi(int n) {
+    double pi = 0.0;
+    int sign = 1;
+    for (int i = 0; i < n; i++) {
+        double denom = 3.0 + 2 * i;
+        double term = 4.0 / denom;
+
+        if (sign == 1) {
+            pi += term;
+        }
+        else {
+            pi -= term;
+        }
+        sign = -sign;
+    }
+    return pi;
+}
+// 2. 計算球體積
+double sphereVol(double pi, double r) {
+    return (4.0 / 3.0) * pi * r * r * r;
+}
+// 3. 計算球表面積
+double sphereArea(double pi, double r) {
+    return 4.0 * pi * r * r;
+}
+// 4. 計算圓柱體積
+double cylVol(double pi, double r, double h) {
+    return pi * r * r * h;
+}
+// 5. 計算圓柱表面積
+double cylArea(double pi, double r, double h) {
+    return 2 * pi * r * (r + h);
+}
+// 6. 計算圓柱側面積
+double cylLatArea(double pi, double r, double h) {
+    return 2 * pi * r * h;
+}
+// 7. 計算圓柱底面積
+double cylBaseArea(double pi, double r) {
+    return pi * r * r;
+}
+int main() {
+    int n = 100000;
+    double r, h;
+    // 從鍵盤輸入半徑和高度
+    printf("請輸入球體和圓柱體的半徑: ");
+    scanf("%lf", &r);
+    printf("請輸入圓柱體的高度: ");
+    scanf("%lf", &h);
+    // 計算 π 值
+    double pi = calcPi(n);
+    printf("\nπ 近似值 (n=%d): %.10f\n\n", n, pi);
+    // 計算球體相關
+    printf("球體 (半徑 = %.2f):\n", r);
+    printf("體積: %.2f\n", sphereVol(pi, r));
+    printf("表面積: %.2f\n\n", sphereArea(pi, r));
+    // 計算圓柱體相關
+    printf("圓柱體 (半徑 = %.2f, 高度 = %.2f):\n", r, h);
+    printf("體積: %.2f\n", cylVol(pi, r, h));
+    printf("表面積: %.2f\n", cylArea(pi, r, h));
+    printf("側面積: %.2f\n", cylLatArea(pi, r, h));
+    printf("底面積: %.2f\n", cylBaseArea(pi, r));
+    return 0;
+}
