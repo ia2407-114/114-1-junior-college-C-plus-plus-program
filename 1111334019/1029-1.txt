@@ -1,0 +1,29 @@
+#include <stdio.h>
+// 傳入身高(height)和體重(weight)，回傳BMI（浮點數）
+double BMI(double height, double weight) {
+    double bmi;
+    bmi = weight / (height * height); // BMI公式
+    return bmi; // 回傳BMI值
+}
+int main() {
+    double height, weight, bmi;
+    // 1. 讀取使用者輸入
+    printf("請輸入身高(公尺)：");
+    scanf_s("%lf", &height);
+    printf("請輸入體重(公斤)：");
+    scanf_s("%lf", &weight);
+    // 2. 呼叫副程式計算BMI
+    bmi = BMI(height, weight);
+    // 3. 印出BMI值
+    printf("您的BMI為：%.2lf\n", bmi);
+    // 4. 根據BMI判斷等級
+    if (bmi < 18.5)
+        printf("體重過輕\n");
+    else if (bmi < 24)
+        printf("體重正常\n");
+    else if (bmi < 27)
+        printf("體重過重\n");
+    else
+        printf("肥胖\n");
+    return 0;
+}
