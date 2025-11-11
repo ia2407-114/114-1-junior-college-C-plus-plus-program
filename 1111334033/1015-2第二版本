@@ -1,13 +1,5 @@
 #include <stdio.h>
-
-int factorial(int n) {
-	int i, result;
-	result = 1;
-	for (i = 1; i <= n; i++) {
-		result = result * i;
-	}
-	return result;
-}
+int factorial(int n) 
 
 int main()
 {
@@ -41,4 +33,12 @@ int main()
 		printf("輸入值過大\n");
 	}
 	return 0;
+}
+int factorial(int n) {
+	int i, result;
+	result = 1;
+	for (i = 1; i <= n; i++) {
+		result = result * i;
+	}
+	return result;
 }
