@@ -1,0 +1,27 @@
+#include <stdio.h>
+int year(double p, double r, int deposit, int aim) {
+    int years = 0;
+
+    while (p < aim) {
+        p = p * (1 + r) + deposit;
+        years++;
+    }
+
+    return years;
+}
+int main() {
+    double p, r;
+    int deposit, aim;
+    int years;
+    printf("請輸入本金(p)：");
+    scanf_s("%lf", &p);
+    printf("請輸入年利率(r)：");
+    scanf_s("%lf", &r);
+    printf("請輸入每年定期定額存入金額：");
+    scanf_s("%d", &deposit);
+    printf("請輸入存款目標(aim)：");
+    scanf_s("%d", &aim);
+    years = year(p, r, deposit, aim);
+    printf("\n達成目標共需 %d 年。\n", years);
+    return 0;
+}
