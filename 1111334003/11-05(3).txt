@@ -1,0 +1,23 @@
+#include <stdio.h>
+int main()
+{
+    int n;              
+    double pi = 0.0;    
+    int sign = 1;       
+
+    cout << "請輸入所需的項目數量 n: ";
+    cin >> n;
+
+    for (int i = 1, count = 0; count < n; i++) 
+    {
+        if (i % 2 == 0)
+            continue;
+        pi += sign * (4.0 / i);
+        sign *= -1;
+        count++;
+    }
+
+    cout << "使用 " << n << " 項近似計算出的 pi 值為: " << pi << endl;
+
+    return 0;
+}
