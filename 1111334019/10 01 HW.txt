@@ -19,13 +19,13 @@ int main(void)
     avg = total / 3.0;
 
     printf("你的總成績是: %d\n", total);
-    printf("你的平均成績是: %.2f\n", avg);
 
+    printf("你的平均成績是: %.2f\n", avg);
+    
     if (avg >= 60) {
         printf("恭喜通過!\n");
     } else {
         printf("再加油!\n");
     }
-
     return 0;
 }
