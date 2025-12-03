@@ -1,0 +1,28 @@
+#include <stdio.h>
+double f(int n);
+
+int main()
+{
+    int n, i;
+    double e_value = 0.0;
+    printf("請輸入要計算級數的項數 n (從 0! 到 n!): ");
+    scanf_s("%d", &n);
+    if ( n!= 1 || n < 0) 
+    {
+        printf("輸入錯誤或數值無效。\n");
+        return 1;
+    }
+    for (i = 0; i <= n; i++) 
+    {
+        e_value += 1.0 / f(i);
+    }
+    printf("當 n=%d 時，e 的近似值為: %f\n", n, e_value);
+    return 0;
+}
+double f(int n)
+{
+    if (n <= 1)
+        return 1.0;
+    else
+        return n * f(n - 1);
+}
