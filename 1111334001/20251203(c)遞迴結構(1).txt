@@ -1,0 +1,30 @@
+#include <stdio.h>
+int j(int n);
+
+int main()
+{
+    int n,i=1;
+    double e=1;
+
+    printf("請輸入階乘數:");
+    scanf_s("%d", &n);
+
+    for (i = 1; i <= n; i++) {
+        e = e + 1 / j(n);
+    }
+
+    printf("e的答案為:%lf",e);
+
+    return 0;
+}
+
+int j(int  n) {
+
+    if (n <= 1)
+    {
+        return 1;
+    }
+    else{
+        return n * j(n - 1);
+    }
+}

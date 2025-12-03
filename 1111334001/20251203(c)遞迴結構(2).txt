@@ -1,0 +1,42 @@
+#include <stdio.h>
+int j(int n);
+int z(int x,int n);
+
+int main()
+{
+    int x,n, i = 1;
+    double e = 1;
+
+    printf("請輸入階乘數:");
+    scanf_s("%d", &n);
+    printf("\n");
+    printf("請輸入x值:");
+    scanf_s("%d", &x);
+
+    for (i = 1; i <= n; i++) {
+        e = e + z(x,n) / j(n);
+    }
+
+    printf("e的答案為:%lf", e);
+
+    return 0;
+}
+
+int j(int  n) {
+
+    if (n <= 1)
+    {
+        return 1;
+    }
+    else {
+        return n * j(n - 1);
+    }
+}
+ int z(int x, int n) {
+    if (n <= 1) {
+        return x;
+    }
+    else {
+        return x * z(x, n-1);
+    }
+}
