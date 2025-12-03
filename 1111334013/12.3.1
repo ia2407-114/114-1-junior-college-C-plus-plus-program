@@ -1,0 +1,23 @@
+#include <stdio.h>
+long long factorial(int n) {
+	if (n == 0 || n == 1)
+		return 1; //if n = 1 or 0 then 回傳 1
+	else
+		return n * factorial(n - 1); //不然回傳這個
+}
+//遞迴計算 n!
+
+int main() {
+	int n;
+	double e = 1.0; //從1開始(1=1/0!)
+
+	printf("請輸入n:");
+	scanf_s("%d", &n);
+
+	for (int i = 1; i <= n; i++) {
+		e += 1.0 / factorial(i);
+	}
+
+	printf("e的近似值=%lf\n", e);
+
+	return 0;
