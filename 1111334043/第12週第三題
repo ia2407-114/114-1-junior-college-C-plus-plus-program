@@ -3,7 +3,7 @@ double power(double x, int n);
 int factorial(int n);
 int main()
 {
-    int terms[m];   
+    int terms[100];   
     int n, i;
     double x;
     double result = 1.0;   
