@@ -1,0 +1,51 @@
+//題目2 :根據上面的級數，由主程式輸入n，x值。並建立兩個遞迴程式，分別計算X^n與n!，再由主程式計算出e^x值。
+#include <stdio.h>
+
+// 遞迴函式計算 x 的 n 次方
+double power(double x, int n) {
+    if (n == 0) {
+        return 1.0;
+    }
+    else if (n > 0) {
+        return x * power(x, n - 1);
+    }
+    else {
+        // 處理負指數
+        return 1.0 / power(x, -n);
+    }
+}
+
+// 遞迴函式計算階乘
+long long factorial(int n) {
+    if (n == 0 || n == 1) {
+        return 1;
+    }
+    else {
+        return n * factorial(n - 1);
+    }
+}
+
+int main() {
+    int n;
+    double x, ex = 1.0;  // ex 用於存儲 e^x 的近似值，第一項是 1
+
+    printf("請輸入 x 值：");
+    scanf_s("%lf", &x);
+
+    printf("請輸入 n 值（計算到 x^n/n!）：");
+    scanf_s("%d", &n);
+
+    if (n < 0) {
+        printf("請輸入非負整數 n。\n");
+        return 1;
+    }
+
+    // 計算 e^x 的泰勒級數展開
+    for (int i = 1; i <= n; i++) {
+        ex += power(x, i) / factorial(i);
+    }
+
+    printf("e^(%.3lf) 的近似值（計算到 x^%d/%d!）：%.15lf\n", x, n, n, ex);
+
+    return 0;
+}
