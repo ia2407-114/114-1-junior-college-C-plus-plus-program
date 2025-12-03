@@ -1,0 +1,49 @@
+#include <stdio.h>
+double power(double x, int n);
+int factorial(int n);
+int main() {
+    int terms[m];   
+    int n, i;
+    double x;
+    double result = 1.0;   
+
+    printf("請輸入 n (n < %d): ", m);
+    scanf_s("%d", &n);
+
+    printf("請輸入 x：");
+    scanf_s("%lf", &x);
+
+    
+    for (i = 1; i <= n; i++) {
+        int px = (int)power(x, i); 
+        terms[i] = px;             
+
+        result = result + (double)px / factorial(i);
+    }
+
+    printf("e^x 的近似值 = %f\n", result);
+
+    printf("\n陣列 terms[] 中存的 x^i 值：\n");
+    for (i = 1; i <= n; i++) {
+        printf("terms[%d] = %d\n", i, terms[i]);
+    }
+
+    return 0;
+}
+double power(double x, int n) {
+    if (n == 0) {
+        return 1;
+    }
+    return x * power(x, n - 1);
+}
+
+
+int factorial(int n) {
+    if (n == 0) {
+        return 1;
+    }
+    if (n == 1) {
+        return 1;
+    }
+    return n * factorial(n - 1);
+}
