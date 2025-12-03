@@ -1,0 +1,52 @@
+#include<stdio.h>
+double power(double x, int n) {
+	if (n == 0)
+		return 1;
+	else
+		return x * power(x, n - 1);
+}
+//遞迴計算 x^n
+
+long long factorial(int n) {
+	if (n == 0 || n == 1)
+		return 1; //if n = 1 or 0 then 回傳 1
+	else
+		return n * factorial(n - 1); //不然回傳這個
+}
+//遞迴計算 n!
+
+int main() {
+	int m = 50; //假設最大為50
+	int terms[50];//宣告整數數列
+	int n;
+	double x;
+	double sum = 1.0;//第一項 1(x^0/0!)
+
+	printf("請輸入n:");
+	scanf_s("%d", &n);
+
+	printf("請輸入x:");
+	scanf_s("%lf", &x);
+
+	if (n >= m) {
+		printf("錯誤:n必須小於陣列大小 m=%d\n", m);
+		return 0;
+	}
+
+	terms[0] = 1; //第一項為1 轉成整數放入 terms[0]
+
+	for (int i = 1; i <= n; i++) { //計算每一項並存入陣列
+		double term = power(x, i) / factorial(i);
+		sum += term;
+		terms[i] = (int)(term = 0.5); //四捨五入放入陣列
+	}
+
+	printf("e^x的近似值=%lf\n", sum);
+	printf("級數每一項(四捨五入後)存入terms[]:\n");
+
+	for (int i = 0; i <= n; i++) {
+		printf("terms[%d] = %d\n", i, terms[i]);
+	}
+
+	return 0;
+}
