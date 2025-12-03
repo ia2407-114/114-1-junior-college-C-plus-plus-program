@@ -8,7 +8,7 @@ int main()
     double x;
     double result = 1.0;   
 
-    printf("請輸入 n (n < %d): ", m);
+    printf("請輸入 n (n < %d): ", 100);
     scanf_s("%d", &n);
 
     printf("請輸入 x：");
