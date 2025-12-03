@@ -1,4 +1,5 @@
 #include<stdio.h>
+void ok(float p, float r, float a, float aims);
 void ok(float p, float r, float a, float aims) {
 	int i;
 	for (i = 1; ; i++) {
@@ -29,4 +30,5 @@ int main() {
 	scanf_s("%f", &aims);
 	ok(p, r, a, aims);
 	return 0;
+
 }
