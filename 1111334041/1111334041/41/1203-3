@@ -1,0 +1,70 @@
+//題目3 : 承上題，在主程式宣告一個大小為m的整數陣列terms[m]，再由主程式輸入n與 x值且n<m。建立兩個遞迴程式，分別計算X^n與n!，再由主程式計算出e^x值，並且將級數每一項的質放入陣列terms中。
+#include <stdio.h>
+
+#define MAX_TERMS 50  // 定義陣列最大大小 m
+
+// 遞迴函式計算 x 的 n 次方
+double power(double x, int n) {
+    if (n == 0) {
+        return 1.0;
+    }
+    else if (n > 0) {
+        return x * power(x, n - 1);
+    }
+    else {
+        // 處理負指數
+        return 1.0 / power(x, -n);
+    }
+}
+
+// 遞迴函式計算階乘
+long long factorial(int n) {
+    if (n == 0 || n == 1) {
+        return 1;
+    }
+    else {
+        return n * factorial(n - 1);
+    }
+}
+
+int main() {
+    int n;
+    double x, ex = 1.0;
+    double terms[MAX_TERMS];  // 宣告大小為 MAX_TERMS 的陣列
+
+    printf("請輸入 x 值：");
+    scanf_S("%lf", &x);
+
+    printf("請輸入 n 值（計算到 x^n/n!，n 需小於 %d）：", MAX_TERMS);
+    scanf_s("%d", &n);
+
+    // 檢查 n 是否小於陣列大小
+    if (n >= MAX_TERMS) {
+        printf("錯誤：n (%d) 必須小於 %d\n", n, MAX_TERMS);
+        return 1;
+    }
+
+    if (n < 0) {
+        printf("錯誤：n 必須是非負整數\n");
+        return 1;
+    }
+
+    // 先計算並存入第0項（1）
+    terms[0] = 1.0;
+
+    // 計算 e^x 的泰勒級數展開，並將每一項存入陣列
+    for (int i = 1; i <= n; i++) {
+        double term_value = power(x, i) / factorial(i);
+        terms[i] = term_value;  // 將第 i 項存入陣列
+        ex += term_value;
+    }
+
+    printf("\n計算結果：\n");
+    printf("e^(%.3lf) 的近似值（計算到 x^%d/%d!）：%.15lf\n\n", x, n, n, ex);
+
+    printf("級數各項的值（從第0項到第%d項）：\n", n);
+    for (int i = 0; i <= n; i++) {
+        printf("第%d項：%.15lf\n", i, terms[i]);
+    }
+
+    return 0;
