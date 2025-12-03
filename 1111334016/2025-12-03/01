@@ -1,0 +1,23 @@
+//題目1 : 根據上面的級數，由主程式輸入n。並建立一個遞迴副程式，負責計算n!，再由主程式計算出e值。
+#include <stdio.h>
+
+double result(int n);
+int main() {
+	int n,i;        //n=2
+	double e=1;
+	printf("請輸入n值:");
+	scanf_s("%d", &n);
+	for (i = 1; i <= n; i++) {
+		e = e + 1 / result(i);
+	}
+	printf("e為%f", e);
+}
+double result(int n) {       //2^2=  2*like(1)=2*2^1=  2*2*like(0)=2*2*2^0
+	if (n <= 0){
+		return 1;
+	}
+	else {
+		return n * result(n - 1);
+	}
+
+}
