@@ -1,0 +1,26 @@
+#include <stdio.h>
+double f(int n);
+double num(int n);
+int main()
+{
+	int n;
+	double e;
+	printf("輸入一個n值:\n");
+	scanf_s("%d", &n);
+	e = num(n);
+	printf("%f", e);
+ }
+double f(int n) {
+	if (n <= 0) {
+		return 1;
+	}
+	else
+		return n * f(n-1);
+}
+double num(int n) {
+	if (n <= 0) {
+		return 1;
+	}
+	else
+		return 1.0 / f(n) + num(n-1);
+}
