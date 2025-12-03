@@ -13,7 +13,7 @@ int main()
     scanf_s("%d", &x);
     for (i = 1; i <= n; i++)
     {
-        e += power(x, n) / stair(i);
+        e += power(x, i) / stair(i);
     }
     printf("e值 = %f", e);
 }
@@ -24,10 +24,10 @@ float stair(int i)
     else
         return i * stair(i - 1);
 }
-int power(int x, int n)
+int power(int x, int i)
 {
-    if (n <= 0)
+    if (i <= 0)
         return 1;
     else
-        return x * power(x, n - 1);
+        return x * power(x, i - 1);
 }
