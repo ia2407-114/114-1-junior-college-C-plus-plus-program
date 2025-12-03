@@ -1,0 +1,28 @@
+#include <stdio.h>
+
+int fact(int n);
+
+int main(void)
+{
+    int n;
+    double e = 1.0;
+
+    printf("請輸入 n : ");
+    scanf_s("%d", &n);
+
+    for (int i = 1; i <= n; i++) {
+        e += 1.0 / fact(i);
+    }
+
+    printf("e 的近似值為:%.10f\n", e);
+
+    return 0;
+}
+
+
+int fact(int n)
+{
+    if (n <= 0)
+        return 1;
+    else
+        return n * fact(n - 1);
