@@ -1,0 +1,44 @@
+#include <stdio.h>
+
+double power(double x, int n);
+long long factorial(int n);
+
+int main() {
+    int n;
+    double x, ex = 0.0;
+
+    printf("請輸入 x 值：");
+    scanf_s("%lf", &x);
+    printf("請輸入 n（計算到第 n 項）：");
+    scanf_s("%d", &n);
+
+    for (int i = 0; i <= n; i++) {
+        ex += power(x,i) / factorial(i);
+    }
+
+    printf("e^%.2f 的近似值（計算到第 %d 項）：%.15f\n", x, n, ex);
+
+    return 0;
+}
+
+
+
+
+double power(double x, int n) {
+    if (n == 0) {
+        return 1.0;  
+    }
+    else {
+        return x * power(x, n - 1);
+    }
+}
+
+
+long long factorial(int n) {
+    if (n == 0 || n == 1) {
+        return 1;
+    }
+    else {
+        return n * factorial(n - 1);
+    }
+}

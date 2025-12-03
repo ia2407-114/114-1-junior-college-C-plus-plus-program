@@ -1,0 +1,32 @@
+#include <stdio.h>
+
+double factorial(int n);
+
+
+
+int main() {
+    int n;
+    double e = 0.0;
+
+    printf("請輸入 n（計算到第 n 項）：");
+    scanf_s("%d", &n);
+
+    for (int i = 0; i <= n; i++) {
+        e += 1.0 / factorial(i);
+        printf("%d\n",i);
+    }
+
+    printf("e 的近似值（計算到 %d 項）：%.15f\n", n, e);
+
+    return 0;
+}
+
+
+double factorial(int n) {
+    if (n == 0 || n == 1) {
+        return 1;
+    }
+    else {
+        return n * factorial(n - 1);
+    }
+}
