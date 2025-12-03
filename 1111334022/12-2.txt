@@ -1,0 +1,32 @@
+#include <stdio.h>
+
+double fact(int n);
+double po(double x,int n);
+int main() {
+    int n, i,x;
+    double e = 0.0;
+
+    printf("輸入n項數：");
+    scanf_s("%d", &n);
+    printf("輸入x項數：");
+    scanf_s("%d", &x);
+    for (i = 0; i < n; i++) {
+        e += po(x,i) / fact(i);
+    }
+
+    printf("e = %.15f\n", e);
+    return 0;
+}
+
+double fact(int n) {
+    if (n == 0 || n == 1)
+        return 1.0;
+    else
+        return n * fact(n - 1);
+}
+double po(double x,int n) {
+    if (n<=0)
+        return 1.0;
+    else
+        return x * po(x, n - 1);
+}

@@ -1,0 +1,25 @@
+#include <stdio.h>
+
+double fact(int n);
+
+int main() {
+    int n, i;
+    double e = 0.0;
+
+    printf("輸入項數：");
+    scanf_s("%d", &n);
+
+    for (i = 0; i < n; i++) {
+        e += 1.0 / fact(i);
+    }
+
+    printf("e = %.15f\n", e);
+    return 0;
+}
+
+double fact(int n) {
+    if (n == 0 || n == 1)
+        return 1.0;
+    else
+        return n * fact(n - 1);
+}

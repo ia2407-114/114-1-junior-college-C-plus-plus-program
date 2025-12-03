@@ -1,0 +1,24 @@
+#include <stdio.h>
+
+double f(int n){
+	if (n == 0 || n == 1) {
+		return 1.0;
+	}
+	else {
+		return n * f(n - 1);
+	}
+}
+
+int main() {
+	int n;
+	double e = 0.0;
+	int i;
+	printf("請輸入n值:\n");
+	scanf_s("%d", &n);
+	for (i = 0; i <= n; i++) {
+		e += 1.0 / f(i);
+	}
+
+	printf("e值為:%.10lf\n", e);
+	return 0;
+}
