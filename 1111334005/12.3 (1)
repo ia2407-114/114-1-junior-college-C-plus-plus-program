@@ -1,0 +1,25 @@
+#include <stdio.h>
+
+// 遞迴計算階乘 n!
+long long fact(int n) {
+    if (n == 0)      // 0! = 1
+        return 1;
+    else
+        return n * fact(n - 1);
+}
+
+int main() {
+    int n;
+    double e = 1.0;
+
+    printf("請輸入 n: ");
+    scanf_s("%d", &n);
+
+    for (int i = 1; i <= n; i++) {
+        e += 1.0 / fact(i);
+    }
+
+    printf("e 的近似值 = %lf\n", e);
+
+    return 0;
+}
