@@ -16,7 +16,7 @@ int main()
 }
 float stair(int i)
 {
-    if (i < 0)
+    if (i <= 1)
         return 1;
     else
         return i * stair(i - 1);
