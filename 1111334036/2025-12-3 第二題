@@ -1,0 +1,33 @@
+#include <stdio.h>
+
+float stair(int i);
+int power(int base, int n);
+
+int main()
+{
+    int n, i, x;
+    float e = 1;
+    printf("請輸入階乘值: ");
+    scanf_s("%d", &n);
+    printf("請輸入 x 值： ");
+    scanf_s("%d", &x);
+    for (i = 1; i <= n; i++)
+    {
+        e += power(x, n) / stair(i);
+    }
+    printf("e值 = %f", e);
+}
+float stair(int i)
+{
+    if (i <= 1)
+        return 1;
+    else
+        return i * stair(i - 1);
+}
+int power(int x, int n)
+{
+    if (n <= 0)
+        return 1;
+    else
+        return x * power(x, n - 1);
+}
