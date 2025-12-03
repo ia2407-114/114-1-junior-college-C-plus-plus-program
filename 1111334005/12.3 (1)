@@ -1,11 +1,11 @@
 #include <stdio.h>
 
-// 遞迴計算階乘 n!
+// 遞迴計算 n!
 long long fact(int n) {
-    if (n == 0)      // 0! = 1
+    if (n == 0)
         return 1;
     else
-        return n * fact(n - 1);
+        return n * fact(n - 1);   // 遞迴，不使用 for
 }
 
 int main() {
@@ -13,10 +13,10 @@ int main() {
     double e = 1.0;
 
     printf("請輸入 n: ");
-    scanf_s("%d", &n);
+    scanf("%d", &n);
 
     for (int i = 1; i <= n; i++) {
-        e += 1.0 / fact(i);
+        e += 1.0 / fact(i);   // 使用遞迴副程式 fact()
     }
 
     printf("e 的近似值 = %lf\n", e);
