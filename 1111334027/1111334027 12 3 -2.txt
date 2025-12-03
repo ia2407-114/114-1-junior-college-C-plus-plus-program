@@ -1,0 +1,41 @@
+#include <stdio.h>
+double power(double x, int n);
+double factorial(int n);
+int main() 
+{
+    int n, i;             
+    double x;              
+    double e_x_value = 0.0;
+    printf("請輸入計算到第幾項 n (例如輸入 10): ");
+    scanf_s("%d", &n);
+    printf("請輸入變數 x 的值 (例如輸入 2.5): ");
+    scanf_s("%lf", &x);
+
+    for (i = 0; i <= n; i++)
+    {
+
+        double numerator = power(x, i);
+        double denominator = factorial(i);
+        double term = numerator / denominator;
+        e_x_value += term;
+    }
+    printf("\n--- 結果 ---\n");
+    printf("當 x=%.2f，計算到 n=%d 項時，e^x 的近似值為: %f\n", x, n, e_x_value);
+    return 0;
+}
+double power(double x, int n)
+{
+    if (n == 0)
+    {
+        return 1.0;
+    }
+    return x * power(x, n - 1);
+}
+double factorial(int n)
+{
+    if (n <= 1)
+    {
+        return 1.0;
+    }
+    return n * factorial(n - 1);
+}
