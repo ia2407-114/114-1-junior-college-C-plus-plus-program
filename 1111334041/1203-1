@@ -1,0 +1,33 @@
+//題目1 : 根據上面的級數，由主程式輸入n。並建立一個遞迴副程式，負責計算n!，再由主程式計算出e值。
+#include <stdio.h>
+
+// 遞迴函式計算階乘
+long long factorial(int n) {
+    if (n == 1) {
+        return 1;
+    }
+    else {
+        return n * factorial(n - 1);
+    }
+}
+
+int main() {
+    int n;
+    double e = 1.0;  // 第一項是 1
+
+    printf("請輸入 n 值（計算到 1/n!）：");
+    scanf_s("%d", &n);
+
+    if (n < 0) {
+        printf("請輸入非負整數。\n");
+        return 1;
+    }
+
+    for (int i = 1; i <= n; i++) {
+        e += 1.0 / factorial(i);
+    }
+
+    printf("e 的近似值（計算到 1/%d!）：%.15lf\n", n, e);
+
+    return 0;
+}
