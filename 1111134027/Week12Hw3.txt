@@ -1,0 +1,45 @@
+#include <stdio.h>
+
+
+double power(double x, int n) {
+    if (n == 0) return 1;
+    return x * power(x, n - 1);
+}
+
+
+int factorial(int n) {
+    if (n == 0 || n == 1) return 1;
+    return n * factorial(n - 1);
+}
+
+int main() {
+    int m = 50;                 
+    int terms[50];              
+    int n;
+    double x;
+
+    printf("輸入 n (最高項數, n < %d): ", m);
+    scanf_s("%d", &n);
+
+    printf("輸入 x 的值: ");
+    scanf_s("%lf", &x);
+
+    double sum = 0.0;
+
+    
+    for (int i = 0; i <= n; i++) {
+        double term = power(x, i) / factorial(i); 
+        sum += term;
+
+        terms[i] = (int)term;  
+    }
+
+    printf("\ne^%.2f 的近似值 = %.10f\n", x, sum);
+
+    printf("\n各項級數值 terms[] ：\n");
+    for (int i = 0; i <= n; i++) {
+        printf("terms[%d] = %d\n", i, terms[i]);
+    }
+
+    return 0;
+}
