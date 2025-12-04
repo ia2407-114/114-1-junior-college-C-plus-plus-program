@@ -3,18 +3,17 @@ double fact(int n);
 int main()
 {
 	int n;
-	double e = 1;
+	double e = 0;
 	printf("輸入一個n值:\n");
 	scanf_s("%d", &n);
-	for (int i = 1; i <= n; i++) {
-		printf("%f\n", fact(i));
+	for (int i = 0; i <= n; i++) {
 			e = e + 1.0/fact(i);
 	}
 	printf("e結果是%lf\n", e);
 	return 0;
 }
 double fact(int n) {
-	if (n <= 1) {
+	if (n <= 0) {
 		return 1;
 	}
 	else {
