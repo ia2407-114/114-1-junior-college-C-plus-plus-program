@@ -1,26 +1,23 @@
 #include <stdio.h>
-double f(int n);
-double num(int n);
+double fact(int n);
 int main()
 {
 	int n;
-	double e;
+	double e = 1;
 	printf("輸入一個n值:\n");
 	scanf_s("%d", &n);
-	e = num(n);
-	printf("%f", e);
- }
-double f(int n) {
-	if (n <= 0) {
-		return 1;
+	for (int i = 1; i <= n; i++) {
+		printf("%f\n", fact(i));
+			e = e + 1.0/fact(i);
 	}
-	else
-		return n * f(n-1);
+	printf("e結果是%lf\n", e);
+	return 0;
 }
-double num(int n) {
-	if (n <= 0) {
+double fact(int n) {
+	if (n <= 1) {
 		return 1;
 	}
-	else
-		return 1.0 / f(n) + num(n-1);
+	else {
+		return n * fact(n - 1);
+	}
 }
