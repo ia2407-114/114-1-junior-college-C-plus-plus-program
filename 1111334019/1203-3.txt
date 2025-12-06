@@ -1,0 +1,56 @@
+#include <stdio.h>
+#define m 15 
+double power(double x, int n) {
+    if (n == 0) {
+        return 1.0;
+    }
+    else {
+        return x * power(x, n - 1);
+    }
+}
+int factorial(int n) {
+    if (n <= 1) {
+        return 1;
+    }
+    else {
+        return n * factorial(n - 1);
+    }
+}
+
+int main() {
+    int n;
+    double x;
+    double terms[m];
+    double total_sum = 0.0;
+    printf("請輸入 x 的值：");
+    scanf_s("%lf", &x);
+    printf("請輸入項數 n (必須小於 %d)：", m);
+    scanf_s("%d", &n);
+    if (n >= m || n<0) {
+//        printf("錯誤：n (%d) 必須小於陣列大小 m (%d)。\n", n, m);
+        printf("錯誤：n (%d) 必須介於 0 .. %d 的整數\n", n, m-1);
+        printf("請輸入項數 n (必須小於 %d)：", m);
+        scanf_s("%d", &n);
+//        return 1;
+    }
+    // else if(n < 0) {
+    //     printf("錯誤：n 不能為負數。\n");
+    //     return 1;
+    // }
+    
+    for (int i = 0; i <= n; i++) {
+        double p = power(x, i);
+        int f_ll = factorial(i);
+        double term_value = p / (double)f_ll;
+        terms[i] = term_value;
+        total_sum += terms[i];
+    }
+    printf("\n陣列 terms[%d] 的內容：\n", m);
+    for (int i = 0; i <= n; i++) {
+        printf("terms[%d] = %f  (即 %.0f^%d / %d!)\n", i, terms[i], x, i, i);
+    }
+
+    printf("\n最終結果：\n");
+    printf("e^%.2f = %f\n", x, total_sum);
+    return 0;
+}
