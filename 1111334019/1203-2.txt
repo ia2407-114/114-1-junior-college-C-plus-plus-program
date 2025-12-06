@@ -14,7 +14,7 @@ int main() {
         double q = 1.0; 
 
         for (int j = 1; j <= i; j++) {
-            numer = numer * x;    
+            numer *= x;      
             q *= j; 
         }
         sum += (numer / q);
@@ -24,4 +24,5 @@ int main() {
     printf("當 x = %.4f，項數 N = %d 時\n", x, N);
     printf("e^x 的結果為：%.8f\n", sum);
     return 0;
+
 }
