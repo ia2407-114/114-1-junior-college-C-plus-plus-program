@@ -1,0 +1,33 @@
+#include <stdio.h>
+double power(int x, int n);
+double fact(int n);
+int main() {
+    int n;
+    double x;
+    double sum = 0;
+    printf("請輸入項數 n: ");
+    scanf_s("%d", &n);
+    printf("請輸入 x 值: ");
+    scanf_s("%lf", &x);
+    for (int k = 0; k <= n; k++) {
+        sum =sum+power(x, k) / fact(k);
+    }
+    printf("e^x 的近似值為: %lf\n", sum);
+    return 0;
+}
+double power(int x, int n) {
+    if (n <= 0) {
+        return 1;
+    }
+    else {
+        return x * power(x, n - 1);
+    }
+}
+double fact(int n) {
+    if (n <= 0) {
+        return 1;
+    }
+    else {
+        return n * fact(n - 1);
+    }
+}
