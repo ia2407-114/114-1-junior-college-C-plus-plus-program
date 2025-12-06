@@ -1,0 +1,27 @@
+#include <stdio.h>
+int main() {
+    double x;
+    int N;  
+    double sum = 0.0;
+    printf("請輸入 x 的值：");
+    if (scanf_s("%lf", &x) != 1) return 1;
+
+    printf("請輸入最大項數 N (從 0 開始)：");
+    if (scanf_s("%d", &N) != 1 || N < 0) return 1;
+    for (int i = 0; i <= N; i++) {
+
+        double numer = 1.0;  
+        double q = 1.0; 
+
+        for (int j = 1; j <= i; j++) {
+            numer = numer * x;    
+            q *= j; 
+        }
+        sum += (numer / q);
+    }
+
+    printf("\n--- 計算結果 ---\n");
+    printf("當 x = %.4f，項數 N = %d 時\n", x, N);
+    printf("e^x 的結果為：%.8f\n", sum);
+    return 0;
+}
