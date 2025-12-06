@@ -1,0 +1,18 @@
+#include <stdio.h>
+double factorial(int n) {
+    if (n == 0 || n == 1) {
+        return 1.0;
+    }
+    return n * factorial(n - 1); 
+}
+int main() {
+    int n, i;
+    double e = 1.0; 
+    printf("請輸入項目數量 n：");
+    scanf_s("%d", &n);
+    for (i = 1; i <= n; i++) {
+        e += 1.0 / factorial(i); 
+    }
+    printf("e 的近似值為：%.10f\n", e);
+    return 0;
+}
