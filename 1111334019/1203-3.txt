@@ -16,7 +16,6 @@ int factorial(int n) {
         return n * factorial(n - 1);
     }
 }
-
 int main() {
     int n;
     double x;
@@ -26,12 +25,11 @@ int main() {
     scanf_s("%lf", &x);
     printf("請輸入項數 n (必須小於 %d)：", m);
     scanf_s("%d", &n);
-    if (n >= m || n<0) {
-        printf("錯誤：n (%d) 必須介於 0 .. %d 的整數\n", n, m-1);
+    if (n >= m || n < 0) {
+        printf("錯誤：n (%d) 必須介於 0 .. %d 的整數\n", n, m - 1);
         printf("請輸入項數 n (必須小於 %d)：", m);
         scanf_s("%d", &n);
     }
-
     for (int i = 0; i <= n; i++) {
         double p = power(x, i);
         int f_ll = factorial(i);
@@ -47,5 +45,4 @@ int main() {
     printf("\n最終結果：\n");
     printf("e^%.2f = %f\n", x, total_sum);
     return 0;
-
 }
