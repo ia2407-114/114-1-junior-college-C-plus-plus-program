@@ -1,0 +1,49 @@
+#include <stdio.h>
+#define RESPONSES_SIZE 20   // 問卷輸入
+#define FREQUENCY_SIZE 11   // 評分
+#define SIZE 10            
+
+int main(void)
+{
+    int frequency[FREQUENCY_SIZE] = { 0 };
+    int responses[RESPONSES_SIZE];
+    int answer, rating;
+
+    //讀入 20 份問卷
+    printf("請輸入 20 份問卷分數（1~10）：\n");
+
+    for (int i = 0; i < RESPONSES_SIZE; i++) {
+        printf("第 %d 份：", i + 1);
+        scanf_s("%d", &answer);
+
+        if (answer < 1 || answer > 10) {
+            printf("錯誤：請輸入 1 到 10。\n");
+            i--;          // 讓這份重輸入
+            continue;
+        }
+
+        responses[i] = answer;
+        frequency[answer]++;   // 直接計數
+    }
+
+    // 顯示統計結果
+    printf("\nRating           Frequency\n");
+    for (rating = 1; rating <= 10; rating++) {
+        printf("%6d%17d\n", rating, frequency[rating]);
+    }
+
+    //印出柱狀圖（Histogram）
+    printf("\n%s%13s%17s\n", "Rating", "Count", "Histogram");
+
+    for (int i = 1; i <= SIZE; i++) {
+        printf("%6d%13d        ", i, frequency[i]);
+
+        for (int j = 0; j < frequency[i]; j++) {
+            printf("*");
+        }
+
+        printf("\n");
+    }
+
+    return 0;
+}
