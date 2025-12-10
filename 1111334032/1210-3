@@ -1,0 +1,94 @@
+#include <stdio.h>
+#define SIZE 10
+
+// ===== 副程式：氣泡排序（依學號排序） =====
+void sort(int id[], int c[], int m[])
+{
+    int i, j, temp;
+
+    for (i = 0; i < SIZE - 1; i++) {
+        for (j = 0; j < SIZE - 1 - i; j++) {
+            if (id[j] > id[j + 1]) {
+
+                // 交換 id
+                temp = id[j];
+                id[j] = id[j + 1];
+                id[j + 1] = temp;
+
+                // 交換計概成績
+                temp = c[j];
+                c[j] = c[j + 1];
+                c[j + 1] = temp;
+
+                // 交換數學成績
+                temp = m[j];
+                m[j] = m[j + 1];
+                m[j + 1] = temp;
+            }
+        }
+    }
+}
+
+// ===== 副程式：求眾數 =====
+int mode(int arr[])
+{
+    int count, maxCount = 0, modeValue = arr[0];
+
+    for (int i = 0; i < SIZE; i++) {
+        count = 1;
+        for (int j = i + 1; j < SIZE; j++) {
+            if (arr[i] == arr[j])
+                count++;
+        }
+        if (count > maxCount) {
+            maxCount = count;
+            modeValue = arr[i];
+        }
+    }
+    return modeValue;
+}
+
+int main(void)
+{
+    int id[SIZE], scoreC[SIZE], scoreM[SIZE];
+    float avg[SIZE];
+
+    // ===== 使用者輸入 =====
+    printf("請輸入 10 位學生的學號、計概成績、數學成績：\n");
+
+    for (int i = 0; i < SIZE; i++) {
+        printf("學生 %d 學號：", i + 1);
+        scanf_s("%d", &id[i]);
+
+        printf("計概成績：");
+        scanf_s("%d", &scoreC[i]);
+
+        printf("數學成績：");
+        scanf_s("%d", &scoreM[i]);
+
+        printf("\n");
+    }
+
+    // ===== 排序（依學號由小到大） =====
+    sort(id, scoreC, scoreM);
+
+    // ===== 計算平均 =====
+    for (int i = 0; i < SIZE; i++) {
+        avg[i] = (scoreC[i] + scoreM[i]) / 2.0;
+    }
+
+    // ===== 求眾數 =====
+    int modeC = mode(scoreC);
+    int modeM = mode(scoreM);
+
+    // ===== 印出結果 =====
+    printf("\n學號\t計概\t數學\t平均\n");
+    for (int i = 0; i < SIZE; i++) {
+        printf("%d\t%d\t%d\t%.1f\n", id[i], scoreC[i], scoreM[i], avg[i]);
+    }
+
+    printf("\n計概成績的眾數：%d\n", modeC);
+    printf("數學成績的眾數：%d\n", modeM);
+
+    return 0;
+}
