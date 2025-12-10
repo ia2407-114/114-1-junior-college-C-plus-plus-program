@@ -1,0 +1,35 @@
+#include <stdio.h>
+#define responses_size 20
+#define frequency_size 11
+
+int main(void)
+{
+	int responses[responses_size];
+	int frequency[frequency_size] = { 0 };
+	int answer;
+
+	printf("請輸入20份問卷評分(分數1~10):\n");
+	for (int i = 0; i < responses_size; ++i) {
+		do {
+			printf("第%d份:", i + 1);
+			scanf_s("%d", &responses[i]);
+			if (responses[i] < 1 || responses[i] > 10) {
+				printf("分數必須在1~10\n");
+			}
+		} while (responses[i] < 1 || responses[i] > 10);
+	}
+	
+	for (answer = 0; answer < responses_size; ++answer) {
+		frequency[responses[answer]]++;
+	}
+
+	printf("\n  分數      人數     星星\n");
+	for (int rating = 1; rating <= 10; ++rating) {
+		printf("%6d%10d     ", rating, frequency[rating]);
+		for (int j = 0; j < frequency[rating]; ++j) {
+			printf("*");
+		}
+		printf("\n");
+	}
+	return 0;
+}
