@@ -1,0 +1,44 @@
+#include <stdio.h>
+#define NUMBER_OF_SURVEYS 20
+#define MAX_RATING 11
+
+int main(void)
+{
+    int responses[NUMBER_OF_SURVEYS] = { 0 };
+    int frequency[MAX_RATING] = { 0 };
+    int i;
+    int current_response;
+
+    printf("請輸入 %d 份問卷的分數 (分數範圍 1-10):\n", NUMBER_OF_SURVEYS);
+
+    for (i = 0; i < NUMBER_OF_SURVEYS; ++i)
+    {
+        printf("請輸入第 %d 個分數: ", i + 1);
+        if (scanf_s("%d", &current_response) != 1) 
+        {
+            printf("\n輸入錯誤，這並的不是一個有效的整數\n");
+            return 1;
+        }
+        if (current_response >= 1 && current_response <= 10) 
+        {
+            responses[i] = current_response;
+            ++frequency[current_response];
+        }
+        else
+        {
+            printf("分數 %d 超出有效範圍\n", current_response);
+            --i;
+        }
+    }
+    printf("%s%17s%15s\n", "分數", "頻率 (人數)", "柱狀圖");
+    for (i = 1; i < MAX_RATING; ++i) 
+    {
+        printf("%4d%17d         ", i, frequency[i]);
+        for (int j = 1; j <= frequency[i]; ++j) 
+        {
+            printf("%c", '*'); 
+        }
+        puts(""); 
+    }
+    return 0;
+}
