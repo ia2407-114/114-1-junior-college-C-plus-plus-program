@@ -1,0 +1,34 @@
+#include <stdio.h>
+
+// 計算 x^n 的副程式
+double power(double x, int n) {
+    double result = 1.0;
+    for (int i = 1; i <= n; i++) {
+        result *= x;
+    }
+    return result;
+}
+
+// 計算 n! 的副程式
+int factorial(int n) {
+    int result = 1;
+    for (int i = 1; i <= n; i++) {
+        result *= i;
+    }
+    return result;
+}
+
+int main() {
+    int n;
+    double x;
+    printf(“輸入n, x: “);
+    scanf_s(“%d %lf”, &n, &x);
+
+    double ex = 1.0;
+    for (int i = 1; i <= n; i++) {
+        ex += power(x, i) / factorial(i);
+    }
+
+    printf(“e^x = %lf\n”, ex);
+    return 0;
+}

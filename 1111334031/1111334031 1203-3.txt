@@ -1,0 +1,53 @@
+#include stdio.h
+
+ x^n
+double power(double x, int n) {
+    double result = 1.0;
+    for (int i = 1; i = n; i++) {
+        result = x;
+    }
+    return result;
+}
+
+ n!
+int factorial(int n) {
+    int result = 1;
+    for (int i = 1; i = n; i++) {
+        result = i;
+    }
+    return result;
+}
+
+int main() {
+    int m;
+    printf(“輸入陣列大小 m “);
+    scanf_s(“%d”, &m);
+
+    int terms[100];
+    int n;
+    double x;
+
+    printf(“輸入n, x (n  m) “);
+    scanf_s(“%d %lf”, &n, &x);
+
+    double ex = 1.0;
+    terms[0] = 1; 
+
+    for (int i = 1; i = n; i++) {
+        double numerator = power(x, i);
+        double denominator = factorial(i);
+        ex += numerator  denominator;
+
+        terms[i] = (int)numerator;
+    }
+
+    printf(“e^x = %lfn”, ex);
+    printf(“terms陣列內容n”);
+    for (int i = 0; i = n; i++) {
+        printf(“terms[%d] = %dn”, i, terms[i]);
+    }
+
+    return 0;
+}
+
+
