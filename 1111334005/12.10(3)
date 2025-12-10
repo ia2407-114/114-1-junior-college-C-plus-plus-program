@@ -1,0 +1,99 @@
+#include <stdio.h>
+
+#define SIZE 10
+
+void sortByAverage(int id[], int cs[], int math[], float avg[], int length);
+float mode(float arr[], int length);
+
+int main(void)
+{
+    int id[SIZE], cs[SIZE], math[SIZE];
+    float avg[SIZE];
+
+    printf("請輸入學生：學號、計概成績、數學成績 (共10位學生)\n");
+    for (int i = 0; i < SIZE; i++) {
+        printf("學生 %d (id cs math)：", i + 1);
+        scanf("%d %d %d", &id[i], &cs[i], &math[i]);
+    }
+
+  
+    for (int i = 0; i < SIZE; i++) {
+        avg[i] = (cs[i] + math[i]) / 2.0f;
+    }
+
+    printf("\n==== 排序前資料 ====\n");
+    printf("ID\tCS\tMath\tAvg\n");
+    for (int i = 0; i < SIZE; i++) {
+        printf("%d\t%d\t%d\t%.1f\n", id[i], cs[i], math[i], avg[i]);
+    }
+
+    sortByAverage(id, cs, math, avg, SIZE);
+
+    float modeAvg = mode(avg, SIZE);
+
+    printf("\n==== 排序後資料 (依平均成績由小到大) ====\n");
+    printf("ID\tCS\tMath\tAvg\n");
+    for (int i = 0; i < SIZE; i++) {
+        printf("%d\t%d\t%d\t%.1f\n", id[i], cs[i], math[i], avg[i]);
+    }
+
+    printf("\n平均成績的眾數 = %.1f\n", modeAvg);
+
+    return 0;
+}
+
+
+void sortByAverage(int id[], int cs[], int math[], float avg[], int length)
+{
+    int tempID, tempCS, tempMath;
+    float tempAvg;
+
+    for (int pass = 0; pass < length - 1; pass++) {
+        for (int i = 0; i < length - 1 - pass; i++) {
+
+            if (avg[i] > avg[i + 1]) {
+
+             
+                tempAvg = avg[i];
+                avg[i] = avg[i + 1];
+                avg[i + 1] = tempAvg;
+
+             
+                tempCS = cs[i];
+                cs[i] = cs[i + 1];
+                cs[i + 1] = tempCS;
+
+               
+                tempMath = math[i];
+                math[i] = math[i + 1];
+                math[i + 1] = tempMath;
+
+             
+                tempID = id[i];
+                id[i] = id[i + 1];
+                id[i + 1] = tempID;
+            }
+        }
+    }
+}
+
+
+float mode(float arr[], int length)
+{
+    int maxCount = 0;
+    float modeValue = arr[0];
+
+    for (int i = 0; i < length; i++) {
+        int count = 1;
+        for (int j = i + 1; j < length; j++) {
+            if (arr[i] == arr[j]) {
+                count++;
+            }
+        }
+        if (count > maxCount) {
+            maxCount = count;
+            modeValue = arr[i];
+        }
+    }
+    return modeValue;
+}
