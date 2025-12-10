@@ -1,0 +1,45 @@
+#include <stdio.h>
+
+#define RESPONSES_SIZE 20
+#define FREQUENCY_SIZE 11
+
+int main(void) {
+
+    // 初始化計數陣列
+    int frequency[FREQUENCY_SIZE] = { 0 };
+    int responses[RESPONSES_SIZE];
+
+    printf("請輸入20份卷結果(1~10):\n");
+
+    for (int i = 0; i < RESPONSES_SIZE; i++) {
+        scanf_s("%d", &responses[i]);
+
+        // 避免輸入超出 1~10
+        if (responses[i] < 1 || responses[i] > 10) {
+            printf("輸入錯誤！請輸入 1~10 的數字\n");
+            return 0;
+        }
+    }
+
+    // 統計每個分數的個數
+    for (size_t answer = 0; answer < RESPONSES_SIZE; ++answer) {
+        ++frequency[responses[answer]];
+    }
+
+    // 顯示表格
+    printf("%s%17s\n", "Rating", "Frequency");
+    for (size_t rating = 1; rating < FREQUENCY_SIZE; ++rating) {
+        printf("%6zu%17d\n", rating, frequency[rating]);
+    }
+
+    printf("\n");
+    for (size_t rating = 1; rating < FREQUENCY_SIZE; ++rating) {
+        printf("%2zu | ", rating);
+        for (int i = 0; i < frequency[rating]; ++i) {
+            printf("*"); // 用 * 畫柱狀圖
+        }
+        printf("\n");
+    }
+
+    return 0;
+}
