@@ -1,0 +1,40 @@
+#include <stdio.h>
+
+#define RESPONSES_SIZE 20     
+#define FREQUENCY_SIZE 11    
+
+int main(void) {
+
+    int responses[RESPONSES_SIZE];       
+    int frequency[FREQUENCY_SIZE] = { 0 }; 
+    int answer, rating;
+
+    printf("請輸入 %d 份問卷(範圍 1~10)：\n", RESPONSES_SIZE);
+
+    for (answer = 0; answer < RESPONSES_SIZE; ++answer) {
+        printf("第 %2d 份：", answer + 1);
+        scanf_s("%d", &responses[answer]);
+
+        if (responses[answer] < 1 || responses[answer] > 10) {
+            printf("無效的分數！請輸入 1~10。\n");
+            answer--;   
+        }
+    }
+
+    for (answer = 0; answer < RESPONSES_SIZE; ++answer) {
+        ++frequency[responses[answer]];
+    }
+
+    printf("\nRating   Frequency    Histogram\n");
+
+    for (rating = 1; rating < FREQUENCY_SIZE; ++rating) {
+        printf("%6d%12d    ", rating, frequency[rating]);
+
+        for (int j = 0; j < frequency[rating]; ++j) {
+            printf("*");
+        }
+        printf("\n");
+    }
+
+    return 0;
+}
