@@ -1,0 +1,43 @@
+#include <stdio.h>
+#define RESPONSES_SIZE 20   // 可從鍵盤輸入 20 份問卷
+#define FREQUENCY_SIZE 11   // 1~10 的計數
+
+int main(void)
+{
+    int frequency[FREQUENCY_SIZE] = { 0 };
+    int responses[RESPONSES_SIZE];
+    int answer, rating;
+
+    // ====== 從鍵盤輸入 20 份問卷 ======
+    printf("請輸入 20 份評分（1～10 之間）：\n");
+    for (answer = 0; answer < RESPONSES_SIZE; ++answer) {
+
+        printf("第 %d 份：", answer + 1);
+        scanf_s("%d", &responses[answer]);
+
+        // 輸入驗證：必須在 1～10 之間
+        if (responses[answer] < 1 || responses[answer] > 10) {
+            printf("輸入錯誤！請輸入 1～10 之間的數字。\n");
+            --answer;   // 讓使用者重新輸入這一筆
+        }
+    }
+
+    // ====== 統計頻率 ======
+    for (answer = 0; answer < RESPONSES_SIZE; ++answer) {
+        ++frequency[responses[answer]];
+    }
+
+    // ====== 輸出結果（文字柱狀圖） ======
+    printf("\n評分\t次數\t柱狀圖\n");
+    for (rating = 1; rating < FREQUENCY_SIZE; ++rating) {
+        printf("%2d\t%2d\t", rating, frequency[rating]);
+
+        // 印出星號當作柱狀圖
+        for (int star = 0; star < frequency[rating]; ++star) {
+            printf("*");
+        }
+        printf("\n");
+    }
+
+    return 0;
+}
