@@ -1,0 +1,43 @@
+#include <stdio.h>
+
+#define RESPONSES 20         
+#define MAX_RATING 10        
+
+int main(void)
+{
+    int responses[RESPONSES];
+    int frequency[MAX_RATING + 1] = { 0 };
+
+    printf("請輸入 %d 份問卷的分數 (1~10)：\n", RESPONSES);
+
+ 
+    for (int i = 0; i < RESPONSES; ++i) {
+        printf("第 %d 份分數：", i + 1);
+        scanf_s("%d", &responses[i]);
+
+    
+        if (responses[i] < 1 || responses[i] > MAX_RATING) {
+            printf("錯誤：分數需介於 1 到 %d，請重新輸入。\n", MAX_RATING);
+            i--; 
+            continue;
+        }
+
+    
+        ++frequency[responses[i]];
+    }
+
+  
+    printf("\nRating     Frequency     Histogram\n");
+
+    for (int rating = 1; rating <= MAX_RATING; ++rating) {
+        printf("%6d%13d        ", rating, frequency[rating]);
+
+     
+        for (int j = 0; j < frequency[rating]; ++j) {
+            printf("*");
+        }
+        printf("\n");
+    }
+
+    return 0;
+}
