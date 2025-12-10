@@ -1,0 +1,41 @@
+#include <stdio.h>
+
+#define RESPONSES 20       
+#define SCORE_RANGE 11     
+
+int main(void)
+{
+    int responses[RESPONSES];
+    int frequency[SCORE_RANGE] = { 0 };
+    int i, j;
+
+    printf("請輸入 20 份問卷（分數 1~10）：\n");
+
+    for (i = 0; i < RESPONSES; i++) {
+        do {
+            printf("第 %d 份：", i + 1);
+            scanf_s
+            ("%d", &responses[i]);
+            if (responses[i] < 1 || responses[i] > 10) {
+                printf("錯誤！分數必須介於 1~10，請重新輸入。\n");
+            }
+        } while (responses[i] < 1 || responses[i] > 10);
+    }
+
+    for (i = 0; i < RESPONSES; i++) {
+        frequency[responses[i]]++;
+    }
+
+    printf("\nRating%13s%17s\n", "Frequency", "Histogram");
+
+    for (i = 1; i <= 10; i++) {
+        printf("%6d%13d        ", i, frequency[i]);
+
+        for (j = 0; j < frequency[i]; j++) {
+            printf("*");
+        }
+        printf("\n");
+    }
+
+    return 0;
+}
