@@ -1,0 +1,94 @@
+#include <stdio.h>
+
+#define SIZE 10
+
+// 函式宣告
+void sortByAverage(int id[], int cprog[], int math[], float avg[]);
+float findMode(float avg[]);
+
+// 主程式
+int main() {
+    int id[SIZE];
+    int cprog[SIZE];
+    int math[SIZE];
+    float avg[SIZE];
+
+    // 輸入資料
+    printf("請輸入 10 位學生的資料：學號 計概 數學\n");
+    for (int i = 0; i < SIZE; i++) {
+        printf("學生 %d: ", i + 1);
+        scanf_s("%d %d %d", &id[i], &cprog[i], &math[i]);
+        avg[i] = (cprog[i] + math[i]) / 2.0;  // 計算平均
+    }
+    // 印出排序前
+    printf("\n--- 排序前資料 ---\n");
+    for (int i = 0; i < SIZE; i++) {
+        printf("學號:%d  計概:%d  數學:%d  平均:%.2f\n",
+            id[i], cprog[i], math[i], avg[i]);
+    }
+
+    // 排序
+    sortByAverage(id, cprog, math, avg);
+
+    // 印出排序後
+    printf("\n--- 排序後資料(依平均由小到大) ---\n");
+    for (int i = 0; i < SIZE; i++) {
+        printf("學號:%d  計概:%d  數學:%d  平均:%.2f\n",
+            id[i], cprog[i], math[i], avg[i]);
+    }
+
+    // 求眾數
+    float mode = findMode(avg);
+    printf("\n平均成績的眾數為：%.2f\n", mode);
+
+    return 0;
+}
+
+// 排序副程式：使用氣泡排序，四個陣列一起交換
+void sortByAverage(int id[], int cprog[], int math[], float avg[]) {
+    for (int i = 0; i < SIZE - 1; i++) {
+        for (int j = 0; j < SIZE - 1 - i; j++) {
+            if (avg[j] > avg[j + 1]) {
+                // 交換平均
+                float tempf = avg[j];
+                avg[j] = avg[j + 1];
+                avg[j + 1] = tempf;
+
+                // 交換學號
+                int tempi = id[j];
+                id[j] = id[j + 1];
+                id[j + 1] = tempi;
+
+                // 交換計概
+                tempi = cprog[j];
+                cprog[j] = cprog[j + 1];
+                cprog[j + 1] = tempi;
+
+                // 交換數學
+                tempi = math[j];
+                math[j] = math[j + 1];
+                math[j + 1] = tempi;
+            }
+        }
+    }
+}
+// 求眾數副程式：找平均分數最常出現的值
+float findMode(float avg[]) {
+    int count;
+    int maxCount = 0;
+    float mode = avg[0];
+
+    for (int i = 0; i < SIZE; i++) {
+        count = 1;
+        for (int j = i + 1; j < SIZE; j++) {
+            if (avg[i] == avg[j]) {
+                count++;
+            }
+        }
+        if (count > maxCount) {
+            maxCount = count;
+            mode = avg[i];
+        }
+    }
+    return mode;
+}
