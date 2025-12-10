@@ -1,0 +1,37 @@
+#include <stdio.h>
+#define RESPONSES_SIZE 20
+#define FREQUENCY_SIZE 11
+
+
+int main(void)
+{
+    
+    int frequency[FREQUENCY_SIZE] = { 0 }, answer, rating,n;
+    int responses[RESPONSES_SIZE],i,q;
+
+    for (i = 0; i < 20; i++) {
+        printf("第%d份問卷的評價為:", i + 1);
+        scanf_s("%d", &q);
+        printf("\n");
+
+        responses[i] = q;
+    }
+
+    for (answer = 0; answer < RESPONSES_SIZE; ++answer) {
+        ++frequency[responses[answer]];
+    }
+
+    printf("%s%17s\n", "Rating", "Frequency");
+
+    for (size_t i = 0; i < FREQUENCY_SIZE; ++i) {
+        printf("%7u%13d        ", i, frequency[i]);
+
+        for (int j = 1; j <= frequency[i]; ++j) {
+            printf("%c", '*');
+        }
+
+        puts("");
+    }
+    
+    return 0;
+}
