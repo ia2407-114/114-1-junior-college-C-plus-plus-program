@@ -1,0 +1,74 @@
+//題目2:建立兩個大小為20的整數陣列，分別存放學生學號以對應的計概成績。
+// 請使用氣泡排序，將兩個陣列依照計概成績由小到大排序，在印出排序後的結果(學號、成績)。
+//id[]學號 : {12, 13, 14, 15, 16, 17, 19, 21, 22, 23, 24, 26, 27, 28, 29, 31, 32, 33, 36, 37}
+//score[]成績 : {66, 67, 66, 70, 73, 74, 75, 75, 62, 32, 44, 46, 27, 12, 80, 63, 66, 90, 11, 66}
+#include <stdio.h>
+#define number 20
+#define grade 20
+// function main begins program execution
+int bubble(int arr[], int scr[], int length);
+
+int main(void)
+{
+    // initialize a
+    int id[number] = { 12, 13, 14, 15, 16, 17, 19, 21, 22, 23, 24, 26, 27, 28, 29, 31, 32, 33, 36, 37 };
+    int score[grade] = { 66, 67, 66, 70, 73, 74, 75, 75, 62, 32, 44, 46, 27, 12, 80, 63, 66, 90, 11, 66 }, temp, i, pass;
+    puts("Data items in original order");
+
+  
+    for (size_t i = 0; i < grade; ++i) {
+        printf("%4d", id[i]); 
+    }
+    puts("");
+    for (size_t i = 0; i < grade; ++i) {
+        printf("%4d", score[i]);
+    }
+                                      
+    // 呼叫氣泡排序函式，執行連動排序
+    bubble(score, id, number);
+
+    puts("\nData items in ascending order");
+
+    
+    for (size_t i = 0; i < grade; ++i) {// 輸出排序後的學號
+      printf("%4d", id[i]);
+   }
+    puts("");
+    for (size_t i = 0; i < grade; ++i) {// 輸出排序後的成績
+        printf("%4d", score[i]);
+    }
+
+}
+
+
+int  bubble(int scr[],int id[], int length)
+{
+    int pass, i, temp;// temp 用於交換成績
+    int temp_id; // 專門用於交換學號         //ex:12 13 14
+    for (pass = 1; pass < length; ++pass) {  //   66 67 66
+       // 作用:外層迴圈。控制需要進行的「遍歷次數」
+       // 對於10個元素，最多需要9次（pass 從1到9）遍歷來確保排序完成。
+       // 在每次遍歷結束後，最大的未排序元素會「浮」到最右端。
+        
+        for (i = 0; i < length - 1; ++i) {
+           // 內層迴圈。控制每一次遍歷中需要進行的「相鄰元素比較次數」。
+// 遍歷陣列，比較索引 i 和 i + 1 的元素。每次遍歷只需要比較到倒數第二個元素(length - 1 次比較)
+            if (scr[i] > scr[i + 1]) {  // scr[1]>scr[2] 67>66
+
+                // 1. 交換成績 (scr) 
+                temp = scr[i];     //temp=67
+                scr[i] = scr[i + 1]; //scr[1]=66
+                scr[i + 1] = temp;  //scr[2]=67
+                //66 67
+                
+                // 2. 同步交換學號 (id)
+                temp_id = id[i];  //temp_id=13
+                id[i] = id[i + 1];//id[1]=14
+                id[i + 1] = temp_id;//id[2]=13
+                //14 13
+                //66 67
+            }
+        }
+    }
+    return 0;
+}
