@@ -1,0 +1,45 @@
+//請修改以上程式，透過鍵盤輸入20份問卷存入陣列中，將他的問卷統計結果，印成柱狀圖，
+// 請利用上面的程式碼進行修改亦可:
+#include <stdio.h>
+#define RESPONSES_SIZE 20 // 定義一個常數，表示調查回應的總數是40。
+#define FREQUENCY_SIZE 11// 我們的評分是1到10，所以陣列需要11個位置（索引0到10）來儲存計數。
+
+int main(void)
+{
+    int i;
+ //frequency[11]：建立一個大小為11的整數陣列，作為評分1到10的計分板。
+ // ={0}：將計分板上所有位置（索引0到10）的起始計數都設定為0，以免保留上一次的紀錄。
+ // answer, rating：宣告兩個變數，稍後會用作迴圈的索引。
+    int frequency[FREQUENCY_SIZE] = { 0 }, answer, rating;
+
+    //輸入並填入20筆原始調查回應資料
+    // 例如：第一筆輸入1分，responses[0]=1，第二筆輸入2分，responses[1] =2，依此類推
+    //for (i = 0;i < RESPONSES_SIZE;++i) 啟動一個迴圈，從第一筆回應開始，依序處理所有20筆資料。
+    // 變數 answer從0開始增加到19，用來存取 responses 陣列中的每一個元素。
+    for (i = 0;i < RESPONSES_SIZE;++i) {
+        printf("請輸入第%d筆資料:", i+1);
+        int responses[RESPONSES_SIZE];
+        scanf_s("%d", &responses[i]);
+        ++frequency[responses[i]];
+        //取出評分：responses[i] 會取出輸入的分數值（例如：取到6）。
+        // 作為索引：這個分數值6會被當作 frequency 陣列的索引。
+        // 計數：++frequency[6]，把分數6對應的計數器值加1。
+        // 範例：如果answer輸入是2，responses[2]是6。程式會將frequency陣列中索引為6的元素值加1
+    }
+
+    printf("%s%13s%17s\n", "Element", "Value", "Histogram");
+    for (rating = 1; rating < FREQUENCY_SIZE; ++rating) {
+        //啟動第二個迴圈，用來輸出統計結果。
+        //變數rating從1開始增加到10（因為評分範圍是1到10）。
+        printf("%6d%17d    ", rating, frequency[rating]);
+        //rating輸出當前評分，表示1~10分的評分   frequency[rating]表示填幾分的資料有幾個
+
+for (int j = 1; j <= frequency[rating]; ++j) { 
+            printf("%c", '*');
+            //輸出當前評分出現幾次
+        }
+
+        puts("");//換行
+    }
+
+    }
