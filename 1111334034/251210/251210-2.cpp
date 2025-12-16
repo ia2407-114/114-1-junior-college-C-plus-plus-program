@@ -1,0 +1,45 @@
+#include <stdio.h>
+#define SIZE 20
+
+// function main begins program execution
+void  bubble(int arr1[], int arr2[], int length);
+
+int main(void)
+{
+	int id[SIZE] = { 12, 13, 14, 15, 16, 17, 19, 21, 22, 23, 24, 26, 27, 28, 29, 31, 32, 33, 36, 37 };
+	int score[SIZE] = { 66, 67, 66, 70, 73, 74, 75, 75, 62, 32, 44, 46, 27, 12, 80, 63, 66, 90, 11, 66 };
+
+	bubble(id, score, SIZE);
+
+	// output sorted array
+	for (size_t i = 0; i < SIZE; ++i) {
+		printf("%-4d%-4d\n", id[i], score[i]);
+	}
+
+	puts("");
+}
+
+
+void  bubble(int arr1[], int arr2[], int length)
+{
+	int pass, i, temp;
+	// loop to control number of passes                    
+	for (pass = 1; pass < length; ++pass) {
+
+		// loop to control number of comparisons per pass   
+		for (i = 0; i < length - 1; ++i) {
+
+			// compare adjacent elements and swap them if first 
+			// element is greater than second element           
+			if (arr2[i] > arr2[i + 1]) {
+				temp = arr1[i];
+				arr1[i] = arr1[i + 1];
+				arr1[i + 1] = temp;
+
+				temp = arr2[i];
+				arr2[i] = arr2[i + 1];
+				arr2[i + 1] = temp;
+			}
+		}
+	}
+}
