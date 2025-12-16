@@ -1,0 +1,102 @@
+#include <stdio.h>
+#define SIZE 10
+
+void sort(double avg[], int id[], int cs[], int math[]);
+double mode(double avg[]);
+
+int main(void)
+{
+    int id[SIZE];
+    int cs[SIZE];
+    int math[SIZE];
+    double avg[SIZE];
+
+    int i;
+    double m;
+
+    printf("請輸入 10 位學生的資料（學號 計概 數學）\n");
+
+    for (i = 0; i < SIZE; i++) {
+    printf("學生 %d：", i + 1);
+    scanf_s("%d %d %d", &id[i], &cs[i], &math[i]);
+    avg[i] = (cs[i] + math[i]) / 2.0;
+    }
+
+    printf("\n=== 排序前 ===\n");
+    printf("學號\t計概\t數學\t平均\n");
+    for (i = 0; i < SIZE; i++) {
+    printf("%d\t%d\t%d\t%.1f\n",
+    id[i], cs[i], math[i], avg[i]);
+    }
+
+  
+    sort(avg, id, cs, math);
+
+ 
+    printf("\n=== 排序後（依平均成績） ===\n");
+    printf("學號\t計概\t數學\t平均\n");
+    for (i = 0; i < SIZE; i++) {
+    printf("%d\t%d\t%d\t%.1f\n",
+    id[i], cs[i], math[i], avg[i]);
+    }
+
+    m = mode(avg);
+    printf("\n平均成績的眾數為：%.1f\n", m);
+
+    return 0;
+}
+
+
+void sort(double avg[], int id[], int cs[], int math[])
+{
+    int i, j;
+    double tempAvg;
+    int temp;
+
+    for (i = 0; i < SIZE - 1; i++) {
+        for (j = 0; j < SIZE - 1 - i; j++) {
+            if (avg[j] > avg[j + 1]) {
+
+                tempAvg = avg[j];
+                avg[j] = avg[j + 1];
+                avg[j + 1] = tempAvg;
+
+                temp = id[j];
+                id[j] = id[j + 1];
+                id[j + 1] = temp;
+
+                temp = cs[j];
+                cs[j] = cs[j + 1];
+                cs[j + 1] = temp;
+
+                temp = math[j];
+                math[j] = math[j + 1];
+                math[j + 1] = temp;
+            }
+        }
+    }
+}
+
+
+double mode(double avg[])
+{
+    int i, j;
+    int count, maxCount = 0;
+    double modeValue = avg[0];
+
+    for (i = 0; i < SIZE; i++) {
+        count = 0;
+        for (j = 0; j < SIZE; j++) {
+            if (avg[i] == avg[j]) {
+                count++;
+            }
+        }
+
+        if (count > maxCount) {
+            maxCount = count;
+            modeValue = avg[i];
+        }
+    }
+
+    return modeValue;
+}
