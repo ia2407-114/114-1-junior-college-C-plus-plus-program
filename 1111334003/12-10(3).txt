@@ -1,0 +1,50 @@
+#include <stdio.h>
+#define SIZE 10
+void sort(int id[], int cs[], int math[], float avg[]);
+float mode(float avg[]);
+int main(void)
+{
+    int id[SIZE], cs[SIZE], math[SIZE];
+    float avg[SIZE];
+    int i;
+    for (i = 0; i < SIZE; i++) {
+        scanf("%d %d %d", &id[i], &cs[i], &math[i]);
+        avg[i] = (cs[i] + math[i]) / 2.0;
+    }
+    sort(id, cs, math, avg);
+    for (i = 0; i < SIZE; i++) {
+        printf("%d %d %d %.1f\n", id[i], cs[i], math[i], avg[i]);
+    }
+    printf("mode = %.1f\n", mode(avg));
+    return 0;
+}
+void sort(int id[], int cs[], int math[], float avg[])
+{
+    int i, p, t;
+    float tf;
+    for (p = 1; p < SIZE; p++) {
+        for (i = 0; i < SIZE - 1; i++) {
+            if (avg[i] > avg[i + 1]) {
+                tf = avg[i]; avg[i] = avg[i + 1]; avg[i + 1] = tf;
+                t = id[i]; id[i] = id[i + 1]; id[i + 1] = t;
+                t = cs[i]; cs[i] = cs[i + 1]; cs[i + 1] = t;
+                t = math[i]; math[i] = math[i + 1]; math[i + 1] = t;
+            }
+        }
+    }
+}
+float mode(float avg[])
+{
+    int i, j, c, max = 0;
+    float m = avg[0];
+    for (i = 0; i < SIZE; i++) {
+        c = 0;
+        for (j = 0; j < SIZE; j++)
+            if (avg[i] == avg[j]) c++;
+        if (c > max) {
+            max = c;
+            m = avg[i];
+        }
+    }
+    return m;
+}
