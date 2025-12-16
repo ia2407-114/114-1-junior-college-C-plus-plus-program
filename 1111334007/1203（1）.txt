@@ -1,0 +1,23 @@
+#include <stdio.h>
+
+float stair(int i);
+
+int main()
+{
+    int n, i;
+    float e = 1;
+    printf("請輸入階乘值: ");
+    scanf_s("%d", &n);
+    for (i = 1; i <= n; i++)
+    {
+        e += 1.0 / stair(i);
+    }
+    printf("e值 = %f", e);
+}
+float stair(int i)
+{
+    if (i <= 1)
+        return 1;
+    else
+        return i * stair(i - 1);
+}
