@@ -1,0 +1,79 @@
+#include <stdio.h>
+
+#define STUDENTS 10
+#define NAME_LEN 20
+
+void sort_students(char name[STUDENTS][NAME_LEN],
+    int score[3][STUDENTS],
+    float avg[STUDENTS])
+{
+    int i, j, k;
+    float temp_avg;
+    int temp_score;
+    char temp_name[NAME_LEN];
+
+    for (i = 0; i < STUDENTS - 1; i++)
+    {
+        for (j = 0; j < STUDENTS - 1 - i; j++)
+        {
+            if (avg[j] > avg[j + 1])
+            {                
+                temp_avg = avg[j];
+                avg[j] = avg[j + 1];
+                avg[j + 1] = temp_avg;
+
+               
+                for (k = 0; k < 3; k++)
+                {
+                    temp_score = score[k][j];
+                    score[k][j] = score[k][j + 1];
+                    score[k][j + 1] = temp_score;
+                }
+              
+                for (k = 0; k < NAME_LEN; k++)
+                {
+                    temp_name[k] = name[j][k];
+                    name[j][k] = name[j + 1][k];
+                    name[j + 1][k] = temp_name[k];
+                }
+            }
+        }
+    }
+}
+
+int main()
+{
+    char name[STUDENTS][NAME_LEN] = {
+        "Amy", "Bob", "Cindy", "David", "Eason",
+        "Fiona", "Grace", "Henry", "Ivy", "Jack"
+    };
+
+    int score[3][STUDENTS] = {
+        {1001,1002,1003,1004,1005,1006,1007,1008,1009,1010},
+        {80, 75, 90, 60, 85, 70, 95, 88, 76, 92},           
+        {78, 82, 88, 65, 90, 72, 93, 85, 80, 89}           
+    };
+
+    float avg[STUDENTS];
+    int i;
+
+    for (i = 0; i < STUDENTS; i++)
+    {
+        avg[i] = (score[1][i] + score[2][i]) / 2.0;
+    }
+
+    sort_students(name, score, avg);
+
+    printf("姓名\t學號\t計概\t數學\t平均\n");
+    for (i = 0; i < STUDENTS; i++)
+    {
+        printf("%-6s\t%d\t%d\t%d\t%.2f\n",
+            name[i],
+            score[0][i],
+            score[1][i],
+            score[2][i],
+            avg[i]);
+    }
+
+    return 0;
+}
