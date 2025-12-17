@@ -1,0 +1,24 @@
+#include <stdio.h>
+
+int main()
+{
+	int x, ratings, count[10] = { 0 }, papers[20] = { 0 };
+
+	for (x = 0; x < 20; x++)
+	{
+		printf("第 %d 份問卷的分數：", x + 1);
+			scanf_s("%d", &ratings);
+			papers[x] = ratings;
+			count[ratings - 1]++;
+	}
+	printf("問卷分數		出現次數\n");
+	for (int i = 0; i < 10; i++)
+	{
+		printf("%d 分出現次數：		", i + 1);
+		for (int y = 0; y < count[i]; y++)
+		{
+			printf("*");
+		}
+		printf("\n");
+	}
+}
