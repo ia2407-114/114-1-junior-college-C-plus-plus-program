@@ -1,0 +1,86 @@
+#include <stdio.h>
+#include <string.h>
+
+#define STUDENT 10
+#define ROW 3
+#define NAME_LEN 20
+
+
+void sort_all(char name[STUDENT][NAME_LEN], int data[ROW][STUDENT], float avg[], int n);
+
+int main() {
+
+    
+    char name[STUDENT][NAME_LEN] = {
+        "Amy", "Bob", "Cindy", "David", "Eason",
+        "Fiona", "Gary", "Helen", "Ivy", "Jack"
+    };
+
+   
+    int data[ROW][STUDENT] = {
+        {11, 15, 13, 18, 12, 17, 14, 19, 16, 20}, 
+        {85, 92, 78, 85, 90, 85, 76, 95, 88, 85}, 
+        {70, 80, 75, 90, 85, 70, 82, 92, 88, 70}  
+    };
+
+    float avg[STUDENT];
+    int i;
+
+  
+    for (i = 0; i < STUDENT; i++) {
+        avg[i] = (data[1][i] + data[2][i]) / 2.0;
+    }
+
+    printf("排序前：\n");
+    printf("姓名\t學號\t計概\t數學\t平均\n");
+    for (i = 0; i < STUDENT; i++) {
+        printf("%s\t%d\t%d\t%d\t%.2f\n",
+            name[i], data[0][i], data[1][i], data[2][i], avg[i]);
+    }
+
+   
+    sort_all(name, data, avg, STUDENT);
+
+    printf("\n排序後（依平均成績）：\n");
+    printf("姓名\t學號\t計概\t數學\t平均\n");
+    for (i = 0; i < STUDENT; i++) {
+        printf("%s\t%d\t%d\t%d\t%.2f\n",
+            name[i], data[0][i], data[1][i], data[2][i], avg[i]);
+    }
+
+    return 0;
+}
+
+
+
+void sort_all(char name[STUDENT][NAME_LEN], int data[ROW][STUDENT], float avg[], int n) {
+
+    int i, j, k;
+    int temp;
+    float tempf;
+    char tempName[NAME_LEN];
+
+    for (i = 0; i < n - 1; i++) {
+        for (j = 0; j < n - 1 - i; j++) {
+            if (avg[j] > avg[j + 1]) {
+
+                
+                tempf = avg[j];
+                avg[j] = avg[j + 1];
+                avg[j + 1] = tempf;
+
+                
+                strcpy_s(tempName, name[j]);
+                strcpy_s(name[j], name[j + 1]);
+                strcpy_s(name[j + 1], tempName);
+
+                
+                for (k = 0; k < ROW; k++) {
+                    temp = data[k][j];
+                    data[k][j] = data[k][j + 1];
+                    data[k][j + 1] = temp;
+                }
+            }
+        }
+    }
+}
