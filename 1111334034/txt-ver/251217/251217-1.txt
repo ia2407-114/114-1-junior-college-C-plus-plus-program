@@ -1,0 +1,60 @@
+﻿#include <stdio.h>
+
+int mid(int arr[3][10]) {
+	return arr[1][5];
+}
+void sort(int arr[3][10], double avg[]) {
+	int pass, i, temp;
+	double tempAvg;
+	int length = 10;
+
+	// loop to control number of passes                    
+	for (pass = 1; pass < length; ++pass) {
+
+		// loop to control number of comparisons per pass   
+		for (i = 0; i < length - 1; ++i) {
+
+			// compare adjacent elements and swap them if first 
+			// element is greater than second element           
+			if (avg[i] > avg[i + 1]) {
+				temp = arr[1][i];
+				arr[1][i] = arr[1][i + 1];
+				arr[1][i + 1] = temp;
+
+				temp = arr[0][i];
+				arr[0][i] = arr[0][i + 1];
+				arr[0][i + 1] = temp;
+
+				temp = arr[2][i];
+				arr[2][i] = arr[2][i + 1];
+				arr[2][i + 1] = temp;
+
+				tempAvg = avg[i];
+				avg[i] = avg[i + 1];
+				avg[i + 1] = tempAvg;
+			}
+		}
+	}
+}
+
+int main(void) {
+	int student[3][10];
+	double avg[10];
+	for (int i = 0; i < 10; i++) {
+		for (int j = 0; j < 3; j++) {
+			scanf_s("%d", &student[j][i]);
+		}
+		avg[i] = (student[1][i] + student[2][i]) / 2;
+	}
+
+	sort(student, avg);
+	printf("中位數: %d\n", mid(student));
+
+	puts("ID  計概  數學 平均");
+	for (int i = 0; i < 10; i++) {
+		printf("%-4d %-4d %-4d %-4lf\n", student[0][i], student[1][i], student[2][i], avg[i]);
+
+	}
+
+	
+}
