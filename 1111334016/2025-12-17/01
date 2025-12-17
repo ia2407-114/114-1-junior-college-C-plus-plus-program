@@ -1,0 +1,88 @@
+/* 題目1 :建立1個大小為3x10的二維整數陣列、一個浮點數陣列，
+二維整數陣列的第0、1、2列分別存放學號以及對應的計概、數學成績。
+浮點數陣列存放學生平均成績
+寫一個排序副程式，將二維整數陣列、浮點數陣列傳遞至副程式中，
+分別求出排序後的結果以及傳回中位數，
+最後由主程式計算出每個學生的平均成績放到浮點數陣列印出所有結果。*/
+
+#include <stdio.h>
+#define SIZE 10
+
+void sort_array(int stu[][10], float avg[], int n) {
+    int i, j, temp;
+    float temp1;
+
+    for (i = 0; i < n - 1; i++) {
+        for (j = 0; j < n - 1 - i; j++) {
+            if (avg[j] > avg[j + 1]) {
+
+                temp = stu[0][j];
+                stu[0][j] = stu[0][j + 1];
+                stu[0][j + 1] = temp;
+
+                temp = stu[1][j];
+                stu[1][j] = stu[1][j + 1];
+                stu[1][j + 1] = temp;
+
+                temp = stu[2][j];
+                stu[2][j] = stu[2][j + 1];
+                stu[2][j + 1] = temp;
+
+                temp1 = avg[j];
+                avg[j] = avg[j + 1];
+                avg[j + 1] = temp1;
+
+            }
+        }
+    }
+}
+
+
+int find_mid(float arr[], int n) {
+
+
+    return arr[n / 2];
+}
+
+
+
+int main() {
+    
+    int stu[3][10] = { { 11, 15, 13, 18, 12, 17, 14, 19, 16, 20 } ,{ 85, 92, 78, 85, 90, 85, 76, 95, 88, 85 } ,{ 70, 80, 75, 90, 85, 70, 82, 92, 88, 70 } };
+    float average_scores[SIZE];
+
+    int i;
+
+    for (i = 0; i < SIZE; i++) {
+        average_scores[i] = (float)(stu[1][i] + stu[1][2]) / 2.0;
+    }
+
+    printf("學號\t計概成績\t數學成績\t平均成績\n");
+    for (i = 0; i < SIZE; i++) {
+        printf("%d\t    %d\t\t    %d\t  %f\t\t\n", stu[0][i], stu[1][i], stu[2][i], average_scores[i]);
+    }
+    printf("\n");
+
+
+    sort_array(stu, average_scores, SIZE);
+    float avg_mode = find_mid(average_scores, SIZE);
+
+    /*sort_array(comp_sci_scores, SIZE);
+    int comp_sci_mode = find_mode(comp_sci_scores, SIZE);
+
+    sort_array(math_scores, SIZE);
+    int math_mode = find_mode(math_scores, SIZE);
+*/
+
+    printf("學號\t計概成績\t數學成績\t平均成績\n");
+    for (i = 0; i < SIZE; i++) {
+        printf("%d\t    %d\t\t    %d\t  %f\t\t\n", stu[0][i], stu[1][i], stu[2][i], average_scores[i]);
+    }
+    printf("\n");
+    printf("\n\n");
+
+
+    printf("平均中位數 ：%f\n", avg_mode);
+
+    return 0;
+}

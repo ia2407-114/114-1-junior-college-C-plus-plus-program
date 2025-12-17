@@ -1,0 +1,77 @@
+#include <stdio.h>
+#include <string.h>
+
+#define STU 10
+#define NAME_LEN 20
+#define ROW 3
+
+void sort(char name[STU][NAME_LEN], int score[ROW][STU], float avg[], int n) {
+    int i, j, k;
+    int temp;
+    float ftemp;
+    char tempName[NAME_LEN];
+
+    for (i = 0; i < n - 1; i++) {
+        for (j = 0; j < n - 1 - i; j++) {
+            if (avg[j] > avg[j + 1]) {
+
+                /* 交換平均 */
+                ftemp = avg[j];
+                avg[j] = avg[j + 1];
+                avg[j + 1] = ftemp;
+
+                /* 交換姓名 */
+                strcpy(tempName, name[j]);
+                strcpy(name[j], name[j + 1]);
+                strcpy(name[j + 1], tempName);
+
+                /* 交換成績與學號 */
+                for (k = 0; k < ROW; k++) {
+                    temp = score[k][j];
+                    score[k][j] = score[k][j + 1];
+                    score[k][j + 1] = temp;
+                }
+            }
+        }
+    }
+}
+
+int main() {
+    char name[STU][NAME_LEN] = {
+        "Amy", "Bob", "Cindy", "David", "Eva",
+        "Frank", "Grace", "Henry", "Ivy", "Jack"
+    };
+
+    int score[ROW][STU] = {
+        {11, 12, 13, 14, 15, 16, 17, 18, 19, 20}, // 學號
+        {85, 90, 78, 88, 92, 75, 80, 95, 87, 83}, // 計概
+        {70, 82, 75, 90, 85, 72, 88, 91, 84, 79}  // 數學
+    };
+
+    float avg[STU];
+    int i;
+
+
+    for (i = 0; i < STU; i++) {
+        avg[i] = (score[1][i] + score[2][i]) / 2.0;
+    }
+
+
+    printf("排序前\n");
+    printf("姓名\t學號\t計概\t數學\t平均\n");
+    for (i = 0; i < STU; i++) {
+        printf("%s\t%d\t%d\t%d\t%.1f\n",
+            name[i], score[0][i], score[1][i], score[2][i], avg[i]);
+    }
+
+    sort(name, score, avg, STU);
+
+    printf("\n排序後（依平均成績）\n");
+    printf("姓名\t學號\t計概\t數學\t平均\n");
+    for (i = 0; i < STU; i++) {
+        printf("%s\t%d\t%d\t%d\t%.1f\n",
+            name[i], score[0][i], score[1][i], score[2][i], avg[i]);
+    }
+
+    return 0;
+}
