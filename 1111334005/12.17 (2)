@@ -1,0 +1,83 @@
+#include <stdio.h>
+
+#define N 10
+#define NAME_LEN 20
+
+/* 排序副程式：依平均成績由小到大 */
+void sortData(char name[N][NAME_LEN], int data[3][N], float avg[N]) {
+    int i, j, k;
+    int tempInt;
+    float tempFloat;
+    char tempName[NAME_LEN];
+
+    for (i = 0; i < N - 1; i++) {
+        for (j = 0; j < N - 1 - i; j++) {
+            if (avg[j] > avg[j + 1]) {
+
+                /* 交換平均 */
+                tempFloat = avg[j];
+                avg[j] = avg[j + 1];
+                avg[j + 1] = tempFloat;
+
+                /* 交換姓名（不用 strcpy） */
+                for (k = 0; k < NAME_LEN; k++) {
+                    tempName[k] = name[j][k];
+                    name[j][k] = name[j + 1][k];
+                    name[j + 1][k] = tempName[k];
+                }
+
+                /* 交換學號 */
+                tempInt = data[0][j];
+                data[0][j] = data[0][j + 1];
+                data[0][j + 1] = tempInt;
+
+                /* 交換計概 */
+                tempInt = data[1][j];
+                data[1][j] = data[1][j + 1];
+                data[1][j + 1] = tempInt;
+
+                /* 交換數學 */
+                tempInt = data[2][j];
+                data[2][j] = data[2][j + 1];
+                data[2][j + 1] = tempInt;
+            }
+        }
+    }
+}
+
+int main() {
+    char name[N][NAME_LEN] = {
+        "Amy","Bob","Cindy","David","Eva",
+        "Frank","Grace","Helen","Ivan","Joy"
+    };
+
+    int data[3][N] = {
+        {101,102,103,104,105,106,107,108,109,110},
+        {80,75,90,60,85,70,95,88,76,84},
+        {78,82,88,65,80,72,92,90,74,86}
+    };
+
+    float avg[N];
+    int i;
+
+    /* 計算平均成績（明確轉型） */
+    for (i = 0; i < N; i++) {
+        avg[i] = (float)(data[1][i] + data[2][i]) / 2;
+    }
+
+    /* 排序 */
+    sortData(name, data, avg);
+
+    /* 輸出結果 */
+    printf("姓名\t學號\t計概\t數學\t平均\n");
+    for (i = 0; i < N; i++) {
+        printf("%s\t%d\t%d\t%d\t%.2f\n",
+            name[i],
+            data[0][i],
+            data[1][i],
+            data[2][i],
+            avg[i]);
+    }
+
+    return 0;
+}
