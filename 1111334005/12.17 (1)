@@ -1,0 +1,73 @@
+#include <stdio.h>
+
+#define N 10
+
+/* 排序副程式：依平均成績由小到大排序，並回傳中位數 */
+float sortAndMedian(int data[3][N], float avg[N]) {
+    int i, j;
+    int tempInt;
+    float tempFloat;
+
+    /* 泡沫排序法 */
+    for (i = 0; i < N - 1; i++) {
+        for (j = 0; j < N - 1 - i; j++) {
+            if (avg[j] > avg[j + 1]) {
+
+                /* 交換平均成績 */
+                tempFloat = avg[j];
+                avg[j] = avg[j + 1];
+                avg[j + 1] = tempFloat;
+
+                /* 同步交換學號、計概、數學 */
+                tempInt = data[0][j];
+                data[0][j] = data[0][j + 1];
+                data[0][j + 1] = tempInt;
+
+                tempInt = data[1][j];
+                data[1][j] = data[1][j + 1];
+                data[1][j + 1] = tempInt;
+
+                tempInt = data[2][j];
+                data[2][j] = data[2][j + 1];
+                data[2][j + 1] = tempInt;
+            }
+        }
+    }
+
+    /* 回傳中位數 */
+    if (N % 2 == 0)
+        return (avg[N / 2 - 1] + avg[N / 2]) / 2;
+    else
+        return avg[N / 2];
+}
+
+int main() {
+    int data[3][N] = {
+        {101,102,103,104,105,106,107,108,109,110},
+        {80,75,90,60,85,70,95,88,76,84},
+        {78,82,88,65,80,72,92,90,74,86}
+    };
+
+    float avg[N];
+    float median;
+    int i;
+
+    /* 計算平均成績 */
+    for (i = 0; i < N; i++) {
+        avg[i] = (data[1][i] + data[2][i]) / 2.0;
+    }
+
+    /* 呼叫排序副程式 */
+    median = sortAndMedian(data, avg);
+
+    /* 印出結果 */
+    printf("學號\t計概\t數學\t平均\n");
+    for (i = 0; i < N; i++) {
+        printf("%d\t%d\t%d\t%.2f\n",
+            data[0][i], data[1][i], data[2][i], avg[i]);
+    }
+
+    printf("\n中位數 = %.2f\n", median);
+
+    return 0;
+}
