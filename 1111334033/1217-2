@@ -1,7 +1,3 @@
-/* 題目2(加分題) 加入上述的程式片段:
-建立1個大小為10x20的二維字元陣列、1個大小為3x10的二維整數陣列、一個浮點數陣列，
-二維字元陣列存放10位同學的姓名，二維整數陣列的第1、2、3列分別存放學生 學號以及對應的計概、數學成績。浮點數陣列存放學生平均成績
-寫一個排序副程式，二維字元陣列、將二維整數陣列、浮點數陣列傳遞至副程式中，分別求出排序後的結果，最後由主程式印出所有結果。*/
 #define count 10
 #include <stdio.h>
 #include <string.h>
@@ -42,14 +38,10 @@ void sort(float avg[],char name[][20], int stu[3][count]) {
 				strcpy_s(name[j], name[j + 1]);
 				strcpy_s(name[j + 1], tempName);
 				
-				
 				for (int k = 0; k < 3; k++) {
 					temp = stu[k][j];
 					stu[k][j] = stu[k][j + 1];
 					stu[k][j + 1] = temp;
-
-
-
 				}
 			}
 		}
