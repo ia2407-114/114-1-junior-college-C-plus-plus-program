@@ -1,14 +1,11 @@
-
 #include <stdio.h>
 #define SIZE 10
 void sort_array(int stu[][10], float avg[], int n) {
     int i, j, temp;
     float temp1;
-
     for (i = 0; i < n - 1; i++) {
         for (j = 0; j < n - 1 - i; j++) {
             if (avg[j] > avg[j + 1]) {
-
                 temp = stu[0][j];
                 stu[0][j] = stu[0][j + 1];
                 stu[0][j + 1] = temp;
@@ -24,7 +21,6 @@ void sort_array(int stu[][10], float avg[], int n) {
                 temp1 = avg[j];
                 avg[j] = avg[j + 1];
                 avg[j + 1] = temp1;
-
             }
         }
     }
