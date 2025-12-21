@@ -83,6 +83,10 @@ int stu(char name[10][20], int me[3][10], float avg[10], int length) {
                     tempName[k] = name[j][k];
                     name[j][k] = name[j + 1][k];
                     name[j + 1][k] = tempName[k];
+//name[j] 和 name[j+1] 都是包含 20 個格子的字元陣列。這段 for 迴圈的用意是：從第 0 個字元開始，一直到第 19 個字元（k < 20）。
+第一步： 把 name[j] 的第 k 個字元暫存在 tempName[k]。
+第二步： 把 name[j+1] 的第 k 個字元覆蓋到 name[j]。
+第三步： 把剛才暫存的 tempName[k] 放回 name[j+1]。
                 }
             }
         }
