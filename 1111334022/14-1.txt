@@ -1,0 +1,46 @@
+#include <stdio.h>
+#define max 10
+void av(int a[][max], double d[]);
+int main() {
+    int a[3][max] = { { 11, 15, 13, 18, 12, 17, 14, 19, 16, 20 },
+    {85, 92, 78, 85, 90, 85, 76, 95, 88, 85 },
+    {70, 80, 75, 90, 85, 70, 82, 92, 88, 70 } };
+    double d[max];
+    for (int i=0; i < max; ++i) {
+		d[i] = (a[1][i]+a[2][i])/2;
+    }
+	av(a, d);
+    
+    return 0;
+}
+void av(int a[][max], double d[]) {
+    printf("排列前\n");
+    printf("學號  計概  數學  平均\n");
+    for (int i = 0; i < max; i++) {
+        printf("%d   %d   %d   %.2f\n",
+            a[0][i], a[1][i], a[2][i], d[i]);
+    }
+    for (int i = 0; i < max - 1; i++) {
+        for (int j = 0; j < max - 1 - i; j++) {
+            if (d[j] < d[j + 1]) {
+                
+                double temp = d[j];
+                d[j] = d[j + 1];
+                d[j + 1] = temp;
+
+                for (int k = 0; k < 3; k++) {
+                    int t = a[k][j];
+                    a[k][j] = a[k][j + 1];
+                    a[k][j + 1] = t;
+                }
+            }
+        }
+    }
+    printf("\n排列後\n");
+    printf("學號  計概  數學  平均\n");
+    for (int i = 0; i < max; i++) {
+        printf("%d   %d   %d   %.2f\n",
+            a[0][i], a[1][i], a[2][i], d[i]);
+    }
+    printf("\n中位數 = %.2f\n", (d[4] + d[5])/2.0);
+}
