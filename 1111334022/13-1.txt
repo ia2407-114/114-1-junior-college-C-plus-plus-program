@@ -1,0 +1,25 @@
+#include <stdio.h>
+#define SIZE 20
+
+
+int main(void)
+{
+   
+    int n[SIZE],i;
+    for (i = 0; i <Size++) {
+		printf("輸入第%d個數字 ", i + 1);
+		scanf_s("%d", &n[i]);
+    }
+    printf("%s%13s%17s\n", "Element", "Value", "Histogram");
+
+    
+    for (size_t i = 0; i < SIZE; ++i) {
+        printf("%7u%13d        ", i, n[i]);
+
+        for (int j = 1; j <= n[i]; ++j) { 
+            printf("%c", '*');
+        }
+
+        puts(""); 
+    }
+}
