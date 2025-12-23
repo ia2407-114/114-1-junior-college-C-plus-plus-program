@@ -1,0 +1,37 @@
+#include <stdio.h>
+#define SIZE 10
+#define NAME_LEN 20
+void sort_data(char name[SIZE][NAME_LEN],
+    int data[3][SIZE],
+    float avg[SIZE]);
+int main(void)
+{
+    char name[SIZE][NAME_LEN];
+    int data[3][SIZE];
+    float avg[SIZE];
+    int i;
+    for (i = 0; i < SIZE; i++) {
+        printf("輸入第 %d 位學生姓名：", i + 1);
+        scanf("%s", name[i]);
+        printf("輸入學號 計概 數學：");
+        scanf("%d %d %d",
+            &data[0][i],
+            &data[1][i],
+            &data[2][i]);
+    }
+    for (i = 0; i < SIZE; i++) {
+        avg[i] = (data[1][i] + data[2][i]) / 2.0;
+    }
+    sort_data(name, data, avg);
+    printf("\n排序後結果：\n");
+    printf("姓名\t學號\t計概\t數學\t平均\n");
+    for (i = 0; i < SIZE; i++) {
+        printf("%s\t%d\t%d\t%d\t%.1f\n",
+            name[i],
+            data[0][i],
+            data[1][i],
+            data[2][i],
+            avg[i]);
+    }
+    return 0;
+}

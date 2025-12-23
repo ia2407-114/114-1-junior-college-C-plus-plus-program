@@ -1,0 +1,37 @@
+#include <stdio.h>
+#define SIZE 10
+void sort_array(int data[3][SIZE], float avg[], int n);
+float find_mid(float arr[], int n);
+int main()
+{
+    int data[3][SIZE] = {
+        {11, 15, 13, 18, 12, 17, 14, 19, 16, 20},  
+        {85, 92, 78, 85, 90, 85, 76, 95, 88, 85},  
+        {70, 80, 75, 90, 85, 70, 82, 92, 88, 70}   
+    };
+    float avg[SIZE];
+    int i;
+    for (i = 0; i < SIZE; i++) {
+        avg[i] = (data[1][i] + data[2][i]) / 2.0;
+    }
+    cout << "排序前：\n";
+    cout << "學號\t計概\t數學\t平均\n";
+    for (i = 0; i < SIZE; i++) {
+        cout << data[0][i] << "\t"
+            << data[1][i] << "\t"
+            << data[2][i] << "\t"
+            << avg[i] << endl;
+    }
+    sort_array(data, avg, SIZE);
+    float median = find_mid(avg, SIZE);
+    cout << "\n排序後：\n";
+    cout << "學號\t計概\t數學\t平均\n";
+    for (i = 0; i < SIZE; i++) {
+        cout << data[0][i] << "\t"
+            << data[1][i] << "\t"
+            << data[2][i] << "\t"
+            << avg[i] << endl;
+    }
+    cout << "\n平均成績中位數 = " << median << endl;
+    return 0;
+}
