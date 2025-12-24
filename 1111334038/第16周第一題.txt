@@ -1,0 +1,32 @@
+#include <stdio.h>
+
+void swapInt(int* a, int* b) {
+    int temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+void swapFloat(float* a, float* b) {
+    float temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+int main() {
+
+    int x = 10, y = 20;
+    float m = 1.5f, n = 3.8f;
+
+    printf("交換前：\n");
+    printf("整數 x = %d, y = %d\n", x, y);
+    printf("浮點數 m = %.2f, n = %.2f\n", m, n);
+
+    swapInt(&x, &y);
+    swapFloat(&m, &n);
+
+    printf("\n交換後：\n");
+    printf("整數 x = %d, y = %d\n", x, y);
+    printf("浮點數 m = %.2f, n = %.2f\n", m, n);
+
+    return 0;
+}
