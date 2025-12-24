@@ -1,0 +1,29 @@
+#include <stdio.h>
+int main() {
+	void swap(int* x, int* y);
+	void swap_f(float* x, float* y);
+	int a1 = 85, a2 = 95;
+	float b1 = 65.0, b2 = 95.0;
+	printf("交換前整數變數值 = %d 與 %d\n", a1, a2);
+	printf("交換前浮點數變數值= %f 與 %f\n", b1, b2);
+	swap(&a1, &a2);
+	swap_f(&b1, &b2);
+	printf("交換後整數變數值 = %d 與 %d\n", a1, a2);
+	printf("交換後浮點數變數值= %f 與 %f\n", b1, b2);
+	return 0;
+}
+
+
+void swap(int* x, int* y) {
+	int temp;
+	temp = *x;
+	*x = *y;
+	*y = temp;
+}
+
+void swap_f(float* x, float* y) {
+	float temp;
+	temp = *x;
+	*x = *y;
+	*y = temp;
+}
