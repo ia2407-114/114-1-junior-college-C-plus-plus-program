@@ -1,0 +1,84 @@
+#include <stdio.h>
+#define SIZE 10
+
+void copy1(char* s1, const char* s2)
+{
+    for (; ((*s1 = *s2) != '\0'); ++s1, ++s2);
+}
+
+void swapInt(int* a, int* b)
+{
+    int temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+void swapFloat(float* a, float* b)
+{
+    float temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+void sort_array(char name[][20], int stu[][3], float avg[], int n)
+{
+    int i, j;
+
+    for (i = 0; i < n - 1; i++) {
+        for (j = 0; j < n - 1 - i; j++) {
+            if (avg[j] < avg[j + 1]) {
+
+                swapFloat(&avg[j], &avg[j + 1]);
+
+                char temp_name[20];
+                copy1(temp_name, name[j]);
+                copy1(name[j], name[j + 1]);
+                copy1(name[j + 1], temp_name);
+
+                swapInt(&stu[j][0], &stu[j + 1][0]); // 學號
+                swapInt(&stu[j][1], &stu[j + 1][1]); // 計概
+                swapInt(&stu[j][2], &stu[j + 1][2]); // 數學
+            }
+        }
+    }
+}
+
+int main()
+{
+    const char* name_ptr[SIZE] = {
+        "Danny","Mary","Jimmy","Peter","Sue",
+        "John","Hearts","Diamonds","Clubs","Spades"
+    };
+
+    char name[SIZE][20];
+
+    for (int i = 0; i < SIZE; i++)
+        copy1(name[i], name_ptr[i]);
+    int stu[SIZE][3] = {
+        {11,85,70},{15,92,80},{13,78,75},{18,85,90},{12,90,85},
+        {17,85,70},{14,76,82},{19,95,92},{16,88,88},{20,85,70}
+    };
+
+    float avg[SIZE];
+
+    for (int i = 0; i < SIZE; i++)
+        avg[i] = (stu[i][1] + stu[i][2]) / 2.0;
+
+    printf("排序前：\n");
+    printf("姓名\t學號\t計概\t數學\t平均\n");
+    for (int i = 0; i < SIZE; i++) {
+        printf("%s\t%d\t%d\t%d\t%.1f\n",
+            name[i], stu[i][0], stu[i][1], stu[i][2], avg[i]);
+    }
+
+    sort_array(name, stu, avg, SIZE);
+
+    printf("\n排序後（依平均成績）：\n");
+    printf("姓名\t學號\t計概\t數學\t平均\n");
+    for (int i = 0; i < SIZE; i++) {
+        printf("%s\t%d\t%d\t%d\t%.1f\n",
+            name[i], stu[i][0], stu[i][1], stu[i][2], avg[i]);
+    }
+
+    return 0;
+}
