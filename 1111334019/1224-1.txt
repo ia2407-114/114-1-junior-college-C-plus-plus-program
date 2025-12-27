@@ -35,7 +35,6 @@ void sort_array(char name[][20], int stu[][SIZE], float avg[], int n) {
         }
     }
 }
-
 int main() {
     const char* stu_name[SIZE] = {
         "Danny","Mary","Jimmy","Peter","Sue",
@@ -54,23 +53,24 @@ int main() {
     };
 
     float average_scores[SIZE];
-
     for (int i = 0; i < SIZE; i++) {
         average_scores[i] = (stu[1][i] + stu[2][i]) / 2.0f;
     }
+
     printf("排序前：\n");
     printf("姓名\t學號\t計概成績\t數學成績\t平均成績\n");
     for (int i = 0; i < SIZE; i++) {
         printf("%-10s\t%2d\t   %3d\t\t   %3d\t\t  %.2f\n",
             name[i], stu[0][i], stu[1][i], stu[2][i], average_scores[i]);
     }
+
     sort_array(name, stu, average_scores, SIZE);
+
     printf("\n排序後（依平均成績由大到小）：\n");
     printf("姓名\t學號\t計概成績\t數學成績\t平均成績\n");
     for (int i = 0; i < SIZE; i++) {
         printf("%-10s\t%2d\t   %3d\t\t   %3d\t\t  %.2f\n",
             name[i], stu[0][i], stu[1][i], stu[2][i], average_scores[i]);
     }
-
     return 0;
 }
