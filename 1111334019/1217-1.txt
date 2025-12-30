@@ -1,0 +1,48 @@
+#include <stdio.h>
+#define N 10
+double sort_and_median(int data[3][N], double avg[N]) {
+    int i, j, max;
+    for (i = 0; i < N - 1; i++) {
+        max = i;
+        for (j = i + 1; j < N; j++) {
+            if (avg[j] > avg[max]) {
+                max = j;
+            }
+        }
+        if (max != i) {
+            double temp_avg = avg[i];
+            avg[i] = avg[max];
+            avg[max] = temp_avg;
+            for (int k = 0; k < 3; k++) {
+                int temp = data[k][i];
+                data[k][i] = data[k][max];
+                data[k][max] = temp;
+            }
+        }
+    }
+    return (avg[4] + avg[5]) / 2.0;
+}
+
+int main() {
+    int data[3][N];
+    double avg[N];
+    int i;
+    for (i = 0; i < N; i++) {
+        printf("輸入第 %d 位學生（學號 計概 數學）：", i + 1);
+        scanf("%d %d %d", &data[0][i], &data[1][i], &data[2][i]);
+    }
+    for (i = 0; i < N; i++) {
+        avg[i] = (data[1][i] + data[2][i]) / 2.0;
+    }
+    double median = sort_and_median(data, avg);
+    printf("\n排序後結果：\n");
+    printf("學號\t計概\t數學\t平均\n");
+    for (i = 0; i < N; i++) {
+        printf("%d\t%d\t%d\t%.2f\n",
+            data[0][i], data[1][i], data[2][i], avg[i]);
+    }
+
+    printf("\n平均成績中位數：%.2f\n", median);
+
+    return 0;
+}
