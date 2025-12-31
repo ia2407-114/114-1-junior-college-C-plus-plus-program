@@ -1,0 +1,61 @@
+#include <stdio.h>
+
+#define SIZE 5
+
+// 定義學生結構
+typedef struct {
+    int id;             // 學號
+    char name[20];      // 姓名
+    int computer;       // 計算機概論
+    int math;           // 數學
+    float average;      // 平均成績
+} Student;
+
+// 二元搜尋副程式（依學號搜尋）
+int binarySearch(const Student s[], int searchKey, int low, int high)
+{
+    while (low <= high) {
+        int middle = (low + high) / 2;
+
+        if (searchKey == s[middle].id) {
+            return middle;   // 找到回傳陣列位置
+        }
+        else if (searchKey < s[middle].id) {
+            high = middle - 1;
+        }
+        else {
+            low = middle + 1;
+        }
+    }
+    return -1; // 找不到
+}
+
+int main(void){
+    Student students[SIZE] = {  // 已依學號排序的學生資料
+        {1001, "王小明", 85, 90, 87.5},
+        {1003, "李小華", 78, 82, 80.0},
+        {1005, "陳大同", 92, 88, 90.0},
+        {1008, "林小美", 70, 75, 72.5},
+        {1010, "張小強", 88, 84, 86.0}
+    };
+
+    int searchID;
+    printf("請輸入要查詢的學號：");
+    scanf_s("%d", &searchID);
+
+    int index = binarySearch(students, searchID, 0, SIZE - 1);
+
+    if (index != -1) {
+        printf("\n找到學生資料：\n");
+        printf("陣列位置：%d\n", index);
+        printf("學號：%d\n", students[index].id);
+        printf("姓名：%s\n", students[index].name);
+        printf("計算機概論：%d\n", students[index].computer);
+        printf("數學：%d\n", students[index].math);
+        printf("平均成績：%.2f\n", students[index].average);
+    }
+    else {
+        printf("\n查無此學號！\n");
+    }
+    return 0;
+}
