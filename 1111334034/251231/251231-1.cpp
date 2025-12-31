@@ -1,0 +1,138 @@
+/*題目1. 修改上面的程式碼，建立一個10*3整數陣列、一個10元素的福點數數陣列以
+及一個指標陣列name，將全班10人的學號，數學成績，計概成績放入整數陣列中(可直
+接置於程式內)，將全班10人的姓名放入指標陣列中。計算出每個學生的平均成績放入
+浮點數陣列中，並根據每個學生的平均分數，由大到小排序。需使用副程式與傳位址
+呼叫進行資料交換，字串交換副程式需使用p.333的拷貝副程式完成。*/
+#include <stdio.h>
+#include <string.h>
+#define SIZE 10
+
+
+void copy1(char* s1, const char* s2)
+{
+	for (; ((*s1 = *s2) != '\0'); ++s1, ++s2);
+}
+void swap(int* prt1, int* prt2) {
+	int temp = *prt1;
+	*prt1 = *prt2;
+	*prt2 = temp;
+}
+void swap_f(float* prt1, float* prt2) {
+	float temp = *prt1;
+	*prt1 = *prt2;
+	*prt2 = temp;
+}
+void sort_array(char name[][20], int stu[][SIZE], float avg[], int n) {
+	int i, j, temp;
+	float temp1;
+	char temp_name[20];
+
+	for (i = 0; i < n - 1; i++) {
+		for (j = 0; j < n - 1 - i; j++) {
+			if (avg[j] < avg[j + 1]) {
+
+				copy1(temp_name, name[j]);
+				copy1(name[j], name[j + 1]);
+				copy1(name[j + 1], temp_name);
+				swap(&stu[0][j], &stu[0][j + 1]);
+				swap(&stu[1][j], &stu[1][j + 1]);
+				swap(&stu[2][j], &stu[2][j + 1]);
+				swap_f(&avg[j], &avg[j + 1]);
+				/*swap_f(&avg[j], &avg[j + 1]);
+				temp = stu[0][j];
+				stu[0][j] = stu[0][j + 1];
+				stu[0][j + 1] = temp;
+
+				temp = stu[1][j];
+				stu[1][j] = stu[1][j + 1];
+				stu[1][j + 1] = temp;
+
+				temp = stu[2][j];
+				stu[2][j] = stu[2][j + 1];
+				stu[2][j + 1] = temp;
+
+				temp1 = avg[j];
+				avg[j] = avg[j + 1];
+				avg[j + 1] = temp1;*/
+
+			}
+		}
+	}
+}
+
+// function to perform binary search of an array
+size_t binarySearch(const int b[], int searchKey, size_t low, size_t high)
+{
+	// loop until low index is greater than high index
+	while (low <= high) {
+
+		// determine middle element of subarray being searched
+		size_t middle = (low + high) / 2;
+
+		// if searchKey matched middle element, return middle
+		if (searchKey == b[middle]) {
+			return middle;
+		}
+
+		// if searchKey is less than middle element, set new high
+		else if (searchKey < b[middle]) {
+			high = middle - 1; // search low end of array      
+		}
+
+		// if searchKey is greater than middle element, set new low
+		else {
+			low = middle + 1; // search high end of array        
+		}
+	} // end while
+
+	return -1; // searchKey not found
+}
+
+
+
+int main() {
+	const char* stu_name[SIZE] = { "Danny","Mary","Jimmy","Peter","Sue","John","Hearts", "Diamonds","Clubs","Spades" };
+	char stu1_name[10][20];
+	for (int i = 0; i < SIZE; i++)
+		copy1(stu1_name[i], stu_name[i]);
+
+	int stu[3][SIZE] = { { 11, 12, 23, 24, 35, 42, 47, 49, 52, 62 },
+	{ 85, 92, 78, 85, 90, 85, 76, 95, 88, 85 },
+	{ 70, 80, 75, 90, 85, 70, 82, 92, 88, 70 } };
+
+
+	float average_scores[SIZE];
+
+	printf("搜尋學號: ");
+	int search_key;
+	scanf_s("%d", &search_key);
+	int result = binarySearch(stu[0], search_key, 0, 9);
+	if (result == -1) {
+		printf("找不到資料\n");
+	}
+	else {
+		printf("名字: %s, 數學成績: %d, 計概成績: %d, 平均成績: %lf\n", stu1_name[result], stu[1][result], stu[2][result], (stu[1][result] + stu[2][result]) / 2.);
+	}
+
+	int i;
+
+	printf("排序前：\n");
+	printf("姓名\t學號\t計概成績\t數學成績\t平均成績\n"); \
+		for (i = 0; i < SIZE; i++) {
+			average_scores[i] = (stu[1][i] + stu[2][i]) / 2.0;
+		}
+	for (i = 0; i < SIZE; i++) {
+		printf("%s\t%d\t    %d\t\t    %d\t\t    %f\t\n", stu1_name[i], stu[0][i], stu[1][i], stu[2][i], average_scores[i]);
+	}
+
+	sort_array(stu1_name, stu, average_scores, SIZE);
+
+	printf("\n排序後（依平均成績）：\n");
+	printf("姓名\t學號\t計概成績\t數學成績\t平均成績\n"); \
+
+		for (i = 0; i < SIZE; i++) {
+			printf("%s\t%d\t    %d\t\t    %d\t\t    %f\t\n", stu1_name[i], stu[0][i], stu[1][i], stu[2][i], average_scores[i]);
+		}
+
+	return 0;
+}
