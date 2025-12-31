@@ -1,0 +1,63 @@
+#include <stdio.h>
+
+#define SIZE 10
+
+struct student {
+    int id;
+    int computer;
+    int math;
+    char name[20]; 
+    float avg;
+};
+
+void copy1(char* s1, const char* s2);
+void swap_struct(struct student* p1, struct student* p2);
+
+int main() {
+    struct student stud[SIZE] = {
+        {11, 70, 85, "Danny"},
+        {15, 80, 92, "Mary"},
+        {13, 75, 78, "Jimmy"},
+        {18, 90, 85, "Peter"},
+        {12, 85, 90, "Sue"},
+        {17, 70, 85, "John"},
+        {14, 82, 76, "Hearts"},
+        {19, 92, 95, "Diamonds"},
+        {16, 88, 88, "Clubs"},
+        {20, 70, 85, "Spades"}
+    };
+
+    for (int i = 0; i < SIZE; i++) {
+        stud[i].avg = (stud[i].math + stud[i].computer) / 2.0;
+    }
+
+    for (int i = 0; i < SIZE - 1; i++) {
+        for (int j = 0; j < SIZE - 1 - i; j++) {
+            if (stud[j].avg < stud[j + 1].avg) {
+                swap_struct(&stud[j], &stud[j + 1]);
+            }
+        }
+    }
+
+    printf("全班成績平均排名（由大到小）：\n");
+    printf("\n");
+    printf("學號\t姓名\t計概\t數學\t平均成績\n");
+    printf("\n");
+    for (int i = 0; i < SIZE; i++) {
+        printf("%d\t%s\t%d\t%d\t%.2f\n",
+            stud[i].id, stud[i].name, stud[i].computer, stud[i].math, stud[i].avg);
+    }
+    printf("\n");
+
+    return 0;
+}
+
+void copy1(char* s1, const char* s2) {
+    for (; ((*s1 = *s2) != '\0'); ++s1, ++s2);
+}
+
+void swap_struct(struct student* p1, struct student* p2) {
+    struct student temp = *p1;
+    *p1 = *p2;
+    *p2 = temp;
+}

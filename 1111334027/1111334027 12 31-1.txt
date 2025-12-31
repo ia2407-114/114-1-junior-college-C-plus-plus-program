@@ -1,0 +1,111 @@
+#include <stdio.h>
+#define SIZE 10
+
+void copy1(char* s1, const char* s2);                    
+void swap(int* ptr1, int* ptr2);                      
+void swap_f(float* ptr1, float* ptr2);                   
+void sort_by_id(char name[][20], int stu[3][SIZE], float avg[], int n);
+int binary_search(int id_array[], int n, int key);  
+
+int main() {
+
+    const char* stu_initial_name[SIZE] = { "Danny","Mary","Jimmy","Peter","Sue","John","Hearts", "Diamonds","Clubs","Spades" };
+    char stu1_name[SIZE][20];
+
+    int stu[3][SIZE] = { { 11, 15, 13, 18, 12, 17, 14, 19, 16, 20 },
+                         { 85, 92, 78, 85, 90, 85, 76, 95, 88, 85 },
+                         { 70, 80, 75, 90, 85, 70, 82, 92, 88, 70 } };
+
+    float average_scores[SIZE];
+
+    for (int i = 0; i < SIZE; i++) {
+        copy1(stu1_name[i], stu_initial_name[i]);
+        average_scores[i] = (stu[1][i] + stu[2][i]) / 2.0;
+    }
+
+    sort_by_id(stu1_name, stu, average_scores, SIZE);
+
+    printf("全班成績清單 (依學號排序)：\n");
+    printf("\n");
+    printf("學號\t姓名\t計概\t數學\t平均\n");
+    for (int i = 0; i < SIZE; i++) {
+        printf("%d\t%s\t%d\t%d\t%.2f\n",
+            stu[0][i], stu1_name[i], stu[2][i], stu[1][i], average_scores[i]);
+    }
+    printf("\n\n");
+
+
+    int search_id;
+    printf("請輸入要查詢的學號: ");
+    scanf_s("%d", &search_id);
+
+    int position = binary_search(stu[0], SIZE, search_id);
+
+    if (position != -1) {
+        printf("\n[搜尋成功]");
+        printf("\n");
+        printf("姓名: %s\n", stu1_name[position]);
+        printf("學號: %d\n", stu[0][position]);
+        printf("計算機概論: %d\n", stu[2][position]);
+        printf("數學成績: %d\n", stu[1][position]);
+        printf("平均成績: %.2f\n", average_scores[position]);
+        printf("\n");
+    }
+    else {
+        printf("\n[搜尋失敗] 找不到學號 %d 的學生資料。\n", search_id);
+    }
+
+    return 0;
+}
+
+
+void copy1(char* s1, const char* s2) {
+    for (; ((*s1 = *s2) != '\0'); ++s1, ++s2);
+}
+
+void swap(int* ptr1, int* ptr2) {
+    int temp = *ptr1;
+    *ptr1 = *ptr2;
+    *ptr2 = temp;
+}
+
+void swap_f(float* ptr1, float* ptr2) {
+    float temp = *ptr1;
+    *ptr1 = *ptr2;
+    *ptr2 = temp;
+}
+
+void sort_by_id(char name[][20], int stu[3][SIZE], float avg[], int n) {
+    char temp_name[20];
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = 0; j < n - 1 - i; j++) {
+            if (stu[0][j] > stu[0][j + 1]) {
+                copy1(temp_name, name[j]);
+                copy1(name[j], name[j + 1]);
+                copy1(name[j + 1], temp_name);
+                swap(&stu[0][j], &stu[0][j + 1]);
+                swap(&stu[1][j], &stu[1][j + 1]);
+                swap(&stu[2][j], &stu[2][j + 1]);
+                swap_f(&avg[j], &avg[j + 1]);
+            }
+        }
+    }
+}
+
+int binary_search(int id_array[], int n, int key) {
+    int low = 0, high = n - 1;
+
+        while (low <= high) {
+            int mid = (low + high) / 2;
+            if (id_array[mid] == key) {
+                return mid;
+            }
+            else if (id_array[mid] < key) {
+                low = mid + 1;
+            }
+            else {
+                high = mid - 1;
+            }
+        }
+    return -1; 
+}
