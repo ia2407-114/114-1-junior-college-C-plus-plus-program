@@ -1,0 +1,30 @@
+// function to perform binary search of an array
+size_t binarySearch(const int b[], int searchKey, size_t low, size_t high)
+{
+   // loop until low index is greater than high index
+   while (low <= high) {
+
+      // determine middle element of subarray being searched
+      size_t middle = (low + high) / 2;
+
+      // display subarray used in this loop iteration
+      printRow(b, low, middle, high);
+
+      // if searchKey matched middle element, return middle
+      if (searchKey == b[middle]) {                       
+         return middle;                                       
+      }                                           
+
+      // if searchKey is less than middle element, set new high
+      else if (searchKey < b[middle]) {                    
+         high = middle - 1; // search low end of array      
+      }                                     
+
+      // if searchKey is greater than middle element, set new low
+      else {                                                     
+         low = middle + 1; // search high end of array        
+      }                                            
+   } // end while
+
+   return -1; // searchKey not found
+}
