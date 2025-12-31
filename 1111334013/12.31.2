@@ -1,0 +1,36 @@
+#include <stdio.h>
+#define SIZE 5
+struct student { // 定義學生結構
+    int id, computer, math;
+    char name[20];
+    float avg;
+};
+
+int main(void){
+    int i;
+    struct student stud[SIZE] = {  // 建立結構陣列並輸入學生資料
+        {1001, 85, 90, "王小明", 0},
+        {1003, 78, 82, "李小華", 0},
+        {1005, 92, 88, "陳大同", 0},
+        {1008, 70, 75, "林小美", 0},
+        {1010, 88, 84, "張小強", 0}
+    };
+
+    for (i = 0; i < SIZE; i++) {  // 計算每位學生的平均成績
+        stud[i].avg = (stud[i].computer + stud[i].math) / 2.0;
+    }
+
+    // 印出整個結構陣列內容
+    printf("學號\t姓名\t\t計算機\t數學\t平均\n");
+    printf("--------------------------------------------------\n");
+
+    for (i = 0; i < SIZE; i++) {
+        printf("%d\t%-8s\t%d\t%d\t%.2f\n",
+            stud[i].id,
+            stud[i].name,
+            stud[i].computer,
+            stud[i].math,
+            stud[i].avg);
+    }
+    return 0;
+}
