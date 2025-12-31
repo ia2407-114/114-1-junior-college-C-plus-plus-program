@@ -1,0 +1,107 @@
+/*題目1. 修改上面的程式碼，建立一個10*3整數陣列、一個10元素的福點數數陣列以
+及一個指標陣列name，將全班10人的學號，數學成績，計概成績放入整數陣列中(可直
+接置於程式內)，將全班10人的姓名放入指標陣列中。計算出每個學生的平均成績放入
+浮點數陣列中，並根據每個學生的平均分數，由大到小排序。需使用副程式與傳位址
+呼叫進行資料交換，字串交換副程式需使用p.333的拷貝副程式完成。*/
+#include <stdio.h>
+#include <string.h>
+#define SIZE 10
+
+struct student {
+	int id, computer, math;
+	char name[20];
+	float avg;
+};
+
+
+void copy1(char* s1, const char* s2)
+{
+	for (; ((*s1 = *s2) != '\0'); ++s1, ++s2);
+}
+void swap(int* prt1, int* prt2) {
+	int temp = *prt1;
+	*prt1 = *prt2;
+	*prt2 = temp;
+}
+void swap_f(float* prt1, float* prt2) {
+	float temp = *prt1;
+	*prt1 = *prt2;
+	*prt2 = temp;
+}
+void sort_struct(student stu[SIZE], int n) {
+	int i, j, temp;
+	float temp1;
+	char temp_name[20];
+
+	for (i = 0; i < n - 1; i++) {
+		for (j = 0; j < n - 1 - i; j++) {
+			if (stu[j].avg < stu[j+1].avg) {
+				copy1(temp_name, stu[j].name);
+				copy1(stu[j].name, stu[j+1].name);
+				copy1(stu[j+1].name, temp_name);
+				swap(&stu[j].id, &stu[j + 1].id);
+				swap(&stu[j].computer, &stu[j + 1].computer);
+				swap(&stu[j].math, &stu[j + 1].math);
+				swap_f(&stu[j].avg, &stu[j].avg);
+				/*swap_f(&avg[j], &avg[j + 1]);
+				temp = stu[0][j];
+				stu[0][j] = stu[0][j + 1];
+				stu[0][j + 1] = temp;
+
+				temp = stu[1][j];
+				stu[1][j] = stu[1][j + 1];
+				stu[1][j + 1] = temp;
+
+				temp = stu[2][j];
+				stu[2][j] = stu[2][j + 1];
+				stu[2][j + 1] = temp;
+
+				temp1 = avg[j];
+				avg[j] = avg[j + 1];
+				avg[j + 1] = temp1;*/
+
+			}
+		}
+	}
+}
+
+
+
+
+int main() {
+	struct student stu[SIZE] = {
+		{ 11, 85, 70, "Danny"},
+		{ 15, 92, 80, "Mary"},
+		{ 13, 78, 75, "Jimmy"},
+		{ 18, 85, 90, "Peter" },
+		{ 12, 90, 85, "Sue"},
+		{ 17, 85, 70, "John" },
+		{ 14, 76, 82, "Hearts"},
+		{ 19, 95, 92, "Diamonds"},
+		{ 16, 88, 88, "Clubs" },
+		{ 20, 85, 70, "Spades" }
+	};
+
+	int i;
+
+	printf("姓名\t學號\t計概成績\t數學成績\t平均成績\n");
+	for (i = 0; i < SIZE; i++) {
+		stu[i].avg = (stu[i].math + stu[i].computer) / 2.;
+	}
+
+	for (i = 0; i < SIZE; i++) {
+		printf("%s\t%d\t    %d\t\t    %d\t\t    %f\t\n", stu[i].name, stu[i].id, stu[i].computer, stu[i].math, stu[i].avg);
+	}
+
+	/*sort_struct(stu, SIZE);
+
+	printf("\n排序後（依平均成績）：\n");
+	printf("姓名\t學號\t計概成績\t數學成績\t平均成績\n"); \
+
+		for (i = 0; i < SIZE; i++) {
+			printf("%s\t%d\t    %d\t\t    %d\t\t    %f\t\n", stu[i].name, stu[i].id, stu[i].computer, stu[i].math, stu[i].avg);
+		}*/
+
+
+	return 0;
+}
