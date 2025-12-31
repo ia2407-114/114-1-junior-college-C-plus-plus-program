@@ -1,0 +1,47 @@
+#include <stdio.h>
+#define SIZE 10
+
+struct student {
+    int id;
+    int computer;
+    int math;
+    char name[20];
+    float avg;
+};
+
+int main()
+{
+    struct student stud[SIZE] =
+    {
+        {11, 70, 85, "Danny", 0},
+        {15, 80, 92, "Mary", 0},
+        {13, 75, 78, "Jimmy", 0},
+        {18, 90, 85, "Peter", 0},
+        {12, 85, 90, "Sue", 0},
+        {17, 70, 85, "John", 0},
+        {14, 82, 76, "Hearts", 0},
+        {19, 92, 95, "Diamonds", 0},
+        {16, 88, 88, "Clubs", 0},
+        {20, 70, 85, "Spades", 0}
+    };
+
+    int i;
+
+    for (i = 0; i < SIZE; i++)
+    {
+        stud[i].avg = (stud[i].computer + stud[i].math) / 2.0;
+    }
+
+    printf("姓名\t學號\t計概\t數學\t平均\n");
+    for (i = 0; i < SIZE; i++)
+    {
+        printf("%s\t%d\t%d\t%d\t%.1f\n",
+            stud[i].name,
+            stud[i].id,
+            stud[i].computer,
+            stud[i].math,
+            stud[i].avg);
+    }
+
+    return 0;
+}
