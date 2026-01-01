@@ -1,0 +1,37 @@
+/*題目2.修改下列的程式碼，留下學生資料並放入結構陣列變數stud[]之中，內容如下:
+struct student {
+    int id, computer, math;
+    char name[20];
+    float avg;
+};
+計算結構陣列中每一位同學的平均成績後放回結構中的平均變數內，並將整個結構內容印出*/
+#include <stdio.h>
+#include <string.h>
+#define SIZE 10
+struct student {  //事先定義
+    int id, computer, math;
+    char name[20];
+    float avg;
+};
+int main() {
+    struct student stu[SIZE] = { {11,85,70,"Danny"},
+                               { 15,95,80,"Mary"},
+                               { 23,78,75,"Jimmy" },
+                               { 33,85,90,"Peter"},
+                               { 42,90,85,"Sue" },
+                               { 46,85,70,"John"},
+                               { 57,76,82,"Hearts"},
+                               { 79,95,92, "Dia"},
+                               { 85,88,88,"Clubs" },
+                               { 95,85,70,"Spades"} };
+    int i;
+
+    printf("姓名\t學號\t計概成績\t數學成績\t平均成績\n");
+    for (i = 0; i < SIZE; i++) {
+        stu[i].avg = (stu[i].math + stu[i].computer) / 2.;
+    }
+
+    for (i = 0; i < SIZE; i++) {
+        printf("%s\t%d\t    %d\t\t    %d\t\t    %f\t\n", stu[i].name, stu[i].id, stu[i].computer, stu[i].math, stu[i].avg);
+   return 0;
+}
