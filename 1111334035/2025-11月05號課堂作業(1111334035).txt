@@ -1,0 +1,254 @@
+老師給的
+
+/* 建立與呼叫函數 */
+#include <stdio.h>
+int play(int);
+
+/* 在main()函數呼叫play()函數 */
+int main()
+{
+    int t;
+    printf("請輸入要印出的星星數量...\n");
+    scanf_s("%d", &t);
+    play(t);            /* 呼叫函數 */
+    printf("結束玩遊戲...\n");
+
+    printf("請輸入要印出的星星數量...\n");
+    scanf_s("%d", &t);
+    play(t);            /* 呼叫函數 */
+    printf("結束玩遊戲...\n");
+
+    printf("請輸入要印出的星星數量...\n");
+    scanf_s("%d", &t);
+    play(t);            /* 呼叫函數 */
+    printf("結束玩遊戲...\n");
+
+    printf("請輸入要印出的星星數量...\n");
+    scanf_s("%d", &t);
+    play(t);            /* 呼叫函數 */
+    printf("結束玩遊戲...\n");
+
+
+    return 0;
+}
+
+
+/* play()函數的定義 */
+int play(int times)
+{
+    int i;
+    for (i = 0; i< times; i++)
+        printf("*");
+    printf("玩一次遊戲\n");
+    return 0;
+}
+
+
+副程式
+
+題目3:請輸入一個整數表示所需的項目數量n，根據pi的近似公式pi=4-4/3+4/5-4/7+4/9-4/11+...，利用continue指令，計算出pi的近似值
+
+double approximate_pi(int n) {
+    int i;
+    double pi_approx = 0.0;
+    double sign = 1.0;
+
+    for (i = 0; i < n; i++) {
+        double denominator = 2.0 * i + 1.0;
+        pi_approx += sign * (4.0 / denominator);
+        sign *= -1.0;
+    }
+
+    return pi_approx;
+}
+
+
+
+題目一(不懂)
+
+承繼上週題目3，建立七個副程式，其中一個利用給定的副程式與傳入整數n求出pi的近似值
+
+剩下六個函數利用第一個函數傳回的pi值分別計算出: 圓周長、圓面積、球體積、球表面積、圓柱體積、圓柱表面積，並將個別結果傳回主程式並且印出
+
+
+
+#include <stdio.h>
+#include <math.h>
+
+/* 函數原型宣告 */
+double approximate_pi(int n);                   // 1. 用傳入的整數 n 求出 pi 近似值 (使用 continue)
+double circleCircumference(double pi, double r); // 2. 圓周長
+double circleArea(double pi, double r);          // 3. 圓面積
+double sphereVolume(double pi, double r);        // 4. 球體積
+double sphereArea(double pi, double r);          // 5. 球表面積
+double cylinderVolume(double pi, double r, double h); // 6. 圓柱體積
+double cylinderArea(double pi, double r, double h);   // 7. 圓柱表面積
+
+/* 主程式 */
+int main(void)
+{
+    int n;
+    double r, h;
+    double pi;
+    double cCircum, cArea, sVolume, sArea, cyVolume, cyArea;
+
+    printf("請輸入 n (決定 pi 近似精度): ");
+    scanf("%d", &n);
+
+    printf("請輸入半徑 r: ");
+    scanf("%lf", &r);
+
+    printf("請輸入圓柱高度 h: ");
+    scanf("%lf", &h);
+
+    /* 呼叫 approximate_pi() 求出 pi */
+    pi = approximate_pi(n);
+
+    printf("\n近似的 pi = %.10f\n\n", pi);
+
+    /* 計算各幾何量 */
+    cCircum = circleCircumference(pi, r);
+    cArea = circleArea(pi, r);
+    sVolume = sphereVolume(pi, r);
+    sArea = sphereArea(pi, r);
+    cyVolume = cylinderVolume(pi, r, h);
+    cyArea = cylinderArea(pi, r, h);
+
+    /* 顯示結果 */
+    printf("圓周長 = %.4f\n", cCircum);
+    printf("圓面積 = %.4f\n", cArea);
+    printf("球體積 = %.4f\n", sVolume);
+    printf("球表面積 = %.4f\n", sArea);
+    printf("圓柱體積 = %.4f\n", cyVolume);
+    printf("圓柱表面積 = %.4f\n", cyArea);
+
+    return 0;
+}
+
+/* 1. 利用傳入的整數 n 求出 pi 的近似值 (使用 continue) */
+double approximate_pi(int n)
+{
+    int i;
+    double pi_approx = 0.0;
+
+    for (i = 0; i < n; i++)
+    {
+        double denominator = 2.0 * i + 1.0;
+
+        if (denominator == 0)  // 不可能發生，但展示 continue 用法
+            continue;
+
+        if (i % 2 == 0)
+            pi_approx += (4.0 / denominator);
+        else
+            pi_approx -= (4.0 / denominator);
+    }
+
+    return pi_approx;
+}
+
+/* 2. 圓周長 */
+double circleCircumference(double pi, double r)
+{
+    return 2.0 * pi * r;
+}
+
+/* 3. 圓面積 */
+double circleArea(double pi, double r)
+{
+    return pi * r * r;
+}
+
+/* 4. 球體積 */
+double sphereVolume(double pi, double r)
+{
+    return (4.0 / 3.0) * pi * pow(r, 3);
+}
+
+/* 5. 球表面積 */
+double sphereArea(double pi, double r)
+{
+    return 4.0 * pi * r * r;
+}
+
+/* 6. 圓柱體積 */
+double cylinderVolume(double pi, double r, double h)
+{
+    return pi * r * r * h;
+}
+
+/* 7. 圓柱表面積 */
+double cylinderArea(double pi, double r, double h)
+{
+    return 2.0 * pi * r * (r + h);
+}
+
+
+
+
+題目二
+
+承襲第6週的題目2，寫一個主程式，從鍵盤輸入本金(p) 年利率(r)，每年年底定期定額存入金額，以及存款目標(aim)，再寫一個副程式，計算需要幾年才能達成目標，並傳回年數(int型態)。
+
+/* 建立與呼叫使用者自訂函數 */
+#include <stdio.h>
+
+/* 1. 函數的原型宣告 (prototype) */
+int calcYears(double p, double r, double deposit, double aims);
+
+/* 在 main() 函數呼叫 calcYears() 函數 */
+int main()
+{
+    double p;        // 本金
+    double r;        // 年利率
+    double deposit;  // 每年定期定額存入金額
+    double aims;     // 存款目標
+    int years;       // 所需年數
+
+    printf("請輸入本金：");
+    scanf_s("%lf", &p);
+
+    printf("輸入年利率：");
+    scanf_s("%lf", &r);
+
+    printf("輸入每年定期定額存入金額：");
+    scanf_s("%lf", &deposit);
+
+    printf("輸入存款目標金額：");
+    scanf_s("%lf", &aims);
+
+    /* 3. 函數的呼叫 */
+    years = calcYears(p, r, deposit, aims);
+
+    printf("\n達成目標共需 %d 年。\n", years);
+
+    return 0;
+}
+
+/* 2. 函數的定義 */
+int calcYears(double p, double r, double deposit, double aims)
+{
+    int years = 0;
+    printf("\n年份\t本利合\n");
+
+    while (p < aims)
+    {
+        p = p * (1 + r) + deposit;  // 複利 + 定期定額
+        years++;
+        printf("%d\t%.2lf\n", years, p);
+    }
+
+    return years;
+}
+
+
+
+第三題
+
+輸入一個整數表示所需的項目數量n，根據pi的近似公式pi=4-4/3+4/5-4/7+4/9-4/11+...，利用continue指令，計算出pi的近似值
+
+
+
+
+
+
