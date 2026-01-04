@@ -1,0 +1,159 @@
+
+題目1 : 根據上面的級數，由主程式輸入n。並建立一個遞迴副程式，負責計算n!，再由主程式計算出e值。
+
+#include <stdio.h>
+
+/* 遞迴函式宣告 */
+double factorial(int n);
+
+int main()
+{
+    int i, n;       /* 宣告變數 */
+    double e = 1.0; /* 因為 e = 1 + ... */
+
+    printf("請輸入 n：");
+    scanf("%d", &n);
+
+    /* 計算 e 值 */
+    for(i = 1; i <= n; i++)
+    {
+        e += 1.0 / factorial(i);
+    }
+
+    printf("e 的近似值 = %lf\n", e);
+
+    return 0;
+}
+
+/* 遞迴副程式：計算 n! */
+double factorial(int n)
+{
+    if(n == 0)
+        return 1;           /* 0! = 1 */
+    else
+        return n * factorial(n - 1);
+}
+
+
+
+
+題目2 :根據上面的級數，由主程式輸入n，x值。並建立兩個遞迴程式，分別計算X^n與n!，再由主程式計算出e^x值。
+
+#include <stdio.h>
+
+/* 遞迴函式宣告 */
+double factorial(int n);
+double power(double x, int n);
+
+int main()
+{
+    int i, n;          /* 宣告變數 */
+    double x, ex = 1;  /* e^x 起始為 1 */
+
+    printf("請輸入 n：");
+    scanf("%d", &n);
+
+    printf("請輸入 x：");
+    scanf("%lf", &x);
+
+    /* 計算 e^x 的級數 */
+    for(i = 1; i <= n; i++)
+    {
+        ex += power(x, i) / factorial(i);
+    }
+
+    printf("e^x 的近似值 = %lf\n", ex);
+
+    return 0;
+}
+
+/* 遞迴副程式：計算 n! */
+double factorial(int n)
+{
+    if(n == 0)
+        return 1;       /* 0! = 1 */
+    else
+        return n * factorial(n - 1);
+}
+
+/* 遞迴副程式：計算 x^n */
+double power(double x, int n)
+{
+    if(n == 0)
+        return 1;       /* x^0 = 1 */
+    else
+        return x * power(x, n - 1);
+}
+
+
+
+題目3 : 承上題，在主程式宣告一個大小為m的整數陣列terms[m]，再由主程式輸入n與 x值且n<m。建立兩個遞迴程式，分別計算X^n與n!，再由主程式計算出e^x值，並且將級數每一項的質放入陣列terms中。
+
+#include <stdio.h>
+
+#define m 20   /* 陣列大小，可自行調整 */
+
+/* 遞迴函式宣告 */
+double factorial(int n);
+double power(double x, int n);
+
+int main()
+{
+    int i, n;              /* 宣告變數 */
+    double x, ex = 1;      /* e^x 初始為 1 */
+
+    int terms[m];          /* 整數陣列 */
+
+    printf("請輸入 n (n < %d)：", m);
+    scanf("%d", &n);
+
+    if(n >= m)
+    {
+        printf("n 超出陣列大小範圍!\n");
+        return 0;
+    }
+
+    printf("請輸入 x：");
+    scanf("%lf", &x);
+
+    /* 計算 e^x 的級數並存到陣列 terms 中 */
+    for(i = 1; i <= n; i++)
+    {
+        double term = power(x, i) / factorial(i);   /* 第 i 項值 */
+        ex += term;
+
+        terms[i] = (int)term;   /* 題目要求整數陣列，因此轉成 int */
+    }
+
+    printf("e^x 的近似值 = %lf\n", ex);
+
+    /* 顯示陣列內容（每一項級數） */
+    printf("\n級數各項存入陣列 terms[]：\n");
+    for(i = 1; i <= n; i++)
+    {
+        printf("terms[%d] = %d\n", i, terms[i]);
+    }
+
+    return 0;
+}
+
+/* 遞迴副程式：計算 n! */
+double factorial(int n)
+{
+    if(n == 0)
+        return 1;
+    else
+        return n * factorial(n - 1);
+}
+
+/* 遞迴副程式：計算 x^n */
+double power(double x, int n)
+{
+    if(n == 0)
+        return 1;
+    else
+        return x * power(x, n - 1);
+}
+
+
+
