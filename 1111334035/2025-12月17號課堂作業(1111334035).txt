@@ -1,0 +1,110 @@
+第一題
+
+
+#include <stdio.h>
+#define SIZE 10
+void sort_array(int stu[][10], float avg[], int n) {
+    int i, j, temp;
+    float temp1;
+    for (i = 0; i < n - 1; i++) {
+        for (j = 0; j < n - 1 - i; j++) {
+            if (avg[j] > avg[j + 1]) {
+                temp = stu[0][j];
+                stu[0][j] = stu[0][j + 1];
+                stu[0][j + 1] = temp;
+
+                temp = stu[1][j];
+                stu[1][j] = stu[1][j + 1];
+                stu[1][j + 1] = temp;
+
+                temp = stu[2][j];
+                stu[2][j] = stu[2][j + 1];
+                stu[2][j + 1] = temp;
+
+                temp1 = avg[j];
+                avg[j] = avg[j + 1];
+                avg[j + 1] = temp1;
+            }
+        }
+    }
+}
+int find_mid(float arr[], int n) {
+    return arr[n / 2];
+}
+int main() {
+
+    int stu[3][10] = { { 11, 15, 13, 18, 12, 17, 14, 19, 16, 20 } ,
+                       { 85, 92, 78, 85, 90, 85, 76, 95, 88, 85 } ,
+                       { 70, 80, 75, 90, 85, 70, 82, 92, 88, 70 } };
+    float average_scores[SIZE];
+    for (int i = 0; i < SIZE; i++) {
+        average_scores[i] = (stu[1][i] + stu[2][i]) / 2.0;
+    }
+    printf("學號\t計概成績\t數學成績\t平均成績\n");
+    for (int i = 0; i < SIZE; i++) {
+        printf("%d\t    %d\t\t    %d\t  %f\t\t\n", stu[0][i], stu[1][i], stu[2][i], average_scores[i]);
+    }
+    printf("\n");
+    sort_array(stu, average_scores, SIZE);
+    float avg_mode = find_mid(average_scores, SIZE);
+    printf("學號\t計概成績\t數學成績\t平均成績\n");
+    for (int i = 0; i < SIZE; i++) {
+        printf("%d\t    %d\t\t    %d\t  %f\t\t\n", stu[0][i], stu[1][i], stu[2][i], average_scores[i]);
+    }
+    printf("\n");
+    printf("\n\n");
+    printf("平均中位數 ：%f\n", avg_mode);
+    return 0;
+}
+
+第二題
+
+#define count 10
+#include <stdio.h>
+#include <string.h>
+void sort(float avg[],char name[][20],int stu[3][count]);
+int main()
+{
+	char name[count][20] = { "A","B","C","D" ,"E" ,"F" ,"G" ,"H" ,"I" ,"J" };
+	int stu[3][count] = { { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 } ,
+					  { 85, 92, 78, 85, 90, 85, 76, 95, 88, 85 } ,
+					  { 70, 80, 75, 90, 85, 70, 82, 92, 88, 70 } };
+	float avg[count];
+	for (int i = 0; i < count; i++) {
+		avg[i] = (stu[1][i] + stu[2][i]) / 2.0;
+	}
+	printf("姓名\t學號\t計概\t數學\t平均\n");
+	for (int i = 0; i < count; i++) {
+		printf("%s\t%d\t%d\t%d\t%.1f\n", name[i],stu[0][i], stu[1][i], stu[2][i],avg[i]);
+	}
+	sort(avg,name,stu);
+	printf("姓名\t學號\t計概\t數學\t平均\n");
+	for (int i = 0; i < count; i++) {
+		printf("%s\t%d\t%d\t%d\t%.1f\n", name[i], stu[0][i], stu[1][i], stu[2][i], avg[i]);
+	}
+	return 0;
+}
+void sort(float avg[],char name[][20], int stu[3][count]) {
+	float tempAvg = 0;
+	char tempName[20] ;
+	int temp = 0;
+	for (int i = 0; i < count-1; i++) {
+		for (int j = 0; j < count - 1 - i; j++) {
+			if (avg[j] > avg[j + 1]) {
+				tempAvg = avg[j];
+				avg[j] = avg[j + 1];
+				avg[j + 1] = tempAvg;
+
+				strcpy_s(tempName, name[j]);
+				strcpy_s(name[j], name[j + 1]);
+				strcpy_s(name[j + 1], tempName);
+				
+				for (int k = 0; k < 3; k++) {
+					temp = stu[k][j];
+					stu[k][j] = stu[k][j + 1];
+					stu[k][j + 1] = temp;
+				}
+			}
+		}
+	}
+}
