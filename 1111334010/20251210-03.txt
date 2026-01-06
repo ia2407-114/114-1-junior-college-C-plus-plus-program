@@ -1,0 +1,107 @@
+#include <stdio.h>
+
+#define N 10
+
+/* 排序副程式（依平均成績由小到大） */
+void sort(int id[], int cs[], int math[], float avg[])
+{
+    int i, j;
+    int tempI;
+    float tempF;
+
+    for (i = 0; i < N - 1; i++)
+    {
+        for (j = 0; j < N - 1 - i; j++)
+        {
+            if (avg[j] > avg[j + 1])
+            {
+                /* 平均成績交換 */
+                tempF = avg[j];
+                avg[j] = avg[j + 1];
+                avg[j + 1] = tempF;
+
+                /* 學號交換 */
+                tempI = id[j];
+                id[j] = id[j + 1];
+                id[j + 1] = tempI;
+
+                /* 計概交換 */
+                tempI = cs[j];
+                cs[j] = cs[j + 1];
+                cs[j + 1] = tempI;
+
+                /* 數學交換 */
+                tempI = math[j];
+                math[j] = math[j + 1];
+                math[j + 1] = tempI;
+            }
+        }
+    }
+}
+
+/* 眾數副程式（以平均成績整數部分計算） */
+int mode(float avg[])
+{
+    int count, maxCount = 0;
+    int modeValue = (int)avg[0];
+    int i, j;
+
+    for (i = 0; i < N; i++)
+    {
+        count = 0;
+        for (j = 0; j < N; j++)
+        {
+            if ((int)avg[i] == (int)avg[j])
+                count++;
+        }
+
+        if (count > maxCount)
+        {
+            maxCount = count;
+            modeValue = (int)avg[i];
+        }
+    }
+
+    return modeValue;
+}
+
+int main()
+{
+    int id[N], cs[N], math[N];
+    float avg[N];
+    int i;
+    int m;
+
+    /* 輸入資料 */
+    for (i = 0; i < N; i++)
+    {
+        printf("請輸入第 %d 位學生資料（學號 計概 數學）：", i + 1);
+        scanf_s("%d %d %d", &id[i], &cs[i], &math[i]);
+        avg[i] = (cs[i] + math[i]) / 2.0;
+    }
+
+    /* 排序前 */
+    printf("\n排序前資料：\n");
+    printf("學號\t計概\t數學\t平均\n");
+    for (i = 0; i < N; i++)
+    {
+        printf("%d\t%d\t%d\t%.1f\n", id[i], cs[i], math[i], avg[i]);
+    }
+
+    /* 排序 */
+    sort(id, cs, math, avg);
+
+    /* 排序後 */
+    printf("\n排序後資料（依平均成績）：\n");
+    printf("學號\t計概\t數學\t平均\n");
+    for (i = 0; i < N; i++)
+    {
+        printf("%d\t%d\t%d\t%.1f\n", id[i], cs[i], math[i], avg[i]);
+    }
+
+    /* 眾數 */
+    m = mode(avg);
+    printf("\n平均成績的眾數（取整數）：%d\n", m);
+
+    return 0;
+}
