@@ -1,0 +1,56 @@
+#include <stdio.h>
+#include <string.h>
+
+#define SIZE 10
+
+
+struct student {
+    int id;           
+    int computer;     
+    int math;         
+    char name[20];    
+    float avg;        
+};
+
+
+void copy1(char* s1, const char* s2)
+{
+    for (; ((*s1 = *s2) != '\0'); ++s1, ++s2);
+}
+
+int main(void)
+{
+    
+    const char* names[SIZE] = {
+        "Danny","Mary","Jimmy","Peter","Sue",
+        "John","Hearts","Diamonds","Clubs","Spades"
+    };
+
+    int ids[SIZE] = { 11, 15, 13, 18, 12, 17, 14, 19, 16, 20 };
+    int computer[SIZE] = { 85, 92, 78, 85, 90, 85, 76, 95, 88, 85 };
+    int math[SIZE] = { 70, 80, 75, 90, 85, 70, 82, 92, 88, 70 };
+
+  
+    struct student stud[SIZE];
+
+    for (int i = 0; i < SIZE; i++) {
+        copy1(stud[i].name, names[i]);
+        stud[i].id = ids[i];
+        stud[i].computer = computer[i];
+        stud[i].math = math[i];
+        stud[i].avg = (stud[i].computer + stud[i].math) / 2.0f;
+    }
+
+
+    printf("姓名\t學號\t計概成績\t數學成績\t平均成績\n");
+    for (int i = 0; i < SIZE; i++) {
+        printf("%s\t%d\t   %3d\t\t   %3d\t\t  %.2f\n",
+            stud[i].name,
+            stud[i].id,
+            stud[i].computer,
+            stud[i].math,
+            stud[i].avg);
+    }
+
+    return 0;
+}

@@ -1,0 +1,124 @@
+#include <stdio.h>
+#include <string.h>
+
+#define SIZE 10
+
+
+void copy1(char* s1, const char* s2)
+{
+    for (; ((*s1 = *s2) != '\0'); ++s1, ++s2);
+}
+
+
+void swap(int* prt1, int* prt2) {
+    int temp = *prt1;
+    *prt1 = *prt2;
+    *prt2 = temp;
+}
+
+void swap_f(float* prt1, float* prt2) {
+    float temp = *prt1;
+    *prt1 = *prt2;
+    *prt2 = temp;
+}
+
+void sort_by_avg(char name[][20], int stu[][SIZE], float avg[], int n) {
+    int i, j;
+    char temp_name[20];
+
+    for (i = 0; i < n - 1; i++) {
+        for (j = 0; j < n - 1 - i; j++) {
+            if (avg[j] < avg[j + 1]) {
+                
+                copy1(temp_name, name[j]);
+                copy1(name[j], name[j + 1]);
+                copy1(name[j + 1], temp_name);
+
+               
+                swap(&stu[0][j], &stu[0][j + 1]); 
+                swap(&stu[1][j], &stu[1][j + 1]); 
+                swap(&stu[2][j], &stu[2][j + 1]); 
+
+                
+                swap_f(&avg[j], &avg[j + 1]);
+            }
+        }
+    }
+}
+
+
+int binarySearch(const int arr[], int size, int key) {
+    int low = 0, high = size - 1;
+    while (low <= high) {
+        int mid = low + (high - low) / 2;
+        if (arr[mid] == key) return mid;
+        else if (arr[mid] < key) low = mid + 1;
+        else high = mid - 1;
+    }
+    return -1;
+}
+
+int main(void) {
+  
+    const char* init_names[SIZE] = {
+        "Danny","Sue","Jimmy","Hearts","Mary","Clubs","John","Peter","Diamonds","Spades"
+    };
+
+    
+    char names[SIZE][20];
+    for (int i = 0; i < SIZE; i++)
+        copy1(names[i], init_names[i]);
+
+  
+   
+    int stu[3][SIZE] = {
+        { 11, 12, 13, 14, 15, 16, 17, 18, 19, 20 }, 
+        { 85, 90, 78, 76, 92, 88, 85, 85, 95, 85 }, 
+        { 70, 85, 75, 82, 80, 88, 70, 90, 92, 70 }  
+    };
+
+    float avg[SIZE];
+    for (int i = 0; i < SIZE; i++) {
+        avg[i] = (stu[1][i] + stu[2][i]) / 2.0f;
+    }
+
+    printf("原始資料（按學號排序）:\n");
+    printf("姓名\t學號\t計概成績\t數學成績\t平均成績\n");
+    for (int i = 0; i < SIZE; i++) {
+        printf("%s\t%d\t   %3d\t\t   %3d\t\t  %.2f\n",
+            names[i], stu[0][i], stu[1][i], stu[2][i], avg[i]);
+    }
+
+    int key;
+    printf("\n請輸入要搜尋的學號: ");
+    if (scanf_s("%d", &key) != 1) {
+        printf("輸入錯誤。\n");
+        return 1;
+    }
+
+    int idx = binarySearch(stu[0], SIZE, key);
+    if (idx >= 0) {
+        printf("\n找到學號 %d，位置 index = %d\n", key, idx);
+        printf("學生資料：\n");
+        printf("姓名：%s\n", names[idx]);
+        printf("學號：%d\n", stu[0][idx]);
+        printf("計概成績：%d\n", stu[1][idx]);
+        printf("數學成績：%d\n", stu[2][idx]);
+        printf("平均成績：%.2f\n", avg[idx]);
+    }
+    else {
+        printf("\n查無學號 %d 的學生。\n", key);
+    }
+
+ 
+    sort_by_avg(names, stu, avg, SIZE);
+
+    printf("\n依平均成績由大到小排序後：\n");
+    printf("姓名\t學號\t計概成績\t數學成績\t平均成績\n");
+    for (int i = 0; i < SIZE; i++) {
+        printf("%s\t%d\t   %3d\t\t   %3d\t\t  %.2f\n",
+            names[i], stu[0][i], stu[1][i], stu[2][i], avg[i]);
+    }
+
+    return 0;
+}
