@@ -1,0 +1,41 @@
+#include <stdio.h>
+
+/* 遞迴計算 x 的 n 次方 */
+double power(double x, int n)
+{
+    if (n == 0)
+        return 1;
+    else
+        return x * power(x, n - 1);
+}
+
+/* 遞迴計算 n! */
+int fact(int n)
+{
+    if (n == 0 || n == 1)
+        return 1;
+    else
+        return n * fact(n - 1);
+}
+
+int main()
+{
+    int n, i;
+    double x;
+    double ex = 0.0;
+
+    printf("請輸入 n：");
+    scanf_s("%d", &n);
+
+    printf("請輸入 x：");
+    scanf_s("%lf", &x);
+
+    for (i = 0; i <= n; i++)
+    {
+        ex += power(x, i) / fact(i);
+    }
+
+    printf("e^x 的近似值為：%f\n", ex);
+
+    return 0;
+}
