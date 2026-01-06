@@ -1,0 +1,51 @@
+#include <stdio.h>
+#define SIZE 10
+void sort_array(int data[3][SIZE], float avg[], int n);
+int binary_search(int data[3][SIZE], int key, int n);
+int main()
+{
+    const char* name[SIZE] = {
+        "Danny","Mary","Jimmy","Peter","Sue",
+        "John","Hearts","Diamonds","Clubs","Spades"
+    };
+    int data[3][SIZE] = {
+        {11, 12, 13, 14, 15, 16, 17, 18, 19, 20}, 
+        {85, 90, 78, 76, 92, 88, 85, 85, 95, 85}, 
+        {70, 85, 75, 82, 80, 88, 70, 90, 92, 70}  
+    };
+    float avg[SIZE];
+    int i, key, pos;
+    for (i = 0; i < SIZE; i++) {
+        avg[i] = (data[1][i] + data[2][i]) / 2.0;
+    }
+    printf("請輸入要查詢的學號：");
+    scanf("%d", &key);
+    pos = binary_search(data, key, SIZE);
+    if (pos != -1) {
+        printf("\n找到學生資料：\n");
+        printf("陣列位置：%d\n", pos);
+        printf("姓名：%s\n", name[pos]);
+        printf("學號：%d\n", data[0][pos]);
+        printf("計概：%d\n", data[1][pos]);
+        printf("數學：%d\n", data[2][pos]);
+        printf("平均：%.1f\n", avg[pos]);
+    }
+    else {
+        printf("查無此學號\n");
+    }
+    return 0;
+}
+int binary_search(int data[3][SIZE], int key, int n)
+{
+    int left = 0, right = n - 1, mid;
+    while (left <= right) {
+        mid = (left + right) / 2;
+        if (data[0][mid] == key)
+            return mid;
+        else if (data[0][mid] < key)
+            left = mid + 1;
+        else
+            right = mid - 1;
+    }
+    return -1; 
+}
