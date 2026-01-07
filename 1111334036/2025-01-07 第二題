@@ -1,0 +1,94 @@
+#include <stdio.h>
+
+void sort(struct student stu[]);
+int key_search(struct student stu[], int key);
+
+struct student
+{
+	int id, computer, math;
+	char name[20];
+	float average;
+};
+
+int main()
+{
+	int key, low, high, middle, result;
+	struct student stu[10] =
+	{ {11, 64, 70, "Danny", 0.0},
+		{12, 92, 80, "Mary", 0.0},
+		{13, 78, 75, "Jimmy", 0.0},
+		{14, 85, 90, "Peter", 0.0},
+		{15, 90, 85, "Sue", 0.0},
+		{16, 85, 70, "John", 0.0},
+		{17, 76, 82, "Hearts", 0.0},
+		{18, 95, 92, "Dumb", 0.0},
+		{19, 88, 88, "Clubs", 0.0},
+		{20, 85, 70, "Spades", 0.0}
+	};
+	for (int i = 0; i < 10; i++)
+	{
+		stu[i].average = (stu[i].computer + stu[i].math) / 2.0;
+	}
+	printf("姓名\t學號\t計概\t數學\t平均\n");
+	for (int i = 0; i < 10; i++)
+	{
+		printf("%s\t%d\t%d\t%d\t%f\n", stu[i].name, stu[i].id, stu[i].computer, stu[i].math, stu[i].average);
+
+	}
+	printf("-----------------------------------------------------------排序\n");
+	sort(stu);
+	for (int i = 0; i < 10; i++)
+	{
+		printf("%s\t%d\t%d\t%d\t%f\n", stu[i].name, stu[i].id, stu[i].computer, stu[i].math, stu[i].average);
+
+	}
+	printf("請輸入 key 值\n");
+	scanf_s("%d", &key);
+	result = key_search(stu, key);
+	if (result == -1)
+	{
+		printf("找不到學生");
+	}
+	else
+	{
+		printf("你要找的學生是 %s, 學號是%d, 計概成績：%d, 數學成績：%d, 平均成績：%f\n", stu[result].name, stu[result].id, stu[result].computer, stu[result].math, stu[result].average);
+	}
+}
+
+void sort(struct student stu[])
+{
+	for (int n = 0; n < 9; n++)
+	{
+		for (int i = 0; i < 9; i++)
+		{
+			if (stu[i].average < stu[i + 1].average)
+			{
+				struct student temp;
+				temp = stu[i];
+				stu[i] = stu[i + 1];
+				stu[i + 1] = temp;
+			}
+		}
+	}
+}
+
+int key_search(struct student stu[], int key)
+{
+	int middle, low, high;
+	low = 0, high = 9;
+	while (low <= high)
+	{
+		middle = (low + high) / 2;
+		if (key == stu[middle].id)
+			return middle;
+		else if (key < stu[middle].id)
+		{
+			high = middle - 1;
+		}
+		else
+		{
+			low = middle + 1;
+		}
+	}
+	return -1;
+}
