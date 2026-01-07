@@ -1,0 +1,111 @@
+#include <stdio.h>
+
+#define SIZE 10
+
+struct student {
+    char name[20];
+    int id;
+    int computer;
+    int math;
+    double avg;
+};
+
+void calc_avg(struct student stu[], int n) {
+    for (int i = 0; i < n; i++) {
+        stu[i].avg = (stu[i].computer + stu[i].math) / 2.0;
+    }
+}
+
+void swap(struct student* a, struct student* b) {
+    struct student temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+void sort_by_avg(struct student stu[], int n) {
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = 0; j < n - 1 - i; j++) {
+            if (stu[j].avg < stu[j + 1].avg) {
+                swap(&stu[j], &stu[j + 1]);
+            }
+        }
+    }
+}
+
+void sort_by_id(struct student stu[], int n) {
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = 0; j < n - 1 - i; j++) {
+            if (stu[j].id > stu[j + 1].id) {
+                swap(&stu[j], &stu[j + 1]);
+            }
+        }
+    }
+}
+int binary_search(struct student stu[], int n, int key) {
+    int left = 0, right = n - 1;
+
+    while (left <= right) {
+        int mid = (left + right) / 2;
+
+        if (stu[mid].id == key)
+            return mid;
+        else if (stu[mid].id < key)
+            left = mid + 1;
+        else
+            right = mid - 1;
+    }
+    return -1;   
+}
+
+int main() {
+
+    struct student stu[SIZE] = {
+        {"Danny",    11, 85, 70, 0},
+        {"Mary",     15, 92, 80, 0},
+        {"Jimmy",    13, 78, 75, 0},
+        {"Peter",    18, 85, 90, 0},
+        {"Sue",      12, 90, 85, 0},
+        {"John",     17, 85, 70, 0},
+        {"Hearts",   14, 76, 82, 0},
+        {"Diamonds", 19, 95, 92, 0},
+        {"Clubs",    16, 88, 88, 0},
+        {"Spades",   20, 85, 70, 0}
+    };
+
+    calc_avg(stu, SIZE);
+
+    sort_by_avg(stu, SIZE);
+
+    printf("依平均成績排序後：\n");
+    printf("姓名\t學號\t計概\t數學\t平均\n");
+    for (int i = 0; i < SIZE; i++) {
+        printf("%s\t%d\t%d\t%d\t%.2f\n",
+            stu[i].name,
+            stu[i].id,
+            stu[i].computer,
+            stu[i].math,
+            stu[i].avg);
+    }
+
+    int key;
+    printf("\n請輸入欲搜尋的學號：");
+    scanf("%d", &key);
+
+    sort_by_id(stu, SIZE);
+
+    int index = binary_search(stu, SIZE, key);
+
+    if (index != -1) {
+        printf("\n查詢結果：\n");
+        printf("姓名：%s\n", stu[index].name);
+        printf("學號：%d\n", stu[index].id);
+        printf("計概：%d\n", stu[index].computer);
+        printf("數學：%d\n", stu[index].math);
+        printf("平均：%.2f\n", stu[index].avg);
+    }
+    else {
+        printf("\n找不到該學號的學生資料。\n");
+    }
+
+    return 0;
+}
