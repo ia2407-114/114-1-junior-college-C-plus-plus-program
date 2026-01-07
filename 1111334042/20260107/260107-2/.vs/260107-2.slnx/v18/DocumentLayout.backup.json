@@ -1,0 +1,41 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\Qnzwe\\source\\repos\\260107-2\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{34103BFE-85FA-480F-9552-646069A59E84}|260107-2\\260107-2.vcxproj|C:\\Users\\Qnzwe\\source\\repos\\260107-2\\260107-2\\260107-2.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{34103BFE-85FA-480F-9552-646069A59E84}|260107-2\\260107-2.vcxproj|solutionrelative:260107-2\\260107-2.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{56df62a4-05a3-4e5b-aa1a-99371ccfb997}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "260107-2.cpp",
+              "DocumentMoniker": "C:\\Users\\Qnzwe\\source\\repos\\260107-2\\260107-2\\260107-2.cpp",
+              "RelativeDocumentMoniker": "260107-2\\260107-2.cpp",
+              "ToolTip": "C:\\Users\\Qnzwe\\source\\repos\\260107-2\\260107-2\\260107-2.cpp",
+              "RelativeToolTip": "260107-2\\260107-2.cpp",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAFgAAAAtAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2026-01-07T07:21:01.687Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,4 @@
+﻿  260107-2.cpp
+C:\Users\Qnzwe\source\repos\260107-2\260107-2\260107-2.cpp(69,52): warning C4244: '=': 將 'double' 轉換為 'float'，由於類型不同，可能導致資料遺失
+C:\Users\Qnzwe\source\repos\260107-2\260107-2\260107-2.cpp(86,22): warning C4267: '正在初始化': 將 'size_t' 轉換為 'int'，資料可能遺失
+  260107-2.vcxproj -> C:\Users\Qnzwe\source\repos\260107-2\x64\Debug\260107-2.exe
