@@ -16,7 +16,6 @@ int main() {
                                 {8,95,92,"Diamonds"}, 
                                 {9,88,88,"Clubs"},
                                 {10,85,70,"Spades"},};
-    char stu1_name[10][20];
     int i;
     for (i = 0; i < SIZE; i++) {
         stud[i].avg = ((float)stud[i].computer + stud[i].math) / 2.0;
