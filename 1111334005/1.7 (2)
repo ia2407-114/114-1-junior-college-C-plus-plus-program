@@ -1,0 +1,84 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <string.h>
+#define SIZE 10
+
+struct student {
+    char name[20];
+    int id;
+    int computer;
+    int math;
+    double avg;
+};   
+
+
+void calc_avg(struct student* s, int n) {
+    for (int i = 0; i < n; i++) {
+        s[i].avg = ((double)s[i].computer + s[i].math) / 2;
+    }
+}
+
+
+void sort_by_id(struct student* s, int n) {
+    struct student temp;
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = 0; j < n - 1 - i; j++) {
+            if (s[j].id > s[j + 1].id) {
+                temp = s[j];
+                s[j] = s[j + 1];
+                s[j + 1] = temp;
+            }
+        }
+    }
+}
+
+
+int binary_search(struct student* s, int n, int key) {
+    int left = 0, right = n - 1;
+    while (left <= right) {
+        int mid = (left + right) / 2;
+        if (s[mid].id == key) return mid;
+        else if (s[mid].id > key) right = mid - 1;
+        else left = mid + 1;
+    }
+    return -1;
+}
+
+int main() {
+    struct student stu[SIZE] = {
+        {"Danny",   11, 85, 70, 0},
+        {"Mary",    15, 92, 80, 0},
+        {"Jimmy",   13, 78, 75, 0},
+        {"Peter",   18, 85, 90, 0},
+        {"Sue",     12, 90, 85, 0},
+        {"John",    17, 85, 70, 0},
+        {"Hearts",  14, 76, 82, 0},
+        {"Diamonds",19, 95, 92, 0},
+        {"Clubs",   16, 88, 88, 0},
+        {"Spades",  20, 85, 70, 0}
+    };
+
+    int search_id, pos;
+
+    calc_avg(stu, SIZE);
+    sort_by_id(stu, SIZE);
+
+    printf("請輸入欲搜尋的學號：");
+    scanf_s("%d", &search_id);
+
+    pos = binary_search(stu, SIZE, search_id);
+
+    if (pos == -1) {
+        printf("查無此學號！\n");
+    }
+    else {
+        printf("\n找到資料：\n");
+        printf("姓名：%s\n", stu[pos].name);
+        printf("學號：%d\n", stu[pos].id);
+        printf("計概：%d\n", stu[pos].computer);
+        printf("數學：%d\n", stu[pos].math);
+        printf("平均：%.2f\n", stu[pos].avg);
+    }
+
+    return 0;
+}
