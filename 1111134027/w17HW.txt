@@ -1,0 +1,66 @@
+#include <stdio.h>
+#include <string.h>
+
+#define SIZE 10
+
+struct student {
+    char name[20];
+    int id;
+    int computer;
+    int math;
+    double avg;
+};
+
+
+void compute_avg(struct student* s, int n) {
+    for (int i = 0; i < n; ++i) {
+        s[i].avg = (s[i].computer + s[i].math) / 2.0;
+    }
+}
+
+void sort_students(struct student* s, int n) {
+    for (int i = 0; i < n - 1; ++i) {
+        for (int j = 0; j < n - 1 - i; ++j) {
+            if (s[j].avg < s[j + 1].avg) {
+                struct student tmp = s[j];
+                s[j] = s[j + 1];
+                s[j + 1] = tmp;
+            }
+        }
+    }
+}
+
+
+void print_students(const struct student* s, int n) {
+    printf("姓名\t學號\t計概成績\t數學成績\t平均成績\n");
+    for (int i = 0; i < n; ++i) {
+        printf("%-10s\t%3d\t   %3d\t\t   %3d\t\t  %.2f\n",
+            s[i].name, s[i].id, s[i].computer, s[i].math, s[i].avg);
+    }
+}
+
+int main(void) {
+   
+    struct student stu[SIZE] = {
+        { "Danny",    11, 85, 70, 0.0 },
+        { "Mary",     15, 92, 80, 0.0 },
+        { "Jimmy",    13, 78, 75, 0.0 },
+        { "Peter",    18, 85, 90, 0.0 },
+        { "Sue",      12, 90, 85, 0.0 },
+        { "John",     17, 85, 70, 0.0 },
+        { "Hearts",   14, 76, 82, 0.0 },
+        { "Diamonds", 19, 95, 92, 0.0 },
+        { "Clubs",    16, 88, 88, 0.0 },
+        { "Spades",   20, 85, 70, 0.0 }
+    };
+
+    printf("排序前：\n");
+    print_students(stu, SIZE);
+
+    sort_students(stu, SIZE);      
+
+    printf("\n排序後（依平均成績由大到小）：\n");
+    print_students(stu, SIZE);
+
+    return 0;
+}
