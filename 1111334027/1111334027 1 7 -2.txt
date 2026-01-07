@@ -1,0 +1,96 @@
+#include <stdio.h>
+
+#define SIZE 10
+
+struct student {
+    int id;
+    int computer;
+    int math;
+    char name[20];
+    float avg;
+};
+
+typedef struct student stud_t;
+
+void sort_struct(stud_t stud[]);
+int key_search(stud_t stu[], int key);
+int main()
+{
+    stud_t stud[SIZE] = {
+        {11, 70, 85, "Danny"},
+        {15, 80, 92, "Mary"},
+        {13, 75, 78, "Jimmy"},
+        {18, 90, 85, "Peter"},
+        {12, 85, 90, "Sue"},
+        {17, 70, 85, "John"},
+        {14, 82, 76, "Hearts"},
+        {19, 92, 95, "Bob"},
+        {16, 88, 88, "Clubs"},
+        {20, 70, 85, "Spades"}
+    };
+
+    printf("全班成績平均 (未排序)\n");
+    for (int i = 0; i < SIZE; i++) {
+        stud[i].avg = (stud[i].math + stud[i].computer) / 2.0;
+        printf("%d\t%s\t%d\t%d\t%.2f\n",
+            stud[i].id, stud[i].name, stud[i].computer, stud[i].math, stud[i].avg);
+    }
+
+    sort_struct(stud);
+
+    printf("\n全班成績平均排名 (由大到小)\n");
+    printf("學號\t姓名\t計概\t數學\t平均成績\n");
+    for (int i = 0; i < SIZE; i++) {
+        printf("%d\t%s\t%d\t%d\t%.2f\n",
+            stud[i].id, stud[i].name, stud[i].computer, stud[i].math, stud[i].avg);
+    }
+    int key, result;
+    printf("請輸入 key 值\n");
+    scanf_s("%d", &key);
+    result = key_search(stud, key);
+    if (result == -1)
+    {
+        printf("找不到學生");
+    }
+    else
+    {
+        printf("你要找的學生是 %s, 學號是%d, 計概成績：%d, 數學成績：%d, 平均成績：%f\n", stud[result].name, stud[result].id, stud[result].computer, stud[result].math, stud[result].avg);
+    }
+}
+
+void sort_struct(stud_t stud[]){
+    stud_t temp;
+    for (int i = 0; i < SIZE - 1; i++)
+    {
+        for (int j = 0; j < SIZE - 1 - i; j++)
+        {
+            if (stud[j].avg < stud[j + 1].avg)
+            {
+                temp = stud[j];
+                stud[j] = stud[j + 1];
+                stud[j + 1] = temp;
+            }
+        }
+    }
+}
+
+int key_search(stud_t stud[], int key)
+{
+    int middle, low, high;
+    low = 0, high = 9;
+    while (low <= high)
+    {
+        middle = (low + high) / 2;
+        if (key == stud[middle].id)
+            return middle;
+        else if (key < stud[middle].id)
+        {
+            high = middle - 1;
+        }
+        else
+        {
+            low = middle + 1;
+        }
+    }
+    return -1;
+}
