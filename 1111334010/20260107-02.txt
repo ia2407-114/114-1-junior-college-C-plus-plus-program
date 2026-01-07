@@ -1,0 +1,106 @@
+#include <stdio.h>
+#include <string.h>
+#define SIZE 10
+
+struct student {
+    char name[20];
+    int id, computer, math;
+    float avg;
+};
+
+typedef struct student STU;
+
+/* 原本的排序副程式（依平均成績，不改） */
+void sort_array(STU my_stu[SIZE], int n) {
+    int i, j;
+    STU temp;
+
+    for (i = 0; i < n - 1; i++) {
+        for (j = 0; j < n - 1 - i; j++) {
+            if (my_stu[j].avg < my_stu[j + 1].avg) {
+                temp = my_stu[j];
+                my_stu[j] = my_stu[j + 1];
+                my_stu[j + 1] = temp;
+            }
+        }
+    }
+}
+
+/* 新增：二元搜尋副程式（用學號） */
+int binary_search(STU my_stu[SIZE], int n, int key) {
+    int left = 0, right = n - 1, mid;
+
+    while (left <= right) {
+        mid = (left + right) / 2;
+
+        if (my_stu[mid].id == key)
+            return mid;
+        else if (my_stu[mid].id < key)
+            left = mid + 1;
+        else
+            right = mid - 1;
+    }
+    return -1;
+}
+
+int main() {
+    struct student sstul, * stuPtr;
+    struct student my_stu[SIZE] = {
+        {"Danny",11,85,70},
+        {"Mary",15,92,80},
+        {"Jimmy",13,78,75},
+        {"Peter",18,85,90},
+        {"Sue",12,90,85},
+        {"John",17,85,70},
+        {"Hearts",14,76,82},
+        {"Diamonds",19,95,92},
+        {"Clubs",16,88,88},
+        {"Spades",20,85,70}
+    };
+
+    stuPtr = my_stu;
+
+    int i;
+    int search_id;
+    int index;
+
+    /* 計算平均成績（一定要做） */
+    for (i = 0; i < SIZE; i++) {
+        my_stu[i].avg = (my_stu[i].computer + my_stu[i].math) / 2.0;
+    }
+
+    /* 為二元搜尋依學號排序（不改原副程式） */
+    for (i = 0; i < SIZE - 1; i++) {
+        for (int j = 0; j < SIZE - 1 - i; j++) {
+            if (my_stu[j].id > my_stu[j + 1].id) {
+                STU temp = my_stu[j];
+                my_stu[j] = my_stu[j + 1];
+                my_stu[j + 1] = temp;
+            }
+        }
+    }
+
+    /* 輸入欲搜尋的學號 */
+    printf("請輸入欲搜尋的學號：");
+    scanf_s("%d", &search_id);
+
+    /* 呼叫二元搜尋副程式 */
+    index = binary_search(my_stu, SIZE, search_id);
+
+    /* 只輸出查詢到的學生資料 */
+    if (index != -1) {
+        printf("\n查詢結果：\n");
+        printf("姓名\t學號\t計概成績\t數學成績\t平均成績\n");
+        printf("%s\t%d\t%d\t\t%d\t\t%.2f\n",
+            my_stu[index].name,
+            my_stu[index].id,
+            my_stu[index].computer,
+            my_stu[index].math,
+            my_stu[index].avg);
+    }
+    else {
+        printf("\n查無此學號！\n");
+    }
+
+    return 0;
+}
