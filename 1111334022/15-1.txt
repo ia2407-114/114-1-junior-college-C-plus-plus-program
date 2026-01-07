@@ -1,0 +1,32 @@
+#include <stdio.h>
+
+void swap(int *x, int *y);
+void swap_float(float *o, float *i);
+
+int main()
+{
+	int x = 2, y = 10;
+	float o = 1.25, i = 20.89;
+	printf("交換前 %d, %d\n", x, y);
+	printf("交換前 %f, %f\n", o, i);
+	swap(&x, &y);
+	swap_float(&o, &i);
+	printf("交換後 %d, %d\n", x, y);
+	printf("交換後 %f, %f", o, i);
+}
+
+void swap(int *x, int *y)
+{
+	int temp;
+	temp = *x;
+	*x = *y;
+	*y = temp;
+}
+
+void swap_float(float *o, float *i)
+{
+	float temp;
+	temp = *o;
+	*o = *i;
+	*i = temp;
+}

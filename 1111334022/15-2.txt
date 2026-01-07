@@ -1,0 +1,79 @@
+#include <stdio.h>
+
+void sort_form(int form[][10], float average[10], const char* student_names[]);
+const char* student_names[10] = { "Danny","Mary","Jimmy","Peter","Sue","John","Hearts","Dumb","Clubs","Spades" };
+void swap_int(int form[][10], int i, float average[]);
+void swap_name(const char* student_names[], int i);
+
+int main()
+{
+	int form[3][10] = { {11, 15 ,13 ,18, 12, 17, 14, 19, 16, 20 },
+		{ 64, 92, 78, 85, 90, 85, 76, 95, 88, 85 },
+		{ 70, 80, 75, 90, 85, 70, 82, 92, 88, 70 } };
+	float average[10];
+	for (int i = 0; i < 9; i++)
+	{
+		average[i] = (form[1][i] + form[2][i]) / 2.0;
+	}
+
+	printf("姓名\t學號\t\t計概成績\t數學成績\t平均成績\n");
+
+	for (int i = 0; i < 9; i++)
+	{
+		printf("%s\t%d\t\t%d\t\t%d\t\t%f\n", student_names[i], form[0][i], form[1][i], form[2][i], average[i]);
+
+	}
+
+	sort_form(form, average, student_names);
+	printf("排序前------------------------------------------------------------\n排序後------------------------------------------------------------\n");
+
+	for (int i = 0; i < 9; i++)
+	{
+		printf("%s\t%d\t\t%d\t\t%d\t\t%f\n", student_names[i], form[0][i], form[1][i], form[2][i], average[i]);
+
+	}
+}
+
+void sort_form(int form[][10], float average[10], const char* student_names[])
+{
+	int temp;
+	float temp2;
+	const char *temp3;
+	for (int pass = 0; pass < 9; pass++)
+	{
+		for (int i = 0; i < 9 - pass; i++)
+		{
+			if (average[i + 1] > average[i])
+			{
+				swap_int(form, i, average);
+				swap_name(student_names, i);
+			}
+		}
+	}
+}
+
+void swap_int(int form[][10], int i, float average[])
+{
+	int temp;
+	float temp2;
+	temp = form[0][i + 1];
+	form[0][i + 1] = form[0][i];
+	form[0][i] = temp;
+	temp = form[1][i + 1];
+	form[1][i + 1] = form[1][i];
+	form[1][i] = temp;
+	temp = form[2][i + 1];
+	form[2][i + 1] = form[2][i];
+	form[2][i] = temp;
+	temp2 = average[i + 1];
+	average[i + 1] = average[i];
+	average[i] = temp2;
+}
+
+void swap_name(const char* student_names[], int i)
+{
+	const char* temp;
+	temp = student_names[i + 1];
+	student_names[i + 1] = student_names[i];
+	student_names[i] = temp;
+}
