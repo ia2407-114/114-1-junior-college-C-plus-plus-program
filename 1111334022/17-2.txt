@@ -1,0 +1,76 @@
+#include <stdio.h>
+#include <string.h>
+#define SIZE 10
+
+struct student {
+    char name[20];
+    int id;
+    int a, b;
+    double avg;
+};
+int binary(struct student s[], int low, int high, int t);
+void sort_by_id(struct student s[]);
+int main() {
+    int i, d, index;
+    struct student mystu[SIZE] = {
+        {"Danny",11,85,70},
+        {"Mary",15,92,80},
+        {"Jimmy",13,78,75},
+        {"Peter",18,85,90},
+        {"Sue",12,90,85},
+        {"John",17,85,70},
+        {"Hearts",14,76,82},
+        {"Diamond",19,95,92},
+        {"Clubs",16,88,88},
+        {"Spades",20,85,70}
+    };
+
+
+    for (i = 0; i < SIZE; i++)
+        mystu[i].avg = (mystu[i].a + mystu[i].b) / 2.0;
+
+    sort_by_id(mystu);
+
+    printf("輸入學號查詢成績：");
+    scanf_s("%d", &d);
+
+    index = binary(mystu, 0, SIZE - 1, d);
+
+    if (index == -1) {
+        printf("查無此學生\n");
+    }
+    else {
+        printf("學生：%s\n計概：%d\n數學：%d\n平均：%.2f\n",
+            mystu[index].name,
+            mystu[index].a,
+            mystu[index].b,
+            mystu[index].avg);
+    }
+    return 0;
+}
+int binary(struct student s[], int low, int high, int t) {
+    int mid;
+    while (low <= high) {
+        mid = (low + high) / 2;
+        if (s[mid].id > t)
+            high = mid - 1;
+        else if (s[mid].id < t)
+            low = mid + 1;
+        else
+            return mid;
+    }
+    return -1;
+}
+void sort_by_id(struct student s[]) {
+    int i, j;
+    struct student temp;
+    for (i = 0; i < SIZE - 1; i++) {
+        for (j = 0; j < SIZE - 1 - i; j++) {
+            if (s[j].id > s[j + 1].id) {
+                temp = s[j];
+                s[j] = s[j + 1];
+                s[j + 1] = temp;
+            }
+        }
+    }
+}
