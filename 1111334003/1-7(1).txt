@@ -1,0 +1,97 @@
+#include <stdio.h>
+#include <stdio.h>
+#define SIZE 10
+struct student {
+    char name[20];
+    int id;
+    int computer;
+    int math;
+    float avg;
+};
+void calc_avg(struct student stu[], int n);
+void sort_by_avg(struct student stu[], int n);
+int linear_search(struct student stu[], int n, int key);
+void print_all(struct student stu[], int n);
+int main(void)
+{
+    struct student my_stu[SIZE] = {
+        {"Danny",11,85,70,0},
+        {"Mary",15,92,80,0},
+        {"Jimmy",13,78,75,0},
+        {"Peter",18,85,90,0},
+        {"Sue",12,90,85,0},
+        {"John",17,85,70,0},
+        {"Hearts",14,76,82,0},
+        {"Diamonds",19,95,92,0},
+        {"Clubs",16,88,88,0},
+        {"Spades",20,85,70,0}
+    };
+    int key, pos;
+    calc_avg(my_stu, SIZE);
+    printf(" 排序前 \n");
+    print_all(my_stu, SIZE);
+    sort_by_avg(my_stu, SIZE);
+    printf("\n 排序後（依平均成績由大到小）\n");
+    print_all(my_stu, SIZE);
+    printf("\n請輸入欲搜尋的學號：");
+    scanf("%d", &key);
+    pos = linear_search(my_stu, SIZE, key);
+    if (pos == -1) {
+        printf("查無此學號！\n");
+    }
+    else {
+        printf("\n搜尋結果：\n");
+        printf("姓名\t學號\t計概\t數學\t平均\n");
+        printf("%s\t%d\t%d\t%d\t%.1f\n",
+            my_stu[pos].name,
+            my_stu[pos].id,
+            my_stu[pos].computer,
+            my_stu[pos].math,
+            my_stu[pos].avg);
+    }
+    return 0;
+}
+void calc_avg(struct student stu[], int n)
+{
+    int i;
+    for (i = 0; i < n; i++) {
+        stu[i].avg = (stu[i].computer + stu[i].math) / 2.0;
+    }
+}
+void sort_by_avg(struct student stu[], int n)
+{
+    int i, j;
+    struct student temp;
+    for (i = 0; i < n - 1; i++) {
+        for (j = 0; j < n - 1 - i; j++) {
+            if (stu[j].avg < stu[j + 1].avg) {
+                temp = stu[j];
+                stu[j] = stu[j + 1];
+                stu[j + 1] = temp;
+            }
+        }
+    }
+}
+int linear_search(struct student stu[], int n, int key)
+{
+    int i;
+    for (i = 0; i < n; i++) {
+        if (stu[i].id == key) {
+            return i;
+        }
+    }
+    return -1;
+}
+void print_all(struct student stu[], int n)
+{
+    int i;
+    printf("姓名\t學號\t計概\t數學\t平均\n");
+    for (i = 0; i < n; i++) {
+        printf("%s\t%d\t%d\t%d\t%.1f\n",
+            stu[i].name,
+            stu[i].id,
+            stu[i].computer,
+            stu[i].math,
+            stu[i].avg);
+    }
+}
