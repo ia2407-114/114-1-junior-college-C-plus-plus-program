@@ -33,15 +33,8 @@ int main()
 	for (int i = 0; i < 10; i++)
 	{
 		printf("%s\t%d\t%d\t%d\t%f\n", stu[i].name, stu[i].id, stu[i].computer, stu[i].math, stu[i].average);
-
 	}
 	printf("-----------------------------------------------------------排序\n");
-	sort(stu);
-	for (int i = 0; i < 10; i++)
-	{
-		printf("%s\t%d\t%d\t%d\t%f\n", stu[i].name, stu[i].id, stu[i].computer, stu[i].math, stu[i].average);
-
-	}
 	printf("請輸入 key 值\n");
 	scanf_s("%d", &key);
 	result = key_search(stu, key);
@@ -52,6 +45,12 @@ int main()
 	else
 	{
 		printf("你要找的學生是 %s, 學號是%d, 計概成績：%d, 數學成績：%d, 平均成績：%f\n", stu[result].name, stu[result].id, stu[result].computer, stu[result].math, stu[result].average);
+	}
+	sort(stu);
+	for (int i = 0; i < 10; i++)
+	{
+		printf("%s\t%d\t%d\t%d\t%f\n", stu[i].name, stu[i].id, stu[i].computer, stu[i].math, stu[i].average);
+
 	}
 }
 
