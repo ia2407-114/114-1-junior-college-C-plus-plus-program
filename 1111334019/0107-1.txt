@@ -1,0 +1,83 @@
+#include <stdio.h>
+#include <string.h>
+#define SIZE 10
+
+
+void copy1(char* s1, const char* s2)
+{
+    for (; ((*s1 = *s2) != '\0'); ++s1, ++s2);
+}
+void swap(int* prt1, int* prt2) {
+    int temp = *prt1;
+    *prt1 = *prt2;
+    *prt2 = temp;
+}
+void swap_f(float* prt1, float* prt2) {
+    float temp = *prt1;
+    *prt1 = *prt2;
+    *prt2 = temp;
+}
+
+
+void sort_array(struct student MYstu[SIZE], int n) {
+    int i, j, temp;
+    float temp1;
+    char temp_name[20];
+	struct student temp_struct;
+    for (i = 0; i < n - 1; i++) {
+        for (j = 0; j < n - 1 - i; j++) {
+            if (MYstu[j].avg < MYstu[j+1].avg) {
+                temp_struct=MYstu[j];
+                MYstu[j]=MYstu[j+1];
+                MYstu[j+1]=temp_struct;
+
+            }
+        }
+    }
+}
+
+struct student{
+	char name[20];
+	int id,computer,math;
+	double avg;
+};
+
+
+int main() {
+	struct student stu1,my_stu[SIZE],*stuPtr;
+	
+	stu1={"Danny",11,85,70};
+	my_stu={{"Danny",11,85,70},
+			{"Mary",11,85,70},
+			{"Jimmy",11,85,70},
+			{"Peter",11,85,70},
+			{"Sue",11,85,70},
+			{"John",11,85,70},
+			{"Hearts",11,85,70},
+			{"Jenny",11,85,70},
+			{"Clubs",11,85,70},
+			{"Spade",11,85,70}};
+    int i;
+
+    printf("排序前：\n");
+    printf("姓名\t學號\t計概成績\t數學成績\t平均成績\n");\
+    for (i = 0; i < SIZE; i++) {
+        my_stu[i].avg = (my_stu[i].computer + my_stu[i].math)/ 2.0;
+    }
+    for (i = 0; i < SIZE; i++) {
+        printf("%s\t%d\t    %d\t\t    %d\t\t    %f\t\n", my_stu[i].name, 
+		my_stu[i].id, my_stu[i].computer, my_stu[i].math, my_stu[i].avg);
+    }
+
+
+    sort_array(my_stu, SIZE);
+
+    printf("\n排序後（依平均成績）：\n");
+    printf("姓名\t學號\t計概成績\t數學成績\t平均成績\n");\
+
+        for (i = 0; i < SIZE; i++) {
+            printf("%s\t%d\t    %d\t\t    %d\t\t    %f\t\n", my_stu[i].name, 
+			my_stu[i].id, my_stu[i].computer, my_stu[i].math, my_stu[i].avg);
+        }
+    return 0;
+}
