@@ -1,0 +1,90 @@
+#include <stdio.h>
+#include <string.h>
+
+#define SIZE 10
+
+struct student {
+    int id, computer, math;
+    char name[20];
+    float avg;
+};
+
+void copy1(char* s1, const char* s2) {
+    for (; ((*s1 = *s2) != '\0'); ++s1, ++s2);
+}
+
+void swap_student(struct student* p1, struct student* p2) {
+    struct student temp = *p1;
+    *p1 = *p2;
+    *p2 = temp;
+}
+
+int binarySearch(struct student stud[], int searchKey, int low, int high) {
+    while (low <= high) {
+        int middle = (low + high) / 2;
+        if (searchKey == stud[middle].id) {
+            return middle;
+        }
+        else if (searchKey < stud[middle].id) {
+            high = middle - 1;
+        }
+        else {
+            low = middle + 1;
+        }
+    }
+    return -1;
+}
+
+void sort_array(struct student stud[], int n) {
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = 0; j < n - 1 - i; j++) {
+            if (stud[j].avg < stud[j + 1].avg) {
+                swap_student(&stud[j], &stud[j + 1]);
+            }
+        }
+    }
+}
+
+int main() {
+    const char* names[SIZE] = { "Danny","Mary","Jimmy","Peter","Sue","John","Hearts", "Diamonds","Clubs","Spades" };
+    int ids[SIZE] = { 11, 12, 13, 14, 15, 16, 17, 18, 19, 20 };
+    int comp_scores[SIZE] = { 85, 92, 78, 85, 90, 85, 76, 95, 88, 85 };
+    int math_scores[SIZE] = { 70, 80, 75, 90, 85, 70, 82, 92, 88, 70 };
+
+    struct student stud[SIZE];
+    int i, key, result;
+
+    for (i = 0; i < SIZE; i++) {
+        stud[i].id = ids[i];
+        stud[i].computer = comp_scores[i];
+        stud[i].math = math_scores[i];
+        copy1(stud[i].name, names[i]);
+        stud[i].avg = (stud[i].computer + stud[i].math) / 2.0f;
+    }
+
+    printf("請輸入要搜尋的學號鍵值: ");
+    scanf_s("%d", &key);
+    result = binarySearch(stud, key, 0, SIZE - 1);
+
+    if (result != -1) {
+        printf("\n[搜尋結果]\n");
+        printf("位置: %d, 姓名: %s, 計概: %d, 數學: %d, 平均: %.2f\n",
+            result, stud[result].name, stud[result].computer, stud[result].math, stud[result].avg);
+    }
+
+    printf("\n排序前 (依學號):\n");
+    printf("姓名\t學號\t計概\t數學\t平均\n");
+    for (i = 0; i < SIZE; i++) {
+        printf("%s\t%d\t%d\t%d\t%.2f\n", stud[i].name, stud[i].id, stud[i].computer, stud[i].math, stud[i].avg);
+    }
+
+    sort_array(stud, SIZE);
+
+    printf("\n排序後 (依平均成績降冪):\n");
+    printf("姓名\t學號\t計概\t數學\t平均\n");
+    for (i = 0; i < SIZE; i++) {
+        printf("%s\t%d\t%d\t%d\t%.2f\n", stud[i].name, stud[i].id, stud[i].computer, stud[i].math, stud[i].avg);
+    }
+
+    return 0;
+}
