@@ -80,12 +80,14 @@ int main() {
         printf_s("\n搜尋結果：\n");
         printf_s("陣列位置: %d\n", result);
         printf_s("學生姓名: %s\n", stu1_name[result]);
-        printf_s("學號: %d, 計概: %d, 數學: %d, 平均: %.2f\n", 
-                 stu[0][result], stu[1][result], stu[2][result], average_scores[result]);
+        printf_s("學號: %d, 計概: %d, 數學: %d, 平均: %.2f\n",
+            stu[0][result], stu[1][result], stu[2][result], average_scores[result]);
     }
 
     printf("\n----------------------------------------\n");
     printf("排序前（依學號）：\n");
     printf("姓名\t學號\t計概\t數學\t平均\n");
     for (i = 0; i < SIZE; i++) {
-        printf("%s\t%d\t%d\t
+        printf("%s\t%d\t%d\t");
+    }
+}
