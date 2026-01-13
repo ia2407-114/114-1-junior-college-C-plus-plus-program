@@ -1,0 +1,30 @@
+#include <stdio.h>
+#define SIZE 10
+struct student {
+    int id, computer, math;
+    char name[20];
+    float avg;
+};
+int main() {
+    struct student stud[SIZE] = { {1,85,70,"Danny"},
+                                {2,92,80,"Mary"},
+                                {3,78,75,"Jimmy"},
+                                {4,85,90,"Peter"},
+                                {5,90,85,"Sue"},
+                                {6,85,70,"John"},
+                                {7,76,82,"Hearts"},
+                                {8,95,92,"Diamonds"}, 
+                                {9,88,88,"Clubs"},
+                                {10,85,70,"Spades"},};
+    int i;
+    for (i = 0; i < SIZE; i++) {
+        stud[i].avg = ((float)stud[i].computer + stud[i].math) / 2.0;
+        printf("學生學號%d 計概成績%d 數學成績%d 學生名字%s 平均成績%f\n",
+            stud[i].id,
+            stud[i].computer,
+            stud[i].math,
+            stud[i].name,
+            stud[i].avg);
+    }
+    return 0;
+}
