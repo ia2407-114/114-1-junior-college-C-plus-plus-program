@@ -1,0 +1,61 @@
+//題目3: 承上題，在主程式宣告一個大小為m的整數陣列terms[m]，再由主程式輸入n與 x值且n < m。
+//建立兩個遞迴程式，分別計算X^ n與n!，再由主程式計算出e ^ x值，並且將級數每一項的質放入陣列terms中。
+#include <stdio.h>
+#define max 15
+int like(int x, int n);
+double result(int n);
+	int main()
+{
+		int n, x, cute;
+		double e = 1;
+	int i, amount;     /* 宣告變數 */
+
+	double tests[max];    /* 陣列宣告整數陣列，可以儲存5個元素 */
+	printf("\n請輸入資料總數:");
+	scanf_s("%d", &amount);
+	if (amount > max)
+	{
+		printf("超出容量!!!");
+		return 0;
+	}
+	
+	printf("請輸入n值:");
+	scanf_s("%d", &n); //n=2
+	printf("請輸入x值:");
+	scanf_s("%d", &x);  //x=1
+	for (i = 1; i <= n; i++) {  //e=1+1/1!+1^2/2!
+		cute = like(x, i); //cute=like(1,1)=1
+		e = e + like(x, i) / result(i);  //e=e+1/result(1)=1+1/1
+		tests[0] = like(x, i);
+		tests[1] = result(i);
+		tests[2] = e;
+	}
+	
+	for (i = 0; i < amount; i++)  /* for迴圈顯示成績 */
+	{   
+		printf("\n請輸入第%d 筆資料:%f", (i + 1),tests[i]);
+		
+	}
+
+	return 0;
+}
+
+
+double result(int n) {  //2^2=  2*like(1)=2*2^1=  2*2*like(0)=2*2*2^0
+	if (n <= 0) {
+		return 1;
+	}
+	else {
+		return n * result(n - 1);
+	}
+
+} //x是底數，n是指數
+
+int like(int x, int n) {  //1^2=like(1,2)  =1*1^1=1*like(1,1)  =1*1*1^0=1*like(1,0) 
+	if (n <= 0) {  //n=1^0
+		return 1;
+	}
+	else {
+		return x * like(x, n - 1);
+	}
+}

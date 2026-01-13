@@ -1,0 +1,35 @@
+//題目2:根據上面的級數，由主程式輸入n，x值。並建立兩個遞迴程式，分別計算X^ n與n!，再由主程式計算出e ^
+#include <stdio.h>
+int like(int x, int n);
+double result(int n);
+int main() {
+	int n, i, x, cute;
+	double e = 1;
+	printf("請輸入n值:");
+	scanf_s("%d", &n); //n=2
+	printf("請輸入x值:");
+	scanf_s("%d", &x);  //x=1
+	for (i = 1; i <= n; i++) {  //e=1+1/1!+1^2/2!
+		cute = like(x, i); //cute=like(1,1)=1
+		e = e + like(x, i) / result(i);  //e=e+1/result(1)=1+1/1
+	}
+	printf("e^為%f", e);
+}
+double result(int n) {  //2^2=  2*like(1)=2*2^1=  2*2*like(0)=2*2*2^0
+	if (n <= 0) {  
+		return 1;
+	}
+	else {
+		return n * result(n - 1);
+	}
+
+} //x是底數，n是指數
+int like(int x, int n) {  //1^2=like(1,2)  =1*1^1=1*like(1,1)  =1*1*1^0=1*like(1,0) 
+	if (n <= 0) {  //n=1^0
+		return 1;
+	}
+	else {
+		return x * like(x, n - 1);
+	}
+
+}
