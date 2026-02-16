@@ -1,0 +1,29 @@
+#include <stdio.h>
+
+int main()
+{
+    int choice;
+
+    printf("請輸入選項值 ==> \n");
+    scanf_s("%d", &choice);
+
+    switch (choice)
+    {
+    case 1:
+        printf_s("請輸入選項值是1\n");
+        //break;
+    case 2:
+        printf_s("請輸入選項值是2\n");
+        //break;
+    case 3:
+        printf_s("請輸入選項值是3\n");
+        //break;
+    default:
+        printf_s("請輸入1~3選項值\n");
+        //break;
+    }
+
+    printf("結束處裡\n");
+
+    return 0;
+}
