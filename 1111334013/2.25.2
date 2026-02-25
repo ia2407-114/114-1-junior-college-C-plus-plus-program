@@ -1,0 +1,46 @@
+題目2. 根據fig11_10.c的檔案內容，建立一個隨機存取檔，用來存入100筆空白的學生資料檔，學生資料存於以下結構中:
+struct student {
+    int id;
+    char name[20];
+    int computer, math;
+    double avg;
+};
+
+// 建立 100 筆空白學生資料的隨機存取檔
+
+#include <stdio.h>
+
+// 學生結構
+struct student {
+    int id;
+    char name[20];
+    int computer, math;
+    double avg;
+};
+
+int main(void)
+{
+    FILE* cfPtr;   // student.dat file pointer
+
+    // 開啟二進位檔案 (寫入模式)
+    if (fopen_s(&cfPtr, "student.dat", "wb") != 0) {
+        puts("File could not be opened.");
+    }
+    else {
+        // 建立空白學生資料
+        struct student blankStudent = { 0, "", 0, 0, 0.0 };
+
+        // 寫入 100 筆空白紀錄
+        for (int i = 0; i < 100; i++) {
+            fwrite(&blankStudent,
+                sizeof(struct student),
+                1,
+                cfPtr);
+        }
+
+        fclose(cfPtr);
+        puts("已建立 100 筆空白學生資料檔 (student.dat)");
+    }
+
+    return 0;
+}
