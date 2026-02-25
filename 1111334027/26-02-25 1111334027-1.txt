@@ -1,0 +1,35 @@
+#include <stdio.h>
+
+int main(void)
+{
+    FILE* cfPtr;
+
+    if (fopen_s(&cfPtr, "students.txt", "w") != 0) {
+        puts("File could not be opened");
+        return 1;
+    }
+
+    puts("請輸入 3 位學生資料：");
+    puts("格式：姓名 學號 數學成績 計概成績");
+
+    char name[30];
+    int id;
+    double math;
+    double computer;
+    double average;
+
+    for (int i = 1; i <= 3; i++) {
+        printf("第 %d 位學生: ", i);
+
+        scanf_s("%29s %d %lf %lf", name, 30, &id, &math, &computer);
+
+        average = (math + computer) / 2.0;
+
+        fprintf(cfPtr, "%s %d %.2f %.2f %.2f\n",
+            name, id, math, computer, average);
+    }
+
+    fclose(cfPtr);
+    puts("資料已寫入 students.txt 檔案中");
+    return 0;
+}
