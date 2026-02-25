@@ -1,0 +1,46 @@
+// fig11_02_modified.c
+// Creating a sequential file with 3 records
+
+#include <stdio.h>
+
+int main(void)
+{
+    FILE* cfPtr;   // clients.txt file pointer
+
+    // 開啟檔案 (寫入模式)
+    if (fopen_s(&cfPtr, "clients.txt", "w") != 0) {
+        puts("File could not be opened");
+    }
+    else {
+        unsigned int id;      // 學號
+        char name[30];        // 姓名
+        int math, computer;   // 數學、計概成績
+        double avg;           // 平均成績
+
+        puts("請輸入 3 位學生的資料：");
+        puts("格式：學號 姓名 數學成績 計概成績");
+
+        // 迴圈輸入 3 筆資料
+        for (int i = 1; i <= 3; i++) {
+
+            printf("第 %d 位學生：", i);
+            scanf_s("%u %29s %d %d",
+                &id,
+                name, 30,
+                &math,
+                &computer);
+
+            // 計算平均
+            avg = ((double)math + computer) / 2.0;
+
+            // 寫入檔案
+            fprintf(cfPtr, "%u %s %d %d %.2f\n",
+                id, name, math, computer, avg);
+        }
+
+        fclose(cfPtr);  // 關閉檔案
+        puts("資料已成功寫入 clients.txt");
+    }
+
+    return 0;
+}
