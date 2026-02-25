@@ -1,23 +1,27 @@
-#include  <stdio.h>
-int main()
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+int main(void)
 {
-	int year = 1;
-	double p, r, aims,sum;
-	printf("輸入本金:\n");
-	scanf_s("%lf", &p);
-	printf("輸入年利率:\n");
-	scanf_s("%lf", &r);
-	printf("輸入存款目標:\n");
-	scanf_s("%lf", &aims);
-	sum = 10000;
-	while (p <= aims)
-	{
-		p = p * (1 + r);
-		printf("第%d年的結存為%lf\n", year, p);
-		p = p + sum;
-		year++;
-		
-	}
-	
-	return 0;
+    FILE* cfPtr;
+    if (fopen_s(&cfPtr, "clients.txt", "w") != 0) {
+        puts("File could not be opened");
+        return 1;
+    }
+    puts("Enter the id, name, math, computer.");
+    puts("Input 3 students only.\n");
+
+    unsigned int id;
+    char name[30];
+    int math, computer;
+    double avg;
+
+    for (int i = 0; i < 3; i++) {
+        printf("Student %d: ", i + 1);
+        scanf_s("%u %29s %d %d",&id, name, sizeof(name), &math, &computer);
+        avg = ((double)math + computer) / 2;
+        fprintf(cfPtr, "%u %s %d %d %.2lf\n",id, name, math, computer, avg);
+    }
+    fclose(cfPtr);
+    puts("\nData written to clients.txt successfully.");
+    return 0;
 }
