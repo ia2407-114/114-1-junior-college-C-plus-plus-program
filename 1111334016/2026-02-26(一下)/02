@@ -1,0 +1,40 @@
+#define _CRT_SECURE_NO_WARNINGS
+/*題目2. 根據fig11_10.c的檔案內容，建立一個隨機存取檔，
+用來存入100筆空白的學生資料檔，學生資料存於以下結構中:
+struct student {
+ int id;
+    char name[20];
+    int computer, math;
+    double avg;
+};
+          
+struct student {
+    int id;
+    char name[20];
+    int computer, math;
+    double avg;};
+
+int main(void)
+{
+    FILE* cfPtr;
+    
+    if ((cfPtr = fopen("accounts.dat", "wb")) == NULL) {
+        puts("File could not be opened.");
+    }
+    else {
+            
+        struct student blankClient = { 0, "", 0,0, 0.0 };
+/*建立空白專案，第一、三、四的0表示整數形式(代表沒有)，""代表沒有字串(空白)
+，0.0代表浮點術士0(沒有數字)*/
+/* struct student blankClient = { 0, "", 0, 0, 0.0 } 的核心是：
+「宣告一個結構變數，並將其內部的所有成員欄位初始化為預設的『空白』或『零』值。」*/
+
+                                     
+        for (unsigned int i = 1; i <= 100; ++i) {
+            fwrite(&blankClient, sizeof(struct student), 1, cfPtr);
+//fwrite 進行二進位寫入
+        }
+
+        fclose(cfPtr); // fclose closes the file
+    }
+}
