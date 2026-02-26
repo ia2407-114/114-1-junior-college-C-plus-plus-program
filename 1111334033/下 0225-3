@@ -1,0 +1,32 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+struct clientData {
+    unsigned int id;
+    char name[20];
+    int math, computer;
+    double avg;
+};
+int main(void)
+{
+    FILE* cfPtr; 
+    if ((cfPtr = fopen("students.txt", "rb+")) == NULL) {
+        puts("File could not be opened.");
+    }
+    else {
+        struct clientData client = { 0, "", 0,0, 0.0 };
+
+        printf("%s", "Enter id" " (1 to 100, 0 to end input): ");
+        scanf_s("%u", &client.id);
+
+        while (client.id != 0) {
+            printf("Enter name , math , computer : ");
+            fscanf_s(stdin, "%s%d%d", client.name, sizeof(client.name), &client.math, &client.computer);
+            client.avg = (client.math + client.computer) / 2.0;
+            fseek(cfPtr, (client.id - 1) * sizeof(struct clientData), SEEK_SET);        
+            fwrite(&client, sizeof(struct clientData), 1, cfPtr);
+            printf("Enter id: ");
+            scanf_s("%u", &client.id);
+        }
+        fclose(cfPtr);
+    }
+}
