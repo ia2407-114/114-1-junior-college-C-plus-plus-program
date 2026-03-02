@@ -19,7 +19,6 @@ int main(void)
         fwrite(&blank, sizeof(struct student), 1, cfPtr);
     }
     fclose(cfPtr);
-
     /* -------- Step 2: 開啟檔案並寫入 3 筆資料 -------- */
     if ((cfPtr = fopen("students.txt", "rb+")) == NULL) {
         puts("File could not be opened.");
@@ -28,9 +27,7 @@ int main(void)
     struct student stu;
     printf("Enter 3 students (id name computer math):\n");
     for (int i = 0; i < 3; i++) {
-        scanf("%d %19s %d %d",
-            &stu.id, stu.name,
-            &stu.computer, &stu.math);
+        scanf("%d %19s %d %d",&stu.id, stu.name,&stu.computer, &stu.math);
         stu.avg = (stu.computer + stu.math) / 2.0;
         fseek(cfPtr, (stu.id - 1) * sizeof(struct student), SEEK_SET);
         fwrite(&stu, sizeof(struct student), 1, cfPtr);
