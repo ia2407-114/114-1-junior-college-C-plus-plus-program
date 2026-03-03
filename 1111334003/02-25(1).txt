@@ -1,0 +1,34 @@
+#include <iostream>
+#include <fstream>
+using namespace std;
+struct student {
+    char name[20];
+    int id;
+    int computer;
+    int math;
+    double avg;
+};
+int main()
+{
+    ofstream outFile("students.txt");
+    if (!outFile) {
+        cout << "File could not be opened.\n";
+        return 1;
+    }
+    student stu[3] = {
+        {"Danny",11,85,70},
+        {"Mary",12,90,88},
+        {"Peter",14,95,92}
+    };
+    for (int i = 0; i < 3; i++) {
+        stu[i].avg = (stu[i].computer + stu[i].math) / 2.0;
+        outFile << stu[i].name << " "
+            << stu[i].id << " "
+            << stu[i].computer << " "
+            << stu[i].math << " "
+            << stu[i].avg << endl;
+    }
+    outFile.close();
+    cout << "成功建立 3 筆學生循序檔 students.txt\n";
+    return 0;
+}

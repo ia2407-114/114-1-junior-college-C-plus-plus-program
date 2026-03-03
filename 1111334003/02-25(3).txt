@@ -1,0 +1,55 @@
+#include <iostream>
+#include <fstream>
+using namespace std;
+struct student {
+    int id;
+    char name[20];
+    int computer;
+    int math;
+    double avg;
+};
+int main()
+{
+    ofstream outFile("student.dat", ios::binary);
+    if (!outFile) {
+        cout << "File could not be opened." << endl;
+        return 1;
+    }
+    student blankStudent = { 0, "", 0, 0, 0.0 };
+    for (int i = 0; i < 100; i++) {
+        outFile.write(reinterpret_cast<char*>(&blankStudent),
+            sizeof(student));
+    }
+    outFile.close();
+    cout << "成功建立 100 筆空白學生隨機存取檔 student.dat" << endl;
+    return 0;
+}#include <iostream>
+#include <fstream>
+using namespace std;
+struct student {
+    int id;
+    char name[20];
+    int computer;
+    int math;
+    double avg;
+};
+int main()
+{
+    fstream file("student.dat", ios::in | ios::out | ios::binary);
+    if (!file) {
+        cout << "File could not be opened." << endl;
+        return 1;
+    }
+    student stu;
+    cout << "請輸入 3 筆學生資料：" << endl;
+    cout << "(輸入：學號 姓名 計概 數學)" << endl;
+    for (int i = 0; i < 3; i++) {
+        cin >> stu.id >> stu.name >> stu.computer >> stu.math;
+        stu.avg = (stu.computer + stu.math) / 2.0;
+        file.seekp((stu.id - 1) * sizeof(student), ios::beg);
+        file.write(reinterpret_cast<char*>(&stu), sizeof(student));
+    }
+    file.close();
+    cout << "成功寫入 3 筆學生資料！" << endl;
+    return 0;
+}

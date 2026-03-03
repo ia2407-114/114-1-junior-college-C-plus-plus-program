@@ -1,0 +1,26 @@
+#include <iostream>
+#include <fstream>
+using namespace std;
+struct student {
+    int id;
+    char name[20];
+    int computer;
+    int math;
+    double avg;
+};
+int main()
+{
+    ofstream outFile("student.dat", ios::binary);
+    if (!outFile) {
+        cout << "File could not be opened." << endl;
+        return 1;
+    }
+    student blankStudent = { 0, "", 0, 0, 0.0 };
+    for (int i = 0; i < 100; i++) {
+        outFile.write(reinterpret_cast<char*>(&blankStudent),
+            sizeof(student));
+    }
+    outFile.close();
+    cout << "成功建立 100 筆空白學生隨機存取檔 student.dat" << endl;
+    return 0;
+}
