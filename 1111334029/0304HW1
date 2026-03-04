@@ -1,0 +1,42 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+
+struct student {
+    int id;
+    char name[20];
+    int computer, math;
+    double avg;
+};
+
+int main(void)
+{
+    FILE* cfPtr;
+
+    if ((cfPtr = fopen("student.dat", "rb+")) == NULL) {
+        puts("File could not be opened.");
+    }
+    else {
+
+        struct student s = { 0 };
+
+        printf("Enter student id (1 to 100, 0 to end): ");
+        scanf_s("%d", &s.id);
+
+        while (s.id != 0) {
+
+            printf("Enter name, computer score, math score: ");
+            scanf_s("%s %d %d", s.name, &s.computer, &s.math);
+
+            s.avg = (s.computer + s.math) / 2.0;
+
+            fseek(cfPtr, (s.id - 1) * sizeof(struct student), SEEK_SET);
+
+            fwrite(&s, sizeof(struct student), 1, cfPtr);
+
+            printf("Enter student id (0 to end): ");
+            scanf_s("%d", &s.id);
+        }
+
+        fclose(cfPtr);
+    }
+}
