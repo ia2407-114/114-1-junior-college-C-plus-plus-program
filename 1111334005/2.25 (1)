@@ -1,0 +1,47 @@
+#include <iostream>
+#include <fstream>
+#include <iomanip>
+using namespace std;
+
+int main() {
+    ofstream outFile("students.txt");  
+
+    if (!outFile) {
+        cout << "檔案無法開啟!" << endl;
+        return 1;
+    }
+
+    string name;      
+    string id;        
+    double math;      
+    double computer;  
+    double average;    
+
+    cout << "請輸入 3 位學生資料：" << endl;
+
+    for (int i = 1; i <= 3; i++) {
+        cout << "\n第 " << i << " 位學生" << endl;
+        cout << "姓名: ";
+        cin >> name;
+        cout << "學號: ";
+        cin >> id;
+        cout << "數學成績: ";
+        cin >> math;
+        cout << "計概成績: ";
+        cin >> computer;
+
+        average = (math + computer) / 2.0;
+
+        outFile << left << setw(10) << name
+            << setw(12) << id
+            << setw(8) << math
+            << setw(8) << computer
+            << setw(8) << fixed << setprecision(2) << average
+            << endl;
+    }
+
+    outFile.close();
+    cout << "\n資料已成功寫入 students.txt 檔案中。" << endl;
+
+    return 0;
+}
