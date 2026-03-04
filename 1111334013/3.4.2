@@ -1,0 +1,44 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct student {
+    int id;
+    char name[20];
+    int computer, math;
+    double avg;
+};
+
+int main(void)
+{
+    FILE* cfPtr;
+    errno_t err;
+
+    // 使用 fopen_s 開啟檔案
+    err = fopen_s(&cfPtr, "students.dat", "rb");
+
+    if (err != 0) {
+        puts("File could not be opened.");
+        return 1;
+    }
+
+    printf("%-6s%-20s%-10s%-10s%-10s\n",
+        "ID", "Name", "Computer", "Math", "Average");
+
+    struct student stu;
+
+    // 正確讀檔方式
+    while (fread(&stu, sizeof(struct student), 1, cfPtr) == 1) {
+
+        if (stu.id != 0) {
+            printf("%-6d%-20s%-10d%-10d%-10.2f\n",
+                stu.id,
+                stu.name,
+                stu.computer,
+                stu.math,
+                stu.avg);
+        }
+    }
+
+    fclose(cfPtr);
+    return 0;
+}
