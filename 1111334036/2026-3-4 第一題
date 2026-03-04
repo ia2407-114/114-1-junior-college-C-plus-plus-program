@@ -24,19 +24,19 @@ int main(void)
     while (1)
     {
         printf("ID: ");
-        scanf_s("%d", &s.id);
+        scanf("%d", &s.id);
 
         if (s.id == 0)
             break;
 
         printf("Name: ");
-        scanf_s("%s", s.name);
+        scanf("%s", s.name);
 
         printf("Computer score: ");
-        scanf_s("%d", &s.computer);
+        scanf("%d", &s.computer);
 
         printf("Math score: ");
-        scanf_s("%d", &s.math);
+        scanf("%d", &s.math);
 
         s.avg = (s.computer + s.math) / 2.0;
 
