@@ -1,0 +1,104 @@
+#include <stdio.h>
+
+#define SIZE 100
+
+struct student {
+    int id;
+    char name[20];
+    int computer, math;
+    double avg;
+};
+
+struct listNode {
+    struct student data;
+    int next;   // 用 index 代替指標
+};
+
+struct listNode list[SIZE];
+
+int head = -1;      // 串列開頭
+int freeIndex = 0;  // 下一個可用位置
+
+void insert(struct student value);
+void printList(void);
+
+int main(void)
+{
+    struct student stu;
+
+    printf("Enter student id (0 to end): ");
+    scanf_s("%d", &stu.id);
+
+    while (stu.id != 0) {
+
+        printf("Enter name, computer score, math score: ");
+        scanf_s("%s %d %d", stu.name, &stu.computer, &stu.math);
+
+        stu.avg = (stu.computer + stu.math) / 2.0;
+
+        insert(stu);
+
+        printf("Enter student id (0 to end): ");
+        scanf_s("%d", &stu.id);
+    }
+
+    printList();
+
+    return 0;
+}
+
+void insert(struct student value)
+{
+    if (freeIndex >= SIZE) {
+        printf("List is full.\n");
+        return;
+    }
+
+    int newIndex = freeIndex++;
+    list[newIndex].data = value;
+    list[newIndex].next = -1;
+
+    int previous = -1;
+    int current = head;
+
+    // ⭐ 依 id 小到大排序
+    while (current != -1 &&
+        value.id > list[current].data.id) {
+
+        previous = current;
+        current = list[current].next;
+    }
+
+    if (previous == -1) {
+        list[newIndex].next = head;
+        head = newIndex;
+    }
+    else {
+        list[newIndex].next = current;
+        list[previous].next = newIndex;
+    }
+}
+
+void printList(void)
+{
+    if (head == -1) {
+        printf("List is empty.\n");
+        return;
+    }
+
+    int current = head;
+
+    printf("\nThe list is:\n\n");
+
+    while (current != -1) {
+
+        printf("ID:%d Name:%s Comp:%d Math:%d Avg:%.2f\n",
+            list[current].data.id,
+            list[current].data.name,
+            list[current].data.computer,
+            list[current].data.math,
+            list[current].data.avg);
+
+        current = list[current].next;
+    }
+}
