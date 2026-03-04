@@ -30,7 +30,7 @@ int main(void)
             break;
 
         printf("Name: ");
-        scanf("%s", s.name);
+        scanf("%s", &s.name);
 
         printf("Computer score: ");
         scanf("%d", &s.computer);
