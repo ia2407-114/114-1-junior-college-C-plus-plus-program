@@ -1,0 +1,51 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+
+
+struct student {
+    int id;           
+    char name[20];   
+    int computer;     
+    int math;        
+    double avg;       
+};
+
+int main(void) {
+    FILE* cfPtr; 
+
+
+    if ((cfPtr = fopen("students.dat", "rb+")) == NULL) {
+        puts("檔案無法開啟，請確認檔案是否存在。");
+    }
+    else {
+     
+        struct student std = { 0, "", 0, 0, 0.0 };
+
+      
+        printf("輸入學號 (1 到 100, 輸入 0 結束): ");
+        scanf_s("%d", &std.id);
+
+        while (std.id != 0) {
+           
+            printf("輸入 姓名, 電腦成績, 數學成績: ");
+            scanf_s("%19s %d %d", std.name, &std.computer, &std.math);
+
+          
+            std.avg = (std.computer + std.math) / 2.0;
+
+           
+            fseek(cfPtr, (std.id - 1) * sizeof(struct student), SEEK_SET);
+
+     
+            fwrite(&std, sizeof(struct student), 1, cfPtr);
+
+            
+            printf("輸入學號 (輸入 0 結束): ");
+            scanf_s("%d", &std.id);
+        }
+
+        fclose(cfPtr); 
+    }
+
+    return 0;
+}
