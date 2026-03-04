@@ -1,0 +1,44 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct student {
+    int id;
+    char name[20];
+    int computer, math;
+    double avg;
+};
+
+int main(void)
+{
+    FILE* cfPtr;
+    errno_t err;
+
+    err = fopen_s(&cfPtr, "students.dat", "rb+");
+
+    if (err != 0) {
+        puts("File could not be opened.");
+        return 1;
+    }
+
+    struct student stu;
+
+    printf("Enter student ID (0 to end): ");
+    scanf_s("%d", &stu.id);
+
+    while (stu.id != 0) {
+
+        printf("Enter name, computer score, math score: ");
+        scanf_s("%s %d %d", stu.name, &stu.computer, &stu.math);
+
+        stu.avg = (stu.computer + stu.math) / 2.0;
+
+        fseek(cfPtr, (stu.id - 1) * sizeof(struct student), SEEK_SET);
+        fwrite(&stu, sizeof(struct student), 1, cfPtr);
+
+        printf("Enter student ID (0 to end): ");
+        scanf_s("%d", &stu.id);
+    }
+
+    fclose(cfPtr);
+    return 0;
+}
