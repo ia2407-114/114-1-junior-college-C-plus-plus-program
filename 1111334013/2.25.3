@@ -1,0 +1,50 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct student {
+    int id;
+    char name[20];
+    int computer, math;
+    double avg;
+};
+
+int main(void)
+{
+    FILE* cfPtr;
+    errno_t err;
+
+    // 開啟已建立的空白隨機存取檔
+    err = fopen_s(&cfPtr, "students.dat", "rb+");
+
+    if (err != 0) {
+        puts("File could not be opened.");
+        return 1;
+    }
+
+    struct student stu;
+
+    // 固定輸入 3 筆
+    for (int i = 0; i < 3; i++) {
+
+        printf("Enter id, name, computer, math: ");
+        scanf_s("%d %s %d %d",
+            &stu.id,
+            stu.name,
+            &stu.computer,
+            &stu.math);
+
+        // 計算平均
+        stu.avg = (stu.computer + stu.math) / 2.0;
+
+        // ⭐ Random Access 核心
+        fseek(cfPtr,
+            (stu.id - 1) * sizeof(struct student),
+            SEEK_SET);
+
+        fwrite(&stu, sizeof(struct student), 1, cfPtr);
+    }
+
+    fclose(cfPtr);
+
+    return 0;
+}
