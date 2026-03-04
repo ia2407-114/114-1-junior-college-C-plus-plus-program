@@ -1,0 +1,22 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>        
+struct clientData {
+    unsigned int id;
+    char name[20];
+    int math, computer;
+    double avg;
+};
+int main(void)
+{
+    FILE* cfPtr;
+    if ((cfPtr = fopen("accounts.dat", "wb")) == NULL) {
+        puts("File could not be opened.");
+    }
+    else {
+        struct clientData blankClient = { 0, "", 0,0, 0.0 };
+        for (unsigned int i = 1; i <= 100; ++i) {
+            fwrite(&blankClient, sizeof(struct clientData), 1, cfPtr);
+        }
+        fclose(cfPtr);
+    }
+}
