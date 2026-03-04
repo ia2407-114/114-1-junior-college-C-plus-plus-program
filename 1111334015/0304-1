@@ -1,0 +1,59 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+
+// student structure definition
+struct student {
+    int id;
+    char name[20];
+    int computer;
+    int math;
+    double avg;
+};
+
+int main(void)
+{
+    FILE* cfPtr;
+
+    // 開啟已建立的隨機存取檔
+    if ((cfPtr = fopen("students.dat", "rb+")) == NULL) {
+        puts("File could not be opened.");
+        return 1;
+    }
+
+    struct student stu;
+
+    printf("請輸入學生資料 (輸入 id = 0 結束)\n");
+    printf("ID: ");
+    scanf_s("%d", &stu.id);
+
+    while (stu.id != 0) {
+
+        printf("Name: ");
+        scanf_s("%19s", stu.name);   // 限制最多輸入19字元（安全）
+
+        printf("Computer score: ");
+        scanf_s("%d", &stu.computer);
+
+        printf("Math score: ");
+        scanf_s("%d", &stu.math);
+
+        // 計算平均成績
+        stu.avg = (stu.computer + stu.math) / 2.0;
+
+        // 移動到指定的隨機位置
+        fseek(cfPtr, (stu.id - 1) * sizeof(struct student), SEEK_SET);
+
+        // 寫入資料
+        fwrite(&stu, sizeof(struct student), 1, cfPtr);
+
+        printf("\n請輸入下一筆資料 (輸入 id = 0 結束)\n");
+        printf("ID: ");
+        scanf_s("%d", &stu.id);
+    }
+
+    fclose(cfPtr);
+
+    printf("資料寫入完成！\n");
+
+    return 0;
+}
