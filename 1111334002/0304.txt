@@ -1,0 +1,51 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+
+// clientData structure definition
+struct student {
+	int id;
+	char Name[20];
+	int computer;
+	int math;
+	double avg; 
+};
+
+int main(void)
+{
+	FILE* cfPtr; // accounts.dat file pointer
+
+	// fopen opens the file; exits if file cannot be opened
+	if ((cfPtr = fopen("students.dat", "wb+")) == NULL) {
+		puts("File could not be opened.");
+	}
+	else {
+		// create clientData with default information
+		struct student std = { 0, "",0,0, 0.0 };
+
+		// require user to specify account number
+		printf("%s", "Enter student id"
+			" (1 to 100, 0 to end input): ");
+		scanf_s("%d", &std.id);
+
+		// user enters information, which is copied into file
+		while (std.id != 0) {
+			// user enters last name, first name and balance
+			printf("Enter Name, computer, math:");
+			scanf_s("%19s %d %d", std.Name, &std.computer, &std.math);
+			std.avg = (std.computer + std.math) / 2.0;
+
+			// seek position in file to user-specified record
+			fseek(cfPtr, (std.id - 1) *
+				sizeof(struct student), SEEK_SET);
+
+			// write user-specified information in file
+			fwrite(&std, sizeof(struct student), 1, cfPtr);
+
+			// enable user to input another account number
+			printf("%s", "Enter student id: ");
+			scanf_s("%d", &std.id);
+		}
+
+		fclose(cfPtr); // fclose closes the file
+	}
+}
