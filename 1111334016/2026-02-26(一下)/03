@@ -1,0 +1,61 @@
+/*題目3. 承上題根據fig11_11.c的檔案內容，利用已建立的空白隨機存取檔，存入3筆學生資料，學生的結構(struct)為:
+struct student {
+ int id;
+    char name[20];
+    int computer, math;
+    double avg;
+};
+*/
+
+#define _CRT_SECURE_NO_WARNINGS
+
+#include <stdio.h>
+
+
+struct student {
+    unsigned int id;
+    char name[30];
+    unsigned int computer, math;
+    double avg;
+};
+
+int main(void)
+{
+    FILE* cfPtr;
+
+
+    if ((cfPtr = fopen("student.dat", "rb+")) == NULL) {
+        puts("File could not be opened.");
+    }
+    else {
+
+        struct student blankboard = { 0, "", 0,0,0.0 };
+
+
+        printf("%s", "Enter id"
+            " (1 to 100, 0 to end input): ");
+        scanf("%d", &blankboard.id);
+
+
+        while (blankboard.id != 0) {
+
+            printf("%s", "Enter name, computer, math: ");
+
+
+            fscanf(stdin, "%14s %d %d", blankboard.name,
+                &blankboard.computer, &blankboard.math);
+
+
+            fseek(cfPtr, (blankboard.id - 1) * sizeof(struct student), SEEK_SET);
+
+
+            fwrite(&blankboard, sizeof(struct student), 1, cfPtr);
+
+
+            printf("%s", "Enter account number: ");
+            scanf("%d", &blankboard.id);
+        }
+
+        fclose(cfPtr);
+    }
+}
