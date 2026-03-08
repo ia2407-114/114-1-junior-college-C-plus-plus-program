@@ -1,0 +1,53 @@
+// Fig. 11.11: fig11_11.c
+// Writing data randomly to a random-access file
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+
+struct student {
+    int id;
+    char name[20];
+    int computer;
+    int math;
+    double avg;
+};
+
+int main(void)
+{
+    FILE* cfPtr; // accounts.dat file pointer
+
+    // fopen opens the file; exits if file cannot be opened
+    if ((cfPtr = fopen("student.dat","wb+")) == NULL) {
+        puts("File could not be opened.");
+    }
+    else {
+        // create clientData with default information
+        struct student stu = { 0, "", 0, 0, 0.0 };
+
+        // require user to specify account number
+        printf("Enter student id (1 to 100, 0 to end): ");
+        scanf_s("%d", &stu.id);
+
+        // user enters information, which is copied into file
+        while (stu.id != 0) {
+            // 輸入學生資料
+            printf("Enter name, computer score, math score: ");
+            scanf_s("%19s %d %d", stu.name, 20, &stu.computer, &stu.math);
+
+            // 計算平均
+            stu.avg = (stu.computer + stu.math) / 2.0;
+
+            // 移動檔案指標到對應位置
+            fseek(cfPtr, (stu.id - 1) * sizeof(struct student), SEEK_SET);
+
+            // 寫入資料
+            fwrite(&stu, sizeof(struct student), 1, cfPtr);
+
+            // 下一筆
+            printf("Enter student id (1~100, 0 to end): ");
+            scanf_s("%d", &stu.id);
+        }
+
+        fclose(cfPtr);
+    }
+    return 0;
+}
