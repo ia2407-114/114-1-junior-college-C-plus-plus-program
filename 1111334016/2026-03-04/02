@@ -1,0 +1,71 @@
+/*題目2. 承上題根據fig11_14.c的檔案內容，將剛才建立的隨機存取檔的內容印出，包括每一位學生的平均成績*/
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+
+
+struct student {
+    int id;
+    char name[20];
+    int computer, math;
+    double avg;
+};
+
+
+int main(void)
+{
+    FILE* cfPtr;
+
+
+        if ((cfPtr = fopen("student.dat", "rb+")) == NULL) {
+            puts("File could not be opened.");
+        }
+        else {
+            struct student blankboard = { 0, "", 0,0, 0.0 };
+
+            // require user to specify account number
+            printf("%s", "輸入學號"
+                " (1 to 100, 0 to end input): ");
+            scanf("%d", &blankboard.id);
+
+            while (blankboard.id != 0) {
+                printf("%s", "輸入名字、計蓋成績、數學成績: ");
+
+                fscanf(stdin, "%14s%d%d", blankboard.name,
+                    &blankboard.computer, &blankboard.math);
+                blankboard.avg = (blankboard.computer + blankboard.math) / 2.0;
+                fseek(cfPtr, (blankboard.id - 1) * sizeof(struct student), SEEK_SET);
+                fwrite(&blankboard, sizeof(struct student), 1, cfPtr);
+
+                printf("%s", "Enter account number: ");
+                scanf("%d", &blankboard.id);
+            }
+
+            fclose(cfPtr); // fclose closes the file
+        }
+    
+
+
+ if ((cfPtr = fopen("student.dat", "rb")) == NULL) {
+        puts("File could not be opened.");
+    }
+    else {
+        printf("%-10s %-20s %-10s %-10s %-10s\n", "id", "name",
+            "computer", "math", "avg");
+
+
+        while (!feof(cfPtr)) {
+
+            struct student blankboard = { 0, "", 0,0,0.0 };
+
+            int result = fread(&blankboard, sizeof(struct student), 1, cfPtr);
+
+
+            if (result != 0 && blankboard.id != 0) {
+                printf("%-10d %-20s %-10d %-10d %-10.2f\n", blankboard.id, blankboard.name,
+                    blankboard.computer, blankboard.math, blankboard.avg);
+            }
+        }
+
+        fclose(cfPtr);
+    }
+}
