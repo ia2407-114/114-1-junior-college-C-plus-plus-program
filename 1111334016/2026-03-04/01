@@ -1,0 +1,49 @@
+/*題目1. 根據fig11_11.c的檔案內容，利用已建立的空白隨機存取檔，存入N筆學生資料，，
+直到輸入id=0才停止輸入學生的結構(struct)為:
+struct student {
+ int id;
+    char name[20];
+    int computer, math;
+    double avg;
+};*/
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+
+
+struct student {
+    int id;
+    char name[20];
+    int computer, math;
+    double avg;
+};
+
+int main(void)
+{
+    FILE* cfPtr; // accounts.dat file pointer
+    if ((cfPtr = fopen("student.dat", "rb+")) == NULL) {
+        puts("File could not be opened.");
+    }
+    else {
+        struct student blankboard = { 0, "", 0,0, 0.0 };
+
+        // require user to specify account number
+        printf("%s", "輸入學號"
+            " (1 to 100, 0 to end input): ");
+        scanf("%d", &blankboard.id);
+
+        while (blankboard.id != 0) {
+            printf("%s", "輸入名字、計蓋成績、數學成績: ");
+
+            fscanf(stdin, "%14s%d%d", blankboard.name,
+                &blankboard.computer, &blankboard.math);
+            blankboard.avg = (blankboard.computer + blankboard.math) / 2.0;
+            fseek(cfPtr, (blankboard.id - 1) * sizeof(struct student), SEEK_SET);
+            fwrite(&blankboard, sizeof(struct student), 1, cfPtr);
+
+            printf("%s", "Enter account number: ");
+            scanf("%d", &blankboard.id);
+        }
+
+        fclose(cfPtr); // fclose closes the file
+    }
+}
