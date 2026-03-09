@@ -47,4 +47,4 @@ int main(void)
     }
     fclose(cfPtr);
     return 0;
-}借放
+}
