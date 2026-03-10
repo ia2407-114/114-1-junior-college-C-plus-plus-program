@@ -1,3 +1,5 @@
+/*題目1. 根據fig11_11.c的檔案內容，利用已建立的空白隨機存取檔，存入N筆學生資料，，
+直到輸入id=0才停止輸入學生的結構(struct)為:*/
 #define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 struct student {
