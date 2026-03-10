@@ -1,3 +1,4 @@
+/*題目3. 請參考課本程式碼fig12_03.c，修改目前的程式碼，建立學生資料，並且依據學號id由小到大插入鏈結串列之中，並且列出鏈結串列的內容*/
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
