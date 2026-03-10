@@ -1,3 +1,4 @@
+/*題目2. 承上題根據fig11_14.c的檔案內容，將剛才建立的隨機存取檔的內容印出，包括每一位學生的平均成績*/
 #define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 struct student {
