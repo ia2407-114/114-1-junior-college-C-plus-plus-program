@@ -1,0 +1,91 @@
+#include <iostream>
+#include <iomanip>
+using namespace std;
+struct student {
+    int id;
+    char name[20];
+    int computer;
+    int math;
+    double avg;
+};
+struct listNode {
+    student data;
+    listNode* nextPtr;
+};
+typedef listNode ListNode;
+typedef ListNode* ListNodePtr;
+void insert(ListNodePtr* sPtr, student value);
+void printList(ListNodePtr currentPtr);
+int isEmpty(ListNodePtr sPtr);
+int main()
+{
+    ListNodePtr startPtr = NULL; 
+    student s;
+    cout << "請輸入學生資料 (id=0 結束)\n";
+    cout << "Enter id: ";
+    cin >> s.id;
+    while (s.id != 0) {
+        cout << "Enter name: ";
+        cin >> s.name;
+        cout << "Enter computer score: ";
+        cin >> s.computer;
+        cout << "Enter math score: ";
+        cin >> s.math;
+        s.avg = (s.computer + s.math) / 2.0;
+        insert(&startPtr, s);  
+        printList(startPtr);
+        cout << "\nEnter id: ";
+        cin >> s.id;
+    }
+    cout << "\nEnd of run.\n";
+    return 0;
+}
+void insert(ListNodePtr* sPtr, student value)
+{
+    ListNodePtr newPtr = new ListNode;
+    if (newPtr != NULL) {
+        newPtr->data = value;
+        newPtr->nextPtr = NULL;
+        ListNodePtr previousPtr = NULL;
+        ListNodePtr currentPtr = *sPtr;
+        while (currentPtr != NULL &&
+            value.id > currentPtr->data.id) {
+            previousPtr = currentPtr;
+            currentPtr = currentPtr->nextPtr;
+        }
+        if (previousPtr == NULL) {
+            newPtr->nextPtr = *sPtr;
+            *sPtr = newPtr;
+        }
+        else {
+            previousPtr->nextPtr = newPtr;
+            newPtr->nextPtr = currentPtr;
+        }
+    }
+    else {
+        cout << "No memory available.\n";
+    }
+}
+int isEmpty(ListNodePtr sPtr)
+{
+    return sPtr == NULL;
+}
+void printList(ListNodePtr currentPtr)
+{
+    if (isEmpty(currentPtr)) {
+        cout << "List is empty.\n";
+    }
+    else {
+        cout << "\nThe list is:\n";
+        while (currentPtr != NULL) {
+            cout << "ID: " << currentPtr->data.id
+                << "  Name: " << currentPtr->data.name
+                << "  Computer: " << currentPtr->data.computer
+                << "  Math: " << currentPtr->data.math
+                << "  Avg: " << fixed << setprecision(2)
+                << currentPtr->data.avg
+                << endl;
+            currentPtr = currentPtr->nextPtr;
+        }
+    }
+}

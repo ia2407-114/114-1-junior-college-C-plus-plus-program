@@ -1,0 +1,40 @@
+#include <iostream>
+#include <fstream>
+#include <iomanip>
+using namespace std;
+struct student {
+    int id;
+    char name[20];
+    int computer;
+    int math;
+    double avg;
+};
+int main()
+{
+    ifstream inFile("student.dat", ios::binary);
+    if (!inFile) {
+        cout << "File could not be opened." << endl;
+        return 1;
+    }
+    student stu;
+    cout << left << setw(6) << "ID"
+        << setw(15) << "Name"
+        << setw(10) << "Computer"
+        << setw(10) << "Math"
+        << setw(10) << "Average"
+        << endl;
+    while (inFile.read(reinterpret_cast<char*>(&stu),
+        sizeof(student))) {
+        if (stu.id != 0) {
+            cout << left << setw(6) << stu.id
+                << setw(15) << stu.name
+                << setw(10) << stu.computer
+                << setw(10) << stu.math
+                << fixed << setprecision(2)
+                << setw(10) << stu.avg
+                << endl;
+        }
+    }
+    inFile.close();
+    return 0;
+}

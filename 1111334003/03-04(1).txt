@@ -1,0 +1,33 @@
+#include <iostream>
+#include <fstream>
+using namespace std;
+struct student {
+    int id;
+    char name[20];
+    int computer;
+    int math;
+    double avg;
+};
+int main()
+{
+    fstream file("student.dat", ios::in | ios::out | ios::binary);
+    if (!file) {
+        cout << "File could not be opened." << endl;
+        return 1;
+    }
+    student stu;
+    cout << "請輸入學生資料 (輸入 id=0 結束)" << endl;
+    cout << "(輸入格式：id 姓名 計概 數學)" << endl;
+    cin >> stu.id;
+    while (stu.id != 0) {
+        cin >> stu.name >> stu.computer >> stu.math;
+        stu.avg = (stu.computer + stu.math) / 2.0;
+        file.seekp((stu.id - 1) * sizeof(student), ios::beg);
+        file.write(reinterpret_cast<char*>(&stu), sizeof(student));
+        cout << "請輸入下一筆資料 (id=0 結束): ";
+        cin >> stu.id;
+    }
+    file.close();
+    cout << "資料輸入完成！" << endl;
+    return 0;
+}
