@@ -1,0 +1,112 @@
+/*題目1. 請參課本程式碼fig12_03.c，修改目前的程式碼，建立學生資料，並且插入數筆資料至鏈結串列之中，並且列出鏈結串列的內容*/
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+// 定義節點結構：整合學生資料與指標
+struct listNode {
+    int id;
+    char name[20];
+    int computer;
+    int math;
+    double avg;
+    struct listNode* nextPtr;
+};
+
+typedef struct listNode ListNode;
+typedef ListNode* ListNodePtr;
+
+// 函式原型宣告
+void insert(ListNodePtr* sPtr, int id, char name[], int comp, int math);
+void printList(ListNodePtr currentPtr);
+
+int main(void)
+{
+    ListNodePtr startPtr = NULL; // 串列起點指標
+    int id, comp, math;
+    char name[20];
+
+    puts("====== 學生資料管理系統 (輸入學號 0 結束) ======");
+
+    while (1) {
+        // 1. 讀取學號
+        printf("\n請輸入學號 (ID): ");
+        scanf("%d", &id);
+        if (id == 0) break;
+
+        // 2. 讀取姓名
+        printf("請輸入姓名 (Name): ");
+        scanf("%19s", name);
+
+        // 3. 分開讀取計概與數學成績
+        printf("請輸入 [計概] 成績: ");
+        scanf("%d", &comp);
+
+        printf("請輸入 [數學] 成績: ");
+        scanf("%d", &math);
+
+        // 將完整資料插入串列
+        insert(&startPtr, id, name, comp, math);
+        puts(">> 系統訊息：該筆資料已成功排序並存入串列。");
+    }
+
+    // 最後顯示所有學生資料清單
+    printList(startPtr);
+
+    puts("程式執行結束。");
+    return 0;
+}
+
+// 【insert 函式實作】
+void insert(ListNodePtr* sPtr, int id, char name[], int comp, int math)
+{
+    ListNodePtr newPtr = (struct listNode*)malloc(sizeof(ListNode)); // 配置記憶體
+
+    if (newPtr != NULL) {
+        newPtr->id = id;
+        strcpy(newPtr->name, name); // 複製字串
+        newPtr->computer = comp;
+        newPtr->math = math;
+        newPtr->avg = ((double)comp + math) / 2.0; // 計算平均
+        newPtr->nextPtr = NULL;
+
+        ListNodePtr previousPtr = NULL;
+        ListNodePtr currentPtr = *sPtr;
+
+        // 依學號由小到大尋找位置
+        while (currentPtr != NULL && id > currentPtr->id) {
+            previousPtr = currentPtr;
+            currentPtr = currentPtr->nextPtr;
+        }
+
+        if (previousPtr == NULL) { // 插在開頭
+            newPtr->nextPtr = *sPtr;
+            *sPtr = newPtr;
+        }
+        else { // 插在中間或末尾
+            previousPtr->nextPtr = newPtr;
+            newPtr->nextPtr = currentPtr;
+        }
+    }
+}
+
+// 【printList 函式實作】
+void printList(ListNodePtr currentPtr)
+{
+    if (currentPtr == NULL) {
+        puts("\n[提示] 目前串列為空，無資料可顯示。");
+    }
+    else {
+        puts("\n==================== 學生總表 ====================");
+        printf("%-8s %-12s %-8s %-8s %-8s\n", "學號", "姓名", "計概", "數學", "平均");
+        printf("--------------------------------------------------\n");
+
+        while (currentPtr != NULL) {
+            printf("%-8d %-12s %-8d %-8d %-8.2f\n",
+                currentPtr->id, currentPtr->name, currentPtr->computer, currentPtr->math, currentPtr->avg);
+            currentPtr = currentPtr->nextPtr;
+        }
+        puts("==================================================\n");
+    }
+}
