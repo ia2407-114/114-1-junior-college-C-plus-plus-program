@@ -1,0 +1,40 @@
+#include <iostream>
+using namespace std;
+
+double& power(int& a, int& n, double& result);
+double& fact(int& x, double& result);
+
+int main() {
+	int x, i;
+	double p_res = 0, f_res = 0;
+
+	cout << "Enter base x = ";
+	cin >> x;
+	cout << "Enter exponent/factorial i = ";
+	cin >> i;
+
+	power(x, i, p_res);
+	fact(i, f_res);
+
+	cout << "--- Result ---" << endl;
+	cout << x << "^" << i << " = " << p_res << endl;
+	cout << i << "! = " << f_res << endl;
+
+	return 0;
+}
+
+double& power(int& a, int& n, double& result) {
+	result = 1.0;
+	for (int k = 1; k <= n; k++) {
+		result *= a;
+	}
+	return result;
+}
+
+double& fact(int& x, double& result) {
+	result = 1.0;
+	for (int j = x; j >= 1; j--) {
+		result *= j;
+	}
+	return result;
+}
