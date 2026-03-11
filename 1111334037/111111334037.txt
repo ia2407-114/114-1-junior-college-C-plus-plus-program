@@ -1,0 +1,145 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <stdlib.h>
+
+struct student
+{
+    int id;
+    char name[20];
+    int computer;
+    int math;
+    double avg;
+    struct student* nextPtr;
+};
+
+void insert(struct student** startPtr, struct student* newStudent);
+void printList(struct student* startPtr);
+int deleteByID(struct student** startPtr, int id);
+
+int main(void)
+{
+    struct student* startPtr = NULL;
+    char name[20];
+    int computer, math, id;
+
+    while (1)
+    {
+        printf("Enter student ID (0 to stop): ");
+        scanf("%d", &id);
+        if (id == 0)
+            break;
+
+        printf("Enter student name: ");
+        scanf("%s", name);
+        printf("Enter computer score: ");
+        scanf("%d", &computer);
+        printf("Enter math score: ");
+        scanf("%d", &math);
+
+        struct student* newStudent = (struct student*)malloc(sizeof(struct student));
+        if (newStudent == NULL)
+        {
+            printf("No memory available.\n");
+            break;
+        }
+
+        newStudent->id = id;
+
+        int i = 0;
+        for (; name[i] != '\0' && i < 19; i++)
+        {
+            newStudent->name[i] = name[i];
+        }
+        newStudent->name[i] = '\0';
+
+        newStudent->computer = computer;
+        newStudent->math = math;
+        newStudent->avg = (computer + math) / 2.0;
+        newStudent->nextPtr = NULL;
+
+        insert(&startPtr, newStudent);
+        printList(startPtr);
+    }
+
+    while (1)
+    {
+        char choice;
+        printf("Do you want to delete a student? (y/n): ");
+        scanf(" %c", &choice);
+
+        if (choice == 'n' || choice == 'N')
+        {
+            break;
+        }
+        else if (choice == 'y' || choice == 'Y') {
+            printf("Enter student ID to delete: ");
+            scanf("%d", &id);
+            int result = deleteByID(&startPtr, id);
+            if (result)
+                printf("Student with ID %d deleted.\n", id);
+            else
+                printf("找不到資料\n");
+
+            printList(startPtr);
+        }
+    }
+
+    puts("End of run.");
+    return 0;
+}
+
+void insert(struct student** startPtr, struct student* newStudent)
+{
+    if (*startPtr == NULL)
+    {
+        *startPtr = newStudent;
+    }
+    else {
+        struct student* current = *startPtr;
+        while (current->nextPtr != NULL)
+        {
+            current = current->nextPtr;
+        }
+        current->nextPtr = newStudent;
+    }
+}
+
+void printList(struct student* startPtr)
+{
+    printf("\nCurrent student list:\n");
+    printf("%-6s %-20s %-10s %-10s %-10s\n", "ID", "Name", "Computer", "Math", "Average");
+    struct student* current = startPtr;
+    while (current != NULL)
+    {
+        printf("%-6d %-20s %-10d %-10d %-10.2f\n",
+            current->id, current->name, current->computer, current->math, current->avg);
+        current = current->nextPtr;
+    }
+    printf("\n");
+}
+
+int deleteByID(struct student** startPtr, int id)
+{
+    struct student* current = *startPtr;
+    struct student* previous = NULL;
+
+    while (current != NULL && current->id != id)
+    {
+        previous = current;
+        current = current->nextPtr;
+    }
+
+    if (current == NULL)
+        return 0;
+
+    if (previous == NULL)
+    {
+        *startPtr = current->nextPtr;
+    }
+    else {
+        previous->nextPtr = current->nextPtr;
+    }
+
+    free(current);
+    return 1;
+}
