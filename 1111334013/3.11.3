@@ -1,0 +1,47 @@
+#include <stdio.h>
+
+double power(int& a, int& n);
+double fact(int& x);
+
+int main()
+{
+    int x, a, n;
+
+    printf("Enter X for factorial = ");
+    scanf_s("%d", &x);
+
+    printf("Enter a for power = ");
+    scanf_s("%d", &a);
+
+    printf("Enter n for power = ");
+    scanf_s("%d", &n);
+
+    printf("Factorial: %d! = %.0f\n", x, fact(x));
+    printf("Power: %d^%d = %.0f\n", a, n, power(a, n));
+
+    return 0;
+}
+
+double fact(int& x)
+{
+    double result = 1.0;
+
+    for (int i = 1; i <= x; i++)
+    {
+        result *= i;
+    }
+
+    return result;
+}
+
+double power(int& a, int& n)
+{
+    double result = 1;
+
+    for (int i = 1; i <= n; i++)
+    {
+        result *= a;
+    }
+
+    return result;
+}
