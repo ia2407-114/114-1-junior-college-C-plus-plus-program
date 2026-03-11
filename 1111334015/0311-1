@@ -1,0 +1,127 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+// student structure
+struct student {
+    int id;
+    char name[20];
+    int computer;
+    int math;
+    double avg;
+};
+
+// linked list node
+struct listNode {
+    struct student data;
+    struct listNode* nextPtr;
+};
+
+typedef struct listNode ListNode;
+typedef ListNode* ListNodePtr;
+
+// function prototypes
+void insert(ListNodePtr* sPtr, struct student stu);
+void printList(ListNodePtr currentPtr);
+int isEmpty(ListNodePtr sPtr);
+
+int main(void)
+{
+    ListNodePtr startPtr = NULL;
+    struct student stu;
+    int n, i;
+
+    printf("請輸入學生人數: ");
+    scanf_s("%d", &n);
+
+    for (i = 0; i < n; i++)
+    {
+        printf("\n輸入第 %d 位學生資料\n", i + 1);
+
+        printf("學號: ");
+        scanf_s("%d", &stu.id);
+
+        printf("姓名: ");
+        scanf_s("%s", stu.name);
+
+        printf("計概成績: ");
+        scanf_s("%d", &stu.computer);
+
+        printf("數學成績: ");
+        scanf_s("%d", &stu.math);
+
+        stu.avg = (stu.computer + stu.math) / 2.0;
+
+        insert(&startPtr, stu);
+    }
+
+    printf("\n===== 鏈結串列內容 =====\n");
+    printList(startPtr);
+
+    return 0;
+}
+
+// insert node
+void insert(ListNodePtr* sPtr, struct student stu)
+{
+    ListNodePtr newPtr = (ListNodePtr)malloc(sizeof(ListNode));
+
+    if (newPtr != NULL)
+    {
+        newPtr->data = stu;
+        newPtr->nextPtr = NULL;
+
+        ListNodePtr previousPtr = NULL;
+        ListNodePtr currentPtr = *sPtr;
+
+        // 依學號排序
+        while (currentPtr != NULL && stu.id > currentPtr->data.id)
+        {
+            previousPtr = currentPtr;
+            currentPtr = currentPtr->nextPtr;
+        }
+
+        if (previousPtr == NULL)
+        {
+            newPtr->nextPtr = *sPtr;
+            *sPtr = newPtr;
+        }
+        else
+        {
+            previousPtr->nextPtr = newPtr;
+            newPtr->nextPtr = currentPtr;
+        }
+    }
+    else
+    {
+        printf("記憶體不足，無法插入資料\n");
+    }
+}
+
+// list empty check
+int isEmpty(ListNodePtr sPtr)
+{
+    return sPtr == NULL;
+}
+
+// print list
+void printList(ListNodePtr currentPtr)
+{
+    if (isEmpty(currentPtr))
+    {
+        printf("List is empty\n");
+    }
+    else
+    {
+        while (currentPtr != NULL)
+        {
+            printf("學號:%d  姓名:%s  計概:%d  數學:%d  平均:%.2f\n",
+                currentPtr->data.id,
+                currentPtr->data.name,
+                currentPtr->data.computer,
+                currentPtr->data.math,
+                currentPtr->data.avg);
+
+            currentPtr = currentPtr->nextPtr;
+        }
+    }
+}
