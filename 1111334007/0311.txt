@@ -1,0 +1,160 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+// 題目 1: 修改結構，讓 student 成為鏈結串列的節點
+struct student {
+	int id;
+	char name[20];
+	int computer, math;
+	double avg;
+	struct student* nextPtr;// 指向下一筆學生資料
+};
+
+typedef struct student Student;
+typedef Student* StudentPtr;
+
+// 函式原型
+void insert(StudentPtr* sPtr, int id, char name[], int comp, int math);
+int d(StudentPtr* sPtr, int id); // 題目 2 的刪除功能
+int isEmpty(StudentPtr sPtr);
+void printList(StudentPtr currentPtr);
+
+int main(void)
+{
+	StudentPtr startPtr = NULL; // 初始串列為空
+	int choice;
+	int id, comp, math;
+	char name[20];
+
+	printf("%s", "請選擇 (1: 插入, 2: 刪除, 3: 結束): ");
+	while (scanf("%d", &choice) && choice != 3) {
+
+		switch (choice) {
+		case 1: // 題目 1: 插入
+			printf("%s", "請輸入學號, 姓名, 電腦, 數學成績: ");
+			scanf("%d %s %d %d", &id, name, &comp, &math);
+			insert(&startPtr, id, name, comp, math);
+			printList(startPtr);
+			break;
+
+		case 2: // 題目 2: 刪除
+			if (!isEmpty(startPtr)) {
+				printf("%s", "請輸入欲刪除的學生學號: ");
+				scanf("%d", &id);
+
+				if (d(&startPtr, id)) {
+					printf("學號 %d 已刪除。\n", id);
+				}
+				else {
+					printf("找不到資料。\n");
+				}
+				printList(startPtr);
+			}
+			else {
+				puts("串列目前是空的。\n");
+			}
+			break;
+
+		default:
+			puts("無效選擇。\n");
+			break;
+		}
+		printf("%s", "請選擇 (1: 插入, 2: 刪除, 3: 結束): ");
+	}
+
+	puts("End of run.");
+}
+
+// 題目 1: 插入節點 (按 ID 排序)
+void insert(StudentPtr* sPtr, int id, char name[], int comp, int math)
+{
+	StudentPtr newPtr = (StudentPtr)malloc(sizeof(Student));
+
+	if (newPtr != NULL) {
+		// 賦值
+		newPtr->id = id;
+		strcpy(newPtr->name, name);
+		newPtr->computer = comp;
+		newPtr->math = math;
+		newPtr->avg = (comp + math) / 2.0;
+		newPtr->nextPtr = NULL;
+
+		StudentPtr previousPtr = NULL;
+		StudentPtr currentPtr = *sPtr;
+
+		// 題目要求的排序邏輯 (依學號 id 排序)
+		while (currentPtr != NULL && id > currentPtr->id) {
+			previousPtr = currentPtr;
+			currentPtr = currentPtr->nextPtr;
+		}
+
+		if (previousPtr == NULL) {
+			newPtr->nextPtr = *sPtr;
+			*sPtr = newPtr;
+		}
+		else {
+			previousPtr->nextPtr = newPtr;
+			newPtr->nextPtr = currentPtr;
+		}
+	}
+	else {
+		printf("記憶體空間不足，學號 %d 未插入。\n", id);
+	}
+}
+
+// 題目 2: 刪除節點
+int d(StudentPtr* sPtr, int id)
+{
+	// 如果學號符合頭節點
+	if (id == (*sPtr)->id) {
+		StudentPtr tempPtr = *sPtr;
+		*sPtr = (*sPtr)->nextPtr;
+		free(tempPtr);
+		return 1;
+	}
+	else {
+		StudentPtr previousPtr = *sPtr;
+		StudentPtr currentPtr = (*sPtr)->nextPtr;
+
+		// 搜尋指定 ID
+		while (currentPtr != NULL && currentPtr->id != id) {
+			previousPtr = currentPtr;
+			currentPtr = currentPtr->nextPtr;
+		}
+
+		// 若找到則刪除
+		if (currentPtr != NULL) {
+			StudentPtr tempPtr = currentPtr;
+			previousPtr->nextPtr = currentPtr->nextPtr;
+			free(tempPtr);
+			return 1;
+		}
+	}
+	return 0; // 沒找到
+}
+
+// 檢查是否為空
+int isEmpty(StudentPtr sPtr)
+{
+	return sPtr == NULL;
+}
+
+// 列出串列內容
+void printList(StudentPtr currentPtr)
+{
+	if (isEmpty(currentPtr)) {
+		puts("串列目前是空的。\n");
+	}
+	else {
+		puts("目前串列內容:");
+		printf("%-10s %-10s %-10s %-10s %-10s\n", "學號", "姓名", "電腦", "數學", "平均");
+		while (currentPtr != NULL) {
+			printf("%-10d %-10s %-10d %-10d %-10.2f\n",
+				currentPtr->id, currentPtr->name, currentPtr->computer, currentPtr->math, currentPtr->avg);
+			currentPtr = currentPtr->nextPtr;
+		}
+		puts("NULL\n");
+	}
+}
