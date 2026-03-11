@@ -1,0 +1,103 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <stdlib.h>
+
+struct student
+{
+    char name[20];
+    int computer;
+    int math;
+    double avg;
+    struct student* nextPtr;
+};
+
+// 函式原型
+void insert(struct student** startPtr, struct student* newStudent);
+void printList(struct student* startPtr);
+
+int main(void)
+{
+    struct student* startPtr = NULL;
+    char name[20];
+    int computer, math;
+
+    while (1)
+    {
+        printf("Enter student name (or 0 to quit): ");
+        scanf("%s", name);
+
+        int isZero = 1;
+        for (int i = 0; name[i] != '\0'; i++)
+        {
+            if (name[i] != '0')
+            {
+                isZero = 0;
+                break;
+            }
+        }
+        if (isZero)
+            break;
+
+        printf("Enter computer score: ");
+        scanf("%d", &computer);
+        printf("Enter math score: ");
+        scanf("%d", &math);
+
+        struct student* newStudent = (struct student*)malloc(sizeof(struct student));
+        if (newStudent == NULL)
+        {
+            printf("No memory available.\n");
+            break;
+        }
+
+        int i = 0;
+        for (; name[i] != '\0' && i < 19; i++)
+        {
+            newStudent->name[i] = name[i];
+        }
+        newStudent->name[i] = '\0';
+
+        newStudent->computer = computer;
+        newStudent->math = math;
+        newStudent->avg = (computer + math) / 2.0;
+        newStudent->nextPtr = NULL;
+
+        insert(&startPtr, newStudent);
+        printList(startPtr);
+    }
+
+    puts("End of run.");
+    return 0;
+}
+
+void insert(struct student** startPtr, struct student* newStudent)
+{
+    if (*startPtr == NULL)
+    {
+        *startPtr = newStudent;
+    }
+    else
+    {
+        struct student* current = *startPtr;
+        while (current->nextPtr != NULL)
+        {
+            current = current->nextPtr;
+        }
+        current->nextPtr = newStudent;
+    }
+}
+
+void printList(struct student* startPtr)
+{
+    printf("\nCurrent student list:\n");
+    printf("%-20s %-10s %-10s %-10s\n", "Name", "Computer", "Math", "Average");
+
+    struct student* current = startPtr;
+    while (current != NULL)
+    {
+        printf("%-20s %-10d %-10d %-10.2f\n",
+            current->name, current->computer, current->math, current->avg);
+        current = current->nextPtr;
+    }
+    printf("\n");
+}
