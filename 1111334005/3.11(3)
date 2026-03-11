@@ -1,0 +1,51 @@
+#include <iostream>
+using namespace std;
+
+
+double fact(int& n);              
+double power(int& a, int& b);      
+
+int main()
+{
+    int x, i;
+
+    cout << "Enter x = ";
+    cin >> x;
+
+    cout << "Enter i = ";
+    cin >> i;
+
+    double powResult = power(x, i);
+    double factResult = fact(i);
+
+    cout << "power(" << x << "," << i << ") = " << powResult << endl;
+    cout << i << "! = " << factResult << endl;
+
+    return 0;
+}
+
+
+double fact(int& n)
+{
+    double result = 1.0;
+
+    if (n == 0) return 1.0;
+
+    for (int j = 1; j <= n; j++) {
+        result *= j;
+    }
+    return result;
+}
+
+
+double power(int& a, int& b)
+{
+    double result = 1.0;
+
+    if (b == 0) return 1.0;
+
+    for (int k = 1; k <= b; k++) {
+        result *= a;
+    }
+    return result;
+}
