@@ -1,0 +1,83 @@
+/*題目3. 請參考課本程式碼fig12_03.c，修改目前的程式碼，建立學生資料，並且依據學號id由小到大插入鏈結串列之中，並且列出鏈結串列的內容*/
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#define _CRT_SECURE_NO_WARNINGS
+struct student {
+    int id;
+    char name[20];
+    int computer, math;
+    double avg;
+    struct student* nextPtr;
+};
+
+typedef struct student ListNode;
+typedef ListNode* ListNodePtr;
+void insert(ListNodePtr* sPtr, int id, char name[], int computer, int math);
+void printList(ListNodePtr currentPtr);
+
+int main(void)
+{
+    ListNodePtr startPtr = NULL;
+    int id, computer, math;
+    char name[20];
+    for (int i = 0; i < 3; i++) {
+        printf("Enter id name computer math: ");
+        scanf_s("%d %s %d %d", &id, name,20, &computer, &math);
+        insert(&startPtr, id, name, computer, math);
+    }
+    printList(startPtr);
+    return 0;
+}
+void insert(ListNodePtr* sPtr, int id, char name[], int computer, int math)
+{
+    ListNodePtr newPtr = (ListNodePtr)malloc(sizeof(ListNode));
+    if (newPtr != NULL) {
+
+        newPtr->id = id;
+        strcpy_s(newPtr->name, name);
+        newPtr->computer = computer;
+        newPtr->math = math;
+        newPtr->avg = (computer + math) / 2.0;
+        newPtr->nextPtr = NULL;
+
+        ListNodePtr previousPtr = NULL;
+        ListNodePtr currentPtr = *sPtr;
+
+        while (currentPtr != NULL && id > currentPtr->id) {
+            previousPtr = currentPtr;
+            currentPtr = currentPtr->nextPtr;
+        }
+        if (previousPtr == NULL) {
+            newPtr->nextPtr = *sPtr;
+            *sPtr = newPtr;
+        }
+        else {
+            previousPtr->nextPtr = newPtr;
+            newPtr->nextPtr = currentPtr;
+        }
+    }
+    else {
+        printf("No memory available\n");
+    }
+}
+void printList(ListNodePtr currentPtr)
+{
+    if (currentPtr == NULL) {
+        printf("List is empty\n");
+    }
+    else {
+        printf("The list is:\n");
+
+        while (currentPtr != NULL) {
+            printf("ID:%d Name:%s Computer:%d Math:%d Avg:%.2f ->\n ",
+                currentPtr->id,
+                currentPtr->name,
+                currentPtr->computer,
+                currentPtr->math,
+                currentPtr->avg);
+            currentPtr = currentPtr->nextPtr;
+        }
+        printf("NULL\n");
+    }
+}
