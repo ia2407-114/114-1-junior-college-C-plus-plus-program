@@ -22,31 +22,64 @@ void printList(StudentPtr currentPtr);
 int main(void)
 {
     StudentPtr startPtr = NULL;
+    int choice = 0;
+    int id, computer, math;
+    char name[20];
 
-    // 插入學生資料
-    insert(&startPtr, 3, "Amy", 80, 90);
-    insert(&startPtr, 1, "John", 75, 85);
-    insert(&startPtr, 5, "Mary", 90, 88);
-    insert(&startPtr, 2, "David", 70, 78);
+    while (choice != 3) {
+        printf("\n--- 學生管理系統 ---\n");
+        printf("1. 新增學生資料\n");
+        printf("2. 刪除學生資料\n");
+        printf("3. 結束程式並印出結果\n");
+        printf("請輸入選擇: ");
+        scanf("%d", &choice);
 
-    printf("原始鏈結串列:\n");
-    printList(startPtr);
+        switch (choice) {
+        case 1:
+            printf("輸入 ID: ");
+            scanf("%d", &id);
+            printf("輸入姓名: ");
+            scanf("%s", name); // 讀取字串不需加 &
+            printf("輸入電腦分數: ");
+            scanf("%d", &computer);
+            printf("輸入數學分數: ");
+            scanf("%d", &math);
 
-    int delID;
+            insert(&startPtr, id, name, computer, math);
+            printf("資料已加入！\n");
+            break;
 
-    printf("輸入要刪除的學生ID: ");
-    scanf("%d", &delID);
+        case 2:
+            if (startPtr == NULL) {
+                printf("目前沒有資料可以刪除。\n");
+            }
+            else {
+                printf("請輸入要刪除的學生 ID: ");
+                scanf("%d", &id);
+                if (deleteNode(&startPtr, id))
+                    printf("ID %d 已刪除。\n", id);
+                else
+                    printf("找不到該 ID 的資料。\n");
+            }
+            break;
 
-    if (deleteNode(&startPtr, delID))
-        printf("資料已刪除\n");
-    else
-        printf("找不到資料\n");
+        case 3:
+            printf("\n程式結束。\n");
+            break;
 
-    printf("\n刪除後鏈結串列:\n");
-    printList(startPtr);
+        default:
+            printf("無效的選擇，請重新輸入。\n");
+            break;
+        }
+
+        // 每次操作完都顯示一下目前的清單，方便確認
+        printf("\n目前的鏈結串列狀態:\n");
+        printList(startPtr);
+    }
 
     return 0;
 }
+
 
 void insert(StudentPtr* sPtr, int id,const char *name, int computer, int math)
 {
