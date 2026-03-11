@@ -1,0 +1,129 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <stdlib.h>
+#include<string.h>
+
+struct student {
+    int id;
+    char name[20];
+    int computer;
+    int math;
+    double avg;
+    struct student* nextPtr;
+};
+
+typedef struct student Student;
+typedef Student* StudentPtr;
+
+void insert(StudentPtr* sPtr, int id,const char *name, int computer, int math);
+int deleteNode(StudentPtr* sPtr, int id);
+void printList(StudentPtr currentPtr);
+
+int main(void)
+{
+    StudentPtr startPtr = NULL;
+
+    // 插入學生資料
+    insert(&startPtr, 3, "Amy", 80, 90);
+    insert(&startPtr, 1, "John", 75, 85);
+    insert(&startPtr, 5, "Mary", 90, 88);
+    insert(&startPtr, 2, "David", 70, 78);
+
+    printf("原始鏈結串列:\n");
+    printList(startPtr);
+
+    int delID;
+
+    printf("輸入要刪除的學生ID: ");
+    scanf("%d", &delID);
+
+    if (deleteNode(&startPtr, delID))
+        printf("資料已刪除\n");
+    else
+        printf("找不到資料\n");
+
+    printf("\n刪除後鏈結串列:\n");
+    printList(startPtr);
+
+    return 0;
+}
+
+void insert(StudentPtr* sPtr, int id,const char *name, int computer, int math)
+{
+    StudentPtr newPtr = (StudentPtr)malloc(sizeof(Student));
+
+    if (newPtr != NULL) {
+
+        newPtr->id = id;
+        strcpy(newPtr->name, name);
+        newPtr->computer = computer;
+        newPtr->math = math;
+        newPtr->avg = (computer + math) / 2.0;
+        newPtr->nextPtr = NULL;
+
+        StudentPtr previousPtr = NULL;
+        StudentPtr currentPtr = *sPtr;
+
+        while (currentPtr != NULL && id > currentPtr->id) {
+            previousPtr = currentPtr;
+            currentPtr = currentPtr->nextPtr;
+        }
+
+        if (previousPtr == NULL) {
+            newPtr->nextPtr = *sPtr;
+            *sPtr = newPtr;
+        }
+        else {
+            previousPtr->nextPtr = newPtr;
+            newPtr->nextPtr = currentPtr;
+        }
+    }
+}
+
+int deleteNode(StudentPtr* sPtr, int id)
+{
+    StudentPtr previousPtr = NULL;
+    StudentPtr currentPtr = *sPtr;
+
+    if (currentPtr != NULL && currentPtr->id == id) {
+        *sPtr = currentPtr->nextPtr;
+        free(currentPtr);
+        return id;
+    }
+
+    while (currentPtr != NULL && currentPtr->id != id) {
+        previousPtr = currentPtr;
+        currentPtr = currentPtr->nextPtr;
+    }
+
+    if (currentPtr != NULL) {
+        previousPtr->nextPtr = currentPtr->nextPtr;
+        free(currentPtr);
+        return id;
+    }
+
+    return 0;
+}
+
+void printList(StudentPtr currentPtr)
+{
+    if (currentPtr == NULL) {
+        printf("List is empty\n");
+    }
+    else {
+        printf("Student List:\n");
+
+        while (currentPtr != NULL) {
+            printf("ID:%d Name:%s Computer:%d Math:%d Avg:%.2f\n",
+                currentPtr->id,
+                currentPtr->name,
+                currentPtr->computer,
+                currentPtr->math,
+                currentPtr->avg);
+
+            currentPtr = currentPtr->nextPtr;
+        }
+
+        printf("\n");
+    }
+}
