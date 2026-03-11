@@ -1,0 +1,34 @@
+#include <iostream>
+using namespace std;
+double power(int&, int&);
+double fact(int&);
+int main()
+{
+	int x, z, i, k, j,a,n;   //ex   e^1=2.71828…
+	cout<<"Enter x =";
+	cin>>x;
+	cout<<"Enter a n =";
+	cin>>a >> n;
+	cout << "階層x!: " << fact(x);
+    cout<<"冪次函數: "<<power(a, n);
+	return 0;
+}
+double fact(int& i)
+{
+	int j;
+	double level = 1.0;
+	for (j = i; j >= 1; j--) {//階乘 e.g. i=5
+		level *= j;  // level=level * j  ?5 * 4 * 3 * 2 * 1
+	}  // 5!=120  
+	return level;
+}
+
+double power(int& x, int& y)
+{
+	double xpow = 1;
+	int k;
+	for (k = 1; k <= y; k++) {//次方  e.g. i=5
+		xpow *= x;         // xpow=xpow * x ?5 * 5 * 5 * 5 * 5 * 5= 3125
+	}
+	return xpow;
+}
