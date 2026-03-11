@@ -1,0 +1,83 @@
+#include <iostream>
+using namespace std;
+struct student {
+    int id;
+    char name[20];
+    int computer;
+    int math;
+    double avg;
+};
+struct listNode {
+    student data;
+    struct listNode* nextPtr;
+};
+typedef struct listNode ListNode;
+typedef ListNode* ListNodePtr;
+void insert(ListNodePtr* sPtr, student value);
+void printList(ListNodePtr currentPtr);
+int isEmpty(ListNodePtr sPtr);
+int main()
+{
+    ListNodePtr startPtr = NULL;
+    student s;
+    cout << "輸入學生資料 (id=0 結束)\n";
+    cout << "Enter id: ";
+    cin >> s.id;
+    while (s.id != 0) {
+        cout << "Enter name: ";
+        cin >> s.name;
+        cout << "Enter computer score: ";
+        cin >> s.computer;
+        cout << "Enter math score: ";
+        cin >> s.math;
+        s.avg = (s.computer + s.math) / 2.0;
+        insert(&startPtr, s);
+        cout << "\n目前鏈結串列內容:\n";
+        printList(startPtr);
+        cout << "\nEnter id: ";
+        cin >> s.id;
+    }
+    cout << "\nEnd of run.\n";
+}
+void insert(ListNodePtr* sPtr, student value)
+{
+    ListNodePtr newPtr = new ListNode;
+    if (newPtr != NULL) {
+        newPtr->data = value;
+        newPtr->nextPtr = NULL;
+        if (*sPtr == NULL) {
+            *sPtr = newPtr;
+        }
+        else {
+            ListNodePtr currentPtr = *sPtr;
+            while (currentPtr->nextPtr != NULL) {
+                currentPtr = currentPtr->nextPtr;
+            }
+            currentPtr->nextPtr = newPtr;
+        }
+    }
+    else {
+        cout << "No memory available.\n";
+    }
+}
+int isEmpty(ListNodePtr sPtr)
+{
+    return sPtr == NULL;
+}
+void printList(ListNodePtr currentPtr)
+{
+    if (isEmpty(currentPtr)) {
+        cout << "List is empty.\n";
+    }
+    else {
+        while (currentPtr != NULL) {
+            cout << "ID: " << currentPtr->data.id
+                << "  Name: " << currentPtr->data.name
+                << "  Computer: " << currentPtr->data.computer
+                << "  Math: " << currentPtr->data.math
+                << "  Avg: " << currentPtr->data.avg
+                << endl;
+            currentPtr = currentPtr->nextPtr;
+        }
+    }
+}

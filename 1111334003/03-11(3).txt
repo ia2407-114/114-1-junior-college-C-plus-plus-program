@@ -1,0 +1,38 @@
+#include <iostream>
+using namespace std;
+double power(int&, int&);
+double fact(int&);
+int main()
+{
+    int x, i;
+    cout << "Enter x = ";
+    cin >> x;
+    cout << "Enter i = ";
+    cin >> i;
+    cout << "result: "
+        << power(x, i) << ", "
+        << fact(i) << endl;
+    return 0;
+}
+double fact(int& i)
+{
+    int j;
+    double level = 1.0;
+    if (i == 0)
+        return 1;
+    for (j = i; j >= 1; j--)
+    {
+        level *= j;
+    }
+    return level;
+}
+double power(int& x, int& y)
+{
+    double xpow = 1;
+    int k;
+    for (k = 1; k <= y; k++)
+    {
+        xpow *= x;
+    }
+    return xpow;
+}
