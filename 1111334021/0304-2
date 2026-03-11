@@ -1,0 +1,32 @@
+/*題目2. 承上題根據fig11_14.c的檔案內容，將剛才建立的隨機存取檔的內容印出，包括每一位學生的平均成績*/
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+struct student {
+    int id;
+    char name[20];
+    int computer, math;
+    double avg;
+};
+int main(void)
+{
+    FILE* cfPtr;
+    struct student client;
+    if ((cfPtr = fopen("students.dat", "rb")) == NULL) {
+        puts("File could not be opened.");
+        return 1;
+    }
+    printf("\nID   Name   Computer   Math   Avg\n");
+    printf("--------------------------------------\n");
+    while (fread(&client, sizeof(struct student), 1, cfPtr) == 1) {
+        if (client.id != 0) {
+            printf("%d   %s   %d   %d   %.2f\n",
+                client.id,
+                client.name,
+                client.computer,
+                client.math,
+                client.avg);
+        }
+    }
+    fclose(cfPtr);
+    return 0;
+}
