@@ -1,0 +1,46 @@
+#include <iostream>
+using namespace std;
+
+double power(int&, int&);
+double fact(int&);
+
+int main()
+{
+    int x, i;
+
+    cout << "輸入 x = ";
+    cin >> x;
+
+    cout << "輸入 i = ";
+    cin >> i;
+
+    cout << "結果: " << power(x, i) << ", " << fact(i) ;
+
+    return 0;
+}
+
+double fact(int& i)
+{
+    int j;
+    double level = 1.0;
+
+    for (j = i; j >= 1; j--)
+    {
+        level *= j;   
+    }
+
+    return level;
+}
+
+double power(int& x, int& y)
+{
+    double xpow = 1;
+    int k;
+
+    for (k = 1; k <= y; k++)
+    {
+        xpow *= x;   
+    }
+
+    return xpow;
+}
