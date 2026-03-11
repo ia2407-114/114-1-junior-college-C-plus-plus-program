@@ -1,0 +1,107 @@
+/*題目3. 請參考課本程式碼fig12_03.c，修改目前的程式碼，建立學生資料，並且依據學號id由小到大插入鏈結串列之中，並且列出鏈結串列的內容*/
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+// 1. 定義節點結構
+struct listNode {
+    int id;                // 排序依據：學號
+    char name[20];
+    int computer, math;
+    double avg;
+    struct listNode* nextPtr;
+};
+
+typedef struct listNode ListNode;
+typedef ListNode* ListNodePtr;
+
+// 函式原型宣告
+void insert(ListNodePtr* sPtr, int id, char name[], int comp, int math);
+void printList(ListNodePtr currentPtr);
+
+int main(void) {
+    ListNodePtr startPtr = NULL; // 初始空串列
+    int id, comp, math;
+    char name[20];
+
+    puts("====== 學生資料排序系統 (輸入 ID 0 結束) ======");
+
+    // 2. 循環讀取資料
+    while (1) {
+        printf("\n請輸入學號 (ID): ");
+        scanf("%d", &id);
+        if (id == 0) break; // 結束條件
+
+        printf("請輸入姓名 (Name): ");
+        scanf("%19s", name);
+        printf("請輸入計概成績: ");
+        scanf("%d", &comp);
+        printf("請輸入數學成績: ");
+        scanf("%d", &math);
+
+        // 3. 呼叫插入函式（內部會自動找位置）
+        insert(&startPtr, id, name, comp, math);
+       
+    }
+
+    // 4. 列出結果
+    printList(startPtr);
+
+    puts("程式結束。");
+    return 0;
+}
+
+// 【insert 函式】：本題核心，負責「由小到大」排序
+void insert(ListNodePtr* sPtr, int id, char name[], int comp, int math) {
+    // 申請記憶體
+    ListNodePtr newPtr = (struct listNode*)malloc(sizeof(ListNode));
+
+    if (newPtr != NULL) {
+        // 設定新節點數值
+        newPtr->id = id;
+        strcpy(newPtr->name, name);
+        newPtr->computer = comp;
+        newPtr->math = math;
+        newPtr->avg = ((double)comp + math) / 2.0;
+        newPtr->nextPtr = NULL;
+
+        ListNodePtr previousPtr = NULL;
+        ListNodePtr currentPtr = *sPtr;
+
+        // 【關鍵邏輯】尋找第一個「比新學號大」的節點
+        // 只要還沒到底且新 ID 比目前 ID 大，就繼續往後走
+        while (currentPtr != NULL && id > currentPtr->id) {
+            previousPtr = currentPtr;          // 紀錄前一個位置
+            currentPtr = currentPtr->nextPtr;  // 移向下一筆
+        }
+
+        // 插入動作
+        if (previousPtr == NULL) {
+            // 情況 A：新學號最小，插在開頭（修改火車頭）
+            newPtr->nextPtr = *sPtr;
+            *sPtr = newPtr;
+        }
+        else {
+            // 情況 B：插在中間或末尾
+            previousPtr->nextPtr = newPtr;
+            newPtr->nextPtr = currentPtr;
+        }
+    }
+}
+
+// 【printList 函式】：走訪並印出表格
+void printList(ListNodePtr currentPtr) {
+    if (currentPtr == NULL) {
+        puts("\n[提示] 目前沒有資料。");
+    }
+    else {
+        puts("\n--- 學生資料清單 (已按 ID 排序) ---");
+        printf("%-8s %-12s %-8s %-8s %-8s\n", "ID", "姓名", "計概", "數學", "平均");
+        while (currentPtr != NULL) {
+            printf("%-8d %-12s %-8d %-8d %-8.2f\n",
+                currentPtr->id, currentPtr->name, currentPtr->computer, currentPtr->math, currentPtr->avg);
+            currentPtr = currentPtr->nextPtr;
+        }
+    }
+}
