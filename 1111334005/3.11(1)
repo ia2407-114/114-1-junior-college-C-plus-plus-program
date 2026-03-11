@@ -1,0 +1,121 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct student {
+    int id;
+    char name[20];
+    int computer;
+    int math;
+    float avg;
+};
+
+
+struct listNode {
+    struct student data;
+    struct listNode* nextPtr;
+};
+
+typedef struct listNode ListNode;
+typedef ListNode* ListNodePtr;
+
+
+void insert(ListNodePtr* sPtr);
+int isEmpty(ListNodePtr sPtr);
+void printList(ListNodePtr currentPtr);
+
+int main()
+{
+    ListNodePtr startPtr = NULL;
+    int choice;
+
+    while (1) {
+        printf("\n1. 插入學生資料\n");
+        printf("2. 顯示鏈結串列\n");
+        printf("3. 結束\n");
+        printf("選擇: ");
+        scanf("%d", &choice);
+
+        if (choice == 1) {
+            insert(&startPtr);
+        }
+        else if (choice == 2) {
+            printList(startPtr);
+        }
+        else if (choice == 3) {
+            break;
+        }
+    }
+
+    return 0;
+}
+
+void insert(ListNodePtr* sPtr)
+{
+    ListNodePtr newPtr = malloc(sizeof(ListNode));
+
+    if (newPtr != NULL) {
+
+        printf("輸入學號: ");
+        scanf("%d", &newPtr->data.id);
+
+        printf("輸入姓名: ");
+        scanf("%s", newPtr->data.name);
+
+        printf("輸入計概成績: ");
+        scanf("%d", &newPtr->data.computer);
+
+        printf("輸入數學成績: ");
+        scanf("%d", &newPtr->data.math);
+
+        newPtr->data.avg = (newPtr->data.computer + newPtr->data.math) / 2.0;
+
+        newPtr->nextPtr = NULL;
+
+        ListNodePtr previousPtr = NULL;
+        ListNodePtr currentPtr = *sPtr;
+
+     
+        while (currentPtr != NULL && newPtr->data.id > currentPtr->data.id) {
+            previousPtr = currentPtr;
+            currentPtr = currentPtr->nextPtr;
+        }
+
+        if (previousPtr == NULL) {
+            newPtr->nextPtr = *sPtr;
+            *sPtr = newPtr;
+        }
+        else {
+            previousPtr->nextPtr = newPtr;
+            newPtr->nextPtr = currentPtr;
+        }
+    }
+    else {
+        printf("記憶體不足\n");
+    }
+}
+
+int isEmpty(ListNodePtr sPtr)
+{
+    return sPtr == NULL;
+}
+
+void printList(ListNodePtr currentPtr)
+{
+    if (isEmpty(currentPtr)) {
+        printf("串列是空的\n");
+    }
+    else {
+        printf("\n學生資料鏈結串列:\n");
+
+        while (currentPtr != NULL) {
+
+            printf("學號:%d ", currentPtr->data.id);
+            printf("姓名:%s ", currentPtr->data.name);
+            printf("計概:%d ", currentPtr->data.computer);
+            printf("數學:%d ", currentPtr->data.math);
+            printf("平均:%.2f\n", currentPtr->data.avg);
+
+            currentPtr = currentPtr->nextPtr;
+        }
+    }
+}
