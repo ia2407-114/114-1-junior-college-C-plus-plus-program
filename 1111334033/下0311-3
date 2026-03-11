@@ -1,0 +1,39 @@
+/*題目3. 請用C++改寫以下程式碼，並且使用傳位址(call by reference)的方式傳遞與回傳參數:
+階乘函數:請輸入一個X值，用for迴圈算出並印出X的階乘X!
+階乘: X=5階乘=1*2*3*4*5=120，0階乘=1(定義)
+冪次函數(power function):輸入整數a，與n，求出a^n值*/
+#include <iostream>
+using namespace std;
+double power(int& a, int& n);
+double fact(int& x);
+int main()
+{
+    int x, a, n;
+    cout << "Enter x = ";
+    cin >> x;
+    cout << "Enter a = ";
+    cin >> a;
+    cout << "Enter n = ";
+    cin >> n;
+    cout << "result: 階乘函數 = " << fact(x)
+        << " , 冪次函數 = " << power(a, n) << endl;
+    return 0;
+}
+double fact(int& x)
+{
+    double level = 1.0;
+    for (int j = x; j >= 1; j--)
+    {
+        level *= j;
+    }
+    return level;
+}
+double power(int& a, int& n)
+{
+    double xpow = 1;
+    for (int k = 1; k <= n; k++)
+    {
+        xpow *= a;
+    }
+    return xpow;
+}
