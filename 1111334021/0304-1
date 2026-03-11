@@ -1,0 +1,31 @@
+/*題目1. 根據fig11_11.c的檔案內容，利用已建立的空白隨機存取檔，存入N筆學生資料，，
+直到輸入id=0才停止輸入學生的結構(struct)為:*/
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+struct student {
+    int id;
+    char name[20];
+    int computer, math;
+    double avg;
+};
+int main(void)
+{
+    FILE* cfPtr;
+    if ((cfPtr = fopen("students.dat", "wb+")) == NULL) {
+        puts("File could not be opened.");
+        return 1;
+    }
+    struct student client;
+    printf("Enter id (1-100, 0 to end): ");
+    scanf("%d", &client.id);
+    while (client.id != 0) {
+        printf("Enter name, computer, math: ");
+        scanf("%19s%d%d", client.name, &client.computer, &client.math);
+        client.avg = (client.computer + client.math) / 2.0;
+        fseek(cfPtr, (client.id - 1) * sizeof(struct student), SEEK_SET);
+        fwrite(&client, sizeof(struct student), 1, cfPtr);
+        printf("Enter id (1-100, 0 to end): ");
+        scanf("%d", &client.id);
+    }
+    fclose(cfPtr);
+}
