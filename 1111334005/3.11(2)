@@ -1,0 +1,168 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct student {
+    int id;
+    char name[20];
+    int computer;
+    int math;
+    float avg;
+};
+
+struct listNode {
+    struct student data;
+    struct listNode *nextPtr;
+};
+
+typedef struct listNode ListNode;
+typedef ListNode *ListNodePtr;
+
+void insert(ListNodePtr *sPtr);
+int deleteNode(ListNodePtr *sPtr, int id);
+void printList(ListNodePtr currentPtr);
+int isEmpty(ListNodePtr sPtr);
+
+int main()
+{
+    ListNodePtr startPtr = NULL;
+    int choice,id;
+
+    while(1){
+
+        printf("\n1. 插入學生資料\n");
+        printf("2. 刪除學生資料\n");
+        printf("3. 顯示鏈結串列\n");
+        printf("4. 結束\n");
+        printf("選擇: ");
+        scanf("%d",&choice);
+
+        if(choice==1){
+            insert(&startPtr);
+        }
+
+        else if(choice==2){
+
+            printf("輸入欲刪除的學生id: ");
+            scanf("%d",&id);
+
+            if(deleteNode(&startPtr,id)){
+                printf("資料已刪除\n");
+            }
+            else{
+                printf("找不到資料\n");
+            }
+
+            printList(startPtr);
+        }
+
+        else if(choice==3){
+            printList(startPtr);
+        }
+
+        else if(choice==4){
+            break;
+        }
+    }
+
+    return 0;
+}
+
+void insert(ListNodePtr *sPtr)
+{
+    ListNodePtr newPtr = malloc(sizeof(ListNode));
+
+    if(newPtr!=NULL){
+
+        printf("輸入學號: ");
+        scanf("%d",&newPtr->data.id);
+
+        printf("輸入姓名: ");
+        scanf("%s",newPtr->data.name);
+
+        printf("輸入計概: ");
+        scanf("%d",&newPtr->data.computer);
+
+        printf("輸入數學: ");
+        scanf("%d",&newPtr->data.math);
+
+        newPtr->data.avg=(newPtr->data.computer+newPtr->data.math)/2.0;
+
+        newPtr->nextPtr=NULL;
+
+        ListNodePtr previousPtr=NULL;
+        ListNodePtr currentPtr=*sPtr;
+
+        while(currentPtr!=NULL && newPtr->data.id>currentPtr->data.id){
+            previousPtr=currentPtr;
+            currentPtr=currentPtr->nextPtr;
+        }
+
+        if(previousPtr==NULL){
+            newPtr->nextPtr=*sPtr;
+            *sPtr=newPtr;
+        }
+        else{
+            previousPtr->nextPtr=newPtr;
+            newPtr->nextPtr=currentPtr;
+        }
+    }
+}
+
+int deleteNode(ListNodePtr *sPtr,int id)
+{
+    if(*sPtr==NULL)
+        return 0;
+
+    if((*sPtr)->data.id==id){
+
+        ListNodePtr tempPtr=*sPtr;
+        *sPtr=(*sPtr)->nextPtr;
+        free(tempPtr);
+        return 1;
+    }
+
+    ListNodePtr previousPtr=*sPtr;
+    ListNodePtr currentPtr=(*sPtr)->nextPtr;
+
+    while(currentPtr!=NULL && currentPtr->data.id!=id){
+        previousPtr=currentPtr;
+        currentPtr=currentPtr->nextPtr;
+    }
+
+    if(currentPtr!=NULL){
+
+        ListNodePtr tempPtr=currentPtr;
+        previousPtr->nextPtr=currentPtr->nextPtr;
+        free(tempPtr);
+        return 1;
+    }
+
+    return 0;
+}
+
+int isEmpty(ListNodePtr sPtr)
+{
+    return sPtr==NULL;
+}
+
+void printList(ListNodePtr currentPtr)
+{
+    if(isEmpty(currentPtr)){
+        printf("鏈結串列是空的\n");
+    }
+    else{
+
+        printf("\n學生資料鏈結串列:\n");
+
+        while(currentPtr!=NULL){
+
+            printf("學號:%d ",currentPtr->data.id);
+            printf("姓名:%s ",currentPtr->data.name);
+            printf("計概:%d ",currentPtr->data.computer);
+            printf("數學:%d ",currentPtr->data.math);
+            printf("平均:%.2f\n",currentPtr->data.avg);
+
+            currentPtr=currentPtr->nextPtr;
+        }
+    }
+}
