@@ -1,0 +1,50 @@
+/*題目1. 請建立一個樣版函數volume( )放在volume.h檔案中，寫出主程式達成下列目標:
+1.輸入3個整數時，呼叫樣版函數volume( )計算正方體體積(整數結果)
+2.輸入3個浮點數，呼叫樣版函數volume( )計算正方體體積(浮點數)
+3.輸入3個double，呼叫樣版函數volume( )計算正方體體積(double結果)*/
+
+#include <iostream>
+using namespace std;
+
+
+#include "volume.h" 
+
+
+int main()
+{
+   
+    int int1;
+
+    cout << "輸入正方體的邊長(整數): ";
+    cin >> int1  ;
+
+   
+    cout << "正方體體積(整數): "
+        << volume(int1);
+
+   
+    float float1;
+cout << "\n\n輸入正方體的邊長(浮點數): ";
+    cin >> float1;
+
+    
+    cout << "正方體體積(浮點數): "
+        << volume(float1);
+
+
+
+   
+    double   double1 ;
+
+    cout << "\n\n輸入正方體的邊長(double):  ";
+    cin >> double1;
+
+    
+    cout << "正方體體積(double) "
+        << volume(double1) << endl;
+}
+
+
+
+
+
