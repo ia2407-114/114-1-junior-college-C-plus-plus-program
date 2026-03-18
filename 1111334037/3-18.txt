@@ -1,0 +1,50 @@
+#include<iostream>
+#include"Header.h"
+using namespace std;
+
+int volume(int S)
+{
+	return (S * S * S);
+}
+int volume(int A, int B, int C)
+{
+	return(A * B * C);
+}
+double volume(double R, double H)
+{
+	double PI = 3.14;
+	return (R * R * PI * H);
+}
+
+
+int main()
+{
+	int S;
+	cout<< "請輸入邊長:\n";
+	cin >> S;
+	cout << "正方體體積是:" << volume(S) << endl;
+	int A, B, C;
+	cout << "請輸入邊長:\n";
+	cin >> A >> B >> C;
+	cout << "長方體體積是:" << volume(A, B, C)<<endl;
+	double R, H;
+	cout<< "請輸入邊長:\n";
+	cin >> R >> H;
+	cout << "圓柱體體積是:" << volume(R, H)<<endl;
+}
+
+主程式
+
+
+#ifndef VOLUME_H
+#define VLOUME_H
+
+int volume(int S);
+int volume(int A, int B, int C);
+double volume(double R, double H);
+
+
+
+#endif // !VOLUME_H
+
+標頭檔
