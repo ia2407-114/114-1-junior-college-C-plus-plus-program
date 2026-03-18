@@ -1,0 +1,37 @@
+#include <iostream>
+using namespace std;
+
+
+template <typename T>
+T volume(T x, T y, T z) {
+    return x * y * z;
+}
+
+int main() {
+
+   
+    int int1, int2, int3;
+    cout << "請輸入三個整數: ";
+    cin >> int1 >> int2 >> int3;
+
+    cout << "整數體積為: "
+        << volume(int1, int2, int3);
+
+    
+    float float1, float2, float3;
+    cout << "\n\n請輸入三個浮點數(float): ";
+    cin >> float1 >> float2 >> float3;
+
+    cout << "float體積為: "
+        << volume(float1, float2, float3);
+
+    double double1, double2, double3;
+    cout << "\n\n請輸入三個double: ";
+    cin >> double1 >> double2 >> double3;
+
+    cout << "double體積為: "
+        << volume(double1, double2, double3)
+        << endl;
+
+    return 0;
+}
