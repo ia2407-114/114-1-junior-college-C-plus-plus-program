@@ -1,0 +1,128 @@
+// Student Linked List
+#include <stdio.h>
+#include <stdlib.h>
+
+struct student {
+    int id;
+    char name[20];
+    int computer;
+    int math;
+    double avg;
+    struct student* nextPtr;
+};
+
+typedef struct student Student;
+typedef Student* StudentPtr;
+
+// function prototypes
+void insert(StudentPtr* sPtr);
+void deleteNode(StudentPtr* sPtr, int id);
+void printList(StudentPtr currentPtr);
+int isEmpty(StudentPtr sPtr);
+
+int main()
+{
+    StudentPtr startPtr = NULL;
+
+    // 新增幾筆資料
+    insert(&startPtr);
+    insert(&startPtr);
+    insert(&startPtr);
+
+    printf("\n目前鏈結串列資料:\n");
+    printList(startPtr);
+
+    int deleteID;
+    printf("\n請輸入要刪除的學生ID: ");
+    scanf_s("%d", &deleteID);
+
+    deleteNode(&startPtr, deleteID);
+
+    printf("\n刪除後鏈結串列:\n");
+    printList(startPtr);
+
+    return 0;
+}
+
+void insert(StudentPtr* sPtr)
+{
+    StudentPtr newPtr = (Student*)malloc(sizeof(Student));
+
+    if(newPtr != NULL)
+    {
+        printf("\n輸入學生ID: ");
+        scanf_s("%d", &newPtr->id);
+
+        printf("輸入姓名: ");
+        scanf_s("%s", newPtr->name, 20);
+
+        printf("輸入Computer成績: ");
+        scanf_s("%d", &newPtr->computer);
+
+        printf("輸入Math成績: ");
+        scanf_s("%d", &newPtr->math);
+
+        newPtr->avg = (newPtr->computer + newPtr->math) / 2.0;
+        newPtr->nextPtr = *sPtr;
+        *sPtr = newPtr;
+    }
+}
+
+void deleteNode(StudentPtr* sPtr, int id)
+{
+    StudentPtr previousPtr = NULL;
+    StudentPtr currentPtr = *sPtr;
+
+    while (currentPtr != NULL && currentPtr->id != id)
+    {
+        previousPtr = currentPtr;
+        currentPtr = currentPtr->nextPtr;
+    }
+
+    if (currentPtr == NULL)
+    {
+        printf("找不到資料\n");
+        return;
+    }
+
+    if (previousPtr == NULL)
+    {
+        *sPtr = currentPtr->nextPtr;
+    }
+    else
+    {
+        previousPtr->nextPtr = currentPtr->nextPtr;
+    }
+
+    free(currentPtr);
+    printf("刪除成功\n");
+}
+
+void printList(StudentPtr currentPtr)
+{
+    if (isEmpty(currentPtr))
+    {
+        printf("List is empty\n");
+    }
+    else
+    {
+        printf("\n學生資料:\n");
+
+        while (currentPtr != NULL)
+        {
+            printf("ID:%d Name:%s Computer:%d Math:%d Avg:%.2f\n",
+                currentPtr->id,
+                currentPtr->name,
+                currentPtr->computer,
+                currentPtr->math,
+                currentPtr->avg);
+
+            currentPtr = currentPtr->nextPtr;
+        }
+    }
+}
+
+int isEmpty(StudentPtr sPtr)
+{
+    return sPtr == NULL;
+}
