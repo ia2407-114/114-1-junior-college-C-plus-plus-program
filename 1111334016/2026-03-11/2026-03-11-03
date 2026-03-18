@@ -4,46 +4,60 @@
 冪次函數(power function) : 輸入整數a和n，求出a ^ n值 :*/
 #include <iostream>
 #include <iomanip> // 用於格式化輸出
-#include <stdio.h>
-    using namespace std;
+
+    using namespace std;/*接下來如果我用到一些標準函式庫的東西，請直接去 std（Standard）這個『命名空間』 裡面找。」
+                        ，避免兩個程式設計師都取了同名的函式，找不到正確的函數 */
+                        //如果沒有的話，要std::cout << "Enter x (底數) = ";
 
     // 函式原型宣告：使用 & 符號表示傳址呼叫 (Call by Reference)
-    double power(int& base, int& exp);
+
+    double power(int& base, int& exp);//使用傳位址 (call by reference) 的方式傳遞與回傳參數「傳址呼叫」，不加&資料簿會跟著改變
     double fact(int& n);
 
     int main()
     {
         int x, i;
 
-        // 使用 C++ 標準輸入流 cin
-        cout << "Enter x (底數) = ";
-        cin >> x;
+        
+        cout << "Enter x (底數) = ";//printf
+        cin >> x;//scanf
         cout << "Enter i (階乘/次方數) = ";
         cin >> i;
 
-        // 輸出結果，使用 cout 替代 printf
-        cout << "--------------------------" << endl;
-        cout << "階層結果 (" << x << "^" << i << "): " << power(x, i) << endl;
-        cout << "次方結果 (" << i << "!): " << fact(i) << endl;
-        cout << "--------------------------" << endl;
+       
+       
+        cout << "次方結果 (" << x << "^" << i << "): " << power(x, i) << endl;//end1等於\n
+        cout << "階層結果 (" << i << "!): " << fact(i) << endl;
+       
 
         return 0;
     }
 
     // 【冪次函數】計算 base 的 exp 次方
     // 參數使用 int & 進行傳址，雖然此處未修改原值，但符合題目要求
-    double power(int& base, int& exp) {
+    double power(int& base, int& exp) {//副程式 1
+        //次方
         double xpow = 1.0;
 
         // 如果次方為 0，結果為 1
-        for (int k = 1; k <= exp; k++) {
+        for (int k = 1; k <= exp; k++) {// k:計算要乘幾次
             xpow *= base;
         }
         return xpow;
-    }
+    }// xpow=xpow * x ?5 * 5 * 5 * 5 * 5 * 5= 3125
+    /*i=5,y=5; 
+    k=1;1<=5;xpow=1*5=5
+    k=1;2<=5;xpow=5=5*5=25;*/
+
+
+
+
+
+
 
     // 【階乘函數】計算 n!
-    double fact(int& n) {
+    double fact(int& n) {//副程式 2
+        //階層
         double level = 1.0;
 
         // 處理 0! = 1 的定義，迴圈從 n 開始遞減
@@ -52,5 +66,9 @@
         for (int j = n; j >= 1; j--) {
             level *= j;
         }
-        return level; // 修正：原程式碼漏掉回傳值
-    }
+        return level; 
+    }// level=level * j  ?5 * 4 * 3 * 2 * 1
+    //j=5;5>=1;5--
+    //level=1.0*5=5.0
+    //j=4;4>=1;4--
+    //level=5.0*4=20.0
