@@ -1,0 +1,61 @@
+#include <iostream>
+using namespace std;
+
+// 正方體
+int volume(int x)
+{
+    return x * x * x;
+}
+
+// 圓柱體
+double volume(int r, int h)
+{
+    const double PI = 3.14159;
+    return PI * r * r * h;
+}
+
+// 長方體
+int volume(int x, int y, int z)
+{
+    return x * y * z;
+}
+
+int main()
+{
+    int choice;
+
+    cout << "請選擇要計算的體積：" << endl;
+    cout << "1. 正方體" << endl;
+    cout << "2. 圓柱體" << endl;
+    cout << "3. 長方體" << endl;
+    cout << "請輸入選項：";
+    cin >> choice;
+
+    if (choice == 1)
+    {
+        int x;
+        cout << "請輸入邊長：";
+        cin >> x;
+        cout << "正方體體積 = " << volume(x) << endl;
+    }
+    else if (choice == 2)
+    {
+        int r, h;
+        cout << "請輸入半徑與高度：";
+        cin >> r >> h;
+        cout << "圓柱體體積 = " << volume(r, h) << endl;
+    }
+    else if (choice == 3)
+    {
+        int x, y, z;
+        cout << "請輸入長、寬、高：";
+        cin >> x >> y >> z;
+        cout << "長方體體積 = " << volume(x, y, z) << endl;
+    }
+    else
+    {
+        cout << "輸入錯誤！" << endl;
+    }
+
+    return 0;
+}
