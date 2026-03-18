@@ -1,0 +1,34 @@
+/*題目1. 請建立一個樣版函數volume( )放在volume.h檔案中，寫出主程式達成下列目標:
+1.輸入3個整數時，呼叫樣版函數volume( )計算正方體體積(整數結果)
+2.輸入3個浮點數，呼叫樣版函數volume( )計算正方體體積(浮點數)
+3.輸入3個double，呼叫樣版函數volume( )計算正方體體積(double結果)*/
+#include <iostream>
+using namespace std;
+#include "volume.h" 
+int main()
+{
+    int int1, int2, int3;
+    cout << "Input three integer values: ";
+    cin >> int1 >> int2 >> int3;
+    cout << "The answer is: "
+        << volume(int1, int2, int3);
+
+    double double1, double2, double3;
+    cout << "\n\nInput three double values: ";
+    cin >> double1 >> double2 >> double3;
+    cout << "The answer is: "
+        << volume(double1, double2, double3);
+
+    char char1, char2, char3;
+    cout << "\n\nInput three characters: ";
+    cin >> char1 >> char2 >> char3;
+    cout << "The answer is: "
+        << volume(char1, char2, char3) << endl;
+}
+
+#pragma once
+template <class T>
+T volume(T a, T b, T c)
+{
+	return a * b * c;
+}
