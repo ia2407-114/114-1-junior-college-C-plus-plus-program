@@ -1,0 +1,51 @@
+來源
+// main.cpp
+#include <iostream>
+#include "volume.h" // 引用自定義標頭檔
+
+using namespace std;
+
+int main() {
+    // 測試 1: 正方體
+    int side = 5;
+    cout << "正方體 (邊長 " << side << ") 體積為: "
+        << volume(side) << endl;
+
+    // 測試 2: 圓柱體
+    int radius = 3, height_cyl = 10;
+    cout << "圓柱體 (半徑 " << radius << ", 高 " << height_cyl << ") 體積為: "
+        << volume(radius, height_cyl) << endl;
+
+    // 測試 3: 長方體
+    int length = 2, width = 4, height_rect = 6;
+    cout << "長方體 (長 " << length << ", 寬 " << width << ", 高 " << height_rect << ") 體積為: "
+        << volume(length, width, height_rect) << endl;
+
+    return 0;
+}
+標頭
+// volume.h
+#ifndef VOLUME_H
+#define VOLUME_H
+
+#include <iostream>
+using namespace std;
+
+// 1. 正方體體積 (1個參數)
+inline int volume(int s) {
+    return s * s * s;
+}
+
+// 2. 圓柱體體積 (2個參數: 半徑, 高)
+// 公式: PI * r^2 * h
+inline double volume(int r, int h) {
+    const double PI = 3.14159;
+    return PI * r * r * h;
+}
+
+// 3. 長方體體積 (3個參數: 長, 寬, 高)
+inline int volume(int l, int w, int h) {
+    return l * w * h;
+}
+
+#endif#pragma once
