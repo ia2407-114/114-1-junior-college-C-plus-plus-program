@@ -1,0 +1,60 @@
+/*主程式*/
+#include <iostream>
+using namespace std;
+
+#include "volume.h"
+int main()
+{
+	int Cube1;
+
+	cout << "輸入正立方體邊長(整數): ";
+	cin >> Cube1;
+
+	cout << "正方體答案為:"<<volume(Cube1);
+	cout << endl;
+
+	int R1, R2;
+
+	cout << "輸入圓柱體半徑(整數): ";
+	cin >> R1;
+	cout << "輸入圓柱體高(整數): ";
+	cin	>> R2;
+
+	cout << "圓柱體答案為:"<<volume(R1, R2);
+	cout << endl;
+
+	int cy1,cy2,cy3;
+
+	cout << "輸入長方體邊長(整數): ";
+	cin >> cy1;
+	cout << "輸入長方體邊寬(整數): ";
+	cin >> cy2;
+	cout << "輸入長方體高(整數): ";
+	cin >> cy3;
+
+	cout << "長方體答案為:" << volume(cy1, cy2, cy3);
+	cout << endl;
+}
+
+
+
+
+
+
+--------------------------------------------------------------------------------
+/*標頭檔*/
+#pragma once
+int volume(int a) {
+
+	return a*a*a;
+}
+
+int volume(int a,int b,int c) {
+
+	return a * b * c;
+}
+
+double volume(int a,int b) {
+	float p = 3.14159;
+	return a * a * p* b;
+}

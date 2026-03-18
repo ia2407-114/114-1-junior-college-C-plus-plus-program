@@ -1,0 +1,49 @@
+/*主程式*/
+#include <iostream>
+using namespace std;
+
+#include "volume.h" 
+
+int main()
+{
+    
+    int int1;
+
+    cout << "輸入正立方體邊長(整數): ";
+    cin >> int1 ;
+
+    
+    cout << "正立方體體積為: "
+        << volume(int1);
+
+    
+    float float1;
+
+    cout << "\n\n輸入正立方體邊長(浮點數): ";
+    cin >> float1 ;
+
+   
+    cout << "正立方體體積為: "
+        << volume(float1);
+
+   
+    double double1;
+
+    cout << "\n\n輸入正立方體邊長(double): ";
+    cin >> double1;
+
+  
+    cout << "正立方體體積為: "
+        << volume(double1) << endl;
+}
+
+
+
+
+--------------------------------------------------------------------------------
+/*標頭檔*/
+#pragma once
+template<class y>
+y volume(y a) {
+		return a*a*a;
+}
