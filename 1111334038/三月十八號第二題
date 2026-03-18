@@ -1,0 +1,34 @@
+#include <iostream>
+using namespace std;
+
+int volume(int side) {
+    return side * side * side;
+}
+
+double volume(int r, int h) {
+    const double PI = 3.14159;
+    return PI * r * r * h;
+}
+
+int volume(int l, int w, int h) {
+    return l * w * h;
+}
+
+int main() {
+    int int1;
+    cout << "輸入正方形的邊長" << endl;
+    cin >> int1;
+    cout << "正方形的體積是" << volume(int1)<<endl;
+
+
+    int int2,int3;
+    cout << "輸入圓柱體的半徑和高" << endl;
+    cin >> int2>>int3;
+    cout << "圓柱體的體積是" << volume(int2, int3)<<endl;
+
+    int int4, int5,int6;
+    cout << "輸入長方形的長，寬，高" << endl;
+    cin >> int4 >> int5 >> int6;
+    cout << "圓柱體的體積是" << volume(int4, int5,int6)<<endl;
+    return 0;
+}
