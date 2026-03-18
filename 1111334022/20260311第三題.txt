@@ -1,0 +1,39 @@
+#include <iostream>
+using namespace std;
+
+double power(int x, int y);
+double fact(int i);
+
+int main() {
+    int x, i;
+
+    cout << "輸入你要算平方的數字 = ";
+    cin >> x;
+
+    cout << "你要多少平方(和冪次)=";
+    cin >> i;
+
+    cout << "result: " << power(x, i) << ", " << fact(i) << endl;
+
+    return 0;
+}
+
+double fact(int i) {
+    double level = 1.0;
+
+    for (int j = i; j >= 1; j--) {
+        level *= j;
+    }
+
+    return level;
+}
+
+double power(int x, int y) {
+    double xpow = 1.0;
+
+    for (int k = 1; k <= y; k++) {
+        xpow *= x;
+    }
+
+    return xpow;
+}
