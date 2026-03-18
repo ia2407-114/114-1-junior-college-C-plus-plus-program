@@ -1,0 +1,7 @@
+#pragma once
+
+template < class v >  // or template< typename T >
+v volume(v value11, v value22, v value33)
+{
+	return value11 * value22 * value33;
+}
