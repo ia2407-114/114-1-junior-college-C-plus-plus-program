@@ -33,3 +33,10 @@ int main()
     cout << "體積是: "
         << volume(double1, double2, double3);
 }
+##pragma once
+template < class T >
+T volume(T volume1, T volume2, T volume3)
+{
+
+    return volume1 * volume2 * volume3;
+}pragma once
