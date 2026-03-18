@@ -1,0 +1,34 @@
+#include <iostream>
+#include "vel.h"
+using namespace std;
+
+int main() {
+
+ 
+    int a;
+    cout << "輸入正方體邊長: ";
+    cin >> a ;
+    cout << "正方體體積 = " << vel(a) << endl;
+
+
+    float x;
+    cout << "輸入正方體邊長: ";
+    cin >> x ;
+    cout << "正方體體積 = " << vel(x) << endl;
+
+
+    double d1;
+    cout << "輸入正方體邊長: ";
+    cin >> d1 ;
+    cout << "正方體體積 = " << vel(d1) << endl;
+
+    return 0;
+}
+
+
+//標頭檔
+template<class T>
+T vel(T a)
+  {
+   return (a*a*a);
+  }
