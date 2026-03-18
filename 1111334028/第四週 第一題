@@ -1,0 +1,35 @@
+#include <iostream>
+using namespace std;
+
+#include "volume.h" 
+int main()
+{
+
+    int int1, int2, int3;
+
+    cout << "輸入方形的長寬高(整數): ";
+    cin >> int1 >> int2 >> int3;
+
+
+    cout << "體積是: "
+        << volume(int1, int2, int3);
+
+    float float1, float2, float3;
+
+    cout << "\n\n輸入方形的長寬高(浮點數) ";
+    cin >> float1 >> float2 >> float3;
+
+
+    cout << "體積是: "
+        << volume(float1, float2, float3) << endl;
+
+
+    double double1, double2, double3;
+
+    cout << "\n\n輸入方形的長寬高(double): ";
+    cin >> double1 >> double2 >> double3;
+
+
+    cout << "體積是: "
+        << volume(double1, double2, double3);
+}
