@@ -1,0 +1,19 @@
+#pragma once
+
+int volume(int k)//正方體積
+{
+  return k * k * k;
+}
+
+double volume(int value1, int value2)//圓柱體積
+{
+    double pi = 3.14159;
+    return value1 * value1 *pi* value2;
+}
+
+int volume(int value1, int value2, int value3)//長方體體積
+{
+    return value1 * value2 * value3;
+}
+
+
