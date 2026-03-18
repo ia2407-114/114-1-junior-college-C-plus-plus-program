@@ -1,5 +1,5 @@
 #pragma once
-template < class T >  
+template < class T >  //單一函數，可以使用不同型態的運算
 T volume(T value1)
 {
 
