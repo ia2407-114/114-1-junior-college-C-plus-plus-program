@@ -1,0 +1,41 @@
+#include <iostream>
+using namespace std;
+
+// 正方體
+int volume(int a)
+{
+    return a * a * a;
+}
+
+// 圓柱體
+double volume(int r, int h)
+{
+    return 3.14159 * r * r * h;
+}
+
+// 長方體
+int volume(int l, int w, int h)
+{
+    return l * w * h;
+}
+
+int main()
+{
+    int a;
+    int r, h;
+    int l, w, h2;
+
+    cout << "輸入正方體邊長: ";
+    cin >> a;
+    cout << "正方體體積 = " << volume(a) << endl;
+
+    cout << "輸入圓柱體半徑與高度: ";
+    cin >> r >> h;
+    cout << "圓柱體體積 = " << volume(r, h) << endl;
+
+    cout << "輸入長方體長寬高: ";
+    cin >> l >> w >> h2;
+    cout << "長方體體積 = " << volume(l, w, h2) << endl;
+
+    return 0;
+}
