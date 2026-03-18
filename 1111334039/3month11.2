@@ -1,0 +1,135 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+struct listNode {
+    int id;
+    char name[20];
+    int computer, math;
+    double avg;
+    struct listNode* nextPtr;
+};
+
+typedef struct listNode ListNode;
+typedef ListNode* ListNodePtr;
+
+// 函式原型宣告
+void insert(ListNodePtr* sPtr, int id, char name[], int comp, int math);
+void deleteNode(ListNodePtr* sPtr, int id); // 新增：刪除功能
+void printList(ListNodePtr currentPtr);
+
+int main(void) {
+    ListNodePtr startPtr = NULL;
+    int id, comp, math, deleteId;
+    char name[20];
+
+    // --- 第一部分：資料輸入 ---
+    puts("====== 1. 建立學生資料 (輸入 ID 0 結束) ======");
+    while (1) {
+        printf("輸入學號 (ID): ");
+        scanf("%d", &id);
+        if (id == 0) break;
+        printf("輸入姓名 (Name): ");
+        scanf("%19s", name);
+        printf("輸入 [計概] 成績: ");
+        scanf("%d", &comp);
+        printf("輸入 [數學] 成績: ");
+        scanf("%d", &math);
+        insert(&startPtr, id, name, comp, math);
+    }
+    printList(startPtr);
+
+    // --- 第二部分：刪除功能 ---
+    puts("\n====== 2. 刪除學生資料 ======");
+    printf("請輸入欲刪除的學生 ID: ");
+    scanf("%d", &deleteId);
+
+    deleteNode(&startPtr, deleteId); // 執行刪除邏輯
+
+    // --- 第三部分：列出最後結果 ---
+    printList(startPtr);
+
+    puts("程式執行結束。");
+    return 0;
+}
+
+// 【deleteNode 函式】：搜尋 ID 並解除鏈結
+void deleteNode(ListNodePtr* sPtr, int id) {
+    // 1. 檢查串列是否為空
+    if (*sPtr == NULL) {
+        puts("串列為空，無法刪除。");
+        return;
+    }
+
+    ListNodePtr tempPtr;        // 用於釋放記憶體
+    ListNodePtr previousPtr = NULL;
+    ListNodePtr currentPtr = *sPtr;
+
+    // 2. 如果「第一筆」就是目標
+    if (id == (*sPtr)->id) {
+        tempPtr = *sPtr;        // 暫存要刪除的節點
+        *sPtr = (*sPtr)->nextPtr; // 將起點指向第二個節點
+        free(tempPtr);          // 釋放記憶體
+        printf("學號 %d 已成功刪除。\n", id);
+    }
+    else {
+        // 3. 往後搜尋目標
+        while (currentPtr != NULL && currentPtr->id != id) {
+            previousPtr = currentPtr;
+            currentPtr = currentPtr->nextPtr;
+        }
+
+        // 4. 判斷搜尋結果
+        if (currentPtr != NULL) { // 找到了
+            tempPtr = currentPtr;
+            previousPtr->nextPtr = currentPtr->nextPtr; // 跳過該節點進行鏈結
+            free(tempPtr); // 釋放記憶體
+            printf("學號 %d 已成功刪除。\n", id);
+        }
+        else {
+            printf("找不到資料：學號 %d 不存在。\n", id);
+        }
+    }
+}
+
+void insert(ListNodePtr* sPtr, int id, char name[], int comp, int math) {
+    ListNodePtr newPtr =(struct listNode*) malloc(sizeof(ListNode));
+    if (newPtr != NULL) {
+        newPtr->id = id;
+        strcpy(newPtr->name, name);
+        newPtr->computer = comp;
+        newPtr->math = math;
+        newPtr->avg = ((double)comp + math) / 2.0;
+        newPtr->nextPtr = NULL;
+        ListNodePtr previousPtr = NULL;
+        ListNodePtr currentPtr = *sPtr;
+        while (currentPtr != NULL && id > currentPtr->id) {
+            previousPtr = currentPtr;
+            currentPtr = currentPtr->nextPtr;
+        }
+        if (previousPtr == NULL) {
+            newPtr->nextPtr = *sPtr;
+            *sPtr = newPtr;
+        }
+        else {
+            previousPtr->nextPtr = newPtr;
+            newPtr->nextPtr = currentPtr;
+        }
+    }
+}
+
+void printList(ListNodePtr currentPtr) {
+    if (currentPtr == NULL) {
+        puts("\n[提示] 目前串列為空。");
+    }
+    else {
+        puts("\n--- 目前學生資料清單 ---");
+        printf("%-8s %-12s %-8s %-8s %-8s\n", "學號", "姓名", "計概", "數學", "平均");
+        while (currentPtr != NULL) {
+            printf("%-8d %-12s %-8d %-8d %-8.2f\n",
+                currentPtr->id, currentPtr->name, currentPtr->computer, currentPtr->math, currentPtr->avg);
+            currentPtr = currentPtr->nextPtr;
+        }
+    }
+}
