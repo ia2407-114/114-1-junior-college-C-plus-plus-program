@@ -8,6 +8,8 @@ using namespace std;
 
 
 #include "volume.h" 
+/*在 C++ 中，#include "volume.h" 是一個預處理指令 (Preprocessor Directive)。
+它的意思是：「請把 volume.h 這個檔案裡面的所有程式碼，原封不動地複製並貼到這個檔案的最上方。」*/
 
 
 int main()
@@ -43,8 +45,4 @@ cout << "\n\n輸入正方體的邊長(浮點數): ";
     cout << "正方體體積(double) "
         << volume(double1) << endl;
 }
-
-
-
-
 
