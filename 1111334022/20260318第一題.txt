@@ -1,0 +1,45 @@
+#include <iostream>
+using namespace std;
+
+#include "volume.h" 
+
+int main()
+{
+    
+    int int1, int2, int3;
+
+    cout << "輸入三個整數數字";
+    cin >> int1 >> int2 >> int3;
+
+    cout << "放進volume算長方體體積 "
+        << volume(int1, int2, int3);
+
+    float float1, float2, float3;
+
+    cout << "\n\n輸入三個浮點數 ";
+    cin >> float1 >> float2 >> float3;
+
+   
+    cout << "放進volume算長方體體積 "
+        << volume(float1, float2, float3);
+
+    double double1, double2, double3;
+
+    cout << "\n\n輸入三個double ";
+    cin >> double1 >> double2 >> double3;
+
+    
+    cout << "放進volume算長方體體積 "
+        << volume(double1, double2, double3) << endl;
+}
+
+
+
+
+標頭
+#pragma once
+template <class T>
+T volume(T value1, T value2, T value3) {
+	T total = value1 * value2 * value3;
+	return total;
+}

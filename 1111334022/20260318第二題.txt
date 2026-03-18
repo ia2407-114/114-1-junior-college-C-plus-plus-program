@@ -1,0 +1,33 @@
+#include <iostream>
+using namespace std;
+
+int volume(int x)
+{
+	return x * x * x;
+}
+int volume(int x ,int y)
+{
+	return x * y;
+}
+
+int volume(int x, int y, int z)
+{
+	return x * y * z;
+}
+
+int main()
+{	
+
+	int int1;
+	cout << "輸入一個整數數字算正方體:" << endl;
+	cin >> int1;
+	cout<<"算正方體體積:" << volume(int1) << endl;
+	int intx, inty;
+	cout << "輸入兩個整數數字算圓柱體:" << endl;
+	cin >> intx>>inty;
+	cout << "算圓柱體體積:" << volume(intx,inty) << endl;
+	int intx1, inty1,intz1;
+	cout << "輸入三個整數數字算長方體:" << endl;
+	cin >> intx1 >> inty1>>intz1;
+	cout << "算長方體體積:" << volume(intx1,inty1,intz1) << endl;
+}
