@@ -1,0 +1,40 @@
+來源
+// main.cpp - 主程式
+#include <iostream>
+#include "volume.h" // 引入樣板標頭檔
+
+using namespace std;
+
+int main() {
+    // 1. 測試整數 (int)
+    int i1, i2, i3;
+    cout << "輸入 3 個整數 (計算長方體/正方體體積): ";
+    cin >> i1 >> i2 >> i3;
+    cout << "整數結果為: " << volume(i1, i2, i3) << endl;
+
+    // 2. 測試浮點數 (float)
+    float f1, f2, f3;
+    cout << "\n輸入 3 個 float 浮點數: ";
+    cin >> f1 >> f2 >> f3;
+    cout << "Float 結果為: " << volume(f1, f2, f3) << endl;
+
+    // 3. 測試倍精度浮點數 (double)
+    double d1, d2, d3;
+    cout << "\n輸入 3 個 double 數值: ";
+    cin >> d1 >> d2 >> d3;
+    cout << "Double 結果為: " << volume(d1, d2, d3) << endl;
+
+    return 0;
+}
+標頭
+// volume.h - 樣板函數定義
+#ifndef VOLUME_H
+#define VOLUME_H
+
+// 定義樣板函數，T 可以代表任何數值型態
+template <typename T>
+T volume(T side1, T side2, T side3) {
+    return side1 * side2 * side3;
+}
+
+#endif
