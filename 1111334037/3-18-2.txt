@@ -1,0 +1,43 @@
+#include<iostream>
+
+using namespace std;
+#include"Header.h"
+#include"Header1.h"
+#include"Header2.h"
+int A , B , C;
+float Q, W, E;
+double Z, X, V;
+
+int main()
+{
+	cout << "請輸入邊長(int):\n";
+	cin >> A >> B >> C;
+	cout << "正方體體積是" << Header(A, B, C) << endl;
+	cout << "請輸入邊長(float):\n";
+	cin >> Q>> W >> E;
+	cout << "正方體體積是" << Header(Q, W, E) << endl;
+	cout << "請輸入邊長(double):\n";
+	cin >> Z >> X >> V;
+	cout << "正方體體積是" << Header(Z, X, V) << endl;
+}主程式
+
+標頭檔
+1.
+template < class T >
+T Header(T A, T B, T C)
+{
+
+	return (A * B * C);
+}
+2.
+template<class T>
+T header1(T Q, T W ,T E)
+{
+	return (Q * W * E);
+}
+3.
+template<class T>
+T header2(T Z, T X, T V)
+{
+	return (Z * X * V);
+}
