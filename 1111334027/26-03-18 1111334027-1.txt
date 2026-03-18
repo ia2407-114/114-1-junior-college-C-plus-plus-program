@@ -1,0 +1,33 @@
+#include <iostream>
+#include "volume.h"
+
+using namespace std;
+
+int main() {
+    int i1, i2, i3;
+    cout << "輸入3個整數 (長 寬 高): ";
+    cin >> i1 >> i2 >> i3;
+    cout << "整數體積結果: " << volume(i1, i2, i3) ;
+
+    float f1, f2, f3;
+    cout << "\n輸入3個浮點數 (float): ";
+    cin >> f1 >> f2 >> f3;
+    cout << "浮點數體積結果: " << volume(f1, f2, f3) ;
+
+    double d1, d2, d3;
+    cout << "\n輸入3個 double: ";
+    cin >> d1 >> d2 >> d3;
+    cout << "Double 體積結果: " << volume(d1, d2, d3) ;
+
+    return 0;
+}
+
+__________________________________________
+
+"volume.h"
+
+template <typename T>
+T volume(T length, T width, T height) {
+    return length * width * height;
+}
+
