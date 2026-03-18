@@ -1,0 +1,37 @@
+#include <iostream>
+using namespace std;
+
+int volume(int x)
+{
+    return x * x * x;
+}
+
+double volume(int r, int h)
+{
+    const double PI = 3.14159;
+    return PI * r * r * h;
+}
+
+int volume(int x, int y, int z)
+{
+    return x * y * z;
+}
+
+int main()
+{
+    int a, r, h, l, w, t;
+
+    cout << "請輸入正方體邊長: ";
+    cin >> a;
+    cout << "正方體體積 = " << volume(a) << endl;
+
+    cout << "請輸入圓柱體半徑與高: ";
+    cin >> r >> h;
+    cout << "圓柱體體積 = " << volume(r, h) << endl;
+
+    cout << "請輸入長方體長、寬、高: ";
+    cin >> l >> w >> t;
+    cout << "長方體體積 = " << volume(l, w, t) << endl;
+
+    return 0;
+}
