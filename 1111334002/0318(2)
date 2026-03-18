@@ -1,36 +1,44 @@
 #include <iostream>
-#include <cmath> // 為了使用 M_PI 或計算次方
-
 using namespace std;
 
-// 1. 計算正方體體積：1 個整數 (邊長)
+// 1. 正方體
 int volume(int s) {
-    cout << "正方體體積 (邊長 " << s << "): ";
     return s * s * s;
 }
 
-// 2. 計算圓柱體體積：2 個整數 (底半徑 r, 高 h)
-// 注意：體積通常有小數，建議回傳 double
+// 2. 圓柱體
 double volume(int r, int h) {
-    cout << "圓柱體體積 (半徑 " << r << ", 高 " << h <<"):"; 
-    return 3.14159 * r * r * h;
+    return 3.14 * r * r * h;
 }
 
-// 3. 計算長方體體積：3 個整數 (長 l, 寬 w, 高 h)
+// 3. 長方體
 int volume(int l, int w, int h) {
-    cout << "長方體體積 (長 " << l << ", 寬 " << w << ", 高 " << h << "):"; 
     return l * w * h;
 }
 
 int main() {
-    // 呼叫 1 個參數的版本
-    cout << volume(7) << endl;
+    int s, r, h_cyl, l, w, h_rect;
 
-    // 呼叫 2 個參數的版本
-    cout << volume(5, 10) << endl;
+    cout << "=== 請輸入各項參數進行計算 ===" << endl;
 
-    // 呼叫 3 個參數的版本
-    cout << volume(5, 6, 7) << endl;
+    // 輸入正方體參數
+    cout << "1. 請輸入正方體邊長: ";
+    cin >> s;
+
+    // 輸入圓柱體參數
+    cout << "2. 請輸入圓柱體半徑 與 高 (以空格隔開): ";
+    cin >> r >> h_cyl;
+
+    // 輸入長方體參數
+    cout << "3. 請輸入長方體 長、寬、高 (以空格隔開): ";
+    cin >> l >> w >> h_rect;
+
+    cout << "\n--- 計算結果 ---" << endl;
+
+    // 透過傳入不同數量的參數，自動觸發多載函數
+    cout << "正方體體積: " << volume(s) << endl;
+    cout << "圓柱體體積: " << volume(r, h_cyl) << endl;
+    cout << "長方體體積: " << volume(l, w, h_rect) << endl;
 
     return 0;
 }
