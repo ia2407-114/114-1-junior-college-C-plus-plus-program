@@ -1,85 +1,56 @@
-題目3. 請用C++改寫以下程式碼，並且使用傳位址(call by reference)的方式傳遞與回傳參數:
+/*題目3 請用C++改寫以下程式碼，並且使用傳位址(call by reference)的方式傳遞與回傳參數:
 階乘函數:請輸入一個X值，用for迴圈算出並印出X的階乘X!
-階乘: X=5階乘=1*2*3*4*5=120，0階乘=1(定義)
-冪次函數(power function):輸入整數a和n，求出a^n值:
-/////////////////////////////////////////////
-double power(int &,int &);
-double fact(int &);
-int main()
-{ int x, z,i,k,j;   //ex   e^1=2.71828…
- printf("Enter x =");
- scanf("%d", &x);
- printf("Enter i =");
- scanf("%d", &i);
- printf("result: %f, %f", power(x,i), fact(i));
-}
-double fact(int &i)
-{int j;
-double level=1.0;
-for ( j = i; j >= 1; j--) {//階乘 e.g. i=5
-   level *= j;  // level=level * j  ?5 * 4 * 3 * 2 * 1
-  }  // 5!=120  
-}
-
-double power(int &x,int &y)
-{
-double xpow = 1;
-int k;
-for ( k = 1; k <= y; k++) {//次方  e.g. i=5
- xpow *= x;         // xpow=xpow * x ?5 * 5 * 5 * 5 * 5 * 5= 3125
- } 
-return xpow;
-////////////////////////////////////////////
-
-
+階乘 : X = 5階乘 = 1 * 2 * 3 * 4 * 5 = 120，0階乘 = 1(定義)
+冪次函數(power function) : 輸入整數a和n，求出a ^ n值 :*/
 #include <iostream>
 #include <iomanip> // 用於格式化輸出
+#include <stdio.h>
+    using namespace std;
 
-using namespace std;
+    // 函式原型宣告：使用 & 符號表示傳址呼叫 (Call by Reference)
+    double power(int& base, int& exp);
+    double fact(int& n);
 
-// 函式原型宣告：使用 & 符號表示傳址呼叫 (Call by Reference)
-double power(int& base, int& exp);
-double fact(int& n);
+    int main()
+    {
+        int x, i;
 
-int main() {
-    int x, i;
+        // 使用 C++ 標準輸入流 cin
+        cout << "Enter x (底數) = ";
+        cin >> x;
+        cout << "Enter i (階乘/次方數) = ";
+        cin >> i;
 
-    // 使用 C++ 標準輸入流 cin
-    cout << "Enter x (底數) = ";
-    cin >> x;
-    cout << "Enter i (階乘/次方數) = ";
-    cin >> i;
+        // 輸出結果，使用 cout 替代 printf
+        cout << "--------------------------" << endl;
+        cout << "階層結果 (" << x << "^" << i << "): " << power(x, i) << endl;
+        cout << "次方結果 (" << i << "!): " << fact(i) << endl;
+        cout << "--------------------------" << endl;
 
-    // 輸出結果，使用 cout 替代 printf
-    cout << "--------------------------" << endl;
-    cout << "冪次結果 (" << x << "^" << i << "): " << power(x, i) << endl;
-    cout << "階乘結果 (" << i << "!): " << fact(i) << endl;
-    cout << "--------------------------" << endl;
-
-    return 0;
-}
-
-// 【冪次函數】計算 base 的 exp 次方
-// 參數使用 int & 進行傳址，雖然此處未修改原值，但符合題目要求
-double power(int& base, int& exp) {
-    double xpow = 1.0;
-
-    // 如果次方為 0，結果為 1
-    for (int k = 1; k <= exp; k++) {
-        xpow *= base;
+        return 0;
     }
-    return xpow;
-}
 
-// 【階乘函數】計算 n!
-double fact(int& n) {
-    double level = 1.0;
+    // 【冪次函數】計算 base 的 exp 次方
+    // 參數使用 int & 進行傳址，雖然此處未修改原值，但符合題目要求
+    double power(int& base, int& exp) {
+        double xpow = 1.0;
 
-    // 處理 0! = 1 的定義，迴圈從 n 開始遞減
-    if (n == 0) return 1.0;
-
-    for (int j = n; j >= 1; j--) {
-        level *= j;
+        // 如果次方為 0，結果為 1
+        for (int k = 1; k <= exp; k++) {
+            xpow *= base;
+        }
+        return xpow;
     }
-    return level; // 修正：原程式碼漏掉回傳值
-}
+
+    // 【階乘函數】計算 n!
+    double fact(int& n) {
+        double level = 1.0;
+
+        // 處理 0! = 1 的定義，迴圈從 n 開始遞減
+        if (n == 0) return 1.0;
+
+        for (int j = n; j >= 1; j--) {
+            level *= j;
+        }
+        return level; // 修正：原程式碼漏掉回傳值
+    }
