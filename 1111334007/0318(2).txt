@@ -1,0 +1,30 @@
+#include <iostream>
+#include <cmath> 
+
+using namespace std;
+
+
+int volume(int s) {
+    cout << "正方體體積 (邊長 " << s << "): ";
+    return s * s * s;
+}
+
+
+double volume(int r, int h) {
+    cout << "圓柱體體積 (半徑 " << r << ", 高 " << h << "): ";
+    return 3.14159 * r * r * h;
+}
+
+
+int volume(int l, int w, int h) {
+    cout << "長方體體積 (長 " << l << ", 寬 " << w << ", 高 " << h << "): ";
+    return l * w * h;
+}
+
+int main() {
+    cout << volume(7) << endl;
+    cout << volume(5, 10) << endl;
+    cout << volume(5, 6, 7) << endl;
+
+    return 0;
+}
