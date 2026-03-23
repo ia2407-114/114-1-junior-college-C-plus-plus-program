@@ -1,0 +1,32 @@
+#include <iostream>
+using namespace std;
+#include "volume.h"  
+int main()
+{
+    int int1, int2, int3;
+    cout << "輸入三個整數: ";
+    cin >> int1 >> int2 >> int3;
+    cout << "整數體積: "
+        << volume(int1, int2, int3) << endl;
+    float float1, float2, float3;
+    cout << "\n輸入三個浮點數(float): ";
+    cin >> float1 >> float2 >> float3;
+    cout << "float 體積: "
+        << volume(float1, float2, float3) << endl;
+    double double1, double2, double3;
+    cout << "\n輸入三個 double: ";
+    cin >> double1 >> double2 >> double3;
+    cout << "double 體積: "
+        << volume(double1, double2, double3) << endl;
+    return 0;
+}
+
+#ifndef VOLUME_H
+#define VOLUME_H
+template <typename Type>
+Type volume(Type x, Type y, Type z)
+{
+    return x * y * z;
+}
+#pragma once
+#endif#pragma once

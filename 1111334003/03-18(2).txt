@@ -1,0 +1,25 @@
+#include <iostream>
+using namespace std;
+const double PI = 3.14159;
+double volume(double x)
+{
+    return x * x * x;
+}
+double volume(double r, double h)
+{
+    return PI * r * r * h;
+}
+double volume(double x, double y, double z)
+{
+    return x * y * z;
+}
+int main()
+{
+    double x, r, h, y, z;
+    cout << "請輸入 x r h y z: ";
+    cin >> x >> r >> h >> y >> z;
+    cout << "Cube volume = " << volume(x) << endl;
+    cout << "Cylinder volume = " << volume(r, h) << endl;
+    cout << "Rectangular prism volume = " << volume(x, y, z) << endl;
+    return 0;
+}
