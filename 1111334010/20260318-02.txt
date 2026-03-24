@@ -1,0 +1,48 @@
+//Source.cpp
+
+#include <iostream>
+#include "volume.h"
+using namespace std;
+
+// 正方體
+int volume(int x)
+{
+    cout << "Cube volume of " << x << " is ";
+    return x * x * x;
+}
+
+// 圓柱體
+double volume(int r, int h)
+{
+    cout << "Cylinder volume of radius " << r 
+         << " and height " << h << " is ";
+    return 3.14159 * r * r * h;
+}
+
+// 長方體
+int volume(int x, int y, int z)
+{
+    cout << "Rectangular prism volume of " 
+         << x << ", " << y << ", " << z << " is ";
+    return x * y * z;
+}
+
+int main()
+{
+    cout << volume(7) << endl;        // 正方體
+    cout << volume(5, 6) << endl;     // 圓柱體
+    cout << volume(5, 6, 7) << endl;  // 長方體
+
+    return 0;
+}
+
+//volume.h
+
+#ifndef VOLUME_H
+#define VOLUME_H
+
+int volume(int x);              // 正方體
+double volume(int r, int h);    // 圓柱體
+int volume(int x, int y, int z);// 長方體
+
+#endif
