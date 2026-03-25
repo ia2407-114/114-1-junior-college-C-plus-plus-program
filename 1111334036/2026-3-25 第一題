@@ -49,18 +49,15 @@ int main()
     string inputName;
     int inputAge;
 
-    // 使用者輸入
     cout << "Enter dog name: ";
     cin >> inputName;
 
     cout << "Enter dog age: ";
     cin >> inputAge;
 
-    // 設定資料
     d.setName(inputName);
     d.setAge(inputAge);
 
-    // 輸出結果
     cout << "\nDog Info\n";
     cout << "Name: " << d.getName() << endl;
     cout << "Age: " << d.getAge() << endl;
