@@ -1,0 +1,66 @@
+#include <iostream>
+#include <string> 
+using namespace std;
+
+class Pet {
+private:
+    
+    string Name = "lulu";
+    int age = 6;
+
+public:
+    
+    void getname() {
+        cout << "寵物的名字是: " << Name << endl;
+    }
+
+    void getage() {
+        cout << "寵物的年齡是: " << age << endl;
+    }
+
+
+    
+    void setname(string n) {
+        if (n.length() > 2 && n.length() < 5) {
+            Name = n; 
+            cout << "姓名設定成功！" << endl;
+        }
+        else {
+            cout << "錯誤：姓名長度必須大於 2 且小於 5！" << endl;
+        }
+    }
+
+    void setage(int a) {
+        if (a < 20 && a>0) {
+            age = a;
+            cout << "年齡設定成功！" << endl;
+        }
+        else {
+            cout << "錯誤：年齡必須小於 20 歲或大於0！" << endl;
+        }
+    }
+};
+
+int main() {
+    Pet myp;
+    string inputName;
+    int inputAge;
+
+    myp.getname();
+    myp.getage();
+
+   
+    cout << "\n請輸入新的寵物姓名: ";
+    getline(cin, inputName);
+    myp.setname(inputName);
+
+    cout << "請輸入新的寵物年齡: ";
+    cin >> inputAge;
+    myp.setage(inputAge);
+
+
+    myp.getname();
+    myp.getage();
+
+    return 0;
+}
