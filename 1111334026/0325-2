@@ -1,0 +1,78 @@
+#include <iostream>
+#include <string> 
+using namespace std;
+
+class myPet
+{
+public:
+
+    string getName() const
+    {
+        char ss;
+        cout << "你是主人嗎(y/Y)?";
+        cin >> ss;
+        if(ss=='y' || ss == 'Y')
+        return PetName;
+    }
+    int getAge() const
+    {
+        return PetAge;
+    }
+    void setName(string name)
+    {
+        if (name.length() > 2 && name.length() < 5)
+            PetName = name;
+    }
+    void setAge(int Age)
+    {
+        if (Age > 20)
+            PetAge = Age;
+    }
+    void www() const {
+        cout << "寵物姓名: " << getName() << endl;
+        cout << "寵物年齡: " << getAge() << " 歲" << endl;
+    }
+private:
+    string PetName = "John";
+    int PetAge = 6;
+};
+
+
+int main()
+{
+    myPet dog;
+
+    string name;
+    int age;
+    cout << "請輸入寵物姓名" << endl;
+    getline(cin, name);
+    dog.setName(name);
+
+    cout << "請輸入寵物年齡:" << endl;
+    cin >> age;
+    dog.setAge(age);
+
+    dog.www();
+
+
+
+    //myPet.getName;
+
+}
+
+
+
+/**************************************************************************
+ * (C) Copyright 1992-2012 by Deitel & Associates, Inc. and               *
+ * Pearson Education, Inc. All Rights Reserved.                           *
+ *                                                                        *
+ * DISCLAIMER: The authors and publisher of this book have used their     *
+ * best efforts in preparing the book. These efforts include the          *
+ * development, research, and testing of the theories and programs        *
+ * to determine their effectiveness. The authors and publisher make       *
+ * no warranty of any kind, expressed or implied, with regard to these    *
+ * programs or to the documentation contained in these books. The authors *
+ * and publisher shall not be liable in any event for incidental or       *
+ * consequential damages in connection with, or arising out of, the       *
+ * furnishing, performance, or use of these programs.                     *
+ **************************************************************************/
