@@ -1,0 +1,77 @@
+#include<iostream>
+#include <string>
+using namespace std;
+
+class Dog  
+{
+
+
+public:
+   
+    void setName(string n)
+    {
+        if (n.length() > 2 && n.length() < 5)
+            name = n;
+        else
+            name = "錯誤名稱";
+    }
+
+    void setAge(int a)
+    {
+        if (a <= 20)
+            age = a;
+        else
+            age = 0;
+    }
+
+
+    void getInfo() const
+    {
+        cout << "寵物新姓名: " << name << endl;
+        cout << "寵物新年齡: " << age << endl;
+    }
+
+    void getInfoWithCheck() const
+    {
+        char check;
+        cout << "是否為主人？(Y/N): ";
+        cin >> check;
+
+        if (check == 'Y' || check == 'y')
+        {
+            cout << "寵物姓名: " << name << endl;
+            cout << "寵物舊年齡: " << age << endl;
+        }
+        else
+        {
+            cout << "無權查看資料！" << endl;
+        }
+    }
+private:
+  
+    string name;
+    int age;
+};
+
+int main()
+{
+    Dog myDog;
+
+    string name;
+    int age;
+
+    cout << "請輸入寵物姓名: ";
+    cin >> name;
+
+    cout << "請輸入寵物年齡: ";
+    cin >> age;
+
+    myDog.setName(name);
+    myDog.setAge(age);
+
+    cout << "\n直接顯示資料\n";
+    myDog.getInfo();
+
+    cout << "\n需驗證主人\n";
+    myDog.getInfoWithCheck();
+}
