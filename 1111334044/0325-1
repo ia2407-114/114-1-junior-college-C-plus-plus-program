@@ -2,7 +2,7 @@
 #include <string>
 using namespace std;
 
-class SecurePetDog {
+class PetDog {
 private:
     string name;
     int age;
@@ -11,7 +11,8 @@ public:
     void setName(string n) {
         if (n.length() > 2 && n.length() < 5) {
             name = n;
-        } else {
+        }
+        else {
             name = "無效姓名";
         }
     }
@@ -19,25 +20,20 @@ public:
     void setAge(int a) {
         if (a > 20) {
             age = a;
-        } else {
+        }
+        else {
             age = 0;
         }
     }
 
+   
     void getInfo() {
-        char isOwner;
-        cout << "是否為主人? (Y/N): ";
-        cin >> isOwner;
-
-        if (isOwner == 'Y' || isOwner == 'y') {
-            // 依序輸出名子及年齡
-            cout << name << " " << age << endl;
-        }
+        cout << name << " " << age << endl;
     }
 };
 
 int main() {
-    SecurePetDog myDog;
+    PetDog myDog;
     string inputName;
     int inputAge;
 
@@ -49,7 +45,7 @@ int main() {
     cin >> inputAge;
     myDog.setAge(inputAge);
 
-    myDog.getInfo();
+    myDog.getInfo(); 
 
     return 0;
 }
