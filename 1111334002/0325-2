@@ -1,0 +1,44 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+class Dog {
+private:
+string name;
+int age;
+
+public:
+void setData(string n, int a) {
+if (n.length() > 2 && n.length() < 5) name = n;
+else name = "錯誤的姓名";
+
+if (a <= 20) age = a;
+else age = 0;
+}
+
+// Get function: 增加身分確認
+void getData() {
+char isOwner;
+cout << "請問您是主人嗎? (按 Y 進行確認): ";
+cin >> isOwner;
+
+if (isOwner == 'Y' || isOwner == 'y') {
+cout << "--- 驗證成功 ---" << endl;
+cout << "寵物姓名: " << name << endl;
+cout << "寵物年齡: " << age << " 歲" << endl;
+} else {
+cout << "權限不足，無法讀取資料。" << endl;
+}
+}
+};
+
+int main() {
+Dog myDog;
+// 假設我們直接設定一組資料來測試
+myDog.setData("小皮", 5);
+
+// 呼叫 get 函數觸發詢問機制
+myDog.getData();
+
+return 0;
+}
