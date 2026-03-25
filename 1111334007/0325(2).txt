@@ -1,0 +1,64 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+class Dog {
+private:
+    string name;
+    int age;
+
+public:
+    void setData(string n, int a) {
+
+        if (n.length() > 2 && n.length() < 5) {
+            name = n;
+        }
+        else {
+            cout << "\n[錯誤] 姓名長度不符 (需為3-4字)，已設為預設值。" << endl;
+            name = "無名";
+        }
+
+        if (a <= 20) {
+            age = a;
+        }
+        else {
+            cout << "[錯誤] 年齡不合理 (不可大於20歲)，已設為預設值。" << endl;
+            age = 0;
+        }
+    }
+
+    void getData() {
+        char isOwner;
+        cout << "\n請問您是主人嗎? (按 Y 確認 / 其他鍵拒絕): ";
+        cin >> isOwner;
+
+        if (isOwner == 'Y' || isOwner == 'y') {
+            cout << "------------------------" << endl;
+            cout << "【寵物資料確認】" << endl;
+            cout << "姓名: " << name << endl;
+            cout << "年齡: " << age << " 歲" << endl;
+            cout << "------------------------" << endl;
+        }
+        else {
+            cout << "抱歉，您不是主人，無法查看私密資料。" << endl;
+        }
+    }
+};
+
+int main() {
+    Dog myDog;
+    string inputName;
+    int inputAge;
+    cout << "=== 寵物資料登錄系統 ===" << endl;
+    cout << "請輸入寵物姓名: ";
+    cin >> inputName;
+
+    cout << "請輸入寵物年齡: ";
+    cin >> inputAge;
+
+    myDog.setData(inputName, inputAge);
+
+    myDog.getData();
+
+    return 0;
+}
