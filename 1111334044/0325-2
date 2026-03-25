@@ -1,0 +1,55 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+class SecurePetDog {
+private:
+    string name;
+    int age;
+
+public:
+    void setName(string n) {
+        if (n.length() > 2 && n.length() < 5) {
+            name = n;
+        } else {
+            name = "無效姓名";
+        }
+    }
+
+    void setAge(int a) {
+        if (a > 20) {
+            age = a;
+        } else {
+            age = 0;
+        }
+    }
+
+    void getInfo() {
+        char isOwner;
+        cout << "是否為主人? (Y/N): ";
+        cin >> isOwner;
+
+        if (isOwner == 'Y' || isOwner == 'y') {
+            // 依序輸出名子及年齡
+            cout << name << " " << age << endl;
+        }
+    }
+};
+
+int main() {
+    SecurePetDog myDog;
+    string inputName;
+    int inputAge;
+
+    cout << "請輸入姓名: ";
+    cin >> inputName;
+    myDog.setName(inputName);
+
+    cout << "請輸入年齡: ";
+    cin >> inputAge;
+    myDog.setAge(inputAge);
+
+    myDog.getInfo();
+
+    return 0;
+}
