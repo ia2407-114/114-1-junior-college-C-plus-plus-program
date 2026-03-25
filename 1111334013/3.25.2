@@ -1,0 +1,58 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+class Dog {
+private:
+    string name;
+    int age;
+
+public:
+    // 修改：考量到中文字編碼，將上限放寬，或測試時輸入英文
+    void setName(string n) {
+        // 如果是純英文，長度 3~4 是 OK 的
+        // 如果是中文，建議條件改為 n.length() >= 3 && n.length() <= 12
+        if (n.length() > 2 && n.length() < 15) {
+            name = n;
+        }
+        else {
+            name = "格式錯誤";
+        }
+    }
+
+    void setAge(int a) {
+        if (a > 20) {
+            age = a;
+        }
+        else {
+            age = 0;
+        }
+    }
+
+    void getInfo() {
+        char isOwner;
+        cout << "請問您是主人嗎？(按Y是，按其他鍵否): ";
+        cin >> isOwner;
+
+        if (isOwner == 'Y' || isOwner == 'y') {
+            cout << "\n--- 存取成功 ---" << endl;
+            cout << "寵物姓名: " << name << endl;
+            cout << "寵物年齡: " << age << " 歲" << endl;
+        }
+        else {
+            cout << "\n[權限不足] 非主人無法查看隱私資料。" << endl;
+        }
+    }
+};
+
+int main() {
+    Dog myDog;
+
+    // 這裡我們輸入 "Lucky" (長度5) 或者把判斷標準放寬
+    myDog.setName("旺財兄");
+    myDog.setAge(21);
+
+    myDog.getInfo();
+
+    return 0;
+}
