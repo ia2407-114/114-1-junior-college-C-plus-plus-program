@@ -1,0 +1,49 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+class Dog {
+private:
+    // 私有資料成員，外部無法直接存取
+    string name;
+    int age;
+
+public:
+    // 設定姓名的 set function
+    void setName(string n) {
+        if (n.length() > 2 && n.length() < 5) {
+            name = n;
+        }
+        else {
+            cout << "姓名長度不符合規範（需介於3-4字之間）！" << endl;
+            name = "未命名";
+        }
+    }
+
+    // 設定年齡的 set function
+    void setAge(int a) {
+        if (a > 15) {
+            age = a;
+        }
+        else {
+            cout << "年齡不符規範（需大於20歲）！" << endl;
+            age = 0;
+        }
+    }
+
+    // 取得並印出資料的 get function
+    void getInfo() {
+        cout << "寵物姓名: " << name << endl;
+        cout << "寵物年齡: " << age << endl;
+    }
+};
+
+int main() {
+    Dog myDog;
+
+    myDog.setName("小皮"); // 長度為2，不符合 > 2
+    myDog.setAge(25);      // 符合 > 20
+
+    myDog.getInfo();
+    return 0;
+}
