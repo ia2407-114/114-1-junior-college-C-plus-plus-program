@@ -1,0 +1,69 @@
+#include <iostream>
+using namespace std;
+
+class Dog 
+{
+private:
+    string name;
+    int age;
+
+public:
+    void setName(string n) 
+    {
+        if (n.length() > 2 && n.length() < 5) 
+        {
+            name = n;
+        }
+        else 
+        {
+            cout << "Invalid name! (length must be 3~4)\n";
+        }
+    }
+
+    void setAge(int a) 
+    {
+        if (a <= 20) 
+        {
+            age = a;
+        }
+        else 
+        {
+            cout << "Invalid age! (must be <= 20)\n";
+        }
+    }
+
+    string getName() 
+    {
+        return name;
+    }
+
+    int getAge() 
+    {
+        return age;
+    }
+};
+
+int main() 
+{
+    Dog d;
+    string inputName;
+    int inputAge;
+
+    // 使用者輸入
+    cout << "Enter dog name: ";
+    cin >> inputName;
+
+    cout << "Enter dog age: ";
+    cin >> inputAge;
+
+    // 設定資料
+    d.setName(inputName);
+    d.setAge(inputAge);
+
+    // 輸出結果
+    cout << "\nDog Info\n";
+    cout << "Name: " << d.getName() << endl;
+    cout << "Age: " << d.getAge() << endl;
+
+    return 0;
+}
