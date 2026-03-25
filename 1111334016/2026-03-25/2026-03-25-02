@@ -1,0 +1,83 @@
+#include <iostream>
+#include <string> 
+using namespace std;
+
+
+class Dog//建立物件
+{
+
+
+public://公開以下的成員允許外部函數使用，若未宣告public，則預設private
+    void setName(string dogName)//成員函數
+    {//set函數用來寫入、修改、判斷及篩選
+        //dogName=>inputName=Rayder
+        if (dogName.length() > 2 && dogName.length() < 5) {//算字串長度
+            name = dogName;//name=dogName=Ryder
+        }
+        
+    }
+
+    
+    void setAge(int dogAge)//dogAge=>inputAge=5
+    {
+        if (dogAge >= 0 && dogAge <= 20) {
+            age = dogAge;//age=dogAge=5
+        }
+        
+    }
+
+   
+
+    
+    void getPetDetails() const//印出內容
+    {
+        char isOwner;
+        cout << "請問您是主人嗎？(按 Y/y)  ";
+        cin >> isOwner;
+        if (isOwner == 'Y' || isOwner == 'y') {
+            cout << "寵物姓名: " << getName() << endl;
+            cout << "寵物年齡: " << getAge() << " 歲" << endl;
+            cout << "---------------------------" << endl;
+        }
+        
+    }
+
+    
+    string getName() const {//讀取資料
+        return name; //name=Ryder
+    }
+    int getAge() const // 【Getter 函數】唯讀函數，用來將私有變數安全地傳遞給外部
+                     // const 代表這個函數「不會修改」類別內任何變數的狀態
+    { 
+        return age;//age=5
+    }
+private:// 私有成員：外部無法直接存取
+
+    string name;
+    int age;
+};
+
+int main()
+{
+    Dog myDog;//建立物件
+    string inputName;
+    int inputAge;
+
+   
+    cout << "請輸入寵物姓名 :\n" << endl;
+    getline(cin, inputName);// 使用 getline 讀取鍵盤的資料(字串才要)
+    //inputName=Rayder
+    myDog.setName(inputName);// 將輸入的名字丟給檢查機制
+
+    
+    cout << "請輸入寵物年齡 :\n" << endl;
+    cin >> inputAge;//inputAge=5
+    myDog.setAge(inputAge);//請把剛剛在鍵盤輸入的年齡（inputAge），交給狗狗物件（myDog）的設定機器（setAge）去檢查並儲存起來。
+
+    cout << endl;
+
+    
+    myDog.getPetDetails();// 呼叫物件函數，將最終儲存的結果印出來
+
+    return 0;
+}
