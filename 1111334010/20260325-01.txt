@@ -1,0 +1,60 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+class Dog
+{
+public:
+    void setName(string n)
+    {
+        if (n.length() > 2 && n.length() < 5)
+            name = n;
+        else
+        {
+            cout << "Name error (length must be 3~4)\n";
+            name = "NoName";
+        }
+    }
+
+    void setAge(int a)
+    {
+        if (a <= 20)
+            age = a;
+        else
+        {
+            cout << "Age error (must <=20)\n";
+            age = 0;
+        }
+    }
+
+    void getInfo() const
+    {
+        cout << "Dog Name: " << name << endl;
+        cout << "Dog Age: " << age << endl;
+    }
+
+private:
+    string name;
+    int age;
+};
+
+int main()
+{
+    Dog myDog;
+    string n;
+    int a;
+
+    cout << "Enter dog name: ";
+    cin >> n;
+
+    cout << "Enter dog age: ";
+    cin >> a;
+
+    myDog.setName(n);
+    myDog.setAge(a);
+
+    cout << "\n--- Dog Info ---\n";
+    myDog.getInfo();
+
+    return 0;
+}
