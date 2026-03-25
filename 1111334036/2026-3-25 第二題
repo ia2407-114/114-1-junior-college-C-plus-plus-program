@@ -1,0 +1,72 @@
+#include <iostream>
+using namespace std;
+
+class Dog
+{
+private:
+    string name;
+    int age;
+
+public:
+    void setName(string n)
+    {
+        if (n.length() > 2 && n.length() < 5)
+        {
+            name = n;
+        }
+        else
+        {
+            cout << "Invalid name! (length must be 3~4)\n";
+        }
+    }
+
+    void setAge(int a) 
+    {
+        if (a <= 20) 
+        {
+            age = a;
+        }
+        else 
+        {
+            cout << "Invalid age! (must be <= 20)\n";
+        }
+    }
+
+    void getInfo() 
+    {
+        char ans;
+        cout << "Are you the owner? (Y/N): ";
+        cin >> ans;
+
+        if (ans == 'Y' || ans == 'y') 
+        {
+            cout << "\n--- Dog Info ---\n";
+            cout << "Name: " << name << endl;
+            cout << "Age: " << age << endl;
+        }
+        else 
+        {
+            cout << "Access denied.\n";
+        }
+    }
+};
+
+int main()
+{
+    Dog d;
+    string inputName;
+    int inputAge;
+
+    cout << "Enter dog name: ";
+    cin >> inputName;
+
+    cout << "Enter dog age: ";
+    cin >> inputAge;
+
+    d.setName(inputName);
+    d.setAge(inputAge);
+
+    d.getInfo();
+
+    return 0;
+}
