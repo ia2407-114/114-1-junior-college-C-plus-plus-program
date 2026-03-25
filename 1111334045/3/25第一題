@@ -1,0 +1,62 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+class Dog
+{
+public:
+   
+    void setName(string dogName)
+    {
+        if (dogName.length() > 2 && dogName.length() < 5)
+            name = dogName;
+        else
+        {
+            cout << "名字長度錯誤（需大於2且小於5）" << endl;
+            name = "NoName";
+        }
+    }
+
+    void setAge(int dogAge)
+    {
+        if (dogAge <= 20)
+            age = dogAge;
+        else
+        {
+            cout << "年齡錯誤（不可大於20）" << endl;
+            age = 0;
+        }
+    }
+
+    void getInfo() const
+    {
+        cout << "寵物名字：" << name << endl;
+        cout << "寵物年齡：" << age << endl;
+    }
+
+private:
+    string name; 
+    int age;     
+}; 
+
+int main()
+{
+    string inputName;
+    int inputAge;
+    Dog myDog; 
+
+    cout << "請輸入寵物名字：" << endl;
+    cin >> inputName;
+
+    cout << "請輸入寵物年齡：" << endl;
+    cin >> inputAge;
+    
+    cout << endl;
+
+    myDog.setName(inputName);
+    myDog.setAge(inputAge);
+
+    cout << endl;
+    myDog.getInfo();
+
+} 
