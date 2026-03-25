@@ -1,0 +1,46 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+class Dog {
+private:
+	string name;
+	int age;
+
+public:
+
+	void setData(string n, int a) {
+		if (n.length() > 2 && n.length() < 5) {
+			name = n;
+		}
+		else {
+			cout << "姓名長度不符規則 (需為3-4字)！" << endl;
+			name = "未知";
+		}
+		if (a <= 20) {
+			age = a;
+		}
+		else {
+			cout << "年齡數據異常 (不可大於20歲)！" << endl;
+			age = 0;
+		}
+	}
+	void getData() {
+		cout << "寵物姓名: " << name << endl;
+		cout << "寵物年齡: " << age << " 歲" << endl;
+	}
+};
+
+int main() {
+	Dog myDog;
+	string n;
+	int a;
+
+	cout << "請輸入寵物姓名與年齡: ";
+	cin >> n >> a;
+
+	myDog.setData(n, a);
+	myDog.getData();
+
+	return 0;
+}
