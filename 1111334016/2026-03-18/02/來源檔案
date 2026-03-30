@@ -21,8 +21,7 @@ int main()
     cin >> t;
     cout << "\n\n輸入圓柱體的高: ";
     cin >> h;
-    cout << "圓柱體體積: "
-        << volume(t,h);
+    cout << "圓柱體體積: "<< volume(t,h);
 
 
     int  a,s,d;
