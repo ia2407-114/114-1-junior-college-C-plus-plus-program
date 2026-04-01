@@ -1,0 +1,46 @@
+#include <iostream>
+using namespace std;
+
+class Pet
+{
+private:
+    string name;
+    int age;
+
+public:
+    Pet(string n, int a)
+    {
+        if (n.length() > 2 && n.length() < 6)
+        {
+            name = n;
+        }
+        if (a > 0 && a < 16)
+        {
+            age = a;
+        }
+        cout << "Pet " << name << " is created.\n";
+    }
+
+    ~Pet()
+    {
+        cout << "Goodbye " << name << "!\n";
+    }
+
+    void printInfo()
+    {
+        cout << "Name: " << name << endl;
+        cout << "Age: " << age << endl;
+    }
+};
+
+int main()
+{
+    Pet p1("Milo", 5);
+    Pet p2("Coco", 3);
+
+    cout << "\n--- Pet Info ---\n";
+    p1.printInfo();
+    p2.printInfo();
+
+    return 0;
+}
