@@ -1,0 +1,21 @@
+#ifndef PET_H
+#define PET_H
+
+#include <string>
+using namespace std;
+
+class Pet {
+private:
+    string name;
+    int age;
+
+public:
+
+    Pet(string n, int a);
+
+    void showInfo();
+
+    ~Pet();
+};
+
+#endif#pragma once
