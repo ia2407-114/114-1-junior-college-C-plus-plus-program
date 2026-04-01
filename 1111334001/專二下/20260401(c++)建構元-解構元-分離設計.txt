@@ -1,0 +1,81 @@
+主程式:
+#include <iostream>
+#include <string> 
+#include"pet.h"
+using namespace std;
+
+int main()
+{
+    string nameOfPet;
+    PET mycat("lulu", 0),mydog("uu", 2);
+    int ageOfPet;
+
+    cout << endl; 
+    mycat.displayMessage(); 
+    mydog.displayMessage();
+} 
+----------------------------------------------------------------------------------------------------------------------------------------
+資源檔(pet.cpp):
+#include"pet.h"
+
+
+PET::PET(string name, int age) {
+        petName = name;
+        petAge = age;
+    }
+
+PET::~PET() {
+        cout << "【" << petName << "】bye bye my pat." << endl;
+    }
+
+void PET::setPetName(string name)
+    {
+        if (name.length() <= 5)
+            petName = name;
+    }
+
+void PET::setPetAge(int age)
+    {
+        if (age >= 0 && age <= 15)
+            petAge = age;
+    }
+
+
+string PET::getPetName() const
+    {
+        return petName;
+    }
+
+int PET::getPetAge() const
+    {
+        return petAge;
+    }
+
+
+void PET::displayMessage() const
+    {
+
+        cout << "Welcome to see my pet 【" << getPetName() << "】," << getPetAge() << " years!\n"
+            << endl;
+    }
+----------------------------------------------------------------------------------------------------------------------------------------
+
+標頭檔(pet.h):
+#include <iostream>
+#include <string> 
+using namespace std;
+
+class PET
+{
+public:
+    PET(string name, int age);
+    ~PET();
+    void setPetName(string name);
+    void setPetAge(int age);
+    string getPetName() const;
+    int getPetAge() const;
+    void displayMessage() const;
+private:
+    string petName = "john";
+    int petAge = 1;
+};
