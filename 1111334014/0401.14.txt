@@ -1,0 +1,58 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+class Dog
+{
+public:
+    // 🔹 建構元（初始化名字與年齡）
+    Dog(string n, int a)
+    {
+        if (n.length() > 2 && n.length() < 5)
+            name = n;
+        else
+        {
+            cout << "Name length error!" << endl;
+            name = "NoName";
+        }
+
+        if (a <= 20)
+            age = a;
+        else
+        {
+            cout << "Age error!" << endl;
+            age = 0;
+        }
+    }
+
+    // 🔹 解構元（物件消失時自動執行）
+    ~Dog()
+    {
+        cout << "Goodbye " << name << " !" << endl;
+    }
+
+    // 🔹 顯示資料
+    void getInfo() const
+    {
+        cout << "Dog name: " << name << endl;
+        cout << "Dog age: " << age << endl;
+    }
+
+private:
+    string name;
+    int age;
+};
+
+int main()
+{
+    // 🔹 建立兩隻狗（直接用建構元）
+    Dog dog1("Tom", 5);
+    Dog dog2("Amy", 3);
+
+    cout << "=== Dog Info ===" << endl;
+    dog1.getInfo();
+    cout << endl;
+    dog2.getInfo();
+
+    return 0;
+}
