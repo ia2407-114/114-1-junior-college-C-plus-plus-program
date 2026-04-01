@@ -1,0 +1,67 @@
+source.cpp
+
+#include <iostream>
+#include "pet.h" 
+
+using namespace std;
+
+int main() {
+	Pet pet1("小黃", 3);
+	Pet pet2("阿福", 5);
+
+	pet1.displayInfo();
+	pet2.displayInfo();
+
+	cout << "--- 程式主體執行結束 ---" << endl;
+
+	return 0;
+}
+
+pet.h
+
+#ifndef PET_H
+#define PET_H
+
+#include <string>
+
+class Pet {
+private:
+	std::string name;
+	int age;
+
+public:
+
+	Pet(std::string n, int a);
+	~Pet();
+	void displayInfo();
+};
+
+#endif#pragma once
+
+pet.cpp
+
+#include <iostream>
+#include "pet.h" 
+
+using namespace std;
+
+Pet::Pet(string n, int a) {
+	name = n;
+	age = a;
+	cout << "寵物物件 " << name << " 已建立。" << endl;
+}
+
+Pet::~Pet() {
+	cout << "再見了，" << name << "！(解構元已執行)" << endl;
+}
+
+void Pet::displayInfo() {
+	cout << "寵物姓名: " << name << ", 年齡: " << age << " 歲" << endl;
+}
+
+
+
+
+
+
+
