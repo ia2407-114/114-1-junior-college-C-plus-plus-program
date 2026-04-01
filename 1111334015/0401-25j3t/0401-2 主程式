@@ -1,0 +1,11 @@
+#include "pet.h"
+
+int main() {
+    Pet pet1("小白", 3);
+    Pet pet2("咪咪", 2);
+
+    pet1.showInfo();
+    pet2.showInfo();
+
+    return 0;
+}
