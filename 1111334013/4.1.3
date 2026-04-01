@@ -1,0 +1,51 @@
+來源
+#include "pet.h" // 只需要引入標頭檔
+
+int main() {
+    PET pet1("Mimi", 3);
+    PET pet2("Lucky", 5);
+
+    pet1.displayInfo();
+    pet2.displayInfo();
+
+    return 0;
+}
+資源
+#include <iostream>
+#include "pet.h" // 必須包含介面檔
+
+using namespace std;
+
+// 實作建構元
+PET::PET(string name, int age) : petName(name), petAge(age) {
+    cout << "寵物物件 " << petName << " 已建立。" << endl;
+}
+
+// 實作解構元
+PET::~PET() {
+    cout << "再見了，" << petName << "！" << endl;
+}
+
+// 實作一般成員函式
+void PET::displayInfo() const {
+    cout << "寵物姓名: " << petName << "，年齡: " << petAge << endl;
+}
+標頭
+#ifndef PET_H
+#define PET_H
+
+#include <string>
+
+class PET {
+public:
+    // 只放宣告
+    PET(std::string name, int age);
+    ~PET();
+    void displayInfo() const;
+
+private:
+    std::string petName;
+    int petAge;
+};
+
+#endif
