@@ -1,0 +1,37 @@
+// Fig. 3.5: fig03_05.cpp
+// Define class GradeBook that contains a courseName data member
+// and member functions to set and get its value; 
+// Create and manipulate a GradeBook object with these functions.
+#include <iostream>
+#include <string> 
+using namespace std;
+#include"pet.h"
+
+
+
+int main()
+{
+    string nameOfPet; 
+    PET myPet("Alice", 1), mydog("Bob", 0);
+    int ageOfPet;
+    //cout << "Initial pet name is: " << myPet.getPetName() << endl;
+    //cout << "Initial pet age is: " << myPet.getPetAge() << endl;
+
+    // prompt for, input and set course name
+    //cout << "\nPlease enter the pet name:" << endl;
+    //getline(cin, nameOfPet); // read a course name with blanks
+    //myPet.setPetName(nameOfPet); // set the course name
+    //cout << "\nPlease enter the pet age:" << endl;
+    //getline(cin, ageOfPet); // read a course name with blanks
+    //myPet.setPetAge(ageOfPet); // set the course name
+
+    //cout << endl; // outputs a blank line
+    //myPet.displayMessage(); // display message with new course name
+    mydog.displayMessage();
+    myPet.displayMessage();
+} 
+
+
+
+
+
