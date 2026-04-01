@@ -1,0 +1,51 @@
+#include <iostream>
+#include <string> 
+using namespace std;
+
+class PET {
+public:
+
+    PET(string name, int age) {
+        setPetName(name);
+        setPetAge(age);
+    }
+
+    ~PET() {
+        cout << "解構" << petName << "。" << endl;
+    }
+
+    void setPetName(string name) {
+        if (name.length() <= 5)
+            petName = name;
+        else
+            petName = "無名";
+    }
+
+    void setPetAge(int age) {
+        if (age >= 0 && age <= 15)
+            petAge = age;
+        else
+            petAge = 0;
+    }
+
+    string getPetName() const { return petName; }
+    int getPetAge() const { return petAge; }
+
+    void displayInfo() const {
+        cout << "寵物姓名: " << getPetName() << "   年齡: " << getPetAge() << endl;
+    }
+
+private:
+    string petName;
+    int petAge;
+};
+
+int main() {
+    PET pet1("BOB", 3);
+    PET pet2("JOJO", 5);
+
+    pet1.displayInfo();
+    pet2.displayInfo();
+
+    return 0;
+}
