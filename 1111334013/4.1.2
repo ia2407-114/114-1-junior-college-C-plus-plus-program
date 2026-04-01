@@ -1,0 +1,37 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+class PET {
+public:
+    // 1. 建構元：與類別同名，無回傳型態
+    PET(string name, int age) {
+        petName = name;
+        petAge = age;
+        cout << "寵物物件 " << petName << " 已建立。" << endl;
+    }
+
+    // 2. 解構元：類別名前加上 ~
+    ~PET() {
+        cout << "再見了，" << petName << "！(解構元已執行)" << endl;
+    }
+
+    void displayInfo() const {
+        cout << "寵物姓名: " << petName << "，年齡: " << petAge << endl;
+    }
+
+private:
+    string petName;
+    int petAge;
+};
+
+int main() {
+    // 建立兩隻寵物物件，觸發建構元
+    PET pet1("Mimi", 3);
+    PET pet2("Lucky", 5);
+
+    pet1.displayInfo();
+    pet2.displayInfo();
+
+    return 0; // 程式結束前會自動觸發解構元
+}
