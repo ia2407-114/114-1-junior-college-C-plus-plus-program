@@ -1,0 +1,59 @@
+#include <iostream>
+#include <string> 
+using namespace std;
+
+class PET {
+public:
+    // 設定寵物名字，限制長度在 5 個字元以內
+    void setPetName(string name) {
+        if (name.length() <= 5)
+            petName = name;
+    }
+
+    // 設定寵物年齡，限制在 0 到 15 歲之間
+    void setPetAge(int age) {
+        if (age >= 0 && age <= 15)
+            petAge = age;
+    }
+
+    string getPetName() const {
+        return petName;
+    }
+
+    int getPetAge() const {
+        return petAge;
+    }
+
+    void displayMessage() const {
+        // 修改了輸出格式，讓名字與年齡之間有空格
+        cout << "Welcome to see my pet: " << getPetName() << " (Age: " << getPetAge() << ")!" << endl;
+    }
+
+private:
+    string petName = "john";
+    int petAge = 1;
+};
+
+int main() {
+    string nameOfPet;
+    int ageOfPet;
+    PET myPet;
+
+    cout << "Initial pet name is: " << myPet.getPetName() << endl;
+    cout << "Initial pet age is: " << myPet.getPetAge() << endl;
+
+    // 取得寵物名字
+    cout << "\nPlease enter the pet name (max 5 chars):" << endl;
+    getline(cin, nameOfPet);
+    myPet.setPetName(nameOfPet);
+
+    // 取得寵物年齡
+    cout << "Please enter the pet age (0-15):" << endl;
+    cin >> ageOfPet; // 修正：讀取 int 應該用 cin >>
+    myPet.setPetAge(ageOfPet);
+
+    cout << endl;
+    myPet.displayMessage();
+
+    return 0;
+}
