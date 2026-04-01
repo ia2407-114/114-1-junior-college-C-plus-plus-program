@@ -1,0 +1,57 @@
+/*題目1. (利用建構元(constructor)與解構元(destructor)) 在寵物類別中建立建構元與解構元成員函數與資料成員，
+建立兩隻寵物物件，透過建構元設定寵物的姓名與年齡(定義為私有資料成員)，
+最後印出寵物的姓名與年齡。並且利用解構子印出與寵物再見的訊息。*/
+#include <iostream>
+#include <string> 
+using namespace std;
+class PET{
+public:
+PET(string name, int age) {
+    petName = name;
+    petAge = age;
+}
+~PET() {
+    cout << "Bye Bye my pet" << endl;
+}
+
+
+void setPetName(string name)
+{
+    if (name.length() <= 5)
+        petName = name;
+}
+void setPetAge(int age)
+{
+    if (age >= 0 && age <= 15)
+        petAge = age;
+}
+string getPetName() const
+{
+    return petName;
+}
+
+int getPetAge() const
+{
+    return petAge;
+}
+
+void displayMessage() const
+{
+    cout << "Welcome to see my pet " << getPetName() << "Its name is " << getPetAge() << " years old!"
+        << endl;
+}
+private:
+    string petName = "john";
+    int petAge = 1;
+};
+    int main()
+    {
+        string nameOfPet;
+        PET mydog("Bob", 2), myPet("Ray", 0);
+        int ageOfPet;
+
+        cout << endl;
+        mydog.displayMessage();
+        myPet.displayMessage();
+    }
+
