@@ -1,60 +1,66 @@
 #include <iostream>
-#include <string>
 using namespace std;
 
-class Dog {
+class Dog 
+{
 private:
     string name;
     int age;
 
 public:
-    // 設定姓名
-    void setName(string n) {
-        while (n.length() <= 2 || n.length() >= 5) {
-            cout << "姓名長度錯誤（需大於2且小於5），請重新輸入：";
-            cin >> n;
+    void setName(string n) 
+    {
+        if (n.length() > 2 && n.length() < 5) 
+        {
+            name = n;
         }
-        name = n;
+        else 
+        {
+            cout << "Invalid name! (length must be 3~4)\n";
+        }
     }
 
-    // 設定年齡
-    void setAge(int a) {
-        while (a <= 0 || a > 20) {
-            cout << "年齡錯誤（需大於0且小於等於20），請重新輸入：";
-            cin >> a;
+    void setAge(int a) 
+    {
+        if (a <= 20) 
+        {
+            age = a;
         }
-        age = a;
+        else 
+        {
+            cout << "Invalid age! (must be <= 20)\n";
+        }
     }
 
-    // 取得資料（需確認是否為主人）
-    void getInfo() {
-        char check;
-        cout << "是否為主人？(Y/N)：";
-        cin >> check;
+    string getName() 
+    {
+        return name;
+    }
 
-        if (check == 'Y' || check == 'y') {
-            cout << "\n寵物狗姓名：" << name << endl;
-            cout << "寵物狗年齡：" << age << endl;
-        } else {
-            cout << "無權限查看資料！" << endl;
-        }
+    int getAge() 
+    {
+        return age;
     }
 };
 
-int main() {
+int main() 
+{
     Dog d;
-    string name;
-    int age;
+    string inputName;
+    int inputAge;
 
-    cout << "請輸入寵物狗姓名：";
-    cin >> name;
-    d.setName(name);
+    cout << "Enter dog name: ";
+    cin >> inputName;
 
-    cout << "請輸入寵物狗年齡：";
-    cin >> age;
-    d.setAge(age);
+    cout << "Enter dog age: ";
+    cin >> inputAge;
 
-    d.getInfo();
+    d.setName(inputName);
+    d.setAge(inputAge);
+
+    cout << "\nDog Info\n";
+    cout << "Name: " << d.getName() << endl;
+    cout << "Age: " << d.getAge() << endl;
 
     return 0;
 }
