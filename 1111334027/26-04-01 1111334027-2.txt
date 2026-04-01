@@ -1,0 +1,86 @@
+//main.ccp
+
+
+#include "pet.h"
+#include <iostream>
+
+int main() {
+    PET pet1("BOB", 3);
+    PET pet2("JOJO", 5);
+
+    pet1.displayInfo();
+    pet2.displayInfo();
+
+    return 0;
+}
+
+
+//Pet.h
+
+
+#ifndef PET_H
+#define PET_H
+
+#include <string>
+
+class PET {
+public:
+    PET(std::string name, int age);
+    ~PET();
+
+    void setPetName(std::string name);
+    void setPetAge(int age);
+    std::string getPetName() const;
+    int getPetAge() const;
+    void displayInfo() const;
+
+private:
+
+    std::string petName;
+    int petAge;
+};
+
+#endif
+
+//Pet.ccp
+
+
+#include "pet.h"
+#include <iostream>
+
+using namespace std;
+
+PET::PET(string name, int age) {
+    setPetName(name);
+    setPetAge(age);
+}
+
+PET::~PET() {
+    cout << "解構 " << petName << "。" << endl;
+}
+
+void PET::setPetName(string name) {
+    if (name.length() <= 5)
+        petName = name;
+    else
+        petName = "無名";
+}
+
+void PET::setPetAge(int age) {
+    if (age >= 0 && age <= 15)
+        petAge = age;
+    else
+        petAge = 0;
+}
+
+string PET::getPetName() const {
+    return petName;
+}
+
+int PET::getPetAge() const {
+    return petAge;
+}
+
+void PET::displayInfo() const {
+    cout << "寵物姓名: " << getPetName() << "   年齡: " << getPetAge() << endl;
+}
