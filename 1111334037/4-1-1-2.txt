@@ -1,0 +1,66 @@
+#include <iostream>
+#include "pet.h"
+using namespace std;
+
+int main()
+{
+    PET pet1("Milo", 3);
+    PET pet2("Coco", 5);
+
+    cout << "\n顯示寵物資料:\n";
+
+    pet1.displayMessage();
+    cout << endl;
+    pet2.displayMessage();
+
+    cout << "\n程式結束\n";
+}主程式
+#ifndef PET_H
+#define PET_H
+
+#include <string>
+using namespace std;
+
+class PET
+{
+public:
+  
+    PET(string name, int age);建構元
+
+ 
+    ~PET();解構元
+
+  
+    void displayMessage() const;
+
+private:
+    string petName;
+    int petAge;
+};
+
+#endif介面
+
+#include <iostream>
+#include "pet.h"
+using namespace std;
+
+
+PET::PET(string name, int age)
+{
+    petName = name;
+    petAge = age;
+    cout << "建立寵物: " << petName << endl;
+}
+
+
+PET::~PET()
+{
+    cout << "與寵物 " << petName << " 再見!" << endl;
+}
+
+
+void PET::displayMessage() const
+{
+    cout << "寵物姓名: " << petName << endl;
+    cout << "寵物年齡: " << petAge << endl;
+}實作
