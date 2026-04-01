@@ -1,0 +1,38 @@
+#include <iostream>
+using namespace std;
+
+class Pet {
+private:
+    string name;
+    int age;
+
+public:
+    
+    Pet(string n, int a) {
+        name = n;
+        age = a;
+        cout << "寵物 " << name << " 已建立！" << endl;
+    }
+
+    // 顯示資料
+    void showInfo() {
+        cout << "姓名: " << name << ", 年齡: " << age << endl;
+    }
+
+    // 解構元
+    ~Pet() {
+        cout << "與寵物 " << name << " 再見！" << endl;
+    }
+};
+
+int main() {
+    // 建立兩隻寵物物件
+    Pet pet1("栗嘻嘻", 3);
+    Pet pet2("黃春", 5);
+
+    // 印出資訊
+    pet1.showInfo();
+    pet2.showInfo();
+
+    return 0;
+}
