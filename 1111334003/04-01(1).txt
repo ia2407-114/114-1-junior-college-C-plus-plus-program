@@ -1,0 +1,41 @@
+#include <iostream>
+#include <string>
+using namespace std;
+class Pet
+{
+private:
+    string name;
+    int age;
+public:
+    Pet(string n, int a)
+    {
+        if (n.length() > 2 && n.length() < 5)
+            name = n;
+        else
+            name = "錯誤姓名";
+        if (a >= 0 && a <= 20)
+            age = a;
+        else
+            age = 0;
+        cout << "已建立寵物: " << name << endl;
+    }
+    ~Pet()
+    {
+        cout << "再見了，" << name  << endl;
+    }
+    void display() const
+    {
+        cout << "寵物姓名: " << name << endl;
+        cout << "寵物年齡: " << age << endl;
+    }
+};
+int main()
+{
+    Pet pet1("Coco", 5);
+    Pet pet2("Mimi", 3);
+    cout << "\n--- 寵物資料 ---\n";
+    pet1.display();
+    pet2.display();
+    cout << "\n程式結束\n";
+    return 0;
+}

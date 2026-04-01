@@ -1,0 +1,52 @@
+#include <iostream>
+#include "pet.h"
+using namespace std;
+int main()
+{
+    Dog dog1("Coco", 5);
+    Dog dog2("Mimi", 3);
+    cout << "\n--- 寵物資料 ---\n";
+    dog1.display();
+    dog2.display();
+    cout << "\n程式結束\n";
+    return 0;
+}
+#include <iostream>
+#include "pet.h"
+using namespace std;
+Dog::Dog(string n, int a)
+{
+    if (n.length() > 2 && n.length() < 5)
+        name = n;
+    else
+        name = "錯誤姓名";
+    if (a >= 0 && a <= 20)
+        age = a;
+    else
+        age = 0;
+    cout << "已建立寵物: " << name << endl;
+}
+Dog::~Dog()
+{
+    cout << "再見了，" << name  << endl;
+}
+void Dog::display() const
+{
+    cout << "寵物姓名: " << name << endl;
+    cout << "寵物年齡: " << age << endl;
+}
+#ifndef PET_H
+#define PET_H
+#include <string>
+using namespace std;
+class Dog
+{
+private:
+    string name;
+    int age;
+public:
+    Dog(string n, int a);
+    ~Dog();
+    void display() const;
+};
+#endif#pragma once
