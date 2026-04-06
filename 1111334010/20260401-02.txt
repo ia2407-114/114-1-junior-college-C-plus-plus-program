@@ -1,0 +1,65 @@
+//Sourse.cpp
+#include <iostream>
+#include "pet.h"
+using namespace std;
+
+int main()
+{
+    // 👉 直接寫死（你要的）
+    PET pet1("Bob", 0);
+    PET pet2("Tom", 4);
+
+    cout << "--- Pet Info ---\n";
+    pet1.displayPet();
+    cout << endl;
+    pet2.displayPet();
+
+    return 0;
+}
+
+//pet.h
+#ifndef PET_H
+#define PET_H
+
+#include <string>
+using namespace std;
+
+class PET
+{
+public:
+    PET(string name, int age); // 建構元
+    ~PET();                    // 解構元
+
+    void displayPet() const;
+
+private:
+    string petName;
+    int petAge;
+};
+
+#endif
+
+//pet.cpp
+#include <iostream>
+#include "pet.h"
+using namespace std;
+
+// 建構元
+PET::PET(string name, int age)
+{
+    petName = name;
+    petAge = age;
+}
+
+// 解構元
+PET::~PET()
+{
+    cout << petName << " Bye Bye my pet!" << endl;
+}
+
+// 顯示資料
+void PET::displayPet() const
+{
+    cout << "Pet Name: " << petName << endl;
+    cout << "Pet Age: " << petAge << endl;
+}
