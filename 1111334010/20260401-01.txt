@@ -1,0 +1,45 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+class PET
+{
+public:
+   
+    PET(string name, int age)
+    {
+        petName = name;
+        petAge = age;
+    }
+
+
+    ~PET()
+    {
+        cout << petName << " Bye Bye my pet!" << endl;
+    }
+
+   
+    void displayPet() const
+    {
+        cout << "Pet Name: " << petName << endl;
+        cout << "Pet Age: " << petAge << endl;
+    }
+
+private:
+    string petName;
+    int petAge;
+};
+
+int main()
+{
+   
+    PET pet1("Bob", 0);
+    PET pet2("Ted", 2);
+
+    cout << "--- Pet Info ---\n";
+    pet1.displayPet();
+    cout << endl;
+    pet2.displayPet();
+
+    return 0;
+}
