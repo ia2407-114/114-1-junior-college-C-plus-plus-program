@@ -1,0 +1,166 @@
+main.cpp
+#include <iostream>
+#include <stdexcept>
+#include "Dog.h"
+
+using namespace std;
+
+int main() {
+    try {
+        Dog d("Lucky", 2020, 5, 1, 2021, 6, 1);
+
+        cout << "預設資料：" << endl;
+        d.printInfo();
+
+        cout << "\n請輸入新資料：" << endl;
+        d.input();
+
+        cout << "\n結果：" << endl;
+        d.printInfo();
+    }
+    catch (invalid_argument& e) {
+        cout << "錯誤: " << e.what() << endl;
+    }
+
+    return 0;
+}
+
+Dog.cpp
+#include <iostream>
+#include <stdexcept>
+#include "Dog.h"
+
+using namespace std;
+
+// 判斷閏年
+bool Dog::isLeap(int y) const {
+    return (y % 4 == 0 && y % 100 != 0) || (y % 400 == 0);
+}
+
+// 驗證日期
+void Dog::validateDate(int y, int m, int d) {
+    if (m < 1 || m > 12)
+        throw invalid_argument("月份錯誤");
+
+    int days[] = { 0,31,28,31,30,31,30,31,31,30,31,30,31 };
+
+    if (isLeap(y)) days[2] = 29;
+
+    if (d < 1 || d > days[m])
+        throw invalid_argument("日期錯誤");
+}
+
+// 計算年齡（以 2026/04/08 為今天）
+int Dog::calculateAge() const {
+    int age = 2026 - birthY;
+
+    if (birthM > 4 || (birthM == 4 && birthD > 8))
+        age--;
+
+    return age;
+}
+
+// 建構子
+Dog::Dog(string n, int by, int bm, int bd,
+    int ay, int am, int ad) {
+
+    validateDate(by, bm, bd);
+    validateDate(ay, am, ad);
+
+    // 年齡檢查
+    int age = 2026 - by;
+    if (bm > 4 || (bm == 4 && bd > 8))
+        age--;
+
+    if (age < 0 || age > 20)
+        throw invalid_argument("狗的年齡不合理(0~20)");
+
+    // 領養日要晚於生日
+    if (ay < by ||
+        (ay == by && am < bm) ||
+        (ay == by && am == bm && ad < bd))
+        throw invalid_argument("領養日不可早於生日");
+
+    name = n;
+    birthY = by; birthM = bm; birthD = bd;
+    adoptY = ay; adoptM = am; adoptD = ad;
+}
+
+// 輸入
+void Dog::input() {
+    string n;
+    int by, bm, bd, ay, am, ad;
+
+    cout << "請輸入姓名: ";
+    cin >> n;
+
+    cout << "請輸入生日 (年 月 日): ";
+    cin >> by >> bm >> bd;
+
+    cout << "請輸入領養日 (年 月 日): ";
+    cin >> ay >> am >> ad;
+
+    validateDate(by, bm, bd);
+    validateDate(ay, am, ad);
+
+    int age = 2026 - by;
+    if (bm > 4 || (bm == 4 && bd > 8))
+        age--;
+
+    if (age < 0 || age > 20)
+        throw invalid_argument("狗的年齡不合理(0~20)");
+
+    if (ay < by ||
+        (ay == by && am < bm) ||
+        (ay == by && am == bm && ad < bd))
+        throw invalid_argument("領養日不可早於生日");
+
+    name = n;
+    birthY = by; birthM = bm; birthD = bd;
+    adoptY = ay; adoptM = am; adoptD = ad;
+}
+
+// 輸出
+void Dog::printInfo() const {
+    cout << "\n姓名: " << name << endl;
+    cout << "生日: " << birthY << "/" << birthM << "/" << birthD << endl;
+    cout << "領養日: " << adoptY << "/" << adoptM << "/" << adoptD << endl;
+    cout << "年齡: " << calculateAge() << " 歲" << endl;
+}
+
+Dog.h
+#pragma once
+#ifndef DOG_H
+#define DOG_H
+
+#include <string>
+using namespace std;
+
+// 抽象類別
+class DogInterface {
+public:
+    virtual void input() = 0;
+    virtual void printInfo() const = 0;
+};
+
+// Dog 類別
+class Dog : public DogInterface {
+private:
+    string name;
+    int birthY, birthM, birthD;
+    int adoptY, adoptM, adoptD;
+
+    bool isLeap(int y) const;
+    void validateDate(int y, int m, int d);
+    int calculateAge() const;
+
+public:
+    // 建構子（姓名、生日、領養日）
+    Dog(string n, int by, int bm, int bd,
+        int ay, int am, int ad);
+
+    void input() override;
+    void printInfo() const override;
+};
+
+#endif
