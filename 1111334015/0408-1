@@ -1,0 +1,80 @@
+#include <iostream>
+using namespace std;
+
+class DateBase {
+public:
+    virtual void input() = 0;        
+    virtual bool isValid() = 0;      
+    virtual void print() = 0;        
+};
+
+class Date : public DateBase {
+private:
+    int year, month, day;
+
+    bool isLeap(int y) {
+        return (y % 4 == 0 && y % 100 != 0) || (y % 400 == 0);
+    }
+
+public:
+
+    Date(int y = 1990, int m = 1, int d = 1) {
+        year = y;
+        month = m;
+        day = d;
+    }
+
+    void input() override {
+        cout << "請輸入西元 年 月 日: ";
+        cin >> year >> month >> day;
+    }
+
+    bool isValid() override {
+        if (month < 1 || month > 12)
+            return false;
+
+        int daysInMonth;
+
+        switch (month) {
+        case 2:
+            daysInMonth = isLeap(year) ? 29 : 28;
+            break;
+        case 4: case 6: case 9: case 11:
+            daysInMonth = 30;
+            break;
+        default:
+            daysInMonth = 31;
+        }
+
+        if (day < 1 || day > daysInMonth)
+            return false;
+
+        return true;
+    }
+
+    void print() override {
+        if (!isValid()) {
+            cout << "錯誤：日期不合法！" << endl;
+            return;
+        }
+
+        cout << "西元日期: " << year << "/" << month << "/" << day << endl;
+
+        int rocYear = year - 1911;
+        if (rocYear <= 0) {
+            cout << "民國日期: 尚未成立" << endl;
+        }
+        else {
+            cout << "民國日期: " << rocYear << "/" << month << "/" << day << endl;
+        }
+    }
+};
+
+int main() {
+    Date d;  
+
+    d.input();
+    d.print();
+
+    return 0;
+}
