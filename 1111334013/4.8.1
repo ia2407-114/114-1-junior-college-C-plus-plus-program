@@ -1,0 +1,112 @@
+main.cpp
+#include <iostream>
+#include <stdexcept>
+#include "Date.h"
+
+using namespace std;
+
+int main() {
+    try {
+        Date d;
+
+        cout << "預設日期：" << endl;
+        d.printAD();
+        d.printROC();
+
+        cout << "\n輸入新日期：" << endl;
+        d.input();
+
+        cout << "\n結果：" << endl;
+        d.printAD();
+        d.printROC();
+    }
+    catch (invalid_argument& e) {
+        cout << "錯誤: " << e.what() << endl;
+    }
+
+    return 0;
+}
+
+Date.cpp
+#include <iostream>
+#include <stdexcept>
+#include "Date.h"
+
+using namespace std;
+
+bool Date::isLeap(int y) const {
+    return (y % 4 == 0 && y % 100 != 0) || (y % 400 == 0);
+}
+
+void Date::validate(int y, int m, int d) {
+    if (m < 1 || m > 12)
+        throw invalid_argument("月份錯誤");
+
+    int daysInMonth[] = { 0,31,28,31,30,31,30,31,31,30,31,30,31 };
+
+    if (isLeap(y)) daysInMonth[2] = 29;
+
+    if (d < 1 || d > daysInMonth[m])
+        throw invalid_argument("日期錯誤");
+}
+
+Date::Date(int y, int m, int d) {
+    validate(y, m, d);
+    year = y;
+    month = m;
+    day = d;
+}
+
+void Date::input() {
+    int y, m, d;
+    cout << "請輸入西元 年 月 日: ";
+    cin >> y >> m >> d;
+
+    validate(y, m, d);
+
+    year = y;
+    month = m;
+    day = d;
+}
+
+void Date::printAD() const {
+    cout << "西元: " << year << "/" << month << "/" << day << endl;
+}
+
+void Date::printROC() const {
+    if (year < 1912)
+        cout << "民國: 無效（1912年前）" << endl;
+    else
+        cout << "民國: " << (year - 1911)
+        << "/" << month << "/" << day << endl;
+}
+
+Date.h
+#ifndef DATE_H
+#define DATE_H
+
+class DateInterface {
+public:
+    virtual void input() = 0;
+    virtual void printAD() const = 0;
+    virtual void printROC() const = 0;
+};
+
+class Date : public DateInterface {
+private:
+    int year;
+    int month;
+    int day;
+
+    bool isLeap(int y) const;
+    void validate(int y, int m, int d);
+
+public:
+    Date(int y = 1990, int m = 1, int d = 1);
+
+    void input() override;
+    void printAD() const override;
+    void printROC() const override;
+};
+
+#endif
