@@ -1,0 +1,101 @@
+主程式:
+
+#include <iostream>
+#include <stdexcept>
+#include "dog.h"
+using namespace std;
+
+int main()
+{
+    string name;
+    int by, bm, bd;
+    int ay, am, ad;
+
+    cout << "輸入你家可愛狗勾的姓名: ";
+    cin >> name;
+
+    cout << "輸入你家可愛狗勾的生日 (年 月 日): ";
+    cin >> by >> bm >> bd;
+
+    cout << "輸入你家可愛狗勾的領養日 (年 月 日): ";
+    cin >> ay >> am >> ad;
+
+    Dog dog(name, by, bm, bd, ay, am, ad);
+
+    if (!dog.isValid())
+    {
+        cout << "太不合理了吧!我沒有那麼好騙!" << endl;
+    }
+    else
+    {
+        dog.showInfo();
+    }
+
+    return 0;
+}
+
+標頭檔:
+
+#ifndef DOG_H
+#define DOG_H
+
+#include <string>
+using namespace std;
+
+class Dog
+{
+private:
+    string name;
+    int byear, bmonth, bday;  
+    int ayear, amonth, aday;   
+
+public:
+    Dog(string n, int by, int bm, int bd, int ay, int am, int ad);
+
+    bool isValid();
+
+    void showInfo();
+};
+
+#endif
+
+實作檔:
+
+#include <iostream>
+#include <iomanip>
+#include <stdexcept>
+#include "dog.h"
+using namespace std;
+
+
+Dog::Dog(string n, int by, int bm, int bd, int ay, int am, int ad)
+{
+    name = n;
+    byear = by;
+    bmonth = bm;
+    bday = bd;
+    ayear = ay;
+    amonth = am;
+    aday = ad;
+}
+bool Dog::isValid()
+{
+    int currentYear = 2026;
+
+    int age = currentYear - byear;
+
+    if (age < 0 || age > 20)
+        return false;
+
+    if (ayear < byear)
+        return false;
+
+    return true;
+}
+
+void Dog::showInfo()
+{
+    cout << "姓名: " << name << endl;
+    cout << "生日: " << byear << "/" << bmonth << "/" << bday << endl;
+    cout << "領養日: " << ayear << "/" << amonth << "/" << aday << endl;
+}
