@@ -1,0 +1,112 @@
+主程式
+
+#include <iostream>
+#include <stdexcept>
+#include "Date.h"
+
+using namespace std;
+
+int main()
+{
+    Date defaultDate;
+    cout << "預設日期為: ";
+    defaultDate.printAD();
+    cout << endl;
+
+    int y, m, d;
+    cout << "\n請輸入西元年、月、日 (用空白隔開): ";
+    cin >> y >> m >> d;
+
+    try
+    {
+        Date userDate(y, m, d);
+
+        cout << "\n--- 日期轉換結果 ---" << endl;
+        cout << "西元格式: ";
+        userDate.printAD();
+
+        cout << "\n民國格式: ";
+        userDate.printROC();
+        cout << endl;
+    }
+    catch (invalid_argument& e)
+    {
+        cout << "\n發生錯誤: " << e.what() << endl;
+    }
+
+    return 0;
+}
+
+
+Date.cpp
+
+#include <iostream>
+#include <iomanip>
+#include <stdexcept> 
+#include "Date.h" 
+
+using namespace std;
+
+Date::Date(int y, int m, int d)
+{
+    setDate(y, m, d);
+}
+
+void Date::setDate(int y, int m, int d)
+{
+    static const int days[] = { 0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+
+    if (m < 1 || m > 12)
+        throw invalid_argument("月份必須在 1-12 之間");
+
+    int maxDay = (m == 2 && isLeapYear(y)) ? 29 : days[m];
+
+    if (d < 1 || d > maxDay)
+        throw invalid_argument("日期天數對於該月份而言是錯誤的");
+
+    year = y;
+    month = m;
+    day = d;
+}
+
+bool Date::isLeapYear(int y) const
+{
+    return (y % 400 == 0 || (y % 4 == 0 && y % 100 != 0));
+}
+
+void Date::printAD() const
+{
+    cout << year << "/" << setfill('0') << setw(2) << month
+        << "/" << setw(2) << day;
+}
+
+void Date::printROC() const
+{
+    cout << "民國 " << (year - 1911) << "/" << setfill('0')
+        << setw(2) << month << "/" << setw(2) << day;
+}
+
+
+Date.h
+
+#ifndef DATE_H
+#define DATE_H
+
+class Date
+{
+public:
+
+	Date(int = 1990, int = 1, int = 1);
+
+	void setDate(int, int, int); 
+	void printAD() const;          
+	void printROC() const;       
+
+private:
+	unsigned int year;
+	unsigned int month;
+	unsigned int day;
+	bool isLeapYear(int) const;  
+};
+
+#endif

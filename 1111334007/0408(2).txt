@@ -1,0 +1,89 @@
+主程式
+
+#include <iostream>
+#include <string>
+#include <stdexcept>
+#include "Dog.h"
+
+using namespace std;
+
+int main() {
+    try {
+        string dogName;
+        int by, bm, bd, ay, am, ad;
+
+        cout << "請輸入狗的姓名: ";
+        cin >> dogName;
+        cout << "請輸入生日 (年 月 日): ";
+        cin >> by >> bm >> bd;
+        cout << "請輸入領養日 (年 月 日): ";
+        cin >> ay >> am >> ad;
+
+        Dog myDog(dogName, by, bm, bd, ay, am, ad);
+        myDog.printInfo();
+
+    }
+    catch (const invalid_argument& e) {
+        cerr << "\n錯誤: " << e.what() << endl;
+    }
+    return 0;
+}
+
+
+Dog.cpp
+
+#include <iostream>
+#include <string>
+#include <stdexcept>
+#include "Dog.h"
+using namespace std;
+
+Dog::Dog(string n, int by, int bm, int bd, int ay, int am, int ad)
+    : name(n), bYear(by), bMonth(bm), bDay(bd), aYear(ay), aMonth(am), aDay(ad) {
+    validateStatus(by, bm, bd, ay, am, ad);
+}
+
+void Dog::validateStatus(int by, int bm, int bd, int ay, int am, int ad) {
+
+    int currY = 2026, currM = 4, currD = 8;
+
+    int age = currY - by;
+    if (currM < bm || (currM == bm && currD < bd)) age--;
+
+    if (age < 0 || age > 20)
+        throw invalid_argument("年齡不合理 (需介於 0-20 歲)");
+
+    if (ay < by || (ay == by && am < bm) || (ay == by && am == bm && ad < bd))
+        throw invalid_argument("領養日不能早於生日");
+}
+
+void Dog::printInfo() const {
+    cout << "\n--- 寵物資料 ---"
+        << "\n姓名: " << name
+        << "\n生日: " << bYear << "/" << bMonth << "/" << bDay
+        << "\n領養日: " << aYear << "/" << aMonth << "/" << aDay << endl;
+}
+
+
+Dog.h
+
+#ifndef DOG_H
+#define DOG_H
+#include <string>
+
+class Dog {
+public:
+
+	Dog(std::string name, int by, int bm, int bd, int ay, int am, int ad);
+
+	void printInfo() const;
+
+private:
+	std::string name;
+	int bYear, bMonth, bDay; 
+	int aYear, aMonth, aDay;
+
+	void validateStatus(int, int, int, int, int, int);
+};
+
+#endif
