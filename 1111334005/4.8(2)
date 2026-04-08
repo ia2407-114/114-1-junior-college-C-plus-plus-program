@@ -1,0 +1,107 @@
+#include <iostream>
+#include <stdexcept>
+using namespace std;
+
+class Dog {
+public:
+    // 建構子
+    Dog(string n, int by, int bm, int bd, int ay, int am, int ad) {
+        setDog(n, by, bm, bd, ay, am, ad);
+    }
+
+    void printInfo() {
+        cout << "姓名: " << name << endl;
+        cout << "生日: " << birthY << "/" << birthM << "/" << birthD << endl;
+        cout << "領養日: " << adoptY << "/" << adoptM << "/" << adoptD << endl;
+        cout << "年齡: " << age << " 歲" << endl;
+    }
+
+private:
+    string name;
+    int birthY, birthM, birthD;
+    int adoptY, adoptM, adoptD;
+    int age;
+
+    void setDog(string n, int by, int bm, int bd, int ay, int am, int ad) {
+        // 今天日期（題目給的）
+        int todayY = 2026, todayM = 4, todayD = 8;
+
+        if (!isValidDate(by, bm, bd) || !isValidDate(ay, am, ad)) {
+            throw invalid_argument("日期不合法！");
+        }
+
+        // 計算年齡
+        age = todayY - by;
+        if (todayM < bm || (todayM == bm && todayD < bd)) {
+            age--;
+        }
+
+        // 年齡限制
+        if (age < 0 || age > 20) {
+            throw invalid_argument("狗的年齡不合理！");
+        }
+
+        // 生日不能晚於今天
+        if (compareDate(by, bm, bd, todayY, todayM, todayD) > 0) {
+            throw invalid_argument("生日不能晚於今天！");
+        }
+
+        // 領養日不能早於生日
+        if (compareDate(ay, am, ad, by, bm, bd) < 0) {
+            throw invalid_argument("領養日不能早於生日！");
+        }
+
+        name = n;
+        birthY = by; birthM = bm; birthD = bd;
+        adoptY = ay; adoptM = am; adoptD = ad;
+    }
+
+    // 日期是否合法
+    bool isValidDate(int y, int m, int d) {
+        if (m < 1 || m > 12) return false;
+
+        int days[] = { 31,28,31,30,31,30,31,31,30,31,30,31 };
+
+        // 閏年
+        if ((y % 4 == 0 && y % 100 != 0) || (y % 400 == 0)) {
+            days[1] = 29;
+        }
+
+        return d >= 1 && d <= days[m - 1];
+    }
+
+    // 日期比較
+    // a > b 回傳 1，a < b 回傳 -1，相等回傳 0
+    int compareDate(int y1, int m1, int d1, int y2, int m2, int d2) {
+        if (y1 != y2) return y1 > y2 ? 1 : -1;
+        if (m1 != m2) return m1 > m2 ? 1 : -1;
+        if (d1 != d2) return d1 > d2 ? 1 : -1;
+        return 0;
+    }
+};
+
+int main() {
+    string name;
+    int by, bm, bd;
+    int ay, am, ad;
+
+    cout << "請輸入狗的姓名: ";
+    cin >> name;
+
+    cout << "請輸入生日 (年 月 日): ";
+    cin >> by >> bm >> bd;
+
+    cout << "請輸入領養日 (年 月 日): ";
+    cin >> ay >> am >> ad;
+
+    try {
+        Dog dog(name, by, bm, bd, ay, am, ad);
+        cout << "\n--- 狗的資料 ---\n";
+        dog.printInfo();
+    }
+    catch (invalid_argument& e) {
+        cout << e.what() << endl;
+    }
+
+    return 0;
+}
