@@ -1,0 +1,107 @@
+main.cpp
+#include <iostream>
+#include "pet.h"
+using namespace std;
+
+int main() {
+    // 先給預設值（之後用 input 覆蓋）
+    PetDog dog("", 0, 0, 0, 0, 0, 0);
+
+    dog.input();
+
+    if (dog.checkValid()) {
+        cout << "\n資料正確！\n";
+        dog.display();
+    }
+    else {
+        cout << "\n資料不合理，請重新輸入！\n";
+    }
+
+    return 0;
+}
+
+pet.cpp
+#include <iostream>
+#include "pet.h"
+using namespace std;
+
+PetDog::PetDog(string n, int by, int bm, int bd,
+    int ay, int am, int ad) {
+    name = n;
+    birthYear = by;
+    birthMonth = bm;
+    birthDay = bd;
+    adoptYear = ay;
+    adoptMonth = am;
+    adoptDay = ad;
+}
+
+void PetDog::input() {
+    cout << "請輸入狗的姓名: ";
+    cin >> name;
+
+    cout << "請輸入生日 (年 月 日): ";
+    cin >> birthYear >> birthMonth >> birthDay;
+
+    cout << "請輸入領養日 (年 月 日): ";
+    cin >> adoptYear >> adoptMonth >> adoptDay;
+}
+
+int PetDog::getAge() {
+    int age = 2026 - birthYear;
+
+    if (birthMonth > 4 || (birthMonth == 4 && birthDay > 8)) {
+        age--;
+    }
+    return age;
+}
+
+bool PetDog::checkValid() {
+    int age = getAge();
+
+    if (age < 0 || age > 20) {
+        return false;
+    }
+
+    if (adoptYear < birthYear) return false;
+    if (adoptYear == birthYear && adoptMonth < birthMonth) return false;
+    if (adoptYear == birthYear && adoptMonth == birthMonth && adoptDay < birthDay) return false;
+
+    if (adoptYear > 2026) return false;
+    if (adoptYear == 2026 && adoptMonth > 4) return false;
+    if (adoptYear == 2026 && adoptMonth == 4 && adoptDay > 8) return false;
+
+    return true;
+}
+
+void PetDog::display() {
+    cout << "\n--- 寵物狗資料 ---\n";
+    cout << "姓名: " << name << endl;
+    cout << "生日: " << birthYear << "/" << birthMonth << "/" << birthDay << endl;
+    cout << "領養日: " << adoptYear << "/" << adoptMonth << "/" << adoptDay << endl;
+    cout << "年齡: " << getAge() << " 歲" << endl;
+}
+
+pet.h
+#ifndef PET_H
+#define PET_H
+
+#include <string>
+using namespace std;
+
+class PetDog {
+private:
+    string name;
+    int birthYear, birthMonth, birthDay;
+    int adoptYear, adoptMonth, adoptDay;
+
+public:    PetDog(string n, int by, int bm, int bd,
+        int ay, int am, int ad);
+
+    void input();
+    bool checkValid();
+    int getAge();
+    void display();
+};
+
+#endif#pragma once
