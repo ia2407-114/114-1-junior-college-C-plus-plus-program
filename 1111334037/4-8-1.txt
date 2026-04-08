@@ -1,0 +1,103 @@
+#include<iostream>
+#include "Date.h"
+using namespace std;
+
+int main()
+{
+    int y, m, d;
+
+    cout << "請輸入西元 年/月/日: ";
+    cin >> y >> m >> d;
+
+    Date date(y, m, d); 
+
+    date.printAD();
+    date.printROC();
+
+    return 0;
+}主程式
+#ifndef DATE_H
+#define DATE_H
+
+class Date
+{
+public:
+    Date(int y = 1990, int m = 1, int d = 1); 
+
+    void setDate(int y, int m, int d);
+    void printAD() const;             
+    void printROC() const;           
+
+private:
+    int year;
+    int month;
+    int day;
+
+    bool isValid(int y, int m, int d); 
+};
+#endif介面
+#include<iostream>
+#include "Date.h"
+using namespace std;
+
+
+Date::Date(int y, int m, int d)
+{
+    if (isValid(y, m, d))
+    {
+        year = y;
+        month = m;
+        day = d;
+    }
+    else
+    {
+        cout << "輸入錯誤，使用預設日期 1990/1/1\n";
+        year = 1990;
+        month = 1;
+        day = 1;
+    }
+}
+
+
+void Date::setDate(int y, int m, int d)
+{
+    if (isValid(y, m, d))
+    {
+        year = y;
+        month = m;
+        day = d;
+    }
+    else
+    {
+        cout << "錯誤日期!\n";
+    }
+}
+
+
+bool Date::isValid(int y, int m, int d)
+{
+    if (m < 1 || m > 12) return false;
+    if (d < 1 || d > 31) return false;
+
+
+    if (m == 4 || m == 6 || m == 9 || m == 11)
+        if (d > 30) return false;
+
+ 
+    if (m == 2)
+        if (d > 28) return false;
+
+    return true;
+}
+
+
+void Date::printAD() const
+{
+    cout << "西元日期: " << year << "/" << month << "/" << day << endl;
+}
+
+
+void Date::printROC() const
+{
+    cout << "民國日期: " << year - 1911 << "/" << month << "/" << day << endl;
+}使算

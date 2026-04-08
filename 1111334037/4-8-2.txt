@@ -1,0 +1,114 @@
+#include<iostream>
+#include "Dog.h"
+using namespace std;
+
+int main()
+{
+    string name;
+    int by, bm, bd;
+    int ay, am, ad;
+
+    cout << "請輸入寵物名字:";
+    cin >> name;
+
+    cout << "請輸入生日 (年 月 日):";
+    cin >> by >> bm >> bd;
+
+    cout << "請輸入領養日 (年 月 日):";
+    cin >> ay >> am >> ad;
+
+    Dog d(name, by, bm, bd, ay, am, ad);
+
+    cout << "\n寵物資料:\n";
+    d.display();
+
+    return 0;
+}主程式
+#ifndef DOG_H
+#define DOG_H
+#include<string>
+using namespace std;
+
+class Dog
+{
+public:
+    Dog(string n, int by, int bm, int bd,
+        int ay, int am, int ad); 
+
+    void display() const;
+
+private:
+    string name;
+
+    int birthY, birthM, birthD;
+    int adoptY, adoptM, adoptD;
+
+    bool isValidDate(int y, int m, int d);
+    int calculateAge(); 
+};
+
+#endif介面
+#include<iostream>
+#include "Dog.h"
+using namespace std;
+
+Dog::Dog(string n, int by, int bm, int bd,
+         int ay, int am, int ad)
+{
+    name = n;
+
+    if (isValidDate(by, bm, bd) && isValidDate(ay, am, ad))
+    {
+        birthY = by; birthM = bm; birthD = bd;
+        adoptY = ay; adoptM = am; adoptD = ad;
+
+        int age = calculateAge();
+
+        if (age < 0 || age > 20 || 
+           (ay < by || (ay == by && am < bm) || (ay == by && am == bm && ad < bd)))
+        {
+            cout << "資料不合理，使用預設值\n";
+            birthY = 2020; birthM = 1; birthD = 1;
+            adoptY = 2021; adoptM = 1; adoptD = 1;
+        }
+    }
+    else
+    {
+        cout << "日期錯誤，使用預設值\n";
+        birthY = 2020; birthM = 1; birthD = 1;
+        adoptY = 2021; adoptM = 1; adoptD = 1;
+    }
+}
+
+
+bool Dog::isValidDate(int y, int m, int d)
+{
+    if (m < 1 || m > 12) return false;
+    if (d < 1 || d > 31) return false;
+
+    if (m == 4 || m == 6 || m == 9 || m == 11)
+        if (d > 30) return false;
+
+    if (m == 2)
+        if (d > 28) return false;
+
+    return true;
+}
+//（今天 2026/04/08）
+int Dog::calculateAge()
+{
+    int age = 2026 - birthY;
+
+    if (birthM > 4 || (birthM == 4 && birthD > 8))
+        age--;
+
+    return age;
+}
+
+
+void Dog::display() const
+{
+    cout << "寵物名字: " << name << endl;
+    cout << "生日: " << birthY << "/" << birthM << "/" << birthD << endl;
+    cout << "領養日: " << adoptY << "/" << adoptM << "/" << adoptD << endl;
+}使算
