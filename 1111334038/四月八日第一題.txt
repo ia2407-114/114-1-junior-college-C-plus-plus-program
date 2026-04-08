@@ -1,0 +1,101 @@
+主程式:
+
+#include <iostream>
+#include <stdexcept>
+#include "date.h"
+using namespace std;
+
+int main()
+{
+    int y, m, d;
+
+    cout << "請輸入西元 年 月 日: ";
+    cin >> y >> m >> d;
+
+    Date date(y, m, d);
+
+    if (!date.isValid())
+    {
+        cout << "日期錯誤！" << endl;
+    }
+    else
+    {
+        date.showAD();
+        date.showROC();
+    }
+
+    return 0;
+}
+
+標頭檔:
+
+#ifndef DATE_H
+#define DATE_H
+
+class Date
+{
+private:
+    int year;
+    int month;
+    int day;
+
+public:
+    Date(int y = 1990, int m = 1, int d = 1);
+
+    void setDate(int y, int m, int d);
+
+    bool isValid();
+
+    void showAD();
+
+    void showROC();
+};
+
+#endif
+
+實作檔:
+
+#include <iostream>
+#include <iomanip>
+#include <stdexcept>
+#include "date.h"
+using namespace std;
+
+Date::Date(int y, int m, int d)
+{
+    setDate(y, m, d);
+}
+
+void Date::setDate(int y, int m, int d)
+{
+    year = y;
+    month = m;
+    day = d;
+}
+
+bool Date::isValid()
+{
+    if (month < 1 || month > 12)
+        return false;
+
+    if (day < 1 || day > 31)
+        return false;
+
+    if ((month == 4 || month == 6 || month == 9 || month == 11) && day > 30)
+        return false;
+
+    if (month == 2 && day > 28)
+        return false;
+
+    return true;
+}
+
+void Date::showAD()
+{
+    cout << "西元日期: " << year << "/" << month << "/" << day << endl;
+}
+
+void Date::showROC()
+{
+    cout << "民國日期: " << year - 1911 << "/" << month << "/" << day << endl;
+}
