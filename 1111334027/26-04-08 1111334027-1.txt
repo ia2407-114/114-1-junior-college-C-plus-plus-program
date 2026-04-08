@@ -1,0 +1,144 @@
+//main.ccp
+#include <iostream>
+#include <stdexcept>
+#include "Date.h"
+using namespace std;
+
+int main()
+{
+    Date d1;             
+    Date d2(2024);      
+    Date d3(2024, 10);    
+    Date d4(2024, 10, 25);
+
+    cout << "Constructed with:\n\nd1: all arguments defaulted\n  ";
+    d1.printUniversal();
+    cout << "\n  ";
+    d1.printStandard();
+
+    cout << "\n\nd2: year specified; month and day defaulted\n  ";
+    d2.printUniversal();
+    cout << "\n  ";
+    d2.printStandard();
+
+    cout << "\n\nd3: year specified; month and day defaulted\n  ";
+    d3.printUniversal();
+    cout << "\n  ";
+    d3.printStandard();
+
+    cout << "\n\nd4: year, month and month specified\n  ";
+    d4.printUniversal();
+    cout << "\n  ";
+    d4.printStandard();
+
+    try
+    {
+        Date d5(27, 74, 99);
+    }
+    catch (invalid_argument& e)
+    {
+        cerr << "\n\nException while initializing t5: " << e.what() << endl;
+    }
+}
+
+
+//Date.ccp
+#include <iostream>
+#include <iomanip>
+#include <stdexcept>
+#include "Date.h"
+using namespace std;
+
+Date::Date(int year, int month, int day)
+{
+    setDate(year, month, day);
+}
+
+void Date::setDate(int y, int m, int d)
+{
+    setYear(y);
+    setMonth(m);
+    setDay(d);
+}
+
+void Date::setYear(int y)
+{
+    if (y >= 1 && y <= 9999)
+        year = y;
+    else
+        cout << "year must be 1-9999"<<endl;
+} 
+
+void Date::setMonth(int m)
+{
+    if (m >= 1 && m <= 12)
+        month = m;
+    else
+        cout<<"month must be 1-12"<<endl;
+}
+
+void Date::setDay(int d)
+{
+    if (d >= 1 && d <= 31)
+        day = d;
+    else
+        cout << "day must be 1-31" << endl;
+}
+
+unsigned int Date::getYear() const
+{
+    return year;
+}
+
+unsigned int Date::getMonth() const
+{
+    return month;
+}
+
+unsigned int Date::getDay() const
+{
+    return day;
+}
+
+void Date::printUniversal() const
+{
+    cout << setfill('0') << setw(4) << getYear() << ":"
+        << setw(2) << getMonth() << ":" << setw(2) << getDay();
+}
+
+void Date::printStandard() const
+{
+    cout << (year < 1911 ? " 民國前 " : "民國 ") << ((getYear() <1911 ) ? 1911 - getYear() : getYear() -1911)
+        << ":" << setfill('0') << setw(2) << getMonth()
+        << ":" << setw(2) << getDay() ;
+}
+
+
+//Date.h
+#ifndef Date_H
+#define Date_H
+
+class Date
+{
+public:
+	explicit Date(int = 1900, int = 1, int = 1); 
+
+	void setDate(int, int, int); 
+	void setYear(int); 
+	void setMonth(int); 
+	void setDay(int);
+
+	unsigned int getYear() const;
+	unsigned int getMonth() const;
+	unsigned int getDay() const;
+
+	void printUniversal() const;
+	void printStandard() const;
+private:
+	unsigned int year; 
+	unsigned int month; 
+	unsigned int day;
+};
+
+#endif
+
