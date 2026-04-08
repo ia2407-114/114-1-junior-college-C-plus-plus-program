@@ -1,0 +1,86 @@
+標頭---------------------------------------------------------------------------------------------------------------------------------
+#ifndef DATECONVERTER_H
+#define DATECONVERTER_H
+
+class DateConverter {
+private:
+    int year, month, day;
+
+    
+    bool isLeapYear(int y);
+    bool isValidDate(int y, int m, int d);
+
+public:
+   
+    DateConverter(int y = 1990, int m = 1, int d = 1);
+
+    
+    void setDate(int y, int m, int d);
+    void printAD();      
+    void printROC();     
+};
+
+#endif
+實作--------------------------------------------------------------------------------------------------------------------------------------
+#include "time.h"
+#include <iostream>
+#include <cmath>
+
+using namespace std;
+
+DateConverter::DateConverter(int y, int m, int d) {
+    setDate(y, m, d);
+}
+
+bool DateConverter::isLeapYear(int y) {
+    return (y % 4 == 0 && y % 100 != 0) || (y % 400 == 0);
+}
+
+bool DateConverter::isValidDate(int y, int m, int d) {
+    if (y < 1 || m < 1 || m > 12 || d < 1) return false;
+    int daysInMonth[] = { 0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+    if (isLeapYear(y)) daysInMonth[2] = 29;
+    return d <= daysInMonth[m];
+}
+
+void DateConverter::setDate(int y, int m, int d) {
+    if (isValidDate(y, m, d)) {
+        year = y; month = m; day = d;
+    }
+    else {
+        cout << "錯誤：日期 [" << y << "/" << m << "/" << d << "] 無效。使用預設值 1990/1/1。" << endl;
+        year = 1990; month = 1; day = 1;
+    }
+}
+
+void DateConverter::printAD() {
+    cout << "西元日期: " << year << "年" << month << "月" << day << "日" << endl;
+}
+
+void DateConverter::printROC() {
+    int rocYear = year - 1911;
+    if (rocYear > 0)
+        cout << "民國日期: 民國" << rocYear << "年" << month << "月" << day << "日" << endl;
+    else
+        cout << "民國日期: 民國前" << abs(rocYear) + 1 << "年" << month << "月" << day << "日" << endl;
+}
+主程式---------------------------------------------------------------------------------------------------------------------------------
+#include <iostream>
+#include "time.h"
+
+using namespace std;
+
+int main() {
+    int y, m, d;
+    cout << "請輸入西元年 月 日 (空格隔開): ";
+    if (!(cin >> y >> m >> d)) {
+        cout << "輸入格式錯誤。" << endl;
+        return 1;
+    }
+
+    DateConverter userDate(y, m, d);
+    userDate.printAD();
+    userDate.printROC();
+
+    return 0;
+}
