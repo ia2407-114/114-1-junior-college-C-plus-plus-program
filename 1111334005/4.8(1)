@@ -1,0 +1,64 @@
+#include <iostream>
+#include <stdexcept>
+using namespace std;
+
+class Date {
+public:
+    // 建構子（預設值 1990/1/1）
+    Date(int y = 1990, int m = 1, int d = 1) {
+        setDate(y, m, d);
+    }
+
+    void setDate(int y, int m, int d) {
+        if (!isValid(y, m, d)) {
+            throw invalid_argument("日期不合法！");
+        }
+        year = y;
+        month = m;
+        day = d;
+    }
+
+    void printAD() const {
+        cout << "西元: " << year << "/" << month << "/" << day << endl;
+    }
+
+    void printROC() const {
+        cout << "民國: " << (year - 1911) << "/" << month << "/" << day << endl;
+    }
+
+private:
+    int year, month, day;
+
+    bool isValid(int y, int m, int d) {
+        if (m < 1 || m > 12) return false;
+
+        int days[] = { 31,28,31,30,31,30,31,31,30,31,30,31 };
+
+        // 閏年
+        if ((y % 4 == 0 && y % 100 != 0) || (y % 400 == 0)) {
+            days[1] = 29;
+        }
+
+        if (d < 1 || d > days[m - 1]) return false;
+
+        return true;
+    }
+};
+
+int main() {
+    int y, m, d;
+
+    cout << "請輸入西元年 月 日: ";
+    cin >> y >> m >> d;
+
+    try {
+        Date date(y, m, d);
+        date.printAD();
+        date.printROC();
+    }
+    catch (invalid_argument& e) {
+        cout << e.what() << endl;
+    }
+
+    return 0;
+}
