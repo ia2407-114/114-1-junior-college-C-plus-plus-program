@@ -2,18 +2,24 @@ Sourse.cpp
 #include <iostream>
 #include "Date.h"
 using namespace std;
+
 int main()
 {
     int y, m, d;
+
     cout << "請輸入西元 年 月 日：";
     cin >> y >> m >> d;
+
     Date t1(y, m, d);
+
     cout << "\n你輸入的日期是：\n";
     cout << "西元：";
-    t1.printUniversal();
+    t1.printAD();
+
     cout << "\n";
-    t1.printStandard();
+    t1.printROC();
     cout << endl;
+
     return 0;
 }
 -------------------------
@@ -23,40 +29,44 @@ Date.h
 class Date
 {
 public:
-	explicit Date(int = 1990, int = 1, int = 1); 
-	void setDate(int, int, int); 
-	void setYear(int); 
-	void setMonth(int); 
-	void setDay(int); 
+	explicit Date(int = 1990, int = 1, int = 1);
+	void setDate(int, int, int);
+	void setYear(int);
+	void setMonth(int);
+	void setDay(int);
 
-	unsigned int getYear() const; 
+	unsigned int getYear() const;
 	unsigned int getMonth() const;
-	unsigned int getDay() const; 
+	unsigned int getDay() const;
 
-	void printUniversal() const; 
-	void printStandard() const; 
+	void printAD() const;
+	void printROC() const;
 private:
-	unsigned int year; 
-	unsigned int month; 
+	unsigned int year;
+	unsigned int month;
 	unsigned int day;
-}; 
+};
 #endif
+
 -------------------
 Date.cpp
 #include <iostream>
 #include <iomanip>
 #include "Date.h"
 using namespace std;
+
 Date::Date(int year, int month, int day)
 {
     setDate(year, month, day);
 }
+
 void Date::setDate(int y, int m, int d)
 {
     setYear(y);
     setMonth(m);
     setDay(d);
 }
+
 void Date::setYear(int y)
 {
     if (y >= 0 && y <= 9999)
@@ -67,6 +77,7 @@ void Date::setYear(int y)
         year = 1990;
     }
 }
+
 void Date::setMonth(int m)
 {
     if (m >= 1 && m <= 12)
@@ -77,6 +88,7 @@ void Date::setMonth(int m)
         month = 1;
     }
 }
+
 void Date::setDay(int d)
 {
     if (d >= 1 && d <= 31)
@@ -87,25 +99,30 @@ void Date::setDay(int d)
         day = 1;
     }
 }
+
 unsigned int Date::getYear() const
 {
     return year;
 }
+
 unsigned int Date::getMonth() const
 {
     return month;
 }
+
 unsigned int Date::getDay() const
 {
     return day;
 }
-void Date::printUniversal() const
+
+void Date::printAD() const
 {
     cout << setfill('0') << setw(4) << getYear() << ":"
         << setw(2) << getMonth() << ":"
         << setw(2) << getDay();
 }
-void Date::printStandard() const
+
+void Date::printROC() const
 {
     cout << (year < 1911 ? "民國前 " : "民國 ")
         << setfill('0') << setw(3)
