@@ -1,40 +1,21 @@
 Sourse.cpp
 #include <iostream>
-#include <stdexcept>
 #include "Date.h"
 using namespace std;
-
 int main()
 {
-    Date t1; 
-    Date t2(2009,12,31); 
-    Date t3(21, 1,2); 
-    Date t4(12, 1, 15);
-
-    cout << "Constructed with:\n\nt1: all arguments defaulted\n  ";
-    t1.printUniversal(); 
-    cout << "\n  ";
-    t1.printStandard(); 
-
-    cout << "\n\nt2: hour specified; minute and second defaulted\n  ";
-    t2.printUniversal(); 
-    cout << "\n  ";
-    t2.printStandard(); 
-
-    cout << "\n\nt3: hour and minute specified; second defaulted\n  ";
-    t3.printUniversal(); 
-    cout << "\n  ";
-    t3.printStandard(); 
-
-    cout << "\n\nt4: hour, minute and second specified\n  ";
-    t4.printUniversal(); 
-    cout << "\n  ";
-    t4.printStandard(); 
-    cout << "\n  ";
-      
-        Date t5(2017, 03, 32);
-     
-} 
+    int y, m, d;
+    cout << "請輸入西元 年 月 日：";
+    cin >> y >> m >> d;
+    Date t1(y, m, d);
+    cout << "\n你輸入的日期是：\n";
+    cout << "西元：";
+    t1.printUniversal();
+    cout << "\n";
+    t1.printStandard();
+    cout << endl;
+    return 0;
+}
 -------------------------
 Date.h
 #ifndef DATE_H
@@ -64,76 +45,73 @@ private:
 Date.cpp
 #include <iostream>
 #include <iomanip>
-#include <stdexcept>
 #include "Date.h"
 using namespace std;
 Date::Date(int year, int month, int day)
 {
-    setDate(year, month, day); 
-} 
-
+    setDate(year, month, day);
+}
 void Date::setDate(int y, int m, int d)
 {
-    setYear(y); 
-    setMonth(m); 
-    setDay(d); 
+    setYear(y);
+    setMonth(m);
+    setDay(d);
 }
-
 void Date::setYear(int y)
 {
-    if (y >= 0 && y < 9999)
+    if (y >= 0 && y <= 9999)
         year = y;
     else
-       cout << "year must be 0-9999" << endl;
-   
+    {
+        cout << "year must be 0-9999，已改成 1990\n";
+        year = 1990;
+    }
 }
-
 void Date::setMonth(int m)
 {
     if (m >= 1 && m <= 12)
         month = m;
     else
-        cout << "month must be 1-12" << endl;
-      
-} 
-
+    {
+        cout << "month must be 1-12，已改成 1\n";
+        month = 1;
+    }
+}
 void Date::setDay(int d)
 {
     if (d >= 1 && d <= 31)
         day = d;
     else
-        cout << "day must be 1-31" << endl;
-
-} 
-
+    {
+        cout << "day must be 1-31，已改成 1\n";
+        day = 1;
+    }
+}
 unsigned int Date::getYear() const
 {
     return year;
-} 
-
+}
 unsigned int Date::getMonth() const
 {
     return month;
-} 
-
+}
 unsigned int Date::getDay() const
 {
     return day;
-} 
-
+}
 void Date::printUniversal() const
 {
     cout << setfill('0') << setw(4) << getYear() << ":"
-        << setw(2) << getMonth() << ":" << setw(2) << getDay();
+        << setw(2) << getMonth() << ":"
+        << setw(2) << getDay();
 }
-
 void Date::printStandard() const
 {
     cout << (year < 1911 ? "民國前 " : "民國 ")
-        << setfill('0') << setw(2)
+        << setfill('0') << setw(3)
         << (year < 1911 ? 1911 - year : year - 1911)
-        << ":" << setw(2) << getMonth()
-        << ":" << setw(2) << getDay();
-} 
-
-
+        << ":"
+        << setw(2) << getMonth()
+        << ":"
+        << setw(2) << getDay();
+}
