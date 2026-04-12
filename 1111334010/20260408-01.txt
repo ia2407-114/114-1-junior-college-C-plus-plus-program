@@ -35,7 +35,7 @@ private:
 #include "Date.h" 
 using namespace std;
 
-Date::Date(int Year, int Month, int Day)
+Date::Date(int Year, int Month, int Day) : Year(1990), Month(1), Day(1)
 {
     setDate(Year, Month, Day);
 }
@@ -48,7 +48,7 @@ void Date::setDate(int y, int m, int d)
 
 void Date::setYear(int y)
 {
-    if (y >= 1 && y <= 9999)
+    if (y >= 1 && y < 9999)
         Year = y;
     else
         cout<<"Year must be 1~9999"<<endl;
