@@ -1,0 +1,152 @@
+題目1. 利用上週(如上)設計的日期類別，建立pet類別，其成員函數如下:
+ pet (name, category (品種), birthday, adoptDate)
+ ~pet ( )印出 Bye Bye~~
+check_birth( )
+check_adopt(... )
+print_all_data(... )
+必須包含date的物件作為其資料成員
+需要有五個檔案:
+date.h, date.cpp, pet.h, pet.cpp, main.cpp
+建立三個寵物，透過鍵盤輸入他們的生日與領養日，檢查他們的生日與領養日，並印出他們的詳細資料
+
+
+main.cpp
+#include <iostream>
+#include <string>
+#include <vector>
+#include "pet.h"
+
+using namespace std;
+
+int main() {
+    string name, cat;
+    int y1, m1, d1, y2, m2, d2;
+    vector<Pet*> shelter;
+
+    for (int i = 0; i < 3; ++i) {
+        cout << "請輸入第 " << i + 1 << " 隻寵物的資料" << endl;
+        cout << "名字: "; cin >> name;
+        cout << "品種: "; cin >> cat;
+        cout << "生日 (年 月 日): "; cin >> y1 >> m1 >> d1;
+        cout << "領養日 (年 月 日): "; cin >> y2 >> m2 >> d2;
+
+        Date bDay(y1, m1, d1);
+        Date aDay(y2, m2, d2);
+        
+        // 使用動態記憶體以觀察解構子執行
+        shelter.push_back(new Pet(name, cat, bDay, aDay));
+        cout << endl;
+    }
+
+    cout << "\n=== 寵物資料清單 ===" << endl;
+    for (int i = 0; i < 3; ++i) {
+        shelter[i]->print_all_data();
+        shelter[i]->check_birth();
+        shelter[i]->check_adopt();
+    }
+
+    cout << "\n=== 程式結束，觸發解構子 ===" << endl;
+    for (int i = 0; i < 3; ++i) {
+        delete shelter[i]; // 這會印出 Bye Bye~~
+    }
+
+    return 0;
+}
+
+date.cpp
+#include <iostream>
+#include "date.h"
+using namespace std;
+
+Date::Date() : year(2000), month(1), day(1) {}
+
+Date::Date(int y, int m, int d) : year(y), month(m), day(d) {}
+
+void Date::setDate(int y, int m, int d) {
+    year = y; month = m; day = d;
+}
+
+void Date::printDate() const {
+    cout << year << "/" << month << "/" << day;
+}
+
+date.h
+#ifndef DATE_H
+#define DATE_H
+
+class Date {
+private:
+    int year, month, day;
+public:
+    Date();
+    Date(int y, int m, int d);
+    void setDate(int y, int m, int d);
+    void printDate() const;
+    // 供 Pet 類別檢查邏輯使用
+    int getYear() const { return year; }
+    int getMonth() const { return month; }
+    int getDay() const { return day; }
+};
+
+#endif
+
+pet.cpp
+#include <iostream>
+#include "pet.h"
+using namespace std;
+
+Pet::Pet(string n, string cat, Date b, Date a) 
+    : name(n), category(cat), birthday(b), adoptDate(a) {}
+
+Pet::~Pet() {
+    cout << "Pet " << name << " says: Bye Bye~~" << endl;
+}
+
+void Pet::check_birth() const {
+    cout << name << " 的生日是: ";
+    birthday.printDate();
+    cout << endl;
+}
+
+void Pet::check_adopt() const {
+    // 簡單邏輯：領養日不應早於生日
+    if (adoptDate.getYear() < birthday.getYear()) {
+        cout << "[警告] " << name << " 的領養年份早於出生年份！" << endl;
+    } else {
+        cout << name << " 的領養紀錄正常。" << endl;
+    }
+}
+
+void Pet::print_all_data() const {
+    cout << "-----------------------" << endl;
+    cout << "名字: " << name << endl;
+    cout << "品種: " << category << endl;
+    cout << "生日: "; birthday.printDate(); cout << endl;
+    cout << "領養日: "; adoptDate.printDate(); cout << endl;
+    cout << "-----------------------" << endl;
+}
+
+pet.h
+#ifndef PET_H
+#define PET_H
+
+#include <string>
+#include "date.h"
+using namespace std;
+
+class Pet {
+private:
+    string name;
+    string category;
+    Date birthday;
+    Date adoptDate;
+
+public:
+    Pet(string n, string cat, Date b, Date a);
+    ~Pet();
+    void check_birth() const;
+    void check_adopt() const;
+    void print_all_data() const;
+};
+
+#endif
