@@ -2,42 +2,52 @@ main.cpp
 
 #include <iostream>
 #include <string>
-#include <vector>
 #include "pet.h"
 
 using namespace std;
 
+Date inputDate() {
+    int y, m, d;
+    cin >> y >> m >> d;
+    return Date(y, m, d);
+}
+
 int main() {
     string name, cat;
-    int y1, m1, d1, y2, m2, d2;
-    vector<Pet*> myPets;
 
-    for (int i = 0; i < 3; ++i) {
-        cout << "\n請輸入第 " << i + 1 << " 隻寵物的資料：" << endl;
-        cout << "名字: "; cin >> name;
-        cout << "品種: "; cin >> cat;
+    cout << "請輸入第 1 隻寵物資料 (名字 品種): ";
+    cin >> name >> cat;
+    cout << "請輸入生日 (年 月 日): ";
+    Date b1 = inputDate();
+    cout << "請輸入領養日 (年 月 日): ";
+    Date a1 = inputDate();
+    Pet* p1 = new Pet(name, cat, b1, a1);
 
-        cout << "請輸入生日 (年 月 日): ";
-        cin >> y1 >> m1 >> d1;
-        Date birth(y1, m1, d1);
+    cout << "\n請輸入第 2 隻寵物資料 (名字 品種): ";
+    cin >> name >> cat;
+    cout << "請輸入生日 (年 月 日): ";
+    Date b2 = inputDate();
+    cout << "請輸入領養日 (年 月 日): ";
+    Date a2 = inputDate();
+    Pet* p2 = new Pet(name, cat, b2, a2);
 
-        cout << "請輸入領養日 (年 月 日): ";
-        cin >> y2 >> m2 >> d2;
-        Date adopt(y2, m2, d2);
-        myPets.push_back(new Pet(name, cat, birth, adopt));
-    }
+    cout << "\n請輸入第 3 隻寵物資料 (名字 品種): ";
+    cin >> name >> cat;
+    cout << "請輸入生日 (年 月 日): ";
+    Date b3 = inputDate();
+    cout << "請輸入領養日 (年 月 日): ";
+    Date a3 = inputDate();
+    Pet* p3 = new Pet(name, cat, b3, a3);
 
-    cout << "\n======= 顯示詳細資料與檢查 =======" << endl;
-    for (int i = 0; i < 3; ++i) {
-        myPets[i]->print_all_data();
-        myPets[i]->check_birth();
-        myPets[i]->check_adopt();
-    }
+    cout << "\n======= 顯示所有資料 =======" << endl;
+    p1->print_all_data(); p1->check_birth(); p1->check_adopt();
+    p2->print_all_data(); p2->check_birth(); p2->check_adopt();
+    p3->print_all_data(); p3->check_birth(); p3->check_adopt();
 
-    cout << "\n======= 程式結束，觸發解構子 =======" << endl;
-    for (int i = 0; i < 3; ++i) {
-        delete myPets[i];
-    }
+    cout << "\n======= 釋放記憶體 =======" << endl;
+    delete p1; 
+    delete p2; 
+    delete p3; 
 
     return 0;
 }
