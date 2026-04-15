@@ -1,0 +1,287 @@
+date標頭檔:
+#ifndef DATE_H
+#define DATE_H
+
+class Date
+{
+private:
+    int year;
+    int month;
+    int day;
+
+public:
+    Date(int y = 1990, int m = 1, int d = 1);
+
+    void setDate(int y, int m, int d);
+
+    bool isValid();
+
+    void showAD();
+
+    void showROC();
+};
+
+#endif
+
+date實作檔:
+
+#include <iostream>
+#include <iomanip>
+#include <stdexcept>
+#include "date.h"
+using namespace std;
+
+Date::Date(int y, int m, int d)
+{
+    setDate(y, m, d);
+}
+
+void Date::setDate(int y, int m, int d)
+{
+    year = y;
+    month = m;
+    day = d;
+}
+
+bool Date::isValid()
+{
+    if (month < 1 || month > 12)
+        return false;
+
+    if (day < 1 || day > 31)
+        return false;
+
+    if ((month == 4 || month == 6 || month == 9 || month == 11) && day > 30)
+        return false;
+
+    if (month == 2 && day > 28)
+        return false;
+
+    return true;
+}
+
+void Date::showAD()
+{
+    cout << "西元日期: " << year << "/" << month << "/" << day << endl;
+}
+
+void Date::showROC()
+{
+    cout << "民國日期: " << year - 1911 << "/" << month << "/" << day << endl;
+}
+
+pet標頭檔:
+
+#ifndef PET_H
+#define PET_H
+
+#include <string>
+#include "date.h"
+using namespace std;
+
+class Pet
+{
+public:
+    Pet(string, string, Date, Date);
+    ~Pet();
+
+    void check_birth();
+    void check_adopt();
+    void print_all_data();
+
+private:
+    string name;
+    string category;
+    Date birthday;
+    Date adoptDate;
+};
+
+#endif
+
+pet實作檔:
+
+#include <iostream>
+#include "pet.h"
+using namespace std;
+
+Pet::Pet(string n, string c, Date b, Date a)
+    : name(n), category(c), birthday(b), adoptDate(a)
+{
+}
+
+Pet::~Pet()
+{
+    cout << name << " says: Bye Bye~~" << endl;
+}
+
+void Pet::check_birth()
+{
+    cout << name << " 的生日檢查: ";
+    if (birthday.isValid())
+        birthday.showAD();
+    else
+        cout << "生日不合法" << endl;
+}
+
+void Pet::check_adopt()
+{
+    cout << name << " 的領養日檢查: ";
+    if (adoptDate.isValid())
+        adoptDate.showAD();
+    else
+        cout << "領養日不合法" << endl;
+}
+
+void Pet::print_all_data()
+{
+    cout << "名稱: " << name << endl;
+    cout << "品種: " << category << endl;
+
+    cout << "生日: ";
+    birthday.showROC();
+
+    cout << "領養日: ";
+    adoptDate.showROC();
+
+    cout << "------------------------" << endl;
+}
+
+主程式:
+
+#include <iostream>
+#include "pet.h"
+using namespace std;
+
+int main()
+{
+    string name, category;
+    int y, m, d;
+
+    // ===== 第1隻 =====
+    cout << "=== 第1隻寵物 ===" << endl;
+
+    cout << "名稱: ";
+    cin >> name;
+
+    cout << "品種: ";
+    cin >> category;
+
+    Date birth1;
+    while (true)
+    {
+        cout << "生日 (年 月 日): ";
+        cin >> y >> m >> d;
+        birth1.setDate(y, m, d);
+
+        if (birth1.isValid())
+            break;
+        else
+            cout << "日期錯誤，請重新輸入\n";
+    }
+
+    Date adopt1;
+    while (true)
+    {
+        cout << "領養日 (年 月 日): ";
+        cin >> y >> m >> d;
+        adopt1.setDate(y, m, d);
+
+        if (adopt1.isValid())
+            break;
+        else
+            cout << "日期錯誤，請重新輸入\n";
+    }
+
+    Pet p1(name, category, birth1, adopt1);
+
+    // ===== 第2隻 =====
+    cout << "\n=== 第2隻寵物 ===" << endl;
+
+    cout << "名稱: ";
+    cin >> name;
+
+    cout << "品種: ";
+    cin >> category;
+
+    Date birth2;
+    while (true)
+    {
+        cout << "生日 (年 月 日): ";
+        cin >> y >> m >> d;
+        birth2.setDate(y, m, d);
+
+        if (birth2.isValid())
+            break;
+        else
+            cout << "日期錯誤，請重新輸入\n";
+    }
+
+    Date adopt2;
+    while (true)
+    {
+        cout << "領養日 (年 月 日): ";
+        cin >> y >> m >> d;
+        adopt2.setDate(y, m, d);
+
+        if (adopt2.isValid())
+            break;
+        else
+            cout << "日期錯誤，請重新輸入\n";
+    }
+
+    Pet p2(name, category, birth2, adopt2);
+
+    // ===== 第3隻 =====
+    cout << "\n=== 第3隻寵物 ===" << endl;
+
+    cout << "名稱: ";
+    cin >> name;
+
+    cout << "品種: ";
+    cin >> category;
+
+    Date birth3;
+    while (true)
+    {
+        cout << "生日 (年 月 日): ";
+        cin >> y >> m >> d;
+        birth3.setDate(y, m, d);
+
+        if (birth3.isValid())
+            break;
+        else
+            cout << "日期錯誤，請重新輸入\n";
+    }
+
+    Date adopt3;
+    while (true)
+    {
+        cout << "領養日 (年 月 日): ";
+        cin >> y >> m >> d;
+        adopt3.setDate(y, m, d);
+
+        if (adopt3.isValid())
+            break;
+        else
+            cout << "日期錯誤，請重新輸入\n";
+    }
+
+    Pet p3(name, category, birth3, adopt3);
+
+    // ===== 輸出 =====
+    cout << "\n===== 寵物資料 =====\n";
+
+    p1.check_birth();
+    p1.check_adopt();
+    p1.print_all_data();
+
+    p2.check_birth();
+    p2.check_adopt();
+    p2.print_all_data();
+
+    p3.check_birth();
+    p3.check_adopt();
+    p3.print_all_data();
+
+    return 0;
+}
