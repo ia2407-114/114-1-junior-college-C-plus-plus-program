@@ -1,0 +1,35 @@
+﻿// 260408-2.cpp
+// Program to test class Dog.
+// NOTE: This file must be compiled with Dog.cpp.
+#include <iostream>
+#include <stdexcept>
+#include "Dog.h" // include definition of class Dog from Dog.h
+using namespace std;
+
+int main()
+{
+   string name;
+   int bYear, bMonth, bDay;
+   int aYear, aMonth, aDay;
+
+   cout << "請輸入寵物狗姓名: ";
+   cin >> name;
+
+   cout << "請輸入生日 (西元年 月 日): ";
+   cin >> bYear >> bMonth >> bDay;
+
+   cout << "請輸入領養日 (西元年 月 日): ";
+   cin >> aYear >> aMonth >> aDay;
+
+   try
+   {
+      Dog dog( name, bYear, bMonth, bDay, aYear, aMonth, aDay );
+
+      cout << "\n--- 寵物狗資料 ---\n";
+      dog.printInfo();
+   } // end try
+   catch ( invalid_argument &e )
+   {
+      cout << "\n錯誤: " << e.what() << endl;
+   } // end catch
+} // end main

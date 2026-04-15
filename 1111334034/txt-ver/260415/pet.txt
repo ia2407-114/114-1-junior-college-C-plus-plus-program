@@ -1,0 +1,58 @@
+﻿// Fig. 9.20: Employee.cpp
+// Employee class member-function definitions.
+#include <iostream>
+#include "pet.h" // Employee class definition
+#include "date.h" // Date class definition
+using namespace std;
+
+// constructor uses member initializer list to pass initializer
+// values to constructors of member objects
+Pet::Pet( const string &petName, const string &petCategory,
+   const Date &petBirthday, const Date &petAdoptDate )
+   : name( petName ), // initialize name
+     category( petCategory ), // initialize category
+     birthday( petBirthday ), // initialize birthday
+     adoptDate( petAdoptDate ) // initialize adoptDate
+{
+   // output Pet object to show when constructor is called
+   cout << "Pet object constructor: "
+      << name << " (" << category << ")" << endl;
+} // end Pet constructor
+
+// check birthday
+void Pet::check_birth() const
+{
+   cout << name << "'s birthday: ";
+   birthday.printUniversal();
+   cout << endl;
+} // end function check_birth
+
+// check adopt date
+void Pet::check_adopt() const
+{
+   cout << name << "'s adopt date: ";
+   adoptDate.printUniversal();
+   cout << endl;
+} // end function check_adopt
+
+// print all data of Pet object
+void Pet::print_all_data() const
+{
+   cout << "Name: " << name << "  Category: " << category << endl;
+   cout << "  Birthday:  ";
+   birthday.printUniversal();
+   cout << "  (";
+   birthday.printStandard();
+   cout << ")" << endl;
+   cout << "  Adopt Date: ";
+   adoptDate.printUniversal();
+   cout << "  (";
+   adoptDate.printStandard();
+   cout << ")" << endl;
+} // end function print_all_data
+
+// output Pet object to show when its destructor is called
+Pet::~Pet()
+{
+   cout << "Bye Bye~~" << endl;
+} // end ~Pet destructor

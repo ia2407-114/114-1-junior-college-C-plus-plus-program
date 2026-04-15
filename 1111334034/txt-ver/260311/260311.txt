@@ -1,0 +1,120 @@
+﻿// Fig. 12.3: fig12_03.c
+// Inserting and deleting nodes in a list
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+// 摮貊?鞈?蝯?擃??芣??蝯?嚗?
+struct student {
+    int id;                      // 摮貉?
+    char name[20];               // 憪?
+    int computer, math;          // 閮?璈??詨飛?蜀
+    double avg;                  // 撟喳??蜀
+    struct student *nextPtr;     // ??銝???暺???
+};
+
+typedef struct student Student;       // 摰儔 Student ?亙?
+typedef Student *StudentPtr;          // 摰儔 StudentPtr ???亙?
+
+// ?賣??
+void insertStudent(StudentPtr *sPtr, int id, const char *name, int computer, int math);
+void printStudentList(StudentPtr currentPtr);
+int isEmpty(StudentPtr sPtr);
+
+
+
+int main(void)
+{
+   StudentPtr startPtr = NULL; // ????蝯葡?????NULL
+
+   printf("=== 摮貊?鞈???銝脣?蝟餌絞 ===\n\n");
+
+   // ?憭?摮貊?鞈?
+   printf("?摮貊?鞈?銝?..\n");
+   insertStudent(&startPtr, 101, "撘萄???, 85, 90);
+   insertStudent(&startPtr, 103, "????, 78, 88);
+   insertStudent(&startPtr, 102, "?之??, 92, 85);
+   insertStudent(&startPtr, 105, "?喟?蝢?, 88, 92);
+   insertStudent(&startPtr, 104, "????, 95, 89);
+
+   printf("\n摮貊?鞈?撌脣遣蝡???\n\n");
+
+   // ???飛????
+   printStudentList(startPtr);
+
+   puts("\n蝔??瑁?蝯???);
+   return 0;
+}
+
+// 瑼Ｘ??銝脣??臬?箇征
+int isEmpty(StudentPtr sPtr)
+{
+   return sPtr == NULL;
+}
+
+// ?摮貊?鞈??圈?蝯葡??靘飛??摨?
+void insertStudent(StudentPtr *sPtr, int id, const char *name, int computer, int math)
+{
+   StudentPtr newPtr = (StudentPtr)malloc(sizeof(Student)); // ?蔭?啁?暺??園?
+
+   if (newPtr != NULL) { // 瑼Ｘ閮擃?阡?蝵格???
+      // 閮剖??啁?暺?鞈?
+      newPtr->id = id;
+      strcpy(newPtr->name, name);
+      newPtr->computer = computer;
+      newPtr->math = math;
+      newPtr->avg = (computer + math) / 2.0; // 閮?撟喳??蜀
+      newPtr->nextPtr = NULL;
+
+      StudentPtr previousPtr = NULL;
+      StudentPtr currentPtr = *sPtr;
+
+      // 撠甇?Ⅱ???乩?蝵殷?靘飛?撠憭扳?摨?
+      while (currentPtr != NULL && id > currentPtr->id) {
+         previousPtr = currentPtr;
+         currentPtr = currentPtr->nextPtr;
+      }
+
+      // ??啁?暺銝脣??
+      if (previousPtr == NULL) {
+         newPtr->nextPtr = *sPtr;
+         *sPtr = newPtr;
+      }
+      else { // ??啁?暺 previousPtr ??currentPtr 銋?
+         previousPtr->nextPtr = newPtr;
+         newPtr->nextPtr = currentPtr;
+      }
+
+      printf("摮貉? %d (%s) 撌脫????功n", id, name);
+   }
+   else {
+      printf("摮貉? %d ?憭望?嚗??園?銝雲\n", id);
+   }
+}
+
+// ?摮貊???銝脣?
+void printStudentList(StudentPtr currentPtr)
+{
+   // 瑼Ｘ銝脣??臬?箇征
+   if (isEmpty(currentPtr)) {
+      puts("摮貊?銝脣??箇征?n");
+   }
+   else {
+      puts("=== 摮貊?鞈??” ===");
+      printf("%-8s %-12s %-8s %-8s %-8s\n", "摮貉?", "憪?", "閮?璈?, "?詨飛", "撟喳?");
+      printf("--------------------------------------------------\n");
+
+      // 韏啗赤?游?蝯葡??
+      while (currentPtr != NULL) {
+         printf("%-8d %-12s %-8d %-8d %-8.2f\n",
+                currentPtr->id,
+                currentPtr->name,
+                currentPtr->computer,
+                currentPtr->math,
+                currentPtr->avg);
+         currentPtr = currentPtr->nextPtr;
+      }
+
+      printf("--------------------------------------------------\n");
+   }
+}

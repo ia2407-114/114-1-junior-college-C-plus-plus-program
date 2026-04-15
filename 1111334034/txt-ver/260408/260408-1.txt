@@ -1,0 +1,34 @@
+﻿// 260408-1.cpp
+// Program to test class Date.
+// NOTE: This file must be compiled with Date.cpp.
+#include <iostream>
+#include <stdexcept>
+#include "Date.h" // include definition of class Date from Date.h
+using namespace std;
+
+int main()
+{
+   int y, m, d;
+
+   cout << "請輸入西元年: ";
+   cin >> y;
+   cout << "請輸入月: ";
+   cin >> m;
+   cout << "請輸入日: ";
+   cin >> d;
+
+   try
+   {
+      Date date( y, m, d ); // instantiate object with user input
+
+      cout << "\n西元日期: ";
+      date.printWestern();
+      cout << "\n民國日期: ";
+      date.printROC();
+      cout << endl;
+   } // end try
+   catch ( invalid_argument &e )
+   {
+      cout << "\n錯誤: " << e.what() << endl;
+   } // end catch
+} // end main
