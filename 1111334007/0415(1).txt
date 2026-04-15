@@ -1,0 +1,153 @@
+main.cpp
+
+#include <iostream>
+#include <string>
+#include "pet.h"
+
+using namespace std;
+
+Date inputDate() {
+    int y, m, d;
+    cin >> y >> m >> d;
+    return Date(y, m, d);
+}
+
+int main() {
+    string name, cat;
+
+    cout << "請輸入第 1 隻寵物資料 (名字 品種): ";
+    cin >> name >> cat;
+    cout << "請輸入生日 (年 月 日): ";
+    Date b1 = inputDate();
+    cout << "請輸入領養日 (年 月 日): ";
+    Date a1 = inputDate();
+    Pet* p1 = new Pet(name, cat, b1, a1);
+
+    cout << "\n請輸入第 2 隻寵物資料 (名字 品種): ";
+    cin >> name >> cat;
+    cout << "請輸入生日 (年 月 日): ";
+    Date b2 = inputDate();
+    cout << "請輸入領養日 (年 月 日): ";
+    Date a2 = inputDate();
+    Pet* p2 = new Pet(name, cat, b2, a2);
+
+    cout << "\n請輸入第 3 隻寵物資料 (名字 品種): ";
+    cin >> name >> cat;
+    cout << "請輸入生日 (年 月 日): ";
+    Date b3 = inputDate();
+    cout << "請輸入領養日 (年 月 日): ";
+    Date a3 = inputDate();
+    Pet* p3 = new Pet(name, cat, b3, a3);
+
+    cout << "\n======= 顯示所有資料 =======" << endl;
+    p1->print_all_data(); p1->check_birth(); p1->check_adopt();
+    p2->print_all_data(); p2->check_birth(); p2->check_adopt();
+    p3->print_all_data(); p3->check_birth(); p3->check_adopt();
+
+    cout << "\n======= 釋放記憶體 =======" << endl;
+    delete p1; 
+    delete p2; 
+    delete p3; 
+
+    return 0;
+}
+
+pet.cpp
+
+#include <iostream>
+#include "pet.h"
+using namespace std;
+
+Pet::Pet(string n, string c, Date b, Date a)
+    : name(n), category(c), birthday(b), adoptDate(a) {}
+
+Pet::~Pet() {
+    cout << "Pet " << name << " : Bye Bye~~" << endl;
+}
+
+void Pet::check_birth() const {
+    if (birthday.getMonth() < 1 || birthday.getMonth() > 12) {
+        cout << "[警告] " << name << " 的生日月份異常！" << endl;
+    }
+    else {
+        cout << name << " 的生日檢查正常。" << endl;
+    }
+}
+
+void Pet::check_adopt() const {
+    if (adoptDate.getYear() < birthday.getYear()) {
+        cout << "[錯誤] " << name << " 的領養年份早於出生年份！" << endl;
+    }
+    else {
+        cout << name << " 的領養日期邏輯正常。" << endl;
+    }
+}
+
+void Pet::print_all_data() const {
+    cout << "---------------------------" << endl;
+    cout << "名字: " << name << endl;
+    cout << "品種: " << category << endl;
+    cout << "生日: "; birthday.printDate(); cout << endl;
+    cout << "領養日: "; adoptDate.printDate(); cout << endl;
+}
+
+pet.h
+
+#ifndef PET_H
+#define PET_H
+
+#include <string>
+#include "date.h"
+using namespace std;
+
+class Pet {
+private:
+    string name;
+    string category;
+    Date birthday;
+    Date adoptDate;
+
+public:
+    Pet(string n, string c, Date b, Date a);
+    ~Pet();
+    void check_birth() const;
+    void check_adopt() const;
+    void print_all_data() const;
+};
+
+#endif
+
+date.cpp
+
+#include <iostream>
+#include "date.h"
+using namespace std;
+
+Date::Date(int y, int m, int d) : year(y), month(m), day(d) {}
+
+void Date::setDate(int y, int m, int d) {
+    year = y; month = m; day = d;
+}
+
+void Date::printDate() const {
+    cout << year << "/" << month << "/" << day;
+}
+
+date.h
+
+#ifndef DATE_H
+#define DATE_H
+
+class Date {
+private:
+    int year, month, day;
+public:
+    Date(int y = 2000, int m = 1, int d = 1);
+    void setDate(int y, int m, int d);
+    void printDate() const;
+    int getYear() const { return year; }
+    int getMonth() const { return month; }
+    int getDay() const { return day; }
+};
+
+#endif
