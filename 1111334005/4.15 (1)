@@ -1,0 +1,155 @@
+今日主題:  類別/物件的Composition (組合)運用 
+題目1. 利用上週(如上)設計的日期類別，建立pet類別，其成員函數如下:
+ pet (name, category (品種), birthday, adoptDate)
+ ~pet ( )印出 Bye Bye~~
+check_birth( )
+check_adopt(... )
+print_all_data(... )
+必須包含date的物件作為其資料成員
+需要有五個檔案:
+date.h, date.cpp, pet.h, pet.cpp, main.cpp
+建立三個寵物，透過鍵盤輸入他們的生日與領養日，檢查他們的生日與領養日，並印出他們的詳細資料
+
+#include <iostream>
+using namespace std;
+
+// ================= Date 類別 =================
+class Date {
+private:
+    int year;
+    int month;
+    int day;
+
+public:
+    Date() {
+        year = 2000;
+        month = 1;
+        day = 1;
+    }
+
+    void setDate(int y, int m, int d) {
+        year = y;
+        month = m;
+        day = d;
+    }
+
+    bool isValid() {
+        if (year < 0) return false;
+        if (month < 1 || month > 12) return false;
+        if (day < 1 || day > 31) return false;
+        return true;
+    }
+
+    void printDate() {
+        cout << year << "/" << month << "/" << day;
+    }
+};
+
+// ================= Pet 類別 =================
+class Pet {
+private:
+    string name;
+    string category;
+    Date birthday;   // ⭐ Composition
+    Date adoptDate;  // ⭐ Composition
+
+public:
+    Pet(string n, string c) {
+        name = n;
+        category = c;
+    }
+
+    void setBirthday(int y, int m, int d) {
+        birthday.setDate(y, m, d);
+    }
+
+    void setAdoptDate(int y, int m, int d) {
+        adoptDate.setDate(y, m, d);
+    }
+
+    void check_birth() {
+        if (birthday.isValid())
+            cout << name << " 的生日正確\n";
+        else
+            cout << name << " 的生日錯誤\n";
+    }
+
+    void check_adopt() {
+        if (adoptDate.isValid())
+            cout << name << " 的領養日正確\n";
+        else
+            cout << name << " 的領養日錯誤\n";
+    }
+
+    void print_all_data() {
+        cout << "名稱: " << name << endl;
+        cout << "品種: " << category << endl;
+
+        cout << "生日: ";
+        birthday.printDate();
+        cout << endl;
+
+        cout << "領養日: ";
+        adoptDate.printDate();
+        cout << endl;
+
+        cout << "-------------------\n";
+    }
+
+    ~Pet() {
+        cout << "Bye Bye~~ (" << name << ")\n";
+    }
+};
+
+// ================= main =================
+int main() {
+    Pet pet1("Doggy", "狗");
+    Pet pet2("Kitty", "貓");
+    Pet pet3("Bunny", "兔");
+
+    int y, m, d;
+
+    // pet1
+    cout << "輸入 Doggy 的生日 (年 月 日): ";
+    cin >> y >> m >> d;
+    pet1.setBirthday(y, m, d);
+
+    cout << "輸入 Doggy 的領養日: ";
+    cin >> y >> m >> d;
+    pet1.setAdoptDate(y, m, d);
+
+    // pet2
+    cout << "輸入 Kitty 的生日: ";
+    cin >> y >> m >> d;
+    pet2.setBirthday(y, m, d);
+
+    cout << "輸入 Kitty 的領養日: ";
+    cin >> y >> m >> d;
+    pet2.setAdoptDate(y, m, d);
+
+    // pet3
+    cout << "輸入 Bunny 的生日: ";
+    cin >> y >> m >> d;
+    pet3.setBirthday(y, m, d);
+
+    cout << "輸入 Bunny 的領養日: ";
+    cin >> y >> m >> d;
+    pet3.setAdoptDate(y, m, d);
+
+    cout << "\n=== 檢查日期 ===\n";
+    pet1.check_birth();
+    pet1.check_adopt();
+
+    pet2.check_birth();
+    pet2.check_adopt();
+
+    pet3.check_birth();
+    pet3.check_adopt();
+
+    cout << "\n=== 寵物資料 ===\n";
+    pet1.print_all_data();
+    pet2.print_all_data();
+    pet3.print_all_data();
+
+    return 0;
+}
