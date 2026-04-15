@@ -1,0 +1,208 @@
+主程式(main.cpp)
+
+#include <iostream>
+#include "PET.h" // Employee class definition
+using namespace std;
+
+int main()
+{
+
+	int y, m, d;
+	cout<<"請輸入寵物生日(dog):";
+	cin >>y>>m>>d;
+	Date dogbirth(y, m, d);
+	cout << "請輸入寵物領養日(dog):";
+	cin >> y >> m >> d;
+	Date dogadoptDate(y, m, d);
+	cout << "請輸入寵物生日(cat):";
+	cin >> y >> m >> d;
+	Date catbirth(y, m, d);
+	cout << "請輸入寵物領養日(cat):";
+	cin >> y >> m >> d;
+	Date catadoptDate(y, m, d);
+	cout << "請輸入寵物生日(tortoise):";
+	cin >> y >> m >> d;
+	Date tortoisebirth(y, m, d);
+	cout << "請輸入寵物領養日(tortoise):";
+	cin >> y >> m >> d;
+	Date tortoiseadoptDate(y, m, d);
+
+	pet mydog("Bob", "dog", dogbirth, dogadoptDate);
+	pet mycat("mimi", "cat", catbirth, catadoptDate);
+	pet mytortoise("moca", "tortoise", tortoisebirth, tortoiseadoptDate);
+
+	cout << endl;
+	mydog.print();
+	mycat.print();
+	mytortoise.print();
+} 
+----------------------------------------------------------------------------------------------------------------------------------------
+寵物資料檔(pet.cpp)
+#include <iostream>
+#include "pet.h" // pet class definition
+#include "Date.h" // Date class definition
+using namespace std;
+
+
+pet::pet(const string& first, const string& last,
+    const Date& dateOfBirth, const Date& dateOfHire)
+    : firstName(first), 
+    category(last), 
+    birthDate(dateOfBirth),
+    adoptDate(dateOfHire) 
+{
+    
+    cout << "寵物資訊: "
+        <<"寵物名稱  "<< firstName << "" << "寵物種類  " << category << endl;
+} 
+
+
+void pet::print() const
+{
+    cout <<"寵物種類"<< category << ", " <<"寵物名稱"<< firstName << "  領養日: ";
+    adoptDate.printUniversal();
+    adoptDate.printStandard();
+    cout << "  生日: ";
+    birthDate.printUniversal();
+    birthDate.printStandard();
+    cout << endl;
+}
+
+
+pet::~pet()
+{
+    cout << "寵物資訊: "
+        << "寵物名稱  " << firstName << "" << "寵物種類  " << category << endl;
+}
+----------------------------------------------------------------------------------------------------------------------------------------
+日期資料檔(date.cpp)
+#include <iostream>
+#include <iomanip>
+#include <stdexcept>
+#include "Date.h" 
+using namespace std;
+
+Date::Date(int year, int month, int day)
+{
+    setDate(year, month, day); 
+} 
+
+
+void Date::setDate(int y, int m, int d)
+{
+    setYear(y); 
+    setMonth(m); 
+    setDay(d); 
+} 
+
+
+void Date::setYear(int y)
+{
+    if (y >= 1 && y < 9999)
+        year = y;
+    else
+       cout<<"year must be 0-9999";
+       
+} 
+
+
+void Date::setMonth(int m)
+{
+    if (m > 0 && m < 13)
+        month = m;
+    else
+        cout << "month must be 1-12";
+        
+} 
+
+
+void Date::setDay(int d)
+{
+    if (d > 0 && d < 32)
+        day = d;
+    else
+        cout<<"day must be 1-31";
+       
+}
+
+
+unsigned int Date::getYear() const
+{
+    return year;
+} 
+
+
+unsigned int Date::getMonth() const
+{
+    return month;
+} 
+
+
+unsigned int Date::getDay() const
+{
+    return day;
+} 
+
+void Date::printUniversal() const
+{
+    cout << setfill('0') << setw(2) << getYear() << ":"
+        << setw(2) << getMonth() << ":" << setw(2) << getDay();
+} 
+void Date::printStandard() const
+{
+    cout << (year < 1911 ? "    e " : "     ") << ((getYear() > 1911 ? year - 1911 : 1911 - year))
+        << "/" << setfill('0') << setw(2) << getMonth()
+        << "/" << setw(2) << getDay();
+}
+----------------------------------------------------------------------------------------------------------------------------------------
+寵物標頭檔(pet.h)
+#ifndef PET_H
+#define PET_H
+
+#include <string>
+#include "Date.h" 
+
+class pet
+{
+public:
+    pet(const std::string&, const std::string&,
+        const Date&, const Date&);
+    void print() const;
+    ~pet(); 
+
+    std::string firstName;
+    std::string category; 
+    const Date birthDate; 
+    const Date adoptDate; 
+}; 
+#endif
+----------------------------------------------------------------------------------------------------------------------------------------
+日期標頭檔(date.h)
+#ifndef DATE_H
+#define DATE_H
+
+
+class Date
+{
+public:
+	explicit Date(int = 1900, int = 1, int = 1); 
+
+	
+	void setDate(int, int, int); 
+	void setYear(int); 
+	void setMonth(int); 
+	void setDay(int); 
+
+	
+	unsigned int getYear() const; 
+	unsigned int getMonth() const; 
+	unsigned int getDay() const; 
+
+	void printUniversal() const; 
+	void printStandard() const; 
+private:
+	unsigned int year; 
+	unsigned int month; 
+	unsigned int day; 
+}; 
+#endif
