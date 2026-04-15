@@ -1,0 +1,163 @@
+//Dog.h
+#ifndef DOG_H
+#define DOG_H
+
+#include <string>
+using namespace std;
+
+class Dog
+{
+public:
+    explicit Dog(string = "NoName",
+        int = 2000, int = 1, int = 1,
+        int = 2000, int = 1, int = 1);
+
+    void setDog(string, int, int, int, int, int, int);
+
+    void setName(string);
+
+    void setBirth(int, int, int);
+    void setAdopt(int, int, int);
+
+    string getName() const;
+    int getBirthY() const;
+    int getBirthM() const;
+    int getBirthD() const;
+
+    int getAdoptY() const;
+    int getAdoptM() const;
+    int getAdoptD() const;
+
+    virtual void printInfo() const = 0;
+
+protected:
+    string name;
+    int by, bm, bd;
+    int ay, am, ad;
+
+    bool isValidDate(int, int, int);
+    int calculateAge() const;
+};
+#endif
+
+//Dog.cpp
+#include <iostream>
+#include "Dog.h"
+using namespace std;
+
+Dog::Dog(string n, int by, int bm, int bd, int ay, int am, int ad)
+    : name("NoName"), by(2000), bm(1), bd(1), ay(2000), am(1), ad(1)
+{
+    setDog(n, by, bm, bd, ay, am, ad);
+}
+
+void Dog::setDog(string n, int by, int bm, int bd, int ay, int am, int ad)
+{
+    setName(n);
+    setBirth(by, bm, bd);
+    setAdopt(ay, am, ad);
+
+    int age = calculateAge();
+    if (age < 0 || age > 20)
+        cout << "年齡不合理\n";
+
+    if (this->ay < this->by ||
+        (this->ay == this->by && this->am < this->bm) ||
+        (this->ay == this->by && this->am == this->bm && this->ad < this->bd))
+    {
+        cout << "領養日不可早於生日\n";
+    }
+}
+
+void Dog::setName(string n)
+{
+    name = n;
+}
+
+void Dog::setBirth(int y, int m, int d)
+{
+    if (isValidDate(y, m, d)) {
+        by = y; bm = m; bd = d;
+    }
+    else {
+        cout << "生日錯誤\n";
+    }
+}
+
+void Dog::setAdopt(int y, int m, int d)
+{
+    if (isValidDate(y, m, d)) {
+        ay = y; am = m; ad = d;
+    }
+    else {
+        cout << "領養日錯誤\n";
+    }
+}
+
+string Dog::getName() const { return name; }
+int Dog::getBirthY() const { return by; }
+int Dog::getBirthM() const { return bm; }
+int Dog::getBirthD() const { return bd; }
+
+int Dog::getAdoptY() const { return ay; }
+int Dog::getAdoptM() const { return am; }
+int Dog::getAdoptD() const { return ad; }
+
+bool Dog::isValidDate(int y, int m, int d)
+{
+    if (m < 1 || m > 12) return false;
+    if (d < 1 || d > 31) return false;
+    return true;
+}
+
+int Dog::calculateAge() const
+{
+    int age = 2026 - by;
+
+    if (bm > 4 || (bm == 4 && bd > 8))
+        age--;
+
+    return age;
+}
+
+//Source.cpp
+#include <iostream>
+#include "Dog.h"
+using namespace std;
+
+class MyDog : public Dog
+{
+public:
+    MyDog(string n, int by, int bm, int bd, int ay, int am, int ad)
+        : Dog(n, by, bm, bd, ay, am, ad) {
+    }
+
+    void printInfo() const override
+    {
+        cout << "姓名: " << getName() << endl;
+        cout << "生日: " << getBirthY() << ":" << getBirthM() << ":" << getBirthD() << endl;
+        cout << "領養日: " << getAdoptY() << ":" << getAdoptM() << ":" << getAdoptD() << endl;
+    }
+};
+
+int main()
+{
+    string name;
+    int by, bm, bd, ay, am, ad;
+
+    cout << "輸入姓名: ";
+    cin >> name;
+
+    cout << "輸入生日(年 月 日): ";
+    cin >> by >> bm >> bd;
+
+    cout << "輸入領養日(年 月 日): ";
+    cin >> ay >> am >> ad;
+
+    MyDog d(name, by, bm, bd, ay, am, ad);
+
+    cout << "\n--- 資料 ---\n";
+    d.printInfo();
+
+    return 0;
+}

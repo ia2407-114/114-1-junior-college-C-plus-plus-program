@@ -1,0 +1,142 @@
+//Date.h
+
+#ifndef Date_H
+#define Date_H
+
+class Date
+{
+public:
+	explicit Date(int = 1900, int = 1, int = 1); 
+
+	void setDate(int, int, int); 
+	void setYear(int); 
+	void setMonth(int); 
+	void setDay(int); 
+
+	
+	unsigned int getYear() const; 
+	unsigned int getMonth() const; 
+	unsigned int getDay() const; 
+
+	void printUniversal() const; 
+	void printStandard() const; 
+private:
+	unsigned int Year; 
+	unsigned int Month; 
+	unsigned int Day; 
+}; 
+
+#endif
+
+//Date.cpp
+#include <iostream>
+#include <iomanip>
+#include <stdexcept>
+#include "Date.h" 
+using namespace std;
+
+Date::Date(int Year, int Month, int Day) : Year(1990), Month(1), Day(1)
+{
+    setDate(Year, Month, Day);
+}
+void Date::setDate(int y, int m, int d)
+{
+    setYear(y); 
+    setMonth(m); 
+    setDay(d); 
+} 
+
+void Date::setYear(int y)
+{
+    if (y >= 1 && y < 9999)
+        Year = y;
+    else
+        cout<<"Year must be 1~9999"<<endl;
+} 
+
+void Date::setMonth(int m)
+{
+    if (m >= 1 && m <= 12)
+        Month = m;
+    else
+        cout << "Month must be 1~12" << endl;
+} 
+
+void Date::setDay(int d)
+{
+    if (d >= 1 && d <= 31)
+        Day = d;
+    else
+        cout << "Day must be 1~31" << endl;
+} 
+
+unsigned int Date::getYear() const
+{
+    return Year;
+} 
+
+unsigned int Date::getMonth() const
+{
+    return Month;
+} 
+
+unsigned int Date::getDay() const
+{
+    return Day;
+} 
+
+void Date::printUniversal() const
+{
+    cout << setfill('0') << setw(4) << getYear() << ":"
+        << setw(2) << getMonth() << ":" << setw(2) << getDay();
+} 
+
+void Date::printStandard() const
+{
+    cout << (Year < 1911 ? " 民國前" : " 民國")<< (getYear() <1911 ? 1911 - getYear() : getYear() - 1911)
+        << ":" << setfill('0') << setw(2) << getMonth()
+        << ":" << setw(2) << getDay() ;
+} 
+
+//Source.cpp
+#include <iostream>
+#include <stdexcept>
+#include "Date.h" 
+using namespace std;
+
+int main()
+{
+    Date t1; 
+    Date t2(2);
+    Date t3(21, 34); 
+    Date t4(12, 25, 42);
+
+    cout << "Constructed with:\n\nt1: all arguments defaulted\n  ";
+    t1.printUniversal();
+    cout << "\n  ";
+    t1.printStandard(); 
+
+    cout << "\n\nt2: hour specified; minute and second defaulted\n  ";
+    t2.printUniversal(); 
+    cout << "\n  ";
+    t2.printStandard();
+
+    cout << "\n\nt3: hour and minute specified; second defaulted\n  ";
+    t3.printUniversal(); 
+    cout << "\n  ";
+    t3.printStandard(); 
+
+    cout << "\n\nt4: hour, minute and second specified\n  ";
+    t4.printUniversal(); 
+    cout << "\n  ";
+    t4.printStandard(); 
+
+    try
+    {
+        Date t5(27, 74, 99); 
+    } 
+    catch (invalid_argument& e)
+    {
+        cerr << "\n\nException while initializing t5: " << e.what() << endl;
+    } 
+}
