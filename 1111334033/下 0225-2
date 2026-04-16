@@ -1,3 +1,10 @@
+/*題目2. 根據fig11_10.c的檔案內容，建立一個隨機存取檔，用來存入100筆空白的學生資料檔，學生資料存於以下結構中:
+struct student {
+ int id;
+    char name[20];
+    int computer, math;
+    double avg;
+};*/
 #define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>        
 struct clientData {
