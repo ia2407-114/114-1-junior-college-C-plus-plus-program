@@ -1,3 +1,4 @@
+/*題目1. 根據上面的程式檔案，修改並建立3筆資料的循序檔案、將全班3人的姓名、學號、數學成績、計概、平均成績放入檔案中*/
 #define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 int main(void)
