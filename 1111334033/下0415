@@ -1,3 +1,13 @@
+/*題目1. 利用上週(如上)設計的日期類別，建立pet類別，其成員函數如下:
+ pet (name, category (品種), birthday, adoptDate)
+ ~pet ( )印出 Bye Bye~~
+check_birth( )
+check_adopt(... )
+print_all_data(... )
+必須包含date的物件作為其資料成員
+需要有五個檔案:
+date.h, date.cpp, pet.h, pet.cpp, main.cpp
+建立三個寵物，透過鍵盤輸入他們的生日與領養日，檢查他們的生日與領養日，並印出他們的詳細資料*/
 main.cpp
 #include <iostream>
 #include <string>
