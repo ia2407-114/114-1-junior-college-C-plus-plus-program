@@ -1,3 +1,10 @@
+/*題目3. 承上題根據fig11_11.c的檔案內容，利用已建立的空白隨機存取檔，存入3筆學生資料，學生的結構(struct)為:
+struct student {
+ int id;
+    char name[20];
+    int computer, math;
+    double avg;
+};*/
 #define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 struct student {
