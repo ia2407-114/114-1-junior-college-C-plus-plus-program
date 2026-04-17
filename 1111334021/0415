@@ -1,0 +1,210 @@
+/*題目1. 利用上週(如上)設計的日期類別，建立pet類別，其成員函數如下:
+ pet (name, category (品種), birthday, adoptDate)
+ ~pet ( )印出 Bye Bye~~
+check_birth( )
+check_adopt(... )
+print_all_data(... )
+必須包含date的物件作為其資料成員
+需要有五個檔案:
+date.h, date.cpp, pet.h, pet.cpp, main.cpp
+建立三個寵物，透過鍵盤輸入他們的生日與領養日，檢查他們的生日與領養日，並印出他們的詳細資料*/
+main.cpp
+#include <iostream>
+#include <string>
+#include "pet.h"
+using namespace std;
+int main()
+{
+    string name, type;
+    int by, bm, bd;
+    int ay, am, ad;
+
+    cout << "請輸入第一隻寵物姓名、種類：";
+    cin >> name >> type;
+    cout << "請輸入生日(年 月 日)：";
+    cin >> by >> bm >> bd;
+    cout << "請輸入領養日(年 月 日)：";
+    cin >> ay >> am >> ad;
+
+    PET myDog(name, type, Date(by, bm, bd), Date(ay, am, ad));
+
+    cout << "\n請輸入第二隻寵物姓名、種類：";
+    cin >> name >> type;
+    cout << "請輸入生日(年 月 日)：";
+    cin >> by >> bm >> bd;
+    cout << "請輸入領養日(年 月 日)：";
+    cin >> ay >> am >> ad;
+
+    PET myCat(name, type, Date(by, bm, bd), Date(ay, am, ad));
+
+    cout << "\n請輸入第三隻寵物姓名、種類：";
+    cin >> name >> type;
+    cout << "請輸入生日(年 月 日)：";
+    cin >> by >> bm >> bd;
+    cout << "請輸入領養日(年 月 日)：";
+    cin >> ay >> am >> ad;
+
+    PET myBird(name, type, Date(by, bm, bd), Date(ay, am, ad));
+
+    cout << "\n=== 寵物資料 ===\n";
+   
+    return 0;
+}
+-------------------------------
+pet.h
+#ifndef PET_H
+#define PET_H
+
+#include <string>
+#include "date.h" 
+
+class PET
+{
+public:
+    PET(const std::string&, const std::string&,const Date&, const Date&);
+    void print() const;
+    ~PET();
+private:
+    std::string firstName; 
+    std::string category; 
+    const Date birthDate;
+    const Date adoptDate; 
+}; 
+#endif
+-------------------------------
+pet.cpp
+#include <iostream>
+#include "pet.h" 
+#include "date.h" 
+using namespace std;
+
+PET::PET(const string& first, const string& last,
+    const Date& dateOfBirth, const Date& dateOfHire)
+    : firstName(first), 
+    category(last), 
+    birthDate(dateOfBirth), 
+    adoptDate(dateOfHire) 
+{
+    cout << "PET object constructor: "
+        << firstName << ' ' << category << endl;
+} 
+
+void PET::print() const
+{
+    cout << category << ", " << firstName << "  adopt: ";
+    adoptDate.printUniversal();
+    adoptDate.printStandard();
+    cout << "  Birthday: ";
+    birthDate.printUniversal();
+    birthDate.printStandard();
+    cout << endl;
+} 
+
+PET::~PET()
+{
+    print();
+    cout << "PET object destructor: "
+        << category << ", " << firstName << endl;
+} 
+-------------------------------
+date.h
+#ifndef DATE_H
+#define DATE_H
+
+class Date
+{
+public:
+	Date(int year = 2000, int month = 1, int day = 1);
+
+	void setDate(int, int, int); 
+	void setYear(int); 
+	void setMonth(int); 
+	void setDay(int); 
+
+	unsigned int getYear() const; 
+	unsigned int getMonth() const; 
+	unsigned int getDay() const; 
+
+	void printUniversal() const;
+	void printStandard() const; 
+private:
+	unsigned int year;
+	unsigned int month;
+	unsigned int day; 
+}; 
+
+#endif
+-------------------------------
+date.cpp
+#include <iostream>
+#include <iomanip>
+#include <stdexcept>
+#include "Date.h" 
+using namespace std;
+
+Date::Date(int year, int month, int day)
+{
+    setDate(year, month, day); 
+}
+
+void Date::setDate(int y, int m, int d)
+{
+    setYear(y); 
+    setMonth(m); 
+    setDay(d); 
+} 
+
+void Date::setYear(int y)
+{
+    if (y >= 1 && y < 9999)
+        year = y;
+    else
+        cout<<"year must be 0-9999"<<endl;
+    
+} 
+
+void Date::setMonth(int m)
+{
+    if (m > 0 && m < 13)
+        month = m;
+    else
+        cout << "month must be 1-12"<<endl;
+   
+} 
+
+void Date::setDay(int d)
+{
+    if (d > 0 && d < 32)
+        day = d;
+    else
+        cout<<"day must be 1-31"<<endl;
+  
+}
+
+unsigned int Date::getYear() const
+{
+    return year;
+} 
+
+unsigned int Date::getMonth() const
+{
+    return month;
+} 
+
+unsigned int Date::getDay() const
+{
+    return day;
+} 
+
+void Date::printUniversal() const
+{
+    cout << setfill('0') << setw(2) << getYear() << ":"
+        << setw(2) << getMonth() << ":" << setw(2) << getDay();
+} 
+
+void Date::printStandard() const
+{
+    cout << (year < 1911 ? "    e " : "     ") << ((getYear() > 1911 ? year - 1911 : 1911 - year))
+        << "/" << setfill('0') << setw(2) << getMonth()
+        << "/" << setw(2) << getDay();
+} 
