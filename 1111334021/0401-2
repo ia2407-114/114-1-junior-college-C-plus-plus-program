@@ -1,0 +1,55 @@
+/*題目2. (承上題) 利用"介面與實作分離"的方式，將第一題的程式碼拆分成:
+主程式、介面檔(pet.h)、實作檔(pet.cpp)，
+別存放主程式碼、類別內的成員函數名稱、與成員函數的實作內容*/
+Pet.h
+#ifndef PET_H
+#define PET_H
+#include <iostream>
+#include <string>
+using namespace std;
+
+class PET
+{
+public:
+    PET(string name, int age);
+    void displayMessage() const;
+    ~PET();
+
+private:
+    string petName;
+    int petAge;
+};
+
+#endif#pragma once
+--------------
+Pet.cpp
+#include <iostream>
+#include "Pet.h"
+using namespace std;
+PET::PET(string name, int age)
+{
+    petName = name;
+    petAge = age;
+}
+void PET::displayMessage() const
+{
+    cout << "我的寵物名字是 " << petName << "，年齡是 " << petAge << " 歲" << endl;
+}
+PET::~PET()
+{
+    cout << "再見了，" << petName << "！" << endl;
+}
+------------
+main.cpp
+#include"Pet.h"
+#include<iostream>
+int main()
+{
+    PET myPet1("dog", 3);
+    PET myPet2("cat", 5);
+
+    myPet1.displayMessage();
+    myPet2.displayMessage();
+
+    return 0;
+}
