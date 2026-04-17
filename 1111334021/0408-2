@@ -1,0 +1,112 @@
+/*題目2. 建立一個寵物狗類別可以讓使用者透過鍵盤輸入並“直接”設定寵物狗屬性(姓名、生日、領養日)的程式，但程式碼需達成以下條件:
+1.請使用類別定義，定義部分請用“抽象方法”
+(抽象方法就是介面與實作分離)
+2.請使用建構子，建構子內包含姓名、生日及領養日參數
+3. 必須判斷狗的年齡(今天是2026/04/08)是否合理，領養日與生日是否合理 (狗的年齡介於0~20歲，條件寫法不限制)*/
+Sourse.cpp
+#include <iostream>
+#include "Pet.h"
+using namespace std;
+int main()
+{
+	string name;
+	int by, bm, bd;
+	int ay, am, ad;
+    cout << "請輸入狗狗名字：";
+    cin >> name;
+    cout << "請輸入生日（西元 年 月 日）：";
+    cin >> by >> bm >> bd;
+    cout << "請輸入領養日（西元 年 月 日）：";
+    cin >> ay >> am >> ad;
+    Dog myDog(name, Date(by, bm, bd), Date(ay, am, ad));
+    myDog.printInfo();
+}
+-------------
+Pet.h
+#ifndef PET_H
+#define PET_H
+#include <string>
+using namespace std; 
+class Date {
+private:
+    int year, month, day;
+public:
+    Date(int, int, int);
+    void setDate(int, int, int);
+    int getYear() const;
+    int getMonth() const;
+    int getDay() const;
+    void printDate() const;
+};
+class Dog
+{
+private:
+    string name;
+    Date bd;
+    Date ad;
+public:
+    Dog(string, Date, Date);
+    void printInfo() const;
+};
+#endif
+---------
+Pet.cpp
+#include <iostream>
+#include "Pet.h"
+using namespace std;
+// ================= Date =================
+Date::Date(int y, int m, int d) {
+    setDate(y, m, d);
+}
+void Date::setDate(int y, int m, int d) {
+    year = y;
+    month = m;
+    day = d;
+}
+int Date::getYear() const
+{
+    return year;
+}
+int Date::getMonth() const
+{
+    return month;
+}
+int Date::getDay() const
+{
+    return day;
+}
+void Date::printDate() const
+{
+    cout << year << "/" << month << "/" << day;
+}
+// ================= Dog =================
+Dog::Dog(string n,Date b,Date a):bd(b),ad(a) {
+    name = n;
+    int age = 2026 - bd.getYear();
+    if (age < 0 || age > 20)
+    {
+        cout << "\n狗的年齡不合理\n";
+        
+    }
+
+    if (ad.getYear() < bd.getYear())
+    {
+        cout << "領養日不能早於生日，已修正為生日\n";
+        ad = bd;
+    }
+}
+void Dog::printInfo() const
+{
+    cout << "\n=== 狗狗資料 ===\n";
+    cout << "名字：" << name << endl;
+
+   cout << "生日：";
+    bd.printDate();
+    cout << endl;
+
+    cout << "領養日：";
+    ad.printDate();
+    cout << endl;
+
+    cout << "年齡：" << 2026 - bd.getYear() << " 歲" << endl;
+}
