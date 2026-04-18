@@ -1,0 +1,64 @@
+#include <stdio.h>
+
+int main(void)
+
+{
+
+    FILE* fPtr = NULL;
+
+    if (fopen_s(&fPtr, "students.txt", "w") != 0) {
+
+        puts("檔案無法開啟");
+
+    }
+
+    else {
+
+        char name[30];  
+
+        char id[15];  
+
+        double math; 
+
+        double computer; 
+
+        double average; 
+
+        puts("請輸入 3 位學生的資料。");
+
+        puts("格式：姓名 學號 數學成績 計概成績");
+
+        for (int i = 1; i <= 3; i++) {
+
+            printf("\n請輸入第 %d 位學生的資料: ", i);
+
+            scanf_s("%s", name, (unsigned int)sizeof(name));
+
+            scanf_s("%s", id, (unsigned int)sizeof(id));
+
+            scanf_s("%lf", &math);
+
+            scanf_s("%lf", &computer);
+
+            average = (math + computer) / 2.0;
+
+            fprintf(fPtr, "%-10s %-15s %7.2f %7.2f %7.2f\n",
+
+                name, id, math, computer, average);
+
+        }
+
+        if (fPtr != NULL) {
+
+            fclose(fPtr); 
+
+        }
+
+        puts("\n檔案建立完成，資料已安全存入 students.txt");
+
+    }
+
+    return 0;
+
+}
+
