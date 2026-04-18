@@ -1,0 +1,64 @@
+#include <stdio.h>
+
+// 定義學生資料結構
+
+struct student {
+
+    int id;            // 學號
+
+    char name[20];     // 姓名
+
+    int computer;      // 計概成績
+
+    int math;          // 數學成績
+
+    double avg;        // 平均成績
+
+};
+
+int main(void)
+
+{
+
+    FILE* fPtr = NULL; // 檔案指標
+
+    // 使用 fopen_s 以 "wb" (寫入二進位模式) 開啟檔案
+
+    // 檔名定為 students.dat
+
+    if (fopen_s(&fPtr, "students.dat", "wb") != 0) {
+
+        puts("檔案無法開啟。");
+
+    }
+
+    else {
+
+        // 建立一個初始化的空白學生資料
+
+        // 學號為 0，姓名為空字串，成績與平均皆為 0
+
+        struct student blankStudent = { 0, "", 0, 0, 0.0 };
+
+        // 輸出 100 筆空白紀錄到檔案中
+
+        for (int i = 1; i <= 100; ++i) {
+
+            // fwrite 寫入二進位資料：
+
+            // 參數：資料來源地址, 資料大小, 寫入幾筆, 檔案指標
+
+            fwrite(&blankStudent, sizeof(struct student), 1, fPtr);
+
+        }
+
+        fclose(fPtr); // 關閉檔案
+
+        puts("已成功建立 100 筆空白學生資料檔 (students.dat)。");
+
+    }
+
+    return 0;
+
+}
+
