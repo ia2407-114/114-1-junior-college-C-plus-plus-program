@@ -1,0 +1,191 @@
+Date.cpp
+#include <iostream>
+#include <iomanip>
+#include <stdexcept>
+#include "Date.h"
+using namespace std;
+Date::Date(int year, int month, int day)
+{
+    setDate(year, month, day); 
+} 
+void Date::setDate(int y, int m, int d)
+{
+    setYear(y); 
+    setMonth(m); 
+    setDay(d); 
+} 
+void Date::setYear(int y)
+{
+    if (y >= 1 && y < 9999)
+        year = y;
+    else
+        cout << "year must be 0 - 9999" << endl;
+} 
+void Date::setMonth(int m)
+{
+    if (m > 0 && m < 13)
+        month = m;
+    else
+        cout << "month must be 1-12";
+}
+void Date::setDay(int d)
+{
+    if (d > 0 && d < 32)
+        day = d;
+    else
+        cout << "day must be 1 - 31" << endl;
+}
+unsigned int Date::getYear() const
+{
+    return year;
+} 
+unsigned int Date::getMonth() const
+{
+    return month;
+} 
+unsigned int Date::getDay() const
+{
+    return day;
+} 
+void Date::printUniversal() const
+{
+    cout << setfill('0') << setw(2) << getYear() << ":"
+        << setw(2) << getMonth() << ":" << setw(2) << getDay();
+} 
+void Date::printStandard() const
+{
+    cout << (year < 1911 ? "民國前 " : "民國 ") << ((getYear() > 1911 ? year - 1911 : 1911 - year))
+        << "/" << setfill('0') << setw(2) << getMonth()
+        << "/" << setw(2) << getDay();
+} 
+Date.h
+#ifndef DATE_H
+#define DATE_H
+class Date
+{
+public:
+	explicit Date(int = 1900, int = 1, int = 1); 
+	void setDate(int, int, int); 
+	void setYear(int); 
+	void setMonth(int);
+	void setDay(int); 
+	unsigned int getYear() const;
+	unsigned int getMonth() const; 
+	unsigned int getDay() const;
+	void printUniversal() const;
+	void printStandard() const;
+private:
+	unsigned int year; 
+	unsigned int month; 
+	unsigned int day;
+}; 
+#endif
+Pet.cpp
+#include <iostream>
+#include "pet.h" 
+using namespace std;
+PET::PET(const string& first, const string& last,
+    const Date& dateOfBirth, const Date& dateOfHire)
+    : firstName(first),
+    category(last),
+    birthDate(dateOfBirth),
+    adoptDate(dateOfHire)
+{
+    cout << "PET object constructor: "
+        << firstName << " " << category << endl;
+}
+void PET::print() const
+{
+    cout << category << ", " << firstName << endl;
+}
+bool PET::check_birth()
+    if (birthDate.getYear() <= 2026 &&
+        birthDate.getMonth() >= 1 && birthDate.getMonth() <= 12 &&
+        birthDate.getDay() >= 1 && birthDate.getDay() <= 31)
+        return true;
+    return false;
+}
+bool PET::check_adopt()
+{
+    if (adoptDate.getYear() > birthDate.getYear()) return true;
+    if (adoptDate.getYear() == birthDate.getYear()) {
+        if (adoptDate.getMonth() > birthDate.getMonth()) return true;
+        if (adoptDate.getMonth() == birthDate.getMonth()) {
+            if (adoptDate.getDay() >= birthDate.getDay()) return true;
+        }
+    }
+    return false;
+}
+void PET::print_all_data()
+{
+    cout << "姓名: " << firstName << endl;
+    cout << "品種: " << category << endl;
+    cout << "生日: ";
+    birthDate.printStandard();
+    cout << endl;
+    cout << "領養日: ";
+    adoptDate.printStandard();
+    cout << endl;
+    cout << "生日檢查: " << (check_birth() ? "正確" : "錯誤") << endl;
+    cout << "領養日檢查: " << (check_adopt() ? "正確" : "錯誤") << endl;
+    cout << "----------------------\n";
+}
+PET::~PET()
+{
+    cout << firstName << " Bye Bye~~" << endl;
+}
+Pet.h
+#ifndef PET_H
+#define PET_H
+#include <string>
+#include "date.h" 
+using namespace std;
+class PET
+{
+public:
+    PET(const string&, const string&,
+        const Date&, const Date&);
+    void print() const;
+    ~PET();
+    bool check_birth();
+    bool check_adopt();
+    void print_all_data();
+private:
+    string firstName;
+    string category;
+    Date birthDate;   
+    Date adoptDate;
+};
+#endif
+Main.cpp
+#include <iostream>
+#include "pet.h" 
+using namespace std;
+int main()
+{
+    string name, category;
+    int y, m, d;
+    PET* pets[3];  
+    for (int i = 0; i < 3; i++) {
+        cout << "\n輸入第 " << i + 1 << " 隻寵物\n";
+        cout << "姓名: ";
+        cin >> name;
+        cout << "品種: ";
+        cin >> category;
+        cout << "生日(年 月 日): ";
+        cin >> y >> m >> d;
+        Date birth(y, m, d);
+        cout << "領養日(年 月 日): ";
+        cin >> y >> m >> d;
+        Date adopt(y, m, d);
+        pets[i] = new PET(name, category, birth, adopt);
+    }
+    cout << "\n===== 所有寵物資料 =====\n";
+    for (int i = 0; i < 3; i++) {
+        pets[i]->print_all_data();
+    }
+    for (int i = 0; i < 3; i++) {
+        delete pets[i];
+    }
+    return 0;
+}
