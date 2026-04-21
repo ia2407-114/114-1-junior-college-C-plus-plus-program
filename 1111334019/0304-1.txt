@@ -1,0 +1,56 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct student {
+    int id;
+    char name[20];
+    int computer;
+    int math;
+    double avg;
+};
+
+int main()
+{
+    FILE* fp = NULL;
+    struct student s;
+
+    if (fopen_s(&fp, "student.dat", "rb+") != 0)
+    {
+        printf("檔案不存在，建立新檔案\n");
+        fopen_s(&fp, "student.dat", "wb+");
+    }
+
+    printf("請輸入學生資料 (輸入 id=0 結束)\n");
+
+    while (1)
+    {
+        printf("輸入學號: ");
+        scanf_s("%d", &s.id);
+
+        if (s.id == 0)
+            break;
+
+        printf("輸入姓名: ");
+        scanf_s("%19s", s.name, (unsigned)_countof(s.name));
+
+        printf("輸入計概成績: ");
+        scanf_s("%d", &s.computer);
+
+        printf("輸入數學成績: ");
+        scanf_s("%d", &s.math);
+
+        s.avg = (s.computer + s.math) / 2.0;
+
+        fseek(fp, (s.id - 1) * sizeof(struct student), SEEK_SET);
+
+        fwrite(&s, sizeof(struct student), 1, fp);
+
+        printf("資料已寫入\n\n");
+    }
+
+    fclose(fp);
+
+    printf("輸入完成\n");
+
+    return 0;
+}
