@@ -1,0 +1,106 @@
+/*題1&2*/
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+struct student {
+    int id;
+    char name[20];
+    int computer, math;
+    double avg;
+    struct student* nextPtr;
+};
+
+typedef struct student Student;
+typedef Student* StudentPtr;
+
+void insert(StudentPtr* sPtr, int id, char name[], int comp, int math);
+int deleteNode(StudentPtr* sPtr, int id);
+void printList(StudentPtr currentPtr);
+
+int main(void) {
+    StudentPtr startPtr = NULL;
+    int choice, id, comp, math;
+    char name[20];
+
+    printf("1:插入, 2:刪除, 3:結束\n選擇: ");
+    while (scanf("%u", &choice) && choice != 3) {
+        if (choice == 1) {
+            printf("輸入資料 (學號 姓名 電腦 數學): ");
+            scanf("%d %19s %d %d", &id, name, &comp, &math);
+            insert(&startPtr, id, name, comp, math);
+        } else if (choice == 2 && startPtr) {
+            printf("輸入欲刪除學號: ");
+            scanf("%d", &id);
+            if (!deleteNode(&startPtr, id)) puts("找不到資料。");
+        }
+        printList(startPtr);
+        printf("選擇: ");
+    }
+    return 0;
+}
+
+void insert(StudentPtr* sPtr, int id, char name[], int comp, int math) {
+    StudentPtr newPtr = (StudentPtr)malloc(sizeof(Student));
+    if (newPtr) {
+        newPtr->id = id; strcpy(newPtr->name, name);
+        newPtr->computer = comp; newPtr->math = math;
+        newPtr->avg = (comp + math) / 2.0; newPtr->nextPtr = NULL;
+        StudentPtr prev = NULL, curr = *sPtr;
+        while (curr && id > curr->id) { prev = curr; curr = curr->nextPtr; }
+        if (!prev) { newPtr->nextPtr = *sPtr; *sPtr = newPtr; }
+        else { prev->nextPtr = newPtr; newPtr->nextPtr = curr; }
+    }
+}
+
+int deleteNode(StudentPtr* sPtr, int id) {
+    if ((*sPtr)->id == id) {
+        StudentPtr temp = *sPtr; *sPtr = (*sPtr)->nextPtr; free(temp); return 1;
+    }
+    StudentPtr prev = *sPtr, curr = (*sPtr)->nextPtr;
+    while (curr && curr->id != id) { prev = curr; curr = curr->nextPtr; }
+    if (curr) { prev->nextPtr = curr->nextPtr; free(curr); return 1; }
+    return 0;
+}
+
+void printList(StudentPtr curr) {
+    if (!curr) puts("空串列");
+    else {
+        while (curr) {
+            printf("[%d, %s, 平均:%.1f] -> ", curr->id, curr->name, curr->avg);
+            curr = curr->nextPtr;
+        }
+        puts("NULL");
+    }
+}
+
+
+/*題3*/
+#include <iostream>
+using namespace std;
+
+void calculateFact(int& n, long long& res) {
+    res = 1;
+    for (int i = 1; i <= n; i++) res *= i;
+}
+
+void calculatePower(int& a, int& n, long long& res) {
+    res = 1;
+    for (int i = 1; i <= n; i++) res *= a;
+}
+
+int main() {
+    int x, a, n;
+    long long f, p;
+
+    cout << "請輸入 X 算階乘: "; cin >> x;
+    calculateFact(x, f);
+    cout << "結果: " << f << endl;
+
+    cout << "請輸入 a 與 n 算次方: "; cin >> a >> n;
+    calculatePower(a, n, p);
+    cout << "結果: " << p << endl;
+
+    return 0;
+}

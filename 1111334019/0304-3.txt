@@ -1,0 +1,83 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+struct student {
+    int id;
+    char name[20];
+    int computer, math;
+    double avg;
+    struct student* nextPtr;
+};
+
+typedef struct student Student;
+typedef Student* StudentPtr;
+
+void insert(StudentPtr* sPtr, int id, char name[], int computer, int math);
+void printList(StudentPtr currentPtr);
+int isEmpty(StudentPtr sPtr);
+
+int main(void) {
+    StudentPtr startPtr = NULL;
+    int choice, id, computer, math;
+    char name[20];
+
+    printf("請選擇操作 (1: 插入, 2: 結束): ");
+    while (scanf("%d", &choice) && choice != 2) {
+        if (choice == 1) {
+            printf("請輸入學號、姓名、電腦、數學成績: ");
+            scanf_s("%d %19s %d %d", &id, name, &computer, &math);
+            insert(&startPtr, id, name, computer, math);
+            printList(startPtr);
+        }
+        printf("請選擇操作 (1: 插入, 2: 結束): ");
+    }
+    return 0;
+}
+
+void insert(StudentPtr* sPtr, int id, char name[], int computer, int math) {
+    StudentPtr newPtr = (StudentPtr)malloc(sizeof(Student));
+    if (newPtr != NULL) {
+        newPtr->id = id;
+        strcpy(newPtr->name, name);
+        newPtr->computer = computer;
+        newPtr->math = math;
+        newPtr->avg = (computer + math) / 2.0;
+        newPtr->nextPtr = NULL;
+        StudentPtr previousPtr = NULL;
+        StudentPtr currentPtr = *sPtr;
+        while (currentPtr != NULL && id > currentPtr->id) {
+            previousPtr = currentPtr;
+            currentPtr = currentPtr->nextPtr;
+        }
+        if (previousPtr == NULL) {
+            newPtr->nextPtr = *sPtr;
+            *sPtr = newPtr;
+        }
+        else {
+            previousPtr->nextPtr = newPtr;
+            newPtr->nextPtr = currentPtr;
+        }
+    }
+}
+
+int isEmpty(StudentPtr sPtr) {
+    return sPtr == NULL;
+}
+
+void printList(StudentPtr currentPtr) {
+    if (isEmpty(currentPtr)) {
+        puts("串列為空。");
+    }
+    else {
+        printf("\n%-10s %-15s %-10s %-10s %-10s\n", "學號", "姓名", "電腦", "數學", "平均");
+        while (currentPtr != NULL) {
+            printf("%-10d %-15s %-10d %-10d %-10.2f\n",
+                currentPtr->id, currentPtr->name, currentPtr->computer,
+                currentPtr->math, currentPtr->avg);
+            currentPtr = currentPtr->nextPtr;
+        }
+        puts("");
+    }
+}
