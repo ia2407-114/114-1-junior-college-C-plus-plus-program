@@ -1,0 +1,64 @@
+//main.ccp
+#include <iostream>
+#include "Count.h"
+using namespace std;
+
+int main() {
+    Count counter;
+    printDate pd;
+
+    cout << "初始狀態 counter.x: ";
+    counter.print();
+
+    setX(counter, 8);
+    cout << "呼叫 setX 後的 counter.x: ";
+    counter.print();
+
+    pd.showCountX(counter);
+
+    return 0;
+}
+
+
+//count.ccp
+#include <iostream>
+#include "Count.h"
+using namespace std;
+
+Count::Count() : x(0) {
+
+}
+void Count::print() const {
+    cout << x << endl;
+}
+
+void setX(Count& c, int val) {
+    c.x = val;
+}
+
+void printDate::showCountX(const Count& c) {
+    cout << "透過 printDate 類別存取的私有成員 x 內容為: " << c.x << endl;
+}
+
+
+//count.h
+#ifndef COUNT_H
+#define COUNT_H
+
+class Count {
+    friend void setX(Count&, int);
+    friend class printDate;
+
+public:
+    Count();
+    void print() const;
+
+private:
+    int x;
+};
+
+class printDate {
+public:
+    void showCountX(const Count& c);
+};
+#endif
