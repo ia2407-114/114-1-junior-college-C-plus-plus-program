@@ -1,0 +1,63 @@
+main.cpp
+#include <iostream>
+#include "Count.h"
+using namespace std;
+
+int main() {
+    Count counter;  
+    PrintDate pd;   
+
+    cout << "1. 初始狀態 (使用成員函式): ";
+    counter.print();
+
+    setX(counter, 8);
+    cout << "2. 呼叫 setX(8) 後 (使用成員函式): ";
+    counter.print();
+
+    pd.showCountX(counter);
+
+    return 0;
+}
+-----------------------------
+Count.h
+#ifndef COUNT_H
+#define COUNT_H
+class Count {
+    friend void setX(Count&, int);
+    friend class PrintDate;
+
+public:
+    Count();
+    void print() const;
+
+private:
+    int x;
+};
+
+class PrintDate {
+public:
+
+    void showCountX(const Count& c); 
+};
+
+#endif
+-----------------------
+Count.cpp
+#include <iostream>
+#include "Count.h"
+using namespace std;
+Count::Count()
+    : x(0)
+{
+}
+
+void Count::print() const {
+    cout << x << endl;
+}
+void setX(Count& c, int val) {
+    c.x = val;
+}
+
+void PrintDate::showCountX(const Count& c) {
+    cout << "[PrintDate] 透過友員類別存取到的 x 為: " << c.x << endl;
+}
