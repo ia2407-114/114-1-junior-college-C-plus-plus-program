@@ -1,0 +1,96 @@
+count.h
+
+#ifndef COUNT_H
+#define COUNT_H
+
+#include <iostream>
+using namespace std;
+
+class printDate; // forward declaration
+
+class Count
+{
+	friend void setX(Count&, int);
+	friend class printDate; // 設定為 friend class
+
+public:
+	Count();        // constructor
+	void print() const;
+
+private:
+	int x;
+};
+
+void setX(Count&, int);
+
+#endif#pragma once
+
+
+count.cpp
+
+#include "Count.h"
+
+// constructor
+Count::Count() : x(0)
+{
+}
+
+// print function
+void Count::print() const
+{
+	cout << x << endl;
+}
+
+// friend function
+void setX(Count& c, int val)
+{
+	c.x = val;
+}
+
+printdate.h
+#ifndef PRINTDATE_H
+#define PRINTDATE_H
+
+#include "Count.h"
+
+class printDate
+{
+public:
+	void showX(const Count& c); // 印出 Count 的 x
+};
+
+#endif#pragma once
+
+printdate.cpp
+#include <iostream>
+#include "printDate.h"
+using namespace std;
+
+void printDate::showX(const Count& c)
+{
+	cout << "printDate 顯示 x: " << c.x << endl;
+}
+
+main.cpp
+#include <iostream>
+#include "Count.h"
+#include "printDate.h"
+using namespace std;
+
+int main()
+{
+	Count counter;
+	printDate pd;
+
+	cout << "counter.x after instantiation: ";
+	counter.print();
+
+	setX(counter, 8);
+	cout << "counter.x after setX: ";
+	counter.print();
+
+	// 使用 friend class 存取 private 成員
+	pd.showX(counter);
+
+	return 0;
+}
