@@ -1,0 +1,85 @@
+main.cpp
+
+#include <iostream>
+#include "Count.h"
+#include "PrintDate.h"
+using namespace std;
+
+int main() {
+    Count counter;
+    PrintDate pd;
+
+    cout << "Initial value: ";
+    counter.print();
+
+    setX(counter, 8);
+
+    pd.showCountX(counter);
+
+    return 0;
+}
+
+count.h
+
+#ifndef COUNT_H
+#define COUNT_H
+
+class PrintDate; 
+
+class Count {
+
+    friend class PrintDate;
+
+    friend void setX(Count&, int);
+
+public:
+    Count();      
+    void print() const; 
+
+private:
+    int x; 
+};
+
+#endif
+
+count.cpp
+
+#include <iostream>
+#include "Count.h"
+using namespace std;
+
+Count::Count() : x(0) {
+}
+
+void Count::print() const {
+    cout << x << endl;
+}
+
+void setX(Count& c, int val) {
+    c.x = val; 
+}
+
+printdate.h
+
+#ifndef PRINTDATE_H
+#define PRINTDATE_H
+
+#include "Count.h"
+
+class PrintDate {
+public:
+    void showCountX(const Count& c);
+};
+
+#endif
+
+printdate.cpp
+
+#include <iostream>
+#include "PrintDate.h"
+#include "Count.h"
+using namespace std;
+
+void PrintDate::showCountX(const Count& c) {
+    cout << "Value of x accessed by PrintDate class: " << c.x << endl;
+}
