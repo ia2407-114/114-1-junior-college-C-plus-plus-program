@@ -1,0 +1,18 @@
+﻿// Count.cpp
+// Count class member function definitions
+#include <iostream>
+#include "Count.h"
+using namespace std;
+
+// constructor
+Count::Count()
+   : x( 0 ) // initialize x to 0
+{
+   // empty body
+} // end constructor Count
+
+// output x
+void Count::print() const
+{
+   cout << x << endl;
+} // end function print
