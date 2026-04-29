@@ -1,0 +1,62 @@
+標頭檔(count.h):
+#ifndef COUNT_H
+#define COUNT_H
+#include <iostream>
+using namespace std;
+
+class Count
+{
+    friend class printDate;
+
+public:
+    Count();
+    void print() const;
+
+private:
+    int x;
+};
+
+class printDate
+{
+public:
+   void setx(Count&, int);
+};
+#endif
+
+實作檔(count.cpp):
+#include "count.h"
+
+Count::Count()
+    : x(0)
+{
+}
+
+void Count::print() const
+{
+    cout << x << endl;
+}
+
+
+ void printDate::setx(Count& a, int val)
+{
+    a.x = val;
+}
+
+主程式(main.cpp):
+#include <iostream>
+#include "count.h"
+using namespace std;
+
+int main()
+{
+	Count counter;
+	printDate printer;
+
+	cout << "預設值:";
+	counter.print();
+
+	printer.setx(counter, 10);
+	cout << "更改值:";
+	counter.print();
+}
+
