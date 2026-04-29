@@ -1,0 +1,120 @@
+Count.h（介面檔）
+#ifndef COUNT_H
+#define COUNT_H
+
+#include <iostream>
+using namespace std;
+
+class printDate; // 前向宣告
+
+class Count
+{
+    friend void setX(Count&, int);     // 原本的 friend function
+    friend class printDate;            // ⭐ 新增 friend class
+
+public:
+    Count();       // 建構子
+    void print() const;
+
+private:
+    int x;
+};
+
+void setX(Count&, int);
+
+#endif
+
+Count.cpp（實作檔）
+#include "Count.h"
+
+// 建構子
+Count::Count()
+{
+    x = 0;
+}
+
+// print 函數
+void Count::print() const
+{
+    cout << x << endl;
+}
+
+// friend function
+void setX(Count &c, int val)
+{
+    c.x = val;
+}
+printDate.h（新的 friend class）
+#ifndef PRINTDATE_H
+#define PRINTDATE_H
+
+#include "Count.h"
+
+class printDate
+{
+public:
+    void showX(Count& c);  // 用來印 x
+};
+
+#endif
+main.cpp（主程式）
+#include <iostream>
+#include "Count.h"
+#include "printDate.h"
+
+using namespace std;
+
+// printDate 成員函數實作
+void printDate::showX(Count& c)
+{
+    cout << "printDate 存取 x: " << c.x << endl; // ⭐ 直接存 private
+}
+
+int main()
+{
+    Count counter;
+    printDate pd;
+
+    cout << "counter.x after instantiation: ";
+    counter.print();
+
+    setX(counter, 8);
+    cout << "counter.x after setX: ";
+    counter.print();
+
+    // ⭐ 用 friend class 印出
+    pd.showX(counter);
+
+    return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
