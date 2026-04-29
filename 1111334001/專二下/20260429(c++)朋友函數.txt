@@ -1,0 +1,67 @@
+主程式(Source.cpp)
+#include <iostream>
+#include"Count.h"
+using namespace std;
+
+int main()
+{
+    Count counter;
+    printDate tt;
+
+    cout << "counter.x after instantiation: ";
+    counter.print();
+
+    tt.setX(counter, 8);
+    cout << "counter.x after call to setX friend function: ";
+    counter.print();
+
+    return 0;
+}
+--------------------------------------------------------------------------
+資源檔(Count.cpp)
+#include <iostream>
+#include"Count.h"
+using namespace std;
+
+
+Count::Count()
+        : x(0)
+    {
+
+    }
+
+
+    void Count::print() const
+    {
+        cout << x << endl;
+    }
+
+
+void  printDate::setX(Count& c, int val)
+{
+    c.x = val;
+}
+--------------------------------------------------------------------------
+標頭檔(Count.h)
+#pragma once
+
+class Count
+{
+    friend class printDate;
+public:
+
+    Count();
+
+
+    void print() const;
+ 
+private:
+    int x;
+};
+
+class printDate
+{
+public:
+     void setX(Count& c, int val);
+private:
+};
