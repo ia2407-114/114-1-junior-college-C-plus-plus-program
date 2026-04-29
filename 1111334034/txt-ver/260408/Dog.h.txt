@@ -1,0 +1,48 @@
+﻿// Dog.h
+// Dog class containing a constructor with parameters.
+// Member functions defined in Dog.cpp.
+
+// prevent multiple inclusions of header
+#ifndef DOG_H
+#define DOG_H
+
+#include <string>
+using namespace std;
+
+// Dog class definition
+class Dog
+{
+public:
+   explicit Dog( string = "Unknown",
+      int = 2024, int = 1, int = 1,   // birthday: year, month, day
+      int = 2024, int = 1, int = 1 ); // adopt date: year, month, day
+
+   // set functions
+   void setName( string ); // set name
+   void setBirthday( int, int, int ); // set birthday year, month, day
+   void setAdoptDate( int, int, int ); // set adopt date year, month, day
+
+   // get functions
+   string getName() const; // return name
+   unsigned int getBirthYear() const; // return birth year
+   unsigned int getBirthMonth() const; // return birth month
+   unsigned int getBirthDay() const; // return birth day
+   unsigned int getAdoptYear() const; // return adopt year
+   unsigned int getAdoptMonth() const; // return adopt month
+   unsigned int getAdoptDay() const; // return adopt day
+
+   void printInfo() const; // output dog info
+private:
+   string name;
+   unsigned int birthYear; // birthday
+   unsigned int birthMonth;
+   unsigned int birthDay;
+   unsigned int adoptYear; // adopt date
+   unsigned int adoptMonth;
+   unsigned int adoptDay;
+   bool isLeapYear( int ) const; // check if leap year
+   int daysInMonth( int, int ) const; // return days in given month/year
+   bool isValidDate( int, int, int ) const; // check if date is valid
+}; // end class Dog
+
+#endif
