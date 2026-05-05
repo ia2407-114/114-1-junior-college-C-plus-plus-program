@@ -1,0 +1,49 @@
+main.cpp
+#include <iostream>
+#include "count.h"
+using namespace std;
+int main()
+{
+	Count counter;
+	SETxx SETxx;
+	cout << "counter.x after instantiation: ";
+	counter.print();
+	SETxx.setX(counter, 8);
+	cout << "counter.x after call to setX friend function: ";
+	counter.print();
+}
+count.cpp
+#include <iostream>
+#include "count.h"
+using namespace std;
+Count::Count()
+    : x(0)
+{
+}
+void Count::print() const
+{
+    cout << x << endl;
+}
+void SETxx::setX(Count& c, int val)
+{
+    c.x = val;
+}
+count.h
+#pragma once
+#include <iostream>
+using namespace std;
+class Count
+{
+    friend class SETxx;
+public:
+    Count();
+    void print() const;
+private:
+    int x;
+};
+class SETxx
+{
+public:
+    void setX(Count& c, int val);
+private:
+};
