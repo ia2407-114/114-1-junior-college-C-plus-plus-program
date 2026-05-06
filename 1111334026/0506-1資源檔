@@ -1,0 +1,39 @@
+#include "Matrix.h"
+#include <iostream>
+#include <cmath> // 引入 cmath 以使用 sqrt() 函式
+
+using namespace std;
+
+// 建構子實作：配置 mxn 的二維陣列 element 之動態記憶體
+Matrix::Matrix(int m, int n) {
+    row = m;
+    column = n;
+  
+    element = new double *[m];
+    for (int i = 0; i < m; i++) {
+        element[i] = new double [n];
+    }
+}   
+        
+// 定義矩陣的「-」(負號)前置運算子的多載
+Matrix Matrix::operator-() {        
+    Matrix temp(row, column);
+    for (int i = 0; i < row; i++) {
+        for (int j = 0; j < column; j++) {
+            temp.element[i][j] = -(this->element[i][j]);        
+        }
+    }
+    return temp;
+}
+
+// 定義矩陣的「!」前置運算子的多載：將元素開平方根後印出
+void Matrix::operator!() {
+    cout << "矩陣A的元素開平方根(!A):\n";
+    for (int i = 0; i < row; i++) {
+        for (int j = 0; j < column; j++) {
+            // 計算並直接印出平方根
+            cout << sqrt(this->element[i][j]) << '\t';
+        }
+        cout << endl;
+    }
+}
