@@ -1,0 +1,129 @@
+main.cpp
+#include "Matrix.h"
+
+int main()
+{
+    int i, j, row, column;
+    int num;
+
+    cout << "矩陣減整數 (a - b)\n";
+    cout << "輸入矩陣列數(row): ";
+    cin >> row;
+    cout << "輸入矩陣行數(column): ";
+    cin >> column;
+
+    Matrix a('A', row, column);
+    Matrix c(row, column);
+
+    cout << "輸入要減的整數 b: ";
+    cin >> num;
+
+    c = a - num;
+
+    // 🔥 印原矩陣
+    cout << "\n原始矩陣 A:\n";
+    for (i = 0; i < row; i++)
+    {
+        for (j = 0; j < column; j++)
+            cout << a.element[i][j] << "\t";
+        cout << endl;
+    }
+
+    // 🔥 印結果
+    cout << "\n矩陣 A - " << num << " = \n";
+    for (i = 0; i < row; i++)
+    {
+        for (j = 0; j < column; j++)
+            cout << c.element[i][j] << "\t";
+        cout << endl;
+    }
+
+    return 0;
+}
+matrix.cpp
+#include "Matrix.h"
+
+// 建構子
+Matrix::Matrix(int m, int n)
+{
+    row = m;
+    column = n;
+
+    element = new int* [row];
+    for (int i = 0; i < row; i++)
+        element[i] = new int[column];
+}
+
+// 輸入矩陣
+Matrix::Matrix(char name, int m, int n)
+{
+    row = m;
+    column = n;
+
+    element = new int* [row];
+    for (int i = 0; i < row; i++)
+        element[i] = new int[column];
+
+    cout << "輸入一" << m << 'x' << n << "矩陣" << name << endl;
+    for (int i = 0; i < m; i++)
+        for (int j = 0; j < n; j++)
+        {
+            cout << name << "[" << i << "][" << j << "]=";
+            cin >> element[i][j];
+        }
+}
+
+// 解構子
+Matrix::~Matrix()
+{
+    for (int i = 0; i < row; i++)
+        delete[] element[i];
+    delete[] element;
+}
+
+// 加法
+Matrix Matrix::operator+(Matrix x)
+{
+    Matrix temp(row, column);
+
+    for (int i = 0; i < row; i++)
+        for (int j = 0; j < column; j++)
+            temp.element[i][j] = element[i][j] + x.element[i][j];
+
+    return temp;
+}
+
+// 🔥 減整數
+Matrix Matrix::operator-(int x)
+{
+    Matrix temp(row, column);
+
+    for (int i = 0; i < row; i++)
+        for (int j = 0; j < column; j++)
+            temp.element[i][j] = element[i][j] - x;
+
+    return temp;
+}
+matrix.h
+#pragma once
+#ifndef MATRIX_H
+#define MATRIX_H
+
+#include <iostream>
+using namespace std;
+
+class Matrix
+{
+public:
+    int row, column;
+    int** element;
+
+    Matrix(int m, int n);
+    Matrix(char name, int m, int n);
+    ~Matrix();
+
+    Matrix operator+(Matrix x); // 原本的
+    Matrix operator-(int x);    // 🔥 新增：矩陣 - 整數
+};
+
+#endif
