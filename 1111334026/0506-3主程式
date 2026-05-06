@@ -1,0 +1,37 @@
+#include <iostream>
+using namespace std;
+#include "Matrix.h"
+int main()
+{
+    int i, j, row, column;
+    cout << "重新定義「-」(減號號)運算子多載，使其能應用在矩陣減法上\n";
+    cout << "輸入矩陣A及B的列數(row):";
+    cin >> row;
+    cout << "輸入矩陣A及B的行數(column):";
+    cin >> column;
+    Matrix a('A', row, column);
+    cout << "原始矩陣A內容 \n";
+    for (i = 0; i < row; i++)
+    {
+        for (j = 0; j < column; j++)
+            cout << a.element[i][j] << '\t';
+        cout << endl;
+    }
+    int b;
+    cout << "輸入要減去的整數B:";
+    cin >> b;
+    ;
+    Matrix c(row, column);
+
+    c = a - b;  
+
+    cout << "矩陣A - 整數B = \n";
+    for (i = 0; i < row; i++)
+    {
+        for (j = 0; j < column; j++)
+            cout << c.element[i][j] << '\t';
+        cout << endl;
+    }
+
+    return 0;
+}
