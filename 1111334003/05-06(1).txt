@@ -1,0 +1,70 @@
+main.cpp
+#include <iostream>
+#include "Matrix.h"
+using namespace std;
+int main()
+{
+    Matrix a;
+    a.input();
+    cout << "\n原始矩陣:\n";
+    a.print();
+    !a;
+    cout << "\n開平方根後的矩陣:\n";
+    a.print();
+    return 0;
+}
+matrix.cpp
+#include <iostream>
+#include <cmath>
+#include "Matrix.h"
+using namespace std;
+void Matrix::input()
+{
+    cout << "請輸入矩陣列數與行數: ";
+    cin >> row >> col;
+    cout << "請輸入矩陣元素:\n";
+    for (int i = 0; i < row; i++)
+    {
+        for (int j = 0; j < col; j++)
+        {
+            cin >> data[i][j];
+        }
+    }
+}
+void Matrix::print()
+{
+    for (int i = 0; i < row; i++)
+    {
+        for (int j = 0; j < col; j++)
+        {
+            cout << data[i][j] << "\t";
+        }
+        cout << endl;
+    }
+}
+void Matrix::operator!()
+{
+    for (int i = 0; i < row; i++)
+    {
+        for (int j = 0; j < col; j++)
+        {
+            data[i][j] = sqrt(data[i][j]);
+        }
+    }
+}
+matrix.h
+#ifndef MATRIX_H
+#define MATRIX_H
+#include <iostream>
+using namespace std;
+class Matrix
+{
+private:
+    int row, col;
+    double data[10][10];
+public:
+    void input();
+    void print();
+    void operator!();
+};
+#endif
