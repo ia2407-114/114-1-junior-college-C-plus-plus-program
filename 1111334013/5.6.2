@@ -1,0 +1,121 @@
+main.cpp
+#include "Matrix.h"
+
+int main()
+{
+    int row, column;
+
+    cout << "輸入矩陣列數: ";
+    cin >> row;
+    cout << "輸入矩陣行數: ";
+    cin >> column;
+
+    Matrix a(row, column), b(row, column);
+
+    cout << "輸入矩陣A:\n";
+    for (int i = 0; i < row; i++)
+        for (int j = 0; j < column; j++)
+        {
+            cout << "A[" << i << "][" << j << "] = ";
+            cin >> a.element[i][j];
+        }
+
+    b = a++;  // 呼叫後置++
+
+    cout << "\n矩陣A每個元素平方 (a++):\n";
+    for (int i = 0; i < row; i++)
+    {
+        for (int j = 0; j < column; j++)
+            cout << b.element[i][j] << "\t";
+        cout << endl;
+    }
+
+    return 0;
+}
+
+matrix.cpp
+#include "Matrix.h"
+#include <cmath>
+
+// 建構子
+Matrix::Matrix(int m, int n)
+{
+    row = m;
+    column = n;
+
+    element = new double* [row];
+    for (int i = 0; i < row; i++)
+        element[i] = new double[column];
+}
+
+// 解構子
+Matrix::~Matrix()
+{
+    for (int i = 0; i < row; i++)
+        delete[] element[i];
+    delete[] element;
+}
+
+// 負號
+Matrix Matrix::operator-()
+{
+    Matrix temp(row, column);
+
+    for (int i = 0; i < row; i++)
+        for (int j = 0; j < column; j++)
+            temp.element[i][j] = -element[i][j];
+
+    return temp;
+}
+
+// 平方根
+Matrix Matrix::operator!()
+{
+    Matrix temp(row, column);
+
+    for (int i = 0; i < row; i++)
+        for (int j = 0; j < column; j++)
+        {
+            if (element[i][j] < 0)
+                temp.element[i][j] = 0;
+            else
+                temp.element[i][j] = sqrt(element[i][j]);
+        }
+
+    return temp;
+}
+
+// 🔥 後置++：平方
+Matrix Matrix::operator++(int)
+{
+    Matrix temp(row, column);
+
+    for (int i = 0; i < row; i++)
+        for (int j = 0; j < column; j++)
+            temp.element[i][j] = element[i][j] * element[i][j];
+
+    return temp;
+}
+matrix.h
+#pragma once
+#ifndef MATRIX_H
+#define MATRIX_H
+
+#include <iostream>
+using namespace std;
+
+class Matrix
+{
+public:
+    int row, column;
+    double** element;
+
+    Matrix(int m, int n);
+    ~Matrix();
+
+    Matrix operator-();     // 負號
+    Matrix operator!();     // 平方根
+    Matrix operator++(int); // 後置++（平方）
+};
+
+#endif
