@@ -1,0 +1,108 @@
+標頭檔:
+#ifndef MATRIX_H
+#define MATRIX_H
+
+class Matrix
+{
+public:
+    int row, column;
+    double** element;
+
+    Matrix(int m, int n);
+
+
+    Matrix operator!();
+
+
+    Matrix operator++(int);
+};
+
+#endif
+
+實作檔:
+#include "Matrix.h"
+#include <cmath>
+
+
+Matrix::Matrix(int m, int n)
+{
+    row = m;
+    column = n;
+
+    element = new double* [m];
+    for (int i = 0; i < m; i++)
+        element[i] = new double[n];
+}
+
+
+Matrix Matrix::operator!()
+{
+    Matrix temp(row, column);
+
+    for (int i = 0; i < row; i++)
+        for (int j = 0; j < column; j++)
+            temp.element[i][j] = sqrt(this->element[i][j]);
+
+    return temp;
+}
+
+
+Matrix Matrix::operator++(int)
+{
+    Matrix temp(row, column);
+
+    for (int i = 0; i < row; i++)
+        for (int j = 0; j < column; j++)
+            temp.element[i][j] = this->element[i][j] * this->element[i][j];
+
+    return temp;
+}
+主程式:
+#include <iostream>
+#include "Matrix.h"
+using namespace std;
+
+int main()
+{
+    int i, j, row, column;
+
+    cout << "前序 !：開平方根 / 後序 ++：平方\n";
+    cout << "輸入矩陣A的列數(row):";
+    cin >> row;
+    cout << "輸入矩陣A的行數(column):";
+    cin >> column;
+
+    Matrix a(row, column);
+    Matrix b(row, column);
+    Matrix c(row, column);
+
+    cout << "輸入一" << row << 'x' << column << "矩陣A" << endl;
+    for (i = 0; i < row; i++)
+        for (j = 0; j < column; j++)
+        {
+            cout << "A[" << i << "][" << j << "]=";
+            cin >> a.element[i][j];
+        }
+
+
+    b = !a;
+    cout << "\n矩陣A開平方根後：\n";
+    for (i = 0; i < row; i++)
+    {
+        for (j = 0; j < column; j++)
+            cout << b.element[i][j] << '\t';
+        cout << endl;
+    }
+
+
+    c = a++;
+    cout << "\n矩陣A平方後：\n";
+    for (i = 0; i < row; i++)
+    {
+        for (j = 0; j < column; j++)
+            cout << c.element[i][j] << '\t';
+        cout << endl;
+    }
+
+    return 0;
+}
