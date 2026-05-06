@@ -1,0 +1,22 @@
+#ifndef MATRIX_H
+#define MATRIX_H
+
+class Matrix {
+public: 
+    int row, column;
+    double **element; // 矩陣元素的形態維持 double
+	
+    Matrix(int m, int n);
+    
+    // 「-」(負號)前置運算子的多載
+    Matrix operator-(); 
+    
+    // 「!」前置運算子的多載：計算平方根並印出
+    void operator!(); 
+    
+    // 新增「++」後置運算子的多載：計算2次方(平方)並印出
+    // 注意：括號內的 int 是用來告訴編譯器這是「後序」運算子
+    void operator++(int); 
+};
+
+#endif
