@@ -1,0 +1,84 @@
+main.cpp
+#include "Matrix.h"
+
+int main()
+{
+    int row, column;
+
+    cout << "輸入矩陣列數: ";
+    cin >> row;
+    cout << "輸入矩陣行數: ";
+    cin >> column;
+
+    Matrix a(row, column), b(row, column);
+
+    cout << "輸入矩陣A:\n";
+    for (int i = 0; i < row; i++)
+        for (int j = 0; j < column; j++)
+        {
+            cout << "A[" << i << "][" << j << "] = ";
+            cin >> a.element[i][j];
+        }
+
+    b = !a;
+
+    cout << "\n矩陣A開平方根後 (!A):\n";
+    for (int i = 0; i < row; i++)
+    {
+        for (int j = 0; j < column; j++)
+            cout << b.element[i][j] << "\t";
+        cout << endl;
+    }
+
+    return 0;
+}
+
+matrix.cpp
+{
+    Matrix temp(row, column);
+
+    for (int i = 0; i < row; i++)
+        for (int j = 0; j < column; j++)
+        {
+            if (element[i][j] < 0)
+            {
+                cout << "警告：負數無法開平方根，設為0\n";
+                temp.element[i][j] = 0;
+            }
+            else
+            {
+                temp.element[i][j] = sqrt(element[i][j]);
+            }
+        }
+
+    return temp;
+}
+
+matrix.h
+#pragma once
+#ifndef MATRIX_H
+#define MATRIX_H
+
+#include <iostream>
+using namespace std;
+
+class Matrix
+{
+public:
+    int row, column;
+    double** element;
+
+    // 建構子
+    Matrix(int m, int n);
+
+    // 解構子
+    ~Matrix();
+
+    // 負號運算子
+    Matrix operator-();
+
+    // 「!」運算子：開平方根
+    Matrix operator!();
+};
+
+#endif
