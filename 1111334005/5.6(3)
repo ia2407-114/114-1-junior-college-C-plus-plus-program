@@ -1,0 +1,196 @@
+題目3. 利用範例3.cpp的類別中，建立一個二元運算子多載，a-b可以將矩陣a的元素減去整數b之後印出，矩陣元素的形態要使用int。請分成以介面檔與實作檔的方式撰寫，並且印出原始矩陣內容以資比較。
+
+Matrix.h（介面檔）
+#ifndef MATRIX_H
+#define MATRIX_H
+
+#include <iostream>
+using namespace std;
+
+class Matrix {
+public:
+    int row, column;
+    int** element;
+
+    Matrix(int m, int n);
+    Matrix(char name, int m, int n);
+    ~Matrix();
+
+    Matrix operator+(Matrix x);   // 原本的
+    Matrix operator-(int b);      // ⭐ 新增：矩陣 - 整數
+};
+
+#endif
+
+Matrix.cpp（實作檔）
+#include "Matrix.h"
+
+// 建構子1
+Matrix::Matrix(int m, int n) {
+    row = m;
+    column = n;
+
+    element = new int* [m];
+    for (int i = 0; i < m; i++)
+        element[i] = new int[n];
+}
+
+// 建構子2（輸入資料）
+Matrix::Matrix(char name, int m, int n) {
+    row = m;
+    column = n;
+
+    element = new int* [m];
+    for (int i = 0; i < m; i++)
+        element[i] = new int[n];
+
+    cout << "輸入一" << m << "x" << n << "矩陣" << name << endl;
+    for (int i = 0; i < m; i++) {
+        for (int j = 0; j < n; j++) {
+            cout << name << "[" << i << "][" << j << "] = ";
+            cin >> element[i][j];
+        }
+    }
+}
+
+// 解構子
+Matrix::~Matrix() {
+    for (int i = 0; i < row; i++)
+        delete[] element[i];
+    delete[] element;
+}
+
+// 原本矩陣加法
+Matrix Matrix::operator+(Matrix x) {
+    Matrix temp(row, column);
+    for (int i = 0; i < row; i++)
+        for (int j = 0; j < column; j++)
+            temp.element[i][j] = element[i][j] + x.element[i][j];
+    return temp;
+}
+
+// ⭐ 矩陣 - 整數
+Matrix Matrix::operator-(int b) {
+    Matrix temp(row, column);
+    for (int i = 0; i < row; i++) {
+        for (int j = 0; j < column; j++) {
+            temp.element[i][j] = element[i][j] - b;
+        }
+    }
+    return temp;
+}
+
+main.cpp（主程式）
+#include <iostream>
+#include "Matrix.h"
+using namespace std;
+
+int main() {
+    int i, j, row, column, num;
+
+    cout << "矩陣減整數運算 (a - b)\n";
+    cout << "輸入矩陣A的列數(row): ";
+    cin >> row;
+    cout << "輸入矩陣A的行數(column): ";
+    cin >> column;
+
+    Matrix a('A', row, column);
+    Matrix c(row, column);
+
+    cout << "\n請輸入要減的整數 b: ";
+    cin >> num;
+
+    // ⭐ 運算
+    c = a - num;
+
+    // ⭐ 印原始矩陣A
+    cout << "\n原始矩陣A:\n";
+    for (i = 0; i < row; i++) {
+        for (j = 0; j < column; j++) {
+            cout << a.element[i][j] << "\t";
+        }
+        cout << endl;
+    }
+
+    // ⭐ 印結果
+    cout << "\n矩陣A - " << num << " 的結果:\n";
+    for (i = 0; i < row; i++) {
+        for (j = 0; j < column; j++) {
+            cout << c.element[i][j] << "\t";
+        }
+        cout << endl;
+    }
+
+    return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
