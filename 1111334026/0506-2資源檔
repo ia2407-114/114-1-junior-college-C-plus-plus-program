@@ -1,0 +1,47 @@
+#include "Matrix.h"
+#include <iostream>
+#include <cmath> 
+
+using namespace std;
+
+Matrix::Matrix(int m, int n) {
+    row = m;
+    column = n;
+  
+    element = new double *[m];
+    for (int i = 0; i < m; i++) {
+        element[i] = new double [n];
+    }
+}   
+        
+Matrix Matrix::operator-() {        
+    Matrix temp(row, column);
+    for (int i = 0; i < row; i++) {
+        for (int j = 0; j < column; j++) {
+            temp.element[i][j] = -(this->element[i][j]);        
+        }
+    }
+    return temp;
+}
+
+void Matrix::operator!() {
+    cout << "矩陣A的元素開平方根(!A):\n";
+    for (int i = 0; i < row; i++) {
+        for (int j = 0; j < column; j++) {
+            cout << sqrt(this->element[i][j]) << '\t';
+        }
+        cout << endl;
+    }
+}
+
+// 實作「++」後置運算子的多載：將元素取2次方後印出
+void Matrix::operator++(int) {
+    cout << "矩陣A的元素取2次方(A++):\n";
+    for (int i = 0; i < row; i++) {
+        for (int j = 0; j < column; j++) {
+            // 使用 pow(數值, 2) 來計算平方，也可以寫成 element[i][j] * element[i][j]
+            cout << pow(this->element[i][j], 2) << '\t';
+        }
+        cout << endl;
+    }
+}
