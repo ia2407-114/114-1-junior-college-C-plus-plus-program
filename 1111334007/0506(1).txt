@@ -1,0 +1,100 @@
+main.cpp
+
+#include <iostream>
+#include "Matrix.h"
+
+using namespace std;
+
+int main() {
+    int row, column;
+    cout << "重新定義「!」前置運算子，求矩陣各元素的平方根：\n";
+    cout << "輸入矩陣A的列數(row):";
+    cin >> row;
+    cout << "輸入矩陣A的行數(column):";
+    cin >> column;
+
+    Matrix a(row, column);
+    cout << "輸入一 " << row << "x" << column << " 矩陣 A" << endl;
+    for (int i = 0; i < row; i++) {
+        for (int j = 0; j < column; j++) {
+            cout << "A[" << i << "][" << j << "]=";
+            cin >> a.element[i][j];
+        }
+    }
+
+    Matrix b = !a;
+
+    cout << "\n矩陣 A 各元素的平方根結果 (!A):\n";
+    for (int i = 0; i < row; i++) {
+        for (int j = 0; j < column; j++) {
+            cout << b.element[i][j] << "\t";
+        }
+        cout << endl;
+    }
+
+    return 0;
+}
+
+matrix.h
+
+#ifndef MATRIX_H
+#define MATRIX_H
+
+class Matrix {
+public:
+    int row, column;
+    double** element; 
+
+    Matrix(int m, int n);
+    ~Matrix(); 
+
+    Matrix operator!();
+
+    Matrix operator-();
+};
+
+#endif
+
+matrix.cpp
+
+#include "Matrix.h"
+#include <iostream>
+#include <cmath> 
+
+using namespace std;
+
+Matrix::Matrix(int m, int n) {
+    row = m;
+    column = n;
+    element = new double* [m];
+    for (int i = 0; i < m; i++) {
+        element[i] = new double[n];
+    }
+}
+
+Matrix::~Matrix() {
+    for (int i = 0; i < row; i++) {
+        delete[] element[i];
+    }
+    delete[] element;
+}
+
+Matrix Matrix::operator!() {
+    Matrix temp(row, column);
+    for (int i = 0; i < row; i++) {
+        for (int j = 0; j < column; j++) {
+            temp.element[i][j] = sqrt(this->element[i][j]);
+        }
+    }
+    return temp;
+}
+
+Matrix Matrix::operator-() {
+    Matrix temp(row, column);
+    for (int i = 0; i < row; i++) {
+        for (int j = 0; j < column; j++) {
+            temp.element[i][j] = -(this->element[i][j]);
+        }
+    }
+    return temp;
+}
