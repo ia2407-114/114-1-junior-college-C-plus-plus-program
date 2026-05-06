@@ -1,0 +1,157 @@
+題目2. 承上題，在Matrix中再加入一個"後序"一元運算子多載，a++可以計算出矩陣a的每個元素的"2次方"後印出，矩陣元素的形態要使用float或double。請分成以介面檔與實作檔的方式撰寫
+
+Matrix.h（介面檔）
+#ifndef MATRIX_H
+#define MATRIX_H
+
+#include <iostream>
+using namespace std;
+
+class Matrix {
+public:
+    int row, column;
+    double** element;
+
+    Matrix(int m, int n);
+    ~Matrix();
+
+    Matrix operator-();        // 負號
+    Matrix operator!();        // 平方根
+    Matrix operator++(int);    // ⭐ 後序++（平方）
+};
+
+#endif
+
+Matrix.cpp（實作檔）
+#include "Matrix.h"
+#include <cmath>
+
+// 建構子
+Matrix::Matrix(int m, int n) {
+    row = m;
+    column = n;
+
+    element = new double* [m];
+    for (int i = 0; i < m; i++)
+        element[i] = new double[n];
+}
+
+// 解構子
+Matrix::~Matrix() {
+    for (int i = 0; i < row; i++)
+        delete[] element[i];
+    delete[] element;
+}
+
+// 負號
+Matrix Matrix::operator-() {
+    Matrix temp(row, column);
+    for (int i = 0; i < row; i++)
+        for (int j = 0; j < column; j++)
+            temp.element[i][j] = -element[i][j];
+    return temp;
+}
+
+// 平方根
+Matrix Matrix::operator!() {
+    Matrix temp(row, column);
+    for (int i = 0; i < row; i++) {
+        for (int j = 0; j < column; j++) {
+            if (element[i][j] >= 0)
+                temp.element[i][j] = sqrt(element[i][j]);
+            else
+                temp.element[i][j] = 0;
+        }
+    }
+    return temp;
+}
+
+// ⭐ 後序 ++ → 每個元素平方
+Matrix Matrix::operator++(int) {
+    Matrix temp(row, column);
+
+    for (int i = 0; i < row; i++) {
+        for (int j = 0; j < column; j++) {
+            temp.element[i][j] = element[i][j] * element[i][j];
+        }
+    }
+
+    return temp;
+}
+
+main.cpp（主程式）
+#include <iostream>
+#include "Matrix.h"
+using namespace std;
+
+int main() {
+    int i, j, row, column;
+
+    cout << "使用 a++ 計算矩陣平方\n";
+    cout << "輸入列數(row): ";
+    cin >> row;
+    cout << "輸入行數(column): ";
+    cin >> column;
+
+    Matrix a(row, column), b(row, column);
+
+    cout << "輸入矩陣A:\n";
+    for (i = 0; i < row; i++) {
+        for (j = 0; j < column; j++) {
+            cout << "A[" << i << "][" << j << "] = ";
+            cin >> a.element[i][j];
+        }
+    }
+
+    b = a++;   // ⭐ 呼叫後序++
+
+    cout << "\n矩陣A平方後:\n";
+    for (i = 0; i < row; i++) {
+        for (j = 0; j < column; j++) {
+            cout << b.element[i][j] << "\t";
+        }
+        cout << endl;
+    }
+
+    return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
