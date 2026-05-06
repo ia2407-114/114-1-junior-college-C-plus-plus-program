@@ -1,0 +1,20 @@
+#ifndef MATRIX_H
+#define MATRIX_H
+
+class Matrix {
+public: 
+    int row, column;
+    // 將矩陣元素的形態改為 double
+    double **element; 
+	
+    // 建構子宣告
+    Matrix(int m, int n);
+    
+    // 保留原本的「-」(負號)前置運算子的多載
+    Matrix operator-(); 
+    
+    // 新增「!」前置運算子的多載：計算平方根並印出
+    void operator!(); 
+};
+
+#endif
