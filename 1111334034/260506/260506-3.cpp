@@ -1,0 +1,94 @@
+#include <iostream>
+#include "260506-3.h"
+using namespace std ;
+
+Matrix::Matrix(int m,int n)
+ {
+  row=m ;
+  column=n ;
+  
+  // 動態配置mxn的二維陣列element之記憶體
+  element = new int *[m];
+  int i;
+  for (i=0 ; i<m ; i++)
+     element[i] = new int [n];
+ }
+ 
+Matrix::Matrix(char name,int m,int n)
+ {
+  row=m ;
+  column=n ;
+  
+  // 動態配置mxn的二維陣列element之記憶體
+  element = new int *[m];
+  int i, j ;
+  for (i=0 ; i<m ; i++)
+     element[i] = new int [n];
+  
+  cout << "輸入一" << m << 'x' << n << "矩陣" << name << endl ;
+  for (i=0;i<m;i++)       
+    for (j=0;j<n;j++)
+     {
+      cout << name <<'['<< i << "][" 
+           << j << "]=" ;
+      cin >> element[i][j] ;
+     }
+ }    
+        
+// 定義矩陣的「+」(加號)運算子的多載
+Matrix Matrix::operator+(Matrix x)
+ {        
+  int i,j;
+  Matrix temp(this->row,this->column) ;
+  for (i=0;i<this->row;i++)
+    for (j=0;j<this->column;j++)           
+       temp.element[i][j]= this->element[i][j] + x.element[i][j] ;      
+    
+  return temp ;
+ }    
+
+Matrix Matrix::operator-(int b)
+ {        
+  int i,j;
+  Matrix temp(this->row,this->column) ;
+  for (i=0;i<this->row;i++)
+    for (j=0;j<this->column;j++)           
+       temp.element[i][j]= this->element[i][j] - b ;      
+    
+  return temp ;
+ }    
+ 
+int main()
+ {
+  int i,j,row,column;
+  cout << "重新定義「-」(減整數)二元運算子多載，使矩陣a的元素減去整數b後輸出\n" ;
+  cout << "輸入矩陣a的列數(row):" ;
+  cin >> row ;
+  cout << "輸入矩陣a的行數(column):" ;
+  cin >> column ;
+  Matrix a('A',row,column) ;
+  int b ;
+  cout << "輸入整數b:" ;
+  cin >> b ;
+  Matrix c(row,column) ;
+  
+  cout << "原始矩陣A:\n" ;  
+  for (i=0;i<row;i++)
+   {    
+     for (j=0;j<column;j++)  
+        cout << a.element[i][j]<< '\t' ;          
+     cout << endl ;
+   }
+  
+  c = a - b ;  // 矩陣A - 整數b
+  
+  cout << "矩陣A - " << b << " = \n" ;  
+  for (i=0;i<row;i++)
+   {    
+     for (j=0;j<column;j++)  
+        cout << c.element[i][j]<< '\t' ;          
+     cout << endl ;
+   }
+   
+  return 0;
+ }

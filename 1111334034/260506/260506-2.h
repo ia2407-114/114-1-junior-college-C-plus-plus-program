@@ -1,0 +1,19 @@
+#include <iostream>
+#include <cmath>
+using namespace std ;
+class Matrix
+ {         
+  public: 
+    int row,column;
+    double **element ; 
+	
+    Matrix(int m, int n) ;
+        
+    // ﹚竡痻皚"-"(璽)玡竚笲衡更ㄧ计
+    Matrix operator-( ) ;
+
+    Matrix operator!( ) ;
+
+    // ﹚竡痻皚"++"笲衡更ㄧ计
+    Matrix operator++(int) ;
+ } ;
