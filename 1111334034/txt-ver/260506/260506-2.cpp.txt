@@ -1,0 +1,78 @@
+﻿#include <iostream>
+#include <cmath>
+#include "260506-2.h"
+using namespace std ;
+
+Matrix::Matrix(int m, int n)
+ {
+   row=m ;
+   column=n ;
+  
+   // 配置mxn個二維陣列,element的態型是浮點數
+   element = new double *[m];
+   int i, j;
+   for (i=0 ; i<m ; i++)
+      element[i] = new double [n];
+ }   
+	        
+// 定義矩陣的"-"(取負)前置運算子多載函數
+Matrix Matrix::operator-( )
+ {        
+   Matrix temp(row, column);
+   int i,j;      
+   for (i=0 ; i<row ; i++)
+     for (j=0 ; j<column ; j++)
+        temp.element[i][j] = -(this->element[i][j]);        
+   return temp ;
+ }
+
+Matrix Matrix::operator!( )
+ {        
+   Matrix temp(row, column);
+   int i,j;      
+   for (i=0 ; i<row ; i++)
+     for (j=0 ; j<column ; j++)
+        temp.element[i][j] = sqrt(this->element[i][j]);        
+   return temp ;
+ }
+
+// 定義矩陣的後序"++"運算子多載函數
+Matrix Matrix::operator++(int)
+ { 
+    Matrix temp(row,column); // 儲存矩陣++運算子執行前的原始內容 
+    int i,j;
+    for (i = 0; i < row; i++) 	    
+      for (j = 0; j < column; j++) 
+	   {		  
+         temp.element[i][j] = this->element[i][j] * this->element[i][j] ;
+       }
+    return temp; // 傳回矩陣的每個元素的2次方
+ }   
+
+int main()
+ {
+  int i, j, row, column;
+  cout << "重新定義後序\"++\"運算子多載函數，計算矩陣a每個元素的2次方：\n" ;
+  cout << "輸入矩陣a的列數(row):" ;
+  cin >> row ;
+  cout << "輸入矩陣a的行數(column):" ;
+  cin >> column ;
+  Matrix a(row, column), b(row, column);
+  cout << "輸入一個" << row << 'x' << column << "矩陣a" << endl ; 
+  for (i=0 ; i<row ; i++)       
+    for (j=0 ; j<column ; j++)
+      {
+        cout << "a["<< i << "][" << j << "]=" ;
+        cin >> a.element[i][j] ;
+      }
+  b = a++ ; 
+  cout << "矩陣a每個元素的2次方(a++):\n" ;
+  for (i=0 ; i<row ; i++)
+   {    
+     for (j=0 ; j<column ; j++)  
+        cout << b.element[i][j] << '\t' ;          
+     cout << endl ;
+   }
+  
+  return 0;
+ }
