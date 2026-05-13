@@ -1,0 +1,69 @@
+// aircraft.h
+// aircraft, airliner, fightJet class definitions
+#ifndef AIRCRAFT_H
+#define AIRCRAFT_H
+
+#include <iostream>
+#include <string>
+
+// 飛行器基底類別
+class aircraft
+{
+private:
+  std::string name; // 名稱
+  int id;           // 編號
+  float wingspan;   // 翼展(公尺)
+  int ceiling;      // 升限(公尺)
+
+public:
+  // aircraft類別建構元函式,設定飛行器的資料
+  aircraft(std::string n, int i, float ws, int cl);
+
+  // aircraft類別解構元函式
+  ~aircraft();
+
+  // 顯示飛行器的資料
+  void display();
+}; // end class aircraft
+
+// 客機衍生類別
+class airliner : public aircraft
+{
+private:
+  int passengers; // 乘客數量
+  int toilets;    // 廁所數量
+
+public:
+  // airliner類別建構元函式,設定客機的資料
+  airliner(std::string n, int i, float ws, int cl,
+           int pax, int wc);
+
+  // airliner類別解構元函式
+  ~airliner();
+
+  // 顯示客機的資料
+  void display_airliner();
+}; // end class airliner
+
+// 戰鬥機衍生類別
+class fightJet : public aircraft
+{
+private:
+  std::string weapons; // 武器
+  int missiles;        // 飛彈數量
+  float thrust;        // 推力(kN)
+  float mach;          // 飛行速度(馬赫)
+
+public:
+  // fightJet類別建構元函式,設定戰鬥機的資料
+  fightJet(std::string n, int i, float ws, int cl,
+           std::string wpn, int msl, float thr, float spd);
+
+  // fightJet類別解構元函式
+  ~fightJet();
+
+  // 顯示戰鬥機的資料
+  void display_fightJet();
+}; // end class fightJet
+
+#endif

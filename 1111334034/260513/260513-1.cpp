@@ -1,0 +1,45 @@
+// 260513-1.cpp
+// Time class test program.
+#include <iostream>
+#include "Time.h" // Time class definition
+using namespace std;
+
+int main()
+{
+   Time t1(8, 24, 36); // 8:24:36
+   Time t2;            // defaults to 0:00:00
+
+   cout << "t1 is " << t1 << "\nt2 is " << t2;
+   cout << "\n\nt1 += 7 is " << (t1 += 7);
+
+   t2.setTime(23, 59, 58);
+   cout << "\n\n  t2 is " << t2;
+   cout << "\n++t2 is " << ++t2 << " (second carry test)";
+
+   Time t3(0, 59, 59);
+
+   cout << "\n\nTesting the prefix increment operator:\n"
+        << "  t3 is " << t3 << endl;
+   cout << "++t3 is " << ++t3 << endl;
+   cout << "  t3 is " << t3;
+
+   cout << "\n\nTesting the postfix increment operator:\n"
+        << "  t3 is " << t3 << endl;
+   cout << "t3++ is " << t3++ << endl;
+   cout << "  t3 is " << t3 << endl;
+} // end main
+
+/**************************************************************************
+ * (C) Copyright 1992-2014 by Deitel & Associates, Inc. and               *
+ * Pearson Education, Inc. All Rights Reserved.                           *
+ *                                                                        *
+ * DISCLAIMER: The authors and publisher of this book have used their     *
+ * best efforts in preparing the book. These efforts include the          *
+ * development, research, and testing of the theories and programs        *
+ * to determine their effectiveness. The authors and publisher make       *
+ * no warranty of any kind, expressed or implied, with regard to these    *
+ * programs or to the documentation contained in these books. The authors *
+ * and publisher shall not be liable in any event for incidental or       *
+ * consequential damages in connection with, or arising out of, the       *
+ * furnishing, performance, or use of these programs.                     *
+ **************************************************************************/
