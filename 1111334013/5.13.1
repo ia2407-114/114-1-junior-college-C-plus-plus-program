@@ -1,0 +1,170 @@
+main.cpp
+#include <iostream>
+#include "Time.h"
+using namespace std;
+
+int main()
+{
+    Time t1(8, 24, 36); // 題目要求：8:24:36
+    Time t2; // 預設為 00:00:00
+
+    cout << "t1 is " << t1 << "\nt2 is " << t2;
+    cout << "\n\nt1 += 7 is " << (t1 += 7) << " (added 7 seconds)";
+
+    t2.setTime(23, 59, 58);
+    cout << "\n\n  t2 is " << t2;
+    cout << "\n++t2 is " << ++t2 << " (incremented)";
+    cout << "\n++t2 is " << ++t2 << " (wraps to next day)";
+
+    Time t3(12, 30, 00);
+
+    cout << "\n\nTesting the prefix increment operator:\n"
+        << "  t3 is " << t3 << endl;
+    cout << "++t3 is " << ++t3 << endl;
+    cout << "  t3 is " << t3;
+
+    cout << "\n\nTesting the postfix increment operator:\n"
+        << "  t3 is " << t3 << endl;
+    cout << "t3++ is " << t3++ << " (shows old value)";
+    cout << "\n  t3 is " << t3 << " (shows new value)" << endl;
+}
+
+time.cpp
+#include <iostream>
+#include <iomanip>
+#include <stdexcept>
+#include "Time.h"
+using namespace std;
+
+// Time 建構子
+Time::Time(int hour, int minute, int second)
+{
+    setTime(hour, minute, second);
+}
+
+// 設定時、分、秒並檢查範圍
+void Time::setTime(int hh, int mm, int ss)
+{
+    if (hh >= 0 && hh <= 23)
+        hour = hh;
+    else
+        throw invalid_argument("Hour must be 0-23");
+
+    if (mm >= 0 && mm <= 59)
+        minute = mm;
+    else
+        throw invalid_argument("Minute must be 0-59");
+
+    if (ss >= 0 && ss <= 59)
+        second = ss;
+    else
+        throw invalid_argument("Second must be 0-59");
+}
+
+// 多載前置遞增運算子
+Time& Time::operator++()
+{
+    helpIncrement(); // 增加一秒
+    return *this;
+}
+
+// 多載後置遞增運算子
+Time Time::operator++(int)
+{
+    Time temp = *this; // 保存目前狀態
+    helpIncrement();
+
+    return temp; // 回傳未遞增前的暫存物件
+}
+
+// 增加指定的秒數
+Time& Time::operator+=(unsigned int additionalSeconds)
+{
+    for (int i = 0; i < additionalSeconds; ++i)
+        helpIncrement();
+
+    return *this;
+}
+
+// 檢查是否為該分鐘的最後一秒
+bool Time::endOfMinute(int testSecond) const
+{
+    return testSecond == 59;
+}
+
+// 檢查是否為該小時的最後一分
+bool Time::endOfHour(int testMinute) const
+{
+    return testMinute == 59;
+}
+
+// 協助遞增時間的工具函式 (核心邏輯)
+void Time::helpIncrement()
+{
+    if (!endOfMinute(second)) // 如果不是 59 秒
+    {
+        ++second;
+    }
+    else
+    {
+        second = 0; // 秒歸零
+        if (!endOfHour(minute)) // 如果不是 59 分
+        {
+            ++minute;
+        }
+        else
+        {
+            minute = 0; // 分歸零
+            if (hour < 23)
+            {
+                ++hour;
+            }
+            else
+            {
+                hour = 0; // 滿 24 小時歸零
+            }
+        }
+    }
+}
+
+// 多載輸出運算子
+ostream& operator<<(ostream& output, const Time& t)
+{
+    // 使用 setfill('0') 和 setw(2) 來保持 00:00:00 格式
+    output << setfill('0') << setw(2) << t.hour << ":"
+        << setw(2) << t.minute << ":"
+        << setw(2) << t.second;
+    return output;
+}
+
+time.h
+#pragma once
+#ifndef TIME_H
+#define TIME_H
+
+#include <iostream>
+
+class Time
+{
+	// 多載輸出運算子
+	friend std::ostream& operator<<(std::ostream&, const Time&);
+public:
+	Time(int h = 0, int m = 0, int s = 0); // 預設建構子
+	void setTime(int, int, int); // 設定時、分、秒
+	Time& operator++(); // 前置遞增運算子
+	Time operator++(int); // 後置遞增運算子
+	Time& operator+=(unsigned int); // 增加秒數，修改物件
+
+	// 這裡保留原範例的 utility 函式架構，修改為時間邏輯
+	bool endOfMinute(int) const; // 是否為該分鐘的最後一秒 (59秒)
+	bool endOfHour(int) const;   // 是否為該小時的最後一分 (59分)
+
+private:
+	unsigned int hour;   // 0-23
+	unsigned int minute; // 0-59
+	unsigned int second; // 0-59
+
+	void helpIncrement(); // 增加秒數的工具函式
+};
+
+#endif
