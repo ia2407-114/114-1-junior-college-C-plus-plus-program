@@ -1,0 +1,53 @@
+#pragma once
+#ifndef AIRCRAFT_H
+#define AIRCRAFT_H
+
+#include <string>
+
+// 基礎類別：飛行器
+class Aircraft {
+private:
+    std::string name;   // 名稱
+    std::string id;     // 編號
+    float wingspan;     // 翼展 (公尺)
+    float ceiling;      // 升限 (英呎)
+
+public:
+    // 建構子與解構子
+    Aircraft(std::string n, std::string i, float w, float c);
+    ~Aircraft();
+
+    // 印出飛行器資料的函數
+    void display() const;
+};
+
+// 衍生類別：大型客機
+class Airliner : public Aircraft {
+private:
+    int passengerCount; // 乘客數量
+    int toiletCount;    // 廁所數量
+
+public:
+    // 透過初始化串列，將父類別需要的資料傳遞過去
+    Airliner(std::string n, std::string i, float w, float c, int p, int t);
+    ~Airliner();
+
+    // 印出客機專屬資料
+    void display() const;
+};
+
+// 衍生類別：戰鬥機
+class FightJet : public Aircraft {
+private:
+    int missileCount;   // 飛彈數量
+    float topSpeedMach; // 最高飛行速度 (馬赫)
+
+public:
+    FightJet(std::string n, std::string i, float w, float c, int m, float s);
+    ~FightJet();
+
+    // 印出戰鬥機專屬資料
+    void display() const;
+};
+
+#endif
