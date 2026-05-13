@@ -1,0 +1,138 @@
+time.h
+
+#ifndef TIME_H
+#define TIME_H
+
+#include <iostream>
+
+class Time
+{
+	friend std::ostream& operator<<(std::ostream&, const Time&);
+public:
+	Time(int h = 0, int m = 0, int s = 0);
+	void setTime(int, int, int);
+	Time& operator++(); 
+	Time operator++(int); 
+	Time& operator+=(unsigned int); 
+private:
+	unsigned int hour; 
+	unsigned int minute;
+	unsigned int second;
+
+	void helpIncrement();
+};
+
+#endif
+
+Time.cpp
+
+#include <iostream>
+#include <iomanip>
+#include <stdexcept>
+#include "Time.h"
+using namespace std;
+
+Time::Time(int hour, int minute, int second)
+{
+    setTime(hour, minute, second);
+}
+
+void Time::setTime(int h, int m, int s)
+{
+    if (h >= 0 && h < 24)
+        hour = h;
+    else
+        throw invalid_argument("Hour must be 0-23");
+
+    if (m >= 0 && m < 60)
+        minute = m;
+    else
+        throw invalid_argument("Minute must be 0-59");
+
+    if (s >= 0 && s < 60)
+        second = s;
+    else
+        throw invalid_argument("Second must be 0-59");
+}
+
+Time& Time::operator++()
+{
+    helpIncrement();
+    return *this; 
+}
+
+Time Time::operator++(int)
+{
+    Time temp = *this;
+    helpIncrement();
+
+    return temp; 
+}
+
+Time& Time::operator+=(unsigned int additionalSeconds)
+{
+    for (unsigned int i = 0; i < additionalSeconds; ++i)
+        helpIncrement();
+
+    return *this; 
+}
+
+void Time::helpIncrement()
+{
+    if (second < 59)
+        ++second;
+    else
+    {
+        second = 0; 
+        if (minute < 59)
+            ++minute;
+        else
+        {
+            minute = 0; 
+            if (hour < 23)
+                ++hour;
+            else
+                hour = 0;
+        }
+    }
+}
+
+ostream& operator<<(ostream& output, const Time& t)
+{
+    output << setfill('0') << setw(2) << t.hour << ":"
+        << setw(2) << t.minute << ":" << setw(2) << t.second;
+    return output;
+}
+
+Source.cpp
+
+#include <iostream>
+#include "Time.h"
+using namespace std;
+
+int main()
+{
+    Time t1(23, 59, 57);
+    Time t2; 
+
+    cout << "t1 is " << t1 << "\nt2 is " << t2;
+    cout << "\n\nt1 += 7 is " << (t1 += 7) << " (crosses midnight)";
+
+    t2.setTime(8, 24, 36);
+    cout << "\n\n  t2 is " << t2;
+    cout << "\n++t2 is " << ++t2 << " (prefix increment)";
+
+    Time t3(12, 30, 0);
+
+    cout << "\n\nTesting the prefix increment operator:\n"
+        << "  t3 is " << t3 << endl;
+    cout << "++t3 is " << ++t3 << endl;
+    cout << "  t3 is " << t3;
+
+    cout << "\n\nTesting the postfix increment operator:\n"
+        << "  t3 is " << t3 << endl;
+    cout << "t3++ is " << t3++ << endl;
+    cout << "  t3 is " << t3 << endl;
+
+    return 0;
+}
