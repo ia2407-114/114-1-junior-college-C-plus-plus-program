@@ -1,0 +1,22 @@
+#include <iostream>
+#include "Aircraft.h"
+
+using namespace std;
+
+int main() {
+    cout << "========== 實作一架大型客機 ==========\n";
+    // 傳入參數：名稱, 編號, 翼展(公尺), 升限(英呎), 乘客數, 廁所數
+    Airliner myAirliner("波音777", "B-16701", 60.9, 43100, 350, 8);
+    cout << "\n[呼叫展示函式]\n";
+    myAirliner.display();
+    cout << endl;
+
+    cout << "========== 實作一架戰鬥機 ==========\n";
+    // 傳入參數：名稱, 編號, 翼展(公尺), 升限(英呎), 飛彈數, 馬赫數
+    FightJet myFighter("F-16", "ROCAF-6832", 9.96, 50000, 6, 2.05);
+    cout << "\n[呼叫展示函式]\n";
+    myFighter.display();
+    cout << "\n========== 程式即將結束，觸發解構子 ==========\n";
+
+    return 0;
+}
