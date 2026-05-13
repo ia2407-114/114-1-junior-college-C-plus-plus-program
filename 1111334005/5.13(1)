@@ -1,0 +1,370 @@
+題目1. 請根據上述"運算子多載的範例程式碼.zip"修改為相對應的時間格式的運算子多載，例如: time1(8,24,36), time1++ 結果為: 8:24:36，需要檢查時間(時、分、秒)是否有超過範圍。 運算子多載的範例程式碼.zip的內容如下:
+// Fig. 10.7: Date.cpp
+// Date class member- and friend-function definitions.
+#include <iostream>
+#include <string>
+#include "Date.h"
+using namespace std;
+
+// initialize static member; one classwide copy
+const array< unsigned int, 13 > Date::days = 
+   { 0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+
+// Date constructor
+Date::Date( int month, int day, int year ) 
+{ 
+   setDate( month, day, year ); 
+} // end Date constructor
+
+// set month, day and year
+void Date::setDate( int mm, int dd, int yy )
+{
+   if ( mm >= 1 && mm <= 12 )
+      month = mm;
+   else
+      throw invalid_argument( "Month must be 1-12" );
+
+   if ( yy >= 1900 && yy <= 2100 )
+      year = yy;
+   else
+      throw invalid_argument( "Year must be >= 1900 and <= 2100" );
+
+   // test for a leap year
+   if ( ( month == 2 && leapYear( year ) && dd >= 1 && dd <= 29 ) ||
+        ( dd >= 1 && dd <= days[ month ] ) )
+      day = dd;
+   else  
+      throw invalid_argument( 
+         "Day is out of range for current month and year" );
+} // end function setDate
+
+// overloaded prefix increment operator 
+Date &Date::operator++()
+{
+   helpIncrement(); // increment date
+   return *this; // reference return to create an lvalue
+} // end function operator++
+
+// overloaded postfix increment operator; note that the  
+// dummy integer parameter does not have a parameter name
+Date Date::operator++( int )
+{
+   Date temp = *this; // hold current state of object
+   helpIncrement(); 
+
+   // return unincremented, saved, temporary object
+   return temp; // value return; not a reference return
+} // end function operator++
+
+// add specified number of days to date
+Date &Date::operator+=( unsigned int additionalDays )
+{
+   for ( int i = 0; i < additionalDays; ++i )
+      helpIncrement();
+
+   return *this; // enables cascading
+} // end function operator+=
+
+// if the year is a leap year, return true; otherwise, return false
+bool Date::leapYear( int testYear )
+{
+   if ( testYear % 400 == 0 || 
+      ( testYear % 100 != 0 && testYear % 4 == 0 ) )
+      return true; // a leap year
+   else
+      return false; // not a leap year
+} // end function leapYear
+
+// determine whether the day is the last day of the month
+bool Date::endOfMonth( int testDay ) const
+{
+   if ( month == 2 && leapYear( year ) )
+      return testDay == 29; // last day of Feb. in leap year
+   else
+      return testDay == days[ month ];
+} // end function endOfMonth
+
+// function to help increment the date
+void Date::helpIncrement()
+{
+   // day is not end of month
+   if ( !endOfMonth( day ) )
+      ++day; // increment day
+   else 
+      if ( month < 12 ) // day is end of month and month < 12
+      {
+         ++month; // increment month
+         day = 1; // first day of new month
+      } // end if
+      else // last day of year
+      {
+         ++year; // increment year
+         month = 1; // first month of new year
+         day = 1; // first day of new month
+      } // end else
+} // end function helpIncrement
+
+// overloaded output operator
+ostream &operator<<( ostream &output, const Date &d )
+{
+   static string monthName[ 13 ] = { "", "January", "February",
+      "March", "April", "May", "June", "July", "August",
+      "September", "October", "November", "December" };
+   output << monthName[ d.month ] << ' ' << d.day << ", " << d.year;
+   return output; // enables cascading
+} // end function operator<<
+
+// Fig. 10.6: Date.h
+// Date class definition with overloaded increment operators.
+#ifndef DATE_H
+#define DATE_H
+
+#include <array>
+#include <iostream>
+
+class Date
+{
+   friend std::ostream &operator<<( std::ostream &, const Date & );
+public:
+   Date( int m = 1, int d = 1, int y = 1900 ); // default constructor
+   void setDate( int, int, int ); // set month, day, year
+   Date &operator++(); // prefix increment operator
+   Date operator++( int ); // postfix increment operator
+   Date &operator+=( unsigned int ); // add days, modify object
+   static bool leapYear( int ); // is date in a leap year?
+   bool endOfMonth( int ) const; // is date at the end of month?
+private:
+   unsigned int month;
+   unsigned int day;
+   unsigned int year;
+
+   static const std::array< unsigned int, 13 > days; // days per month
+   void helpIncrement(); // utility function for incrementing date
+}; // end class Date
+
+#endif
+
+// Fig. 10.8: fig10_08.cpp
+// Date class test program.
+#include <iostream>
+#include "Date.h" // Date class definition
+using namespace std;
+
+int main()
+{
+   Date d1( 12, 27, 2010 ); // December 27, 2010   
+   Date d2; // defaults to January 1, 1900
+
+   cout << "d1 is " << d1 << "\nd2 is " << d2;
+   cout << "\n\nd1 += 7 is " << ( d1 += 7 );
+
+   d2.setDate( 2, 28, 2008 );
+   cout << "\n\n  d2 is " << d2;
+   cout << "\n++d2 is " << ++d2 << " (leap year allows 29th)";
+
+   Date d3( 7, 13, 2010 );
+
+   cout << "\n\nTesting the prefix increment operator:\n"
+      << "  d3 is " << d3 << endl;
+   cout << "++d3 is " << ++d3 << endl;
+   cout << "  d3 is " << d3;
+
+   cout << "\n\nTesting the postfix increment operator:\n"
+      << "  d3 is " << d3 << endl;
+   cout << "d3++ is " << d3++ << endl;
+   cout << "  d3 is " << d3 << endl;
+} // end main
+
+ 老師說要用到什麼time1++，time1+-
+___________________________________________________________________________________________________________________________________________
+
+Time.h
+#ifndef TIME_H
+#define TIME_H
+
+#include <iostream>
+using namespace std;
+
+class Time {
+    friend ostream& operator<<(ostream&, const Time&);
+
+public:
+    Time(int h = 0, int m = 0, int s = 0);
+
+    void setTime(int, int, int);
+
+    // 前置 ++
+    Time& operator++();
+
+    // 後置 ++
+    Time operator++(int);
+
+    // += 秒數
+    Time& operator+=(unsigned int);
+
+private:
+    unsigned int hour;
+    unsigned int minute;
+    unsigned int second;
+
+    void helpIncrement();
+};
+
+#endif
+
+Time.cpp
+#include <iostream>
+#include <stdexcept>
+#include "Time.h"
+
+using namespace std;
+
+// 建構子
+Time::Time(int h, int m, int s) {
+    setTime(h, m, s);
+}
+
+// 設定時間
+void Time::setTime(int h, int m, int s) {
+
+    if (h >= 0 && h < 24)
+        hour = h;
+    else
+        throw invalid_argument("Hour must be 0-23");
+
+    if (m >= 0 && m < 60)
+        minute = m;
+    else
+        throw invalid_argument("Minute must be 0-59");
+
+    if (s >= 0 && s < 60)
+        second = s;
+    else
+        throw invalid_argument("Second must be 0-59");
+}
+
+// 前置++
+Time& Time::operator++() {
+
+    helpIncrement();
+
+    return *this;
+}
+
+// 後置++
+Time Time::operator++(int) {
+
+    Time temp = *this;
+
+    helpIncrement();
+
+    return temp;
+}
+
+// += 秒數
+Time& Time::operator+=(unsigned int additionalSeconds) {
+
+    for (unsigned int i = 0; i < additionalSeconds; i++) {
+        helpIncrement();
+    }
+
+    return *this;
+}
+
+// 時間遞增1秒
+void Time::helpIncrement() {
+
+    ++second;
+
+    // 秒滿60
+    if (second >= 60) {
+        second = 0;
+        ++minute;
+    }
+
+    // 分滿60
+    if (minute >= 60) {
+        minute = 0;
+        ++hour;
+    }
+
+    // 時滿24
+    if (hour >= 24) {
+        hour = 0;
+    }
+}
+
+// 輸出運算子 <<
+ostream& operator<<(ostream& output, const Time& t) {
+
+    output << t.hour << ":"
+           << t.minute << ":"
+           << t.second;
+
+    return output;
+}
+
+main.cpp
+#include <iostream>
+#include "Time.h"
+
+using namespace std;
+
+int main() {
+
+    Time time1(8, 24, 36);
+
+    cout << "原始時間: " << time1 << endl;
+
+    // 前置++
+    cout << "\n測試前置++" << endl;
+    cout << "++time1 = " << ++time1 << endl;
+    cout << "time1 = " << time1 << endl;
+
+    // 後置++
+    cout << "\n測試後置++" << endl;
+    cout << "time1++ = " << time1++ << endl;
+    cout << "time1 = " << time1 << endl;
+
+    // +=
+    cout << "\n測試 += " << endl;
+    time1 += 30;
+
+    cout << "time1 += 30 後: " << time1 << endl;
+
+    return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
