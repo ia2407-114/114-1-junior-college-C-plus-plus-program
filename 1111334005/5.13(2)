@@ -1,0 +1,226 @@
+題目2.請建立一個飛行器(aircraft)類別，具有翼展、升限、名稱、編號等私有資料成員，以及建構子與解構子分別接受(初始)飛行器資料，再建立一個public成員函數，用來印出飛行器資料。
+另外，再建立兩個衍生類別airliner與fightJet繼承aircraft類別，並且具有自身特色的資料成員(參考上課的舉例或自行想像)，例如:武器、飛彈、推力、乘客數量，飛行速度(馬赫)，
+廁所數量等。再建立個別的一個public成員函數，用來印出airliner與flightJet的資料。
+
+aircraft.h
+#ifndef AIRCRAFT_H
+#define AIRCRAFT_H
+
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+class aircraft {
+
+protected:
+    double wingspan;     // 翼展
+    int ceiling;         // 升限
+    string name;         // 名稱
+    string id;           // 編號
+
+public:
+    // 建構子
+    aircraft(double ws, int ce, string n, string i);
+
+    // 解構子
+    ~aircraft();
+
+    // 印出飛行器資料
+    void printAircraft();
+};
+
+#endif
+________________________________________________________________________________________
+aircraft.cpp
+#include "aircraft.h"
+
+// 建構子
+aircraft::aircraft(double ws, int ce, string n, string i) {
+
+    wingspan = ws;
+    ceiling = ce;
+    name = n;
+    id = i;
+
+    cout << "aircraft 建構子執行" << endl;
+}
+
+// 解構子
+aircraft::~aircraft() {
+
+    cout << "aircraft 解構子執行" << endl;
+}
+
+// 印出資料
+void aircraft::printAircraft() {
+
+    cout << "飛行器名稱: " << name << endl;
+    cout << "飛行器編號: " << id << endl;
+    cout << "翼展: " << wingspan << " 公尺" << endl;
+    cout << "升限: " << ceiling << " 英尺" << endl;
+}
+__________________________________________________________________________
+airliner.h
+#ifndef AIRLINER_H
+#define AIRLINER_H
+
+#include "aircraft.h"
+
+class airliner : public aircraft {
+
+private:
+    int passengers;   // 乘客數量
+    int toilets;      // 廁所數量
+
+public:
+    // 建構子
+    airliner(double, int, string, string, int, int);
+
+    // 解構子
+    ~airliner();
+
+    // 印出資料
+    void printAirliner();
+};
+
+#endif
+____________________________________________________________
+airliner.cpp
+#include "airliner.h"
+
+// 建構子
+airliner::airliner(double ws, int ce, string n,
+                   string i, int p, int t)
+    : aircraft(ws, ce, n, i)
+{
+    passengers = p;
+    toilets = t;
+
+    cout << "airliner 建構子執行" << endl;
+}
+
+// 解構子
+airliner::~airliner() {
+
+    cout << "airliner 解構子執行" << endl;
+}
+
+// 印出資料
+void airliner::printAirliner() {
+
+    printAircraft();
+
+    cout << "乘客數量: " << passengers << endl;
+    cout << "廁所數量: " << toilets << endl;
+}
+_____________________________________________________________________
+
+fightJet.h
+#ifndef FIGHTJET_H
+#define FIGHTJET_H
+
+#include "aircraft.h"
+
+class fightJet : public aircraft {
+
+private:
+    int missiles;      // 飛彈數量
+    double mach;       // 馬赫速度
+
+public:
+    // 建構子
+    fightJet(double, int, string, string, int, double);
+
+    // 解構子
+    ~fightJet();
+
+    // 印出資料
+    void printFightJet();
+};
+
+#endif
+_________________________________________________________________
+
+fightJet.cpp
+#include "fightJet.h"
+
+// 建構子
+fightJet::fightJet(double ws, int ce, string n,
+                   string i, int m, double ma)
+    : aircraft(ws, ce, n, i)
+{
+    missiles = m;
+    mach = ma;
+
+    cout << "fightJet 建構子執行" << endl;
+}
+
+// 解構子
+fightJet::~fightJet() {
+
+    cout << "fightJet 解構子執行" << endl;
+}
+
+// 印出資料
+void fightJet::printFightJet() {
+
+    printAircraft();
+
+    cout << "飛彈數量: " << missiles << endl;
+    cout << "飛行速度(馬赫): " << mach << endl;
+}
+
+_____________________________________________________________________
+main.cpp
+#include <iostream>
+#include "airliner.h"
+#include "fightJet.h"
+
+using namespace std;
+
+int main() {
+
+    cout << "===== 客機資料 =====" << endl;
+
+    airliner a1(
+        60.3,
+        43000,
+        "Boeing 777",
+        "BR777",
+        350,
+        8
+    );
+
+    a1.printAirliner();
+
+    cout << endl;
+
+    cout << "===== 戰鬥機資料 =====" << endl;
+
+    fightJet f1(
+        13.5,
+        65000,
+        "F-22 Raptor",
+        "USAF22",
+        6,
+        2.25
+    );
+
+    f1.printFightJet();
+
+    return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
