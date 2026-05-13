@@ -1,0 +1,59 @@
+#include <iostream>
+#include "Aircraft.h"
+
+using namespace std;
+
+// ================= Aircraft (飛行器) 實作 =================
+Aircraft::Aircraft(string n, string i, float w, float c)
+    : name(n), id(i), wingspan(w), ceiling(c) {
+    cout << "[系統] 建立基礎飛行器: " << name << endl;
+}
+
+Aircraft::~Aircraft() {
+    cout << "[系統] 銷毀基礎飛行器: " << name << endl;
+}
+
+void Aircraft::display() const {
+    cout << "--- 飛行器基本資料 ---" << endl;
+    cout << "名稱: " << name << endl;
+    cout << "編號: " << id << endl;
+    cout << "翼展: " << wingspan << " 公尺" << endl;
+    cout << "升限: " << ceiling << " 英呎" << endl;
+}
+
+// ================= Airliner (大型客機) 實作 =================
+// 注意：必須在初始化串列中呼叫父類別 Aircraft 的建構子
+Airliner::Airliner(string n, string i, float w, float c, int p, int t)
+    : Aircraft(n, i, w, c), passengerCount(p), toiletCount(t) {
+    cout << "[系統] 建立大型客機完成。" << endl;
+}
+
+Airliner::~Airliner() {
+    cout << "[系統] 銷毀大型客機資源..." << endl;
+}
+
+void Airliner::display() const {
+    // 先呼叫父類別的 display() 印出共通資料
+    Aircraft::display();
+    // 再印出子類別獨有的資料
+    cout << "--- 客機特色資料 ---" << endl;
+    cout << "乘客數量: " << passengerCount << " 人" << endl;
+    cout << "廁所數量: " << toiletCount << " 間" << endl;
+}
+
+// ================= FightJet (戰鬥機) 實作 =================
+FightJet::FightJet(string n, string i, float w, float c, int m, float s)
+    : Aircraft(n, i, w, c), missileCount(m), topSpeedMach(s) {
+    cout << "[系統] 建立戰鬥機完成。" << endl;
+}
+
+FightJet::~FightJet() {
+    cout << "[系統] 銷毀戰鬥機資源..." << endl;
+}
+
+void FightJet::display() const {
+    Aircraft::display(); // 呼叫父類別方法
+    cout << "--- 戰機特色資料 ---" << endl;
+    cout << "搭載飛彈: " << missileCount << " 枚" << endl;
+    cout << "極速表現: " << topSpeedMach << " 馬赫" << endl;
+}
