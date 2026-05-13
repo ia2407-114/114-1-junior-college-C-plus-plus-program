@@ -1,0 +1,30 @@
+
+#include <iostream>
+#include "Time.h"
+using namespace std;
+
+int main()
+{
+    Time t1(23, 59, 58);
+    Time t2; 
+
+    cout << "t1 is " << t1 << "\nt2 is " << t2;
+    cout << "\n\nt1 += 7 is " << (t1 += 7);
+
+    t2.setTime(8,24,36);
+    cout << "\n\n  t2 is " << t2;
+    cout << "\n++t2 is " << ++t2 ;
+
+    Time t3(11,4,51);
+
+    cout << "\n\nTesting the prefix increment operator:\n"
+        << "  t3 is " << t3 << endl;
+    cout << "++t3 is " << ++t3 << endl;
+    cout << "  t3 is " << t3;
+
+    cout << "\n\nTesting the postfix increment operator:\n"
+        << "  t3 is " << t3 << endl;
+    cout << "t3++ is " << t3++ << endl;
+    cout << "  t3 is " << t3 << endl;
+}
+
