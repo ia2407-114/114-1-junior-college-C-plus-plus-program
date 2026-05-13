@@ -1,0 +1,146 @@
+main.cpp
+#include <iostream>
+#include "Airliner.h"
+#include "FlightJet.h"
+
+using namespace std;
+
+int main() {
+    cout << "--- Creating an Airliner ---" << endl;
+    Airliner my747(64.4, 45100, "Boeing 747", "B747-001", 416, 12);
+    my747.printAirlinerData();
+
+    cout << "\n--- Creating a Flight Jet ---" << endl;
+    FlightJet myF16(9.96, 50000, "F-16 Fighting Falcon", "F16-USA", 2.0, 6);
+    myF16.printFlightJetData();
+
+    cout << "\n--- Program Ending (Destructors will fire) ---" << endl;
+    return 0;
+}
+
+aircraft.cpp
+#include <iostream>
+#include "Aircraft.h"
+using namespace std;
+
+Aircraft::Aircraft(double w, double c, string n, string i)
+    : wingspan(w), ceiling(c), name(n), id(i) {
+    cout << "Aircraft " << name << " constructor called." << endl;
+}
+
+Aircraft::~Aircraft() {
+    cout << "Aircraft " << name << " destructor called." << endl;
+}
+
+void Aircraft::printData() const {
+    cout << "Name: " << name << "\nID: " << id
+        << "\nWingspan: " << wingspan << " m"
+        << "\nCeiling: " << ceiling << " ft" << endl;
+}
+
+airline.cpp
+#include <iostream>
+#include "Airliner.h"
+using namespace std;
+
+Airliner::Airliner(double w, double c, string n, string i, int p, int t)
+    : Aircraft(w, c, n, i), passengers(p), toilets(t) {
+    cout << "Airliner specialized constructor called." << endl;
+}
+
+Airliner::~Airliner() {
+    cout << "Airliner destructor called." << endl;
+}
+
+void Airliner::printAirlinerData() const {
+    printData(); // 呼叫基底類別函數
+    cout << "Passenger Capacity: " << passengers
+        << "\nNumber of Toilets: " << toilets << endl;
+}
+
+flightjet.cpp
+#include <iostream>
+#include "FlightJet.h"
+using namespace std;
+
+FlightJet::FlightJet(double w, double c, string n, string i, double m, int ms)
+    : Aircraft(w, c, n, i), mach(m), missiles(ms) {
+    cout << "FlightJet specialized constructor called." << endl;
+}
+
+FlightJet::~FlightJet() {
+    cout << "FlightJet destructor called." << endl;
+}
+
+void FlightJet::printFlightJetData() const {
+    printData();
+    cout << "Top Speed: " << mach << " Mach"
+        << "\nMissiles Loaded: " << missiles << endl;
+}
+
+aircraft.h
+#pragma once
+#ifndef AIRCRAFT_H
+#define AIRCRAFT_H
+
+#include <string>
+
+class Aircraft {
+public:
+    // 建構子與解構子
+    Aircraft(double wingspan, double ceiling, std::string name, std::string id);
+    virtual ~Aircraft(); // 良好的習慣：基底類別解構子應為 virtual
+
+    void printData() const; // 列印基本資料
+
+protected:
+    // 私有資料成員 (使用 protected 方便衍生類別存取或維持封裝)
+    double wingspan;   // 翼展
+    double ceiling;    // 升限
+    std::string name;  // 名稱
+    std::string id;    // 編號
+};
+
+#endif
+
+airline.h
+#pragma once
+#ifndef AIRLINER_H
+#define AIRLINER_H
+
+#include "Aircraft.h"
+
+class Airliner : public Aircraft {
+public:
+    Airliner(double, double, std::string, std::string, int passengers, int toilets);
+    ~Airliner();
+
+    void printAirlinerData() const;
+
+private:
+    int passengers; // 乘客數量
+    int toilets;    // 廁所數量
+};
+
+#endif
+
+flightjet.h
+#pragma once
+#ifndef FLIGHTJET_H
+#define FLIGHTJET_H
+
+#include "Aircraft.h"
+
+class FlightJet : public Aircraft {
+public:
+    FlightJet(double, double, std::string, std::string, double mach, int missiles);
+    ~FlightJet();
+
+    void printFlightJetData() const;
+
+private:
+    double mach;    // 飛行速度 (馬赫)
+    int missiles;   // 飛彈數量
+};
+
+#endif
