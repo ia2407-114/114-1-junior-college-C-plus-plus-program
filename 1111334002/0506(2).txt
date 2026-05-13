@@ -1,0 +1,110 @@
+main.cpp
+
+#include <iostream>
+#include "Matrix.h"
+
+using namespace std;
+
+int main() {
+    int r, c;
+    cout << "輸入矩陣列數(row):";
+    cin >> r;
+    cout << "輸入矩陣行數(column):";
+    cin >> c;
+
+    Matrix a(r, c);
+    cout << "請輸入 " << r << "x" << c << " 矩陣 A 的元素：" << endl;
+    for (int i = 0; i < r; i++) {
+        for (int j = 0; j < c; j++) {
+            cout << "A[" << i << "][" << j << "]=";
+            cin >> a.element[i][j];
+        }
+    }
+
+    Matrix b = !a;
+    cout << "\n1. 執行 !a (平方根) 的結果：\n";
+    for (int i = 0; i < r; i++) {
+        for (int j = 0; j < c; j++) {
+            cout << b.element[i][j] << "\t";
+        }
+        cout << endl;
+    }
+
+    Matrix d = a++;
+    cout << "\n2. 執行 a++ (2 次方) 的結果：\n";
+    for (int i = 0; i < r; i++) {
+        for (int j = 0; j < c; j++) {
+            cout << d.element[i][j] << "\t";
+        }
+        cout << endl;
+    }
+
+    return 0;
+}
+
+matrix.h
+
+#ifndef MATRIX_H
+#define MATRIX_H
+
+class Matrix {
+public:
+    int row, column;
+    double** element; 
+    Matrix(int m, int n);
+    ~Matrix();
+
+    Matrix operator!();      
+    Matrix operator++(int);
+};
+
+#endif
+
+matrix.cpp
+
+#include "Matrix.h"
+#include <iostream>
+#include <cmath> 
+
+using namespace std;
+
+Matrix::Matrix(int m, int n) {
+    row = m;
+    column = n;
+    element = new double* [row];
+    for (int i = 0; i < row; i++) {
+        element[i] = new double[column];
+    }
+}
+
+Matrix::~Matrix() {
+    for (int i = 0; i < row; i++) {
+        delete[] element[i];
+    }
+    delete[] element;
+}
+
+Matrix Matrix::operator!() {
+    Matrix temp(row, column);
+    for (int i = 0; i < row; i++) {
+        for (int j = 0; j < column; j++) {
+
+            temp.element[i][j] = sqrt(this->element[i][j]);
+        }
+    }
+    return temp;
+}
+
+Matrix Matrix::operator++(int) {
+
+    Matrix temp(row, column);
+
+    for (int i = 0; i < row; i++) {
+        for (int j = 0; j < column; j++) {
+
+            temp.element[i][j] = this->element[i][j] * this->element[i][j];
+        }
+    }
+
+    return temp;
+}

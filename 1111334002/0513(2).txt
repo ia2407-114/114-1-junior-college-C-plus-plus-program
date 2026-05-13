@@ -1,0 +1,117 @@
+Aircraft.h
+
+#ifndef AIRCRAFT_H
+#define AIRCRAFT_H
+
+#include <string>
+
+class Aircraft {
+public:
+    Aircraft(double span, int ceiling, std::string n, std::string id);
+    virtual ~Aircraft();
+    void printBaseInfo() const;
+
+private:
+    double wingspan;     
+    int serviceCeiling;  
+    std::string name; 
+    std::string tailNumber; 
+};
+
+class Airliner : public Aircraft {
+public:
+    Airliner(double span, int ceiling, std::string n, std::string id, int pass, int lav);
+    ~Airliner();
+    void printAirlinerInfo() const;
+
+private:
+    int passengerCapacity;
+    int toiletCount;   
+};
+
+class FlightJet : public Aircraft {
+public:
+    FlightJet(double span, int ceiling, std::string n, std::string id, double mach, int missiles);
+    ~FlightJet();
+    void printFlightJetInfo() const;
+
+private:
+    double speedMach; 
+    int missileCount;
+};
+
+#endif
+
+Aircraft.cpp
+
+#include "Aircraft.h"
+#include <iostream>
+
+using namespace std;
+
+Aircraft::Aircraft(double span, int ceiling, string n, string id)
+    : wingspan(span), serviceCeiling(ceiling), name(n), tailNumber(id) {
+    cout << "Aircraft " << name << " [建構子執行]\n";
+}
+
+Aircraft::~Aircraft() {
+    cout << "Aircraft " << name << " [解構子執行]\n";
+}
+
+void Aircraft::printBaseInfo() const {
+    cout << "名稱: " << name << "\n"
+        << "編號: " << tailNumber << "\n"
+        << "翼展: " << wingspan << " 公尺\n"
+        << "升限: " << serviceCeiling << " 英呎\n";
+}
+
+Airliner::Airliner(double span, int ceiling, string n, string id, int pass, int lav)
+    : Aircraft(span, ceiling, n, id), passengerCapacity(pass), toiletCount(lav) {
+    cout << "Airliner 特色資料已初始化。\n";
+}
+
+Airliner::~Airliner() {
+    cout << "Airliner 解構完成。\n";
+}
+
+void Airliner::printAirlinerInfo() const {
+    cout << "===== 民航機詳細資料 =====\n";
+    printBaseInfo();
+    cout << "乘客數量: " << passengerCapacity << " 人\n"
+        << "廁所數量: " << toiletCount << " 間\n";
+}
+
+FlightJet::FlightJet(double span, int ceiling, string n, string id, double mach, int missiles)
+    : Aircraft(span, ceiling, n, id), speedMach(mach), missileCount(missiles) {
+    cout << "FlightJet 特色資料已初始化。\n";
+}
+
+FlightJet::~FlightJet() {
+    cout << "FlightJet 解構完成。\n";
+}
+
+void FlightJet::printFlightJetInfo() const {
+    cout << "===== 戰鬥機詳細資料 =====\n";
+    printBaseInfo();
+    cout << "飛行速度: " << speedMach << " 馬赫\n"
+        << "載彈數量: " << missileCount << " 枚\n";
+}
+
+source.cpp
+
+#include <iostream>
+#include "Aircraft.h"
+
+int main() {
+    Airliner airliner(60.3, 40000, "Airbus A330", "B-12345", 300, 8);
+    std::cout << std::endl;
+    airliner.printAirlinerInfo();
+    std::cout << "-----------------------------------\n\n";
+
+    FlightJet jet(13.1, 60000, "F-15 Eagle", "AF-710", 2.5, 8);
+    std::cout << std::endl;
+    jet.printFlightJetInfo();
+    std::cout << "-----------------------------------\n\n";
+
+    return 0;
+}

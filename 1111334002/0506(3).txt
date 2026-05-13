@@ -1,0 +1,109 @@
+main.cpp
+
+#include <iostream>
+#include "Matrix.h"
+
+using namespace std;
+
+int main() {
+    int row, column, subValue;
+    cout << "重新定義「-」(減號)運算子多載，使其能應用在矩陣減去整數上\n";
+    cout << "輸入矩陣A的列數(row):";
+    cin >> row;
+    cout << "輸入矩陣A的行數(column):";
+    cin >> column;
+
+    Matrix a('A', row, column);
+
+    cout << "輸入欲減去的整數值:";
+    cin >> subValue;
+
+    Matrix c = a - subValue;
+
+    cout << "\n--- 比較結果 ---\n";
+    cout << "原始矩陣 A 内容:\n";
+    a.display();
+
+    cout << "\n矩陣 A 減去 " << subValue << " 後的結果 (A - " << subValue << "):\n";
+    c.display();
+
+    return 0;
+}
+
+matrix.h
+
+#ifndef MATRIX_H
+#define MATRIX_H
+
+class Matrix {
+public:
+    int row, column;
+    int** element;
+
+    Matrix(int m, int n);
+    Matrix(char name, int m, int n);
+    ~Matrix();
+
+    Matrix operator-(int b);
+
+    void display();
+};
+
+#endif
+
+matrix.cpp
+
+#include "Matrix.h"
+#include <iostream>
+
+using namespace std;
+
+Matrix::Matrix(int m, int n) {
+    row = m;
+    column = n;
+    element = new int* [m];
+    for (int i = 0; i < m; i++)
+        element[i] = new int[n];
+}
+
+Matrix::Matrix(char name, int m, int n) {
+    row = m;
+    column = n;
+    element = new int* [m];
+    for (int i = 0; i < m; i++)
+        element[i] = new int[n];
+
+    cout << "輸入一" << m << 'x' << n << "矩陣" << name << endl;
+    for (int i = 0; i < m; i++) {
+        for (int j = 0; j < n; j++) {
+            cout << name << "[" << i << "][" << j << "]=";
+            cin >> element[i][j];
+        }
+    }
+}
+
+Matrix::~Matrix() {
+    for (int i = 0; i < row; i++)
+        delete[] element[i];
+    delete[] element;
+}
+
+Matrix Matrix::operator-(int b) {
+    Matrix temp(this->row, this->column);
+    for (int i = 0; i < this->row; i++) {
+        for (int j = 0; j < this->column; j++) {
+
+            temp.element[i][j] = this->element[i][j] - b;
+        }
+    }
+    return temp;
+}
+
+void Matrix::display() {
+    for (int i = 0; i < row; i++) {
+        for (int j = 0; j < column; j++) {
+            cout << element[i][j] << '\t';
+        }
+        cout << endl;
+    }
+}
