@@ -1,0 +1,92 @@
+
+#include <iostream>
+#include <string>
+#include "Time.h"
+#include <iomanip>
+using namespace std;
+
+
+
+
+
+Time::Time(int h, int m, int s)
+{
+    setTime(h, m, s);
+} 
+
+void Time::setTime(int hh, int mm, int ss)
+{
+    if (hh >= 0 && hh < 24)
+        h = hh;
+    else
+        throw invalid_argument("Hour must be 0-23");
+
+    if (mm >= 0 && mm < 60)
+        m = mm;
+    else
+        throw invalid_argument("Minute must be 0-59");
+
+    if (ss >= 0 && ss < 60)
+        s = ss;
+    else
+        throw invalid_argument("Second must be 0-59");
+} 
+
+Time& Time::operator++()
+{
+    helpIncrement(); 
+    return *this; 
+} 
+
+
+Time Time::operator++(int)
+{
+    Time temp = *this; 
+    helpIncrement();
+
+    return temp; 
+} 
+Time& Time::operator+=(unsigned int additionalSeconds)
+{
+    for (unsigned int i=0 ; i< additionalSeconds; ++i)
+        helpIncrement();
+
+    return *this; 
+} 
+
+
+
+void Time::helpIncrement()
+{
+    // day is not end of month
+    if (s<59)
+        ++s; // increment day
+    else{
+        s = 0;
+        if (m < 59) {
+            ++m; 
+            
+        } 
+        else 
+        {
+            m = 0;
+            if (h > 23) {
+                ++h;
+            }
+            else {
+                h = 0;
+            }
+        }
+    }
+        
+} 
+
+
+ostream& operator<<(ostream& output, const Time& t)
+{
+    output << t.h << ":"
+        << setfill('0') << setw(2) << t.m << ":"
+        << setfill('0') << setw(2) << t.s;
+    return output; 
+} 
+
