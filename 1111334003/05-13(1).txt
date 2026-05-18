@@ -1,0 +1,114 @@
+main.cpp
+#include <iostream>
+#include "Time.h"
+using namespace std;
+int main()
+{
+    Time time1(8, 24, 36);
+    Time time2;
+    cout << "time1 is " << time1 << "\ntime2 is " << time2;
+    cout << "\n\ntime1 += 7 is " << (time1 += 7);
+    time2.setTime(23, 59, 58);
+    cout << "\n\n time2 is " << time2;
+    cout << "\n++time2 is " << ++time2;
+    Time time3(12, 30, 59);
+    cout << "\n\nTesting prefix increment:\n";
+    cout << "time3 is " << time3 << endl;
+    cout << "++time3 is " << ++time3 << endl;
+    cout << "time3 is " << time3 << endl;
+    cout << "\n\nTesting postfix increment:\n";
+    cout << "time3 is " << time3 << endl;
+    cout << "time3++ is " << time3++ << endl;
+    cout << "time3 is " << time3 << endl;
+    return 0;
+}
+time.cpp
+#include <iostream>
+#include <iomanip>
+#include <stdexcept>
+#include "Time.h"
+using namespace std;
+Time::Time(int h, int m, int s)
+{
+    setTime(h, m, s);
+}
+void Time::setTime(int h, int m, int s)
+{
+    if (h >= 0 && h <= 23)
+        hour = h;
+    else
+        throw invalid_argument("Hour must be 0-23");
+    if (m >= 0 && m <= 59)
+        minute = m;
+    else
+        throw invalid_argument("Minute must be 0-59");
+    if (s >= 0 && s <= 59)
+        second = s;
+    else
+        throw invalid_argument("Second must be 0-59");
+}
+Time& Time::operator++()
+{
+    helpIncrement();
+    return *this;
+}
+Time Time::operator++(int)
+{
+    Time temp = *this;
+    helpIncrement();
+    return temp;
+}
+Time& Time::operator+=(unsigned int additionalSeconds)
+{
+    for (unsigned int i = 0; i < additionalSeconds; i++)
+    {
+        helpIncrement();
+    }
+    return *this;
+}
+void Time::helpIncrement()
+{
+    second++;
+    if (second >= 60)
+    {
+        second = 0;
+        minute++;
+        if (minute >= 60)
+        {
+            minute = 0;
+            hour++;
+            if (hour >= 24)
+            {
+                hour = 0;
+            }
+        }
+    }
+}
+ostream& operator<<(ostream& output, const Time& t)
+{
+    output << setfill('0')
+        << setw(2) << t.hour << ":"
+        << setw(2) << t.minute << ":"
+        << setw(2) << t.second;
+    return output;
+}
+time.h
+#ifndef TIME_H
+#define TIME_H
+#include <iostream>
+class Time
+{
+    friend std::ostream& operator<<(std::ostream&, const Time&);
+public:
+    Time(int = 0, int = 0, int = 0);
+    void setTime(int, int, int);
+    Time& operator++();
+    Time operator++(int);
+    Time& operator+=(unsigned int);
+private:
+    unsigned int hour;
+    unsigned int minute;
+    unsigned int second;
+    void helpIncrement();
+};
+#endif

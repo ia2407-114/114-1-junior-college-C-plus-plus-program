@@ -1,0 +1,139 @@
+main.cpp
+#include <iostream>
+#include "airliner.h"
+#include "fighterJet.h"
+using namespace std;
+int main()
+{
+    cout << "===== Create Airliner =====\n";
+    airliner air1;
+    air1.display();
+    air1.display_airliner();
+    cout << "\n===========================\n";
+    cout << "\n===== Create Fighter Jet =====\n";
+    fighterJet jet1;
+    jet1.display();
+    jet1.display_fighterJet();
+    return 0;
+}
+fighterJet.cpp
+#include <iostream>
+#include "fighterJet.h"
+using namespace std;
+fighterJet::fighterJet()
+{
+    cout << "\nExecute fighterJet constructor\n";
+    cout << "Number of missiles: ";
+    cin >> missiles;
+    cout << "Mach speed: ";
+    cin >> machSpeed;
+}
+fighterJet::~fighterJet()
+{
+    cout << "Execute fighterJet destructor.\n";
+}
+void fighterJet::display_fighterJet()
+{
+    cout << "Missiles: " << missiles << endl;
+    cout << "Mach Speed: " << machSpeed << endl;
+}
+fighterJet.h
+#ifndef FIGHTERJET_H
+#define FIGHTERJET_H
+#include "aircraft.h"
+class fighterJet : public aircraft
+{
+private:
+    int missiles;
+    float machSpeed;
+public:
+    fighterJet();
+    ~fighterJet();
+    void display_fighterJet();
+};
+#endif#pragma once
+airliner.cpp
+#include <iostream>
+#include "airliner.h"
+using namespace std;
+airliner::airliner()
+{
+    cout << "\nExecute airliner constructor\n";
+    cout << "Passenger capacity: ";
+    cin >> passengers;
+    cout << "Number of toilets: ";
+    cin >> toilets;
+}
+airliner::~airliner()
+{
+    cout << "Execute airliner destructor.\n";
+}
+void airliner::display_airliner()
+{
+    cout << "Passengers: " << passengers << endl;
+    cout << "Toilets: " << toilets << endl;
+}
+airliner.h
+#ifndef AIRLINER_H
+#define AIRLINER_H
+#include "aircraft.h"
+class airliner : public aircraft
+{
+private:
+    int passengers;
+    int toilets;
+public:
+    airliner();
+    ~airliner();
+
+    void display_airliner();
+};
+#endif#pragma once
+aircraft.cpp
+#include <iostream>
+#include "aircraft.h"
+using namespace std;
+aircraft::aircraft()
+{
+    cout << "Execute aircraft constructor\n";
+    cout << "Create an aircraft:\n";
+    cout << "Name: ";
+    cin >> name;
+    cout << "ID: ";
+    cin >> id;
+    cout << "Wingspan (meter): ";
+    cin >> wingspan;
+    cout << "Service ceiling (meter): ";
+    cin >> ceiling;
+}
+aircraft::~aircraft()
+{
+    cout << "Execute aircraft destructor.\n";
+}
+void aircraft::display()
+{
+    cout << "\nAircraft Name: " << name << endl;
+    cout << "Aircraft ID: " << id << endl;
+    cout << "Wingspan: " << wingspan << " m" << endl;
+    cout << "Service Ceiling: " << ceiling << " m" << endl;
+}
+aircraft.h
+#ifndef AIRCRAFT_H
+#define AIRCRAFT_H
+#include <iostream>
+#include <string>
+using namespace std;
+class aircraft
+{
+private:
+    string name;
+    int id;
+    float wingspan;
+    float ceiling;
+public:
+    aircraft();
+    ~aircraft();
+
+    void display();
+};
+#endif#pragma once
