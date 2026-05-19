@@ -1,0 +1,189 @@
+//main.cpp
+#include <iostream>
+#include "Aircraft.h"
+
+using namespace std;
+
+int main()
+{
+    Airliner a1(
+        "Boeing 747",
+        "A1001",
+        68.5,
+        13100,
+        416,
+        10
+    );
+
+    FightJet f1(
+        "F-22 Raptor",
+        "F2201",
+        13.56,
+        20000,
+        8,
+        2.25
+    );
+
+    cout << "===== Airliner Data =====" << endl;
+    a1.printAirliner();
+
+    cout << endl;
+
+    cout << "===== FightJet Data =====" << endl;
+    f1.printFightJet();
+
+    return 0;
+}
+//aircraft.h
+#ifndef AIRCRAFT_H
+#define AIRCRAFT_H
+
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+// 基底類別
+class Aircraft
+{
+public:
+    Aircraft(string, string, double, double);
+    ~Aircraft();
+
+    void printAircraft() const;
+
+protected:
+    string name;
+    string number;
+    double wingspan;
+    double ceiling;
+};
+
+// 客機類別
+class Airliner : public Aircraft
+{
+public:
+    Airliner(string, string, double, double, int, int);
+    ~Airliner();
+
+    void printAirliner() const;
+
+private:
+    int passengers;
+    int toilets;
+};
+
+// 戰鬥機類別
+class FightJet : public Aircraft
+{
+public:
+    FightJet(string, string, double, double, int, double);
+    ~FightJet();
+
+    void printFightJet() const;
+
+private:
+    int missiles;
+    double machSpeed;
+};
+#endif
+//aircraft.cpp
+#include <iostream>
+#include "Aircraft.h"
+
+using namespace std;
+
+// ================= Aircraft =================
+
+// 建構子
+Aircraft::Aircraft(
+    string n,
+    string num,
+    double wing,
+    double ceil
+)
+{
+    name = n;
+    number = num;
+    wingspan = wing;
+    ceiling = ceil;
+
+    cout << "Aircraft constructor called" << endl;
+}
+
+// 解構子
+Aircraft::~Aircraft()
+{
+    cout << "Aircraft destructor called" << endl;
+}
+
+// 印出資料
+void Aircraft::printAircraft() const
+{
+    cout << "Name: " << name << endl;
+    cout << "Number: " << number << endl;
+    cout << "Wingspan: " << wingspan << " meters" << endl;
+    cout << "Ceiling: " << ceiling << " meters" << endl;
+}
+
+// ================= Airliner =================
+
+Airliner::Airliner(
+    string n,
+    string num,
+    double wing,
+    double ceil,
+    int pass,
+    int toilet
+)
+    : Aircraft(n, num, wing, ceil)
+{
+    passengers = pass;
+    toilets = toilet;
+
+    cout << "Airliner constructor called" << endl;
+}
+
+Airliner::~Airliner()
+{
+    cout << "Airliner destructor called" << endl;
+}
+
+void Airliner::printAirliner() const
+{
+    printAircraft();
+
+    cout << "Passengers: " << passengers << endl;
+    cout << "Toilets: " << toilets << endl;
+}
+
+// ================= FightJet =================
+
+FightJet::FightJet(
+    string n,
+    string num,
+    double wing,
+    double ceil,
+    int missile,
+    double speed
+)
+    : Aircraft(n, num, wing, ceil)
+{
+    missiles = missile;
+    machSpeed = speed;
+
+    cout << "FightJet constructor called" << endl;
+}
+
+FightJet::~FightJet()
+{
+    cout << "FightJet destructor called" << endl;
+}
+
+void FightJet::printFightJet() const
+{
+    printAircraft();
+
+    cout << "Missiles: " << missiles << endl;
+    cout << "Mach Speed: " << machSpeed << endl;
+}
