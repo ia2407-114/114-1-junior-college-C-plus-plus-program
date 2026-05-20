@@ -1,0 +1,12 @@
+#include "classroom.h"
+
+int main()
+{
+    classroom c1;
+
+    c1.data_input();
+
+    c1.show();
+
+    return 0;
+}
