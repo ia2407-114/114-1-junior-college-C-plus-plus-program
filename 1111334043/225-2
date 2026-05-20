@@ -1,0 +1,28 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+
+         
+struct student {
+    int id;
+    char name[20];
+    int computer, math;
+    double average;
+};
+
+int main(void)
+{
+    FILE* cfPtr;
+
+    if ((cfPtr = fopen("random students.dat", "wb")) == NULL) {
+        puts("File could not be opened.");
+    }
+    else {   
+        struct student form = { 0, "", 0, 0, 0.0 };
+                            
+        for (unsigned int i = 1; i <= 100; ++i) {
+            fwrite(&form, sizeof(struct student), 1, cfPtr);
+        }
+
+        fclose(cfPtr);
+    }
+}
