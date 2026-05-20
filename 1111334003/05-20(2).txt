@@ -1,0 +1,97 @@
+main.cpp
+#include <iostream>
+#include "classroom.h"
+using namespace std;
+int main()
+{
+    int sid, tid;
+    string sname, tname;
+    cout << "Enter student id: ";
+    cin >> sid;
+    cin.ignore();
+    cout << "Enter student name: ";
+    getline(cin, sname);
+    cout << "\nEnter teacher id: ";
+    cin >> tid;
+    cin.ignore();
+    cout << "Enter teacher name: ";
+    getline(cin, tname);
+    classroom c1(sid, sname, tid, tname);
+    c1.data_input();
+    c1.show();
+    return 0;
+}
+classroom.cpp
+#include <iostream>
+#include "classroom.h"
+using namespace std;
+student::student(int id, string name)
+{
+    student_id = id;
+    student_name = name;
+}
+teacher::teacher(int id, string name)
+{
+    teacher_id = id;
+    teacher_name = name;
+}
+void teacher::data_input()
+{
+    cout << "\nEnter course id: ";
+    cin >> course_id;
+    cin.ignore();
+    cout << "Enter course name: ";
+    getline(cin, course_name);
+    cout << "Enter course credit: ";
+    cin >> course_credit;
+}
+classroom::classroom(int sid, string sname,
+    int tid, string tname)
+    : student(sid, sname),
+    teacher(tid, tname)
+{
+}
+void classroom::show()
+{
+    cout << "\n===== Classroom Information =====\n";
+    cout << "Teacher ID: " << teacher_id << endl;
+    cout << "Teacher Name: " << teacher_name << endl;
+    cout << "\nStudent ID: " << student_id << endl;
+    cout << "Student Name: " << student_name << endl;
+    cout << "\nCourse ID: " << course_id << endl;
+    cout << "Course Name: " << course_name << endl;
+    cout << "Course Credit: " << course_credit << endl;
+}
+classroom.h
+#ifndef CLASSROOM_H
+#define CLASSROOM_H
+#include <iostream>
+#include <string>
+using namespace std;
+class student
+{
+protected:
+    int student_id;
+    string student_name;
+public:
+    student(int, string);
+};
+class teacher
+{
+protected:
+    int teacher_id;
+    string teacher_name;
+    int course_id;
+    string course_name;
+    int course_credit;
+public:
+    teacher(int, string);
+    void data_input();
+};
+class classroom : public student, public teacher
+{
+public:
+    classroom(int, string, int, string);
+    void show();
+};
+#endif#pragma once
