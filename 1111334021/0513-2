@@ -1,0 +1,183 @@
+flightJet.h
+#ifndef FLIGHTJET_H
+#define FLIGHTJET_H
+#include "aircraft.h"
+
+class flightJet : public aircraft
+{
+private:
+    int missile; 
+    float mach;    
+    int weapon;     
+
+public:
+    flightJet();
+
+    ~flightJet();
+
+    void display_flightJet();
+};
+
+#endif
+----------
+airliner.h
+#ifndef AIRLINER_H
+#define AIRLINER_H
+#include "aircraft.h"
+
+class airliner : public aircraft
+{
+private:
+    int passenger;     
+    int toilet;       
+    int servicePerson; 
+
+public:
+    airliner();
+
+    ~airliner();
+
+    void display_airliner();
+};
+
+#endif
+-----------
+aircraft.h
+#ifndef AIRCRAFT_H
+#define AIRCRAFT_H
+#include <iostream>
+#include <string>
+using namespace std;
+
+class aircraft
+{
+private:
+    string name;     
+    int id;          
+    float wingspan;  
+    float ceiling;   
+
+public:
+    aircraft();
+
+    ~aircraft();
+
+    void display();
+};
+
+#endif
+--------------
+aircraft.cpp
+#include "aircraft.h"
+aircraft::aircraft()
+{
+    cout << "執行 aircraft 建構元\n";
+
+    cout << "請輸入飛行器名稱:";
+    cin >> name;
+
+    cout << "請輸入編號:";
+    cin >> id;
+
+    cout << "請輸入翼展(公尺):";
+    cin >> wingspan;
+
+    cout << "請輸入升限(公尺):";
+    cin >> ceiling;
+}
+
+aircraft::~aircraft()
+{
+    cout << "執行 aircraft 解構元\n";
+}
+
+void aircraft::display()
+{
+    cout << "\n===== 飛行器資料 =====\n";
+    cout << "名稱:" << name << endl;
+    cout << "編號:" << id << endl;
+    cout << "翼展:" << wingspan << " 公尺" << endl;
+    cout << "升限:" << ceiling << " 公尺" << endl;
+}
+-----------
+airliner.cpp
+#include "airliner.h"
+
+airliner::airliner()
+{
+    cout << "\n執行 airliner 建構元\n";
+
+    cout << "請輸入乘客數量:";
+    cin >> passenger;
+
+    cout << "請輸入廁所數量:";
+    cin >> toilet;
+
+    cout << "請輸入服務人員數量:";
+    cin >> servicePerson;
+}
+
+airliner::~airliner()
+{
+    cout << "執行 airliner 解構元\n";
+}
+
+void airliner::display_airliner()
+{
+    cout << "\n===== 大型客機資料 =====\n";
+    cout << "乘客數量:" << passenger << "位" << endl;
+    cout << "廁所數量:" << toilet << "間" << endl;
+    cout << "服務人員數量:" << servicePerson << "位" << endl;
+}
+-------------
+flightJet.cpp
+#include "flightJet.h"
+flightJet::flightJet()
+{
+    cout << "\n執行 flightJet 建構元\n";
+
+    cout << "請輸入飛彈數量:";
+    cin >> missile;
+
+    cout << "請輸入飛行速度(馬赫):";
+    cin >> mach;
+
+    cout << "請輸入武器數量:";
+    cin >> weapon;
+}
+
+flightJet::~flightJet()
+{
+    cout << "執行 flightJet 解構元\n";
+}
+
+void flightJet::display_flightJet()
+{
+    cout << "\n===== 戰鬥機資料 =====\n";
+    cout << "飛彈數量:" << missile << "枚" << endl;
+    cout << "飛行速度:" << mach << " 馬赫" << endl;
+    cout << "武器數量:" << weapon << "個" << endl;
+}
+----------------
+main.cpp
+#include "airliner.h"
+#include "flightJet.h"
+
+int main()
+{
+    cout << "建立大型客機:\n";
+    airliner a1;
+
+    a1.display();
+    a1.display_airliner();
+
+    cout << "\n========================\n";
+
+    cout << "\n建立戰鬥機:\n";
+    flightJet f1;
+
+    f1.display();
+    f1.display_flightJet();
+
+    return 0;
+}
