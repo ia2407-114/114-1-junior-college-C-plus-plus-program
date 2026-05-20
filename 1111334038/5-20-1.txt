@@ -1,0 +1,102 @@
+#include <iostream>
+using namespace std;
+
+#include "Header.h"
+
+int main()
+{
+    cube cube1;
+
+    cube1.rectangle::data_input();
+    cube1.data_input();
+
+    cube1.area();
+
+    return 0;
+}
+#ifndef HEADER_H
+#define HEADER_H
+
+#include <string>
+using namespace std;
+
+class shape
+{
+protected:
+    string name;
+    float shape_area;
+
+public:
+    shape();
+
+    void area();
+};
+
+class rectangle : public shape
+{
+protected:
+    float length;
+    float width;
+
+public:
+    rectangle();
+
+    void data_input();
+};
+
+class cube : public rectangle
+{
+private:
+    float height;
+
+public:
+    cube();
+
+    void data_input();
+};
+
+#endif介面
+#include <iostream>
+using namespace std;
+
+#include "Header.h"
+
+shape::shape()
+{
+    name = "長方體";
+    shape_area = 0;
+}
+
+void shape::area()
+{
+    cout << "\n圖形名稱:" << name << endl;
+    cout << "長方體體積:" << shape_area << endl;
+}
+
+rectangle::rectangle()
+{
+    length = 0;
+    width = 0;
+}
+
+void rectangle::data_input()
+{
+    cout << "請輸入長方體的長:";
+    cin >> length;
+
+    cout << "請輸入長方體的寬:";
+    cin >> width;
+}
+
+cube::cube()
+{
+    height = 0;
+}
+
+void cube::data_input()
+{
+    cout << "請輸入長方體的高:";
+    cin >> height;
+
+    shape_area = length * width * height;
+}實作
