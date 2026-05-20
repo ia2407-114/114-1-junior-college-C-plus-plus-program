@@ -1,0 +1,17 @@
+#include <iostream>
+#include <string>
+using namespace std;
+#include"shape.h"
+
+
+int main()
+{
+    
+    cube cube1;
+    cube1.data_input();
+    cube1.area();
+    cube1.display();
+
+
+    return 0;
+}
