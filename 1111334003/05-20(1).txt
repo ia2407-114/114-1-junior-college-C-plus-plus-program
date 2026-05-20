@@ -1,0 +1,84 @@
+main.cpp
+#include <iostream>
+#include "shape.h"
+using namespace std;
+int main()
+{
+    cube c1;
+    cout << "Input cube data\n";
+    c1.data_input();
+    c1.area();
+    return 0;
+}
+shape.cpp
+#include <iostream>
+#include "shape.h"
+using namespace std;
+shape::shape()
+{
+    name = "Shape";
+    shape_area = 0;
+}
+void shape::area() const
+{
+    cout << "\nShape Name: " << name << endl;
+    cout << "Volume: " << shape_area << endl;
+}
+rectangle::rectangle()
+{
+    length = 0;
+    width = 0;
+}
+void rectangle::data_input()
+{
+    cout << "Enter length: ";
+    cin >> length;
+
+    cout << "Enter width: ";
+    cin >> width;
+}
+cube::cube()
+{
+    name = "Cube";
+    height = 0;
+}
+void cube::data_input()
+{
+    rectangle::data_input();
+    cout << "Enter height: ";
+    cin >> height;
+    shape_area = length * width * height;
+}
+shape.h
+#ifndef SHAPE_H
+#define SHAPE_H
+#include <iostream>
+#include <string>
+using namespace std;
+class shape
+{
+protected:
+    string name;
+    double shape_area;
+public:
+    shape();
+    void area() const;
+};
+class rectangle : public shape
+{
+protected:
+    double length;
+    double width;
+public:
+    rectangle();
+    virtual void data_input();
+};
+class cube : public rectangle
+{
+private:
+    double height;
+public:
+    cube();
+    void data_input();
+};
+#endif#pragma once
