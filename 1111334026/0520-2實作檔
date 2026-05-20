@@ -1,0 +1,54 @@
+#include "classroom.h"
+
+
+student::student()
+{
+    cout << "輸入學生編號:";
+    cin >> id;
+
+    cout << "輸入學生姓名:";
+    cin >> name;
+}
+
+
+teacher::teacher()
+{
+    cout << "輸入教師編號:";
+    cin >> id;
+
+    cout << "輸入教師姓名:";
+    cin >> name;
+}
+
+void teacher::data_input()
+{
+    cout << "輸入課程編號:";
+    cin >> course_id;
+
+    cout << "輸入課程名稱:";
+    cin >> course_name;
+
+    cout << "輸入課程學分:";
+    cin >> course_credit;
+}
+
+
+void classroom::show()
+{
+    cout << "\n===== 課程資料 =====\n";
+
+    cout << "課程編號:"
+        << course_id << endl;
+
+    cout << "課程名稱:"
+        << course_name << endl;
+
+    cout << "課程學分:"
+        << course_credit << endl;
+
+    cout << "教師姓名:"
+        << teacher::name << endl;
+
+    cout << "學生姓名:"
+        << student::name << endl;
+}
