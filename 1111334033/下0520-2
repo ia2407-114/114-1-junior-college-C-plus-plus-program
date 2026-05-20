@@ -1,0 +1,182 @@
+main.cpp
+#include <iostream>
+#include "Classroom.h"
+
+using namespace std;
+
+int main()
+{
+    int tid, sid;
+    string tname, sname;
+
+    cout << "請輸入教師編號: ";
+    cin >> tid;
+
+    cin.ignore();
+
+    cout << "請輸入教師姓名: ";
+    getline(cin, tname);
+
+    cout << "請輸入學生編號: ";
+    cin >> sid;
+
+    cin.ignore();
+
+    cout << "請輸入學生姓名: ";
+    getline(cin, sname);
+
+    classroom c1(tid, tname, sid, sname);
+
+    c1.data_input();
+
+    c1.show();
+
+    return 0;
+}
+-----------
+Teacher.h
+#ifndef TEACHER_H
+#define TEACHER_H
+
+#include <iostream>
+#include <string>
+using namespace std;
+
+class teacher
+{
+protected:
+    int teacher_id;
+    string teacher_name;
+
+    int course_id;
+    string course_name;
+    int course_credit;
+
+public:
+    teacher(int id, string name);
+
+    void data_input();
+
+    string getTeacherName();
+    int getCourseID();
+    string getCourseName();
+    int getCourseCredit();
+};
+
+#endif
+-----------
+Teacher.cpp
+#include "Teacher.h"
+
+teacher::teacher(int id, string name)
+{
+    teacher_id = id;
+    teacher_name = name;
+}
+
+void teacher::data_input()
+{
+    cout << "請輸入課程編號: ";
+    cin >> course_id;
+
+    cin.ignore();
+
+    cout << "請輸入課程名稱: ";
+    getline(cin, course_name);
+
+    cout << "請輸入課程學分: ";
+    cin >> course_credit;
+}
+
+string teacher::getTeacherName()
+{
+    return teacher_name;
+}
+
+int teacher::getCourseID()
+{
+    return course_id;
+}
+
+string teacher::getCourseName()
+{
+    return course_name;
+}
+
+int teacher::getCourseCredit()
+{
+    return course_credit;
+}
+------------
+Student.h
+#ifndef STUDENT_H
+#define STUDENT_H
+
+#include <iostream>
+#include <string>
+using namespace std;
+
+class student
+{
+protected:
+    int student_id;
+    string student_name;
+
+public:
+    student(int id, string name);
+
+    string getStudentName();
+};
+
+#endif
+-----------
+Student.cpp
+#include "Student.h"
+
+student::student(int id, string name)
+{
+    student_id = id;
+    student_name = name;
+}
+
+string student::getStudentName()
+{
+    return student_name;
+}
+-----------
+Classroom.h
+#ifndef CLASSROOM_H
+#define CLASSROOM_H
+
+#include "Student.h"
+#include "Teacher.h"
+
+class classroom : public teacher, public student
+{
+public:
+    classroom(int tid, string tname,
+        int sid, string sname);
+
+    void show();
+};
+
+#endif
+------------
+Classroom.cpp
+#include "Classroom.h"
+
+classroom::classroom(int tid, string tname,int sid, string sname): teacher(tid, tname), student(sid, sname)
+{
+}
+
+void classroom::show()
+{
+    cout << "\n===== 課堂資料 =====" << endl;
+
+    cout << "課程編號: " << getCourseID() << endl;
+    cout << "課程名稱: " << getCourseName() << endl;
+    cout << "課程學分: " << getCourseCredit() << endl;
+
+    cout << "教師姓名: " << getTeacherName() << endl;
+    cout << "學生姓名: " << getStudentName() << endl;
+}
