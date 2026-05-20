@@ -1,0 +1,183 @@
+題目2:（多重繼承）寫一程式，定義類別student，其成員變數有編號id、姓名name(使用建構子函數輸入)。再定義類別teacher，其成員變數有編號id、姓名name(使用建構子函數輸入)
+、課程編號course_id、課程名稱course_name 與學分course_credit，及成員函式data_input( )作為教師的課程編號、課程名稱與學分輸入之用。最後定義同時繼承teacher及student的衍生類別classroom
+，且其成員函式為show()，用來顯示此classroom內的課程資料、課程名稱與學分，以及教師與學生的姓名。
+_______________________________________________________________
+student.h
+#ifndef STUDENT_H
+#define STUDENT_H
+
+#include <string>
+using namespace std;
+
+class Student {
+protected:
+    int student_id;
+    string student_name;
+
+public:
+    Student(int id, string name);
+};
+
+#endif
+____________________________________________________________
+student.cpp
+#include "student.h"
+
+Student::Student(int id, string name) {
+    student_id = id;
+    student_name = name;
+}
+____________________________________________________________
+teacher.h
+#ifndef TEACHER_H
+#define TEACHER_H
+
+#include <string>
+using namespace std;
+
+class Teacher {
+protected:
+    int teacher_id;
+    string teacher_name;
+
+    int course_id;
+    string course_name;
+    int course_credit;
+
+public:
+    Teacher(int id, string name);
+
+    void data_input();
+};
+
+#endif
+___________________________________________________________
+teacher.cpp
+#include <iostream>
+#include "teacher.h"
+
+using namespace std;
+
+Teacher::Teacher(int id, string name) {
+    teacher_id = id;
+    teacher_name = name;
+
+    course_id = 0;
+    course_name = "";
+    course_credit = 0;
+}
+
+void Teacher::data_input() {
+
+    cout << "請輸入課程編號: ";
+    cin >> course_id;
+
+    cin.ignore();
+
+    cout << "請輸入課程名稱: ";
+    getline(cin, course_name);
+
+    cout << "請輸入課程學分: ";
+    cin >> course_credit;
+}
+_________________________________________________________
+classroom.h
+#ifndef CLASSROOM_H
+#define CLASSROOM_H
+
+#include "teacher.h"
+#include "student.h"
+
+class Classroom : public Teacher, public Student {
+
+public:
+    Classroom(
+        int tid,
+        string tname,
+        int sid,
+        string sname
+    );
+
+    void show();
+};
+
+#endif
+____________________________________________________
+classroom.cpp
+#include <iostream>
+#include "classroom.h"
+
+using namespace std;
+
+Classroom::Classroom(
+    int tid,
+    string tname,
+    int sid,
+    string sname
+)
+    : Teacher(tid, tname),
+    Student(sid, sname) {
+}
+
+void Classroom::show() {
+
+    cout << "\n===== 課堂資料 =====" << endl;
+
+    cout << "課程編號: " << course_id << endl;
+    cout << "課程名稱: " << course_name << endl;
+    cout << "課程學分: " << course_credit << endl;
+
+    cout << "\n教師姓名: " << teacher_name << endl;
+    cout << "學生姓名: " << student_name << endl;
+}
+___________________________________________________________
+main.cpp
+#include <iostream>
+#include "classroom.h"
+
+using namespace std;
+
+int main() {
+
+    int tid, sid;
+    string tname, sname;
+
+    cout << "請輸入教師編號: ";
+    cin >> tid;
+
+    cin.ignore();
+
+    cout << "請輸入教師姓名: ";
+    getline(cin, tname);
+
+    cout << "請輸入學生編號: ";
+    cin >> sid;
+
+    cin.ignore();
+
+    cout << "請輸入學生姓名: ";
+    getline(cin, sname);
+
+    Classroom c(tid, tname, sid, sname);
+
+    c.data_input();
+
+    c.show();
+
+    return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
