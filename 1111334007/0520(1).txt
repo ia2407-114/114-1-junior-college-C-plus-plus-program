@@ -1,0 +1,97 @@
+Shape.h
+
+#ifndef SHAPE_H
+#define SHAPE_H
+#include <string>
+
+class Shape {
+protected:
+    std::string name;
+    double shape_area;
+public:
+    Shape();
+    void area() const;
+};
+#endif
+
+Shape.cpp
+
+#include "Shape.h"
+#include <iostream>
+
+Shape::Shape() : name("未命名圖形"), shape_area(0.0) {}
+void Shape::area() const {
+    std::cout << name << " 的面積/底面積為: " << shape_area << std::endl;
+}
+
+ Rectangle.h
+
+#ifndef RECTANGLE_H
+#define RECTANGLE_H
+
+#include "Shape.h"
+
+class Rectangle : public Shape {
+protected:
+    double length;
+    double width;
+public:
+    Rectangle();
+    void data_input();
+};
+
+#endif
+
+Rectangle.cpp
+
+#include "Rectangle.h"
+#include <iostream>
+
+Rectangle::Rectangle() : Shape(), length(0.0), width(0.0) {
+    name = "長方形";
+}
+void Rectangle::data_input() {
+    std::cout << "請輸入長方形的長: ";
+    std::cin >> length;
+    std::cout << "請輸入長方形的寬: ";
+    std::cin >> width;
+    shape_area = length * width;
+}
+
+Cube.cpp
+
+#include "Cube.h"
+#include <iostream>
+
+Cube::Cube() : Rectangle(), height(0.0), volume(0.0) {
+    name = "長方體";
+}
+
+void Cube::data_input() {
+    Rectangle::data_input();
+
+    std::cout << "請輸入長方體的高: ";
+    std::cin >> height;
+    
+    // 3. 體積 = 底面積(shape_area) * 高
+    volume = shape_area * height;
+}
+
+void Cube::display_volume() const {
+    std::cout << "\n輸出結果" << std::endl;
+    area(); 
+    std::cout << name << " 的體積為: " << volume << std::endl;
+}
+
+main.cpp
+
+#include "Cube.h"
+#include <iostream>
+
+int main() {
+    std::cout << "長方體計算程式" << std::endl;
+    Cube myCube;
+    myCube.data_input();
+    myCube.display_volume();
+    return 0;
+}

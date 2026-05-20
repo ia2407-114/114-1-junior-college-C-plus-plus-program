@@ -1,0 +1,107 @@
+Student.h
+
+#ifndef STUDENT_H
+#define STUDENT_H
+#include <string>
+
+class Student {
+protected:
+    int id;
+    std::string name;
+public:
+    Student(int s_id, const std::string& s_name);
+};
+
+#endif
+
+Student.cpp
+
+#include "Student.h"
+
+Student::Student(int s_id, const std::string& s_name) : id(s_id), name(s_name) {}
+
+Teacher.h
+
+#ifndef TEACHER_H
+#define TEACHER_H
+#include <string>
+
+class Teacher {
+protected:
+    int id;
+    std::string name;
+    int course_id;
+    std::string course_name;
+    int course_credit;
+public:
+    Teacher(int t_id, const std::string& t_name);
+    void data_input();
+};
+
+#endif
+
+Teacher.cpp
+
+#include "Teacher.h"
+#include <iostream>
+
+Teacher::Teacher(int t_id, const std::string& t_name) 
+    : id(t_id), name(t_name), course_id(0), course_name("無"), course_credit(0) {}
+
+void Teacher::data_input() {
+    std::cout << "請輸入課程編號: ";
+    std::cin >> course_id;
+    std::cin.ignore();
+    std::cout << "請輸入課程名稱: ";
+    std::getline(std::cin, course_name);
+    std::cout << "請輸入課程學分: ";
+    std::cin >> course_credit;
+}
+
+Classroom.h
+
+#ifndef CLASSROOM_H
+#define CLASSROOM_H
+#include "Student.h"
+#include "Teacher.h"
+#include <string>
+
+class Classroom : public Student, public Teacher {
+public:
+    Classroom(int s_id, const std::string& s_name, int t_id, const std::string& t_name);
+
+    void show() const;
+};
+
+#endif
+
+Classroom.cpp
+
+#include "Classroom.h"
+#include <iostream>
+
+Classroom::Classroom(int s_id, const std::string& s_name, int t_id, const std::string& t_name)
+    : Student(s_id, s_name), Teacher(t_id, t_name) {}
+
+void Classroom::show() const {
+    std::cout << "\n教室課程資訊" << std::endl;
+    std::cout << "授課教師: " << Teacher::name << " (編號: " << Teacher::id << ")" << std::endl;
+    std::cout << "上課學生: " << Student::name << " (學號: " << Student::id << ")" << std::endl;
+    std::cout << "課程代碼: " << course_id << std::endl;
+    std::cout << "課程名稱: " << course_name << std::endl;
+    std::cout << "課程學分: " << course_credit << " 學分" << std::endl;
+}
+
+main.cpp
+
+#include "Classroom.h"
+#include <iostream>
+
+int main() {
+    std::cout << "初始化教室成員" << std::endl;
+    Classroom myClass(10501, "張小明", 99001, "王大同教授");
+    std::cout << "\n輸入課程資料" << std::endl;
+    myClass.data_input();
+    myClass.show();   
+    return 0;
+}
