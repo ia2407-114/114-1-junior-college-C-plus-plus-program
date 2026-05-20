@@ -1,0 +1,125 @@
+//main.cpp
+#include "Shape.h"
+
+int main()
+{
+    cube cube1;
+
+    cube1.data_input();
+    cube1.display();
+
+    return 0;
+}
+//shape.cpp
+#include "Shape.h"
+
+shape::shape()
+{
+    name = "長方體";
+    shape_area = 0;
+}
+
+void shape::area()
+{
+    cout << "底面面積:" << shape_area << endl;
+}
+
+rectangle::rectangle()
+{
+    length = 0;
+    width = 0;
+}
+
+void rectangle::data_input()
+{
+    cout << "請輸入長:";
+    cin >> length;
+
+    cout << "請輸入寬:";
+    cin >> width;
+}
+
+float rectangle::getLength()
+{
+    return length;
+}
+
+float rectangle::getWidth()
+{
+    return width;
+}
+
+float rectangle::getArea()
+{
+    return length * width;
+}
+
+cube::cube()
+{
+    height = 0;
+    volume = 0;
+}
+
+void cube::data_input()
+{
+    rectangle::data_input();
+
+    cout << "請輸入高:";
+    cin >> height;
+
+    volume = getLength() * getWidth() * height;
+}
+
+void cube::display()
+{
+    cout << "\n長方體體積:" << volume << endl;
+}
+//shape.h
+#ifndef SHAPE_H
+#define SHAPE_H
+
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+class shape
+{
+private:
+    string name;
+    float shape_area;
+
+public:
+    shape();
+    void area();
+};
+
+class rectangle : public shape
+{
+private:
+    float length;
+    float width;
+
+public:
+    rectangle();
+    void data_input();
+
+    float getLength();
+    float getWidth();
+
+    float getArea();
+};
+
+class cube : public rectangle
+{
+private:
+    float height;
+    float volume;
+
+public:
+    cube();
+    void data_input();
+    void display();
+};
+
+#endif
