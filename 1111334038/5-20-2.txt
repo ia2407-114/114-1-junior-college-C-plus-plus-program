@@ -1,0 +1,127 @@
+#include <iostream>
+using namespace std;
+
+#include "Header.h"
+
+student::student()
+{
+    cout << "請輸入學生編號:";
+    cin >> id;
+
+    cout << "請輸入學生姓名:";
+    cin >> name;
+}
+
+void student::show_student()
+{
+    cout << "學生編號:" << id << endl;
+    cout << "學生姓名:" << name << endl;
+}
+
+teacher::teacher()
+{
+    cout << "請輸入教師編號:";
+    cin >> id;
+
+    cout << "請輸入教師姓名:";
+    cin >> name;
+}
+
+void teacher::data_input()
+{
+    cout << "請輸入課程編號:";
+    cin >> course_id;
+
+    cout << "請輸入課程名稱:";
+    cin >> course_name;
+
+    cout << "請輸入課程學分:";
+    cin >> course_credit;
+}
+
+void teacher::show_teacher()
+{
+    cout << "教師編號:" << id << endl;
+    cout << "教師姓名:" << name << endl;
+}
+
+
+void classroom::show()
+{
+    cout << "\n課程資料\n";
+
+    cout << "課程編號:" << course_id << endl;
+    cout << "課程名稱:" << course_name << endl;
+    cout << "課程學分:" << course_credit << endl;
+
+    cout << "\n教師資料\n";
+    teacher::show_teacher();
+
+    cout << "\n學生資料\n";
+    student::show_student();
+}
+
+實作
+
+#ifndef HEADER_H
+#define HEADER_H
+
+#include <string>
+using namespace std;
+
+class student
+{
+protected:
+    int id;
+    string name;
+
+public:
+    student();
+
+    void show_student();
+};
+
+class teacher
+{
+protected:
+    int id;
+    string name;
+    int course_id;
+    string course_name;
+    int course_credit;
+
+public:
+    teacher();
+
+    void data_input();
+
+    void show_teacher();
+};
+
+class classroom : public teacher, public student
+{
+public:
+
+
+    void show();
+};
+
+#endif
+
+介面
+
+#include <iostream>
+using namespace std;
+
+#include "Header.h"
+
+int main()
+{
+    classroom c1;
+
+    c1.data_input();
+
+    c1.show();
+
+    return 0;
+}
