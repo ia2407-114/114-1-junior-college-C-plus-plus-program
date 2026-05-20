@@ -1,0 +1,148 @@
+shape.h
+#ifndef SHAPE_H
+#define SHAPE_H
+
+#include <string>
+using namespace std;
+
+class Shape {
+protected:
+    string name;
+    double shape_area;
+
+public:
+    Shape();
+
+    void area();
+};
+
+#endif
+____________________________________________________________________
+shape.cpp
+#include <iostream>
+#include "shape.h"
+
+using namespace std;
+
+Shape::Shape() {
+    name = "";
+    shape_area = 0;
+}
+
+void Shape::area() {
+    cout << "體積為: " << shape_area << endl;
+}
+__________________________________________________________________
+rectangle.h
+#ifndef RECTANGLE_H
+#define RECTANGLE_H
+
+#include "shape.h"
+
+class Rectangle : public Shape {
+protected:
+    double length;
+    double width;
+
+public:
+    Rectangle();
+
+    void data_input();
+};
+
+#endif
+_________________________________________________________________
+rectangle.cpp
+#include <iostream>
+#include "rectangle.h"
+
+using namespace std;
+
+Rectangle::Rectangle() {
+    length = 0;
+    width = 0;
+}
+
+void Rectangle::data_input() {
+    cout << "請輸入長方體的長: ";
+    cin >> length;
+
+    cout << "請輸入長方體的寬: ";
+    cin >> width;
+}
+________________________________________________________________ 
+cube.h
+#ifndef CUBE_H
+#define CUBE_H
+
+#include "rectangle.h"
+
+class Cube : public Rectangle {
+private:
+    double height;
+
+public:
+    Cube();
+
+    void data_input();
+};
+
+#endif
+________________________________________________________________
+cube.cpp
+#include <iostream>
+#include "cube.h"
+
+using namespace std;
+
+Cube::Cube() {
+    height = 0;
+}
+
+void Cube::data_input() {
+
+    // 呼叫 Rectangle 的 data_input()
+    Rectangle::data_input();
+
+    cout << "請輸入長方體的高: ";
+    cin >> height;
+
+    // 計算體積
+    shape_area = length * width * height;
+}
+________________________________________________________________
+main.cpp
+#include <iostream>
+#include "cube.h"
+
+using namespace std;
+
+int main() {
+
+    Cube c;
+
+    c.data_input();
+
+    c.area();
+
+    return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
