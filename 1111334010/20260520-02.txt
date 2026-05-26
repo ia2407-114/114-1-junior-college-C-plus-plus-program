@@ -1,0 +1,177 @@
+//main.cpp
+#include "classroom.h"
+
+int main()
+{
+    int tid, sid;
+    string tname, sname;
+
+    cout << "請輸入教師編號：";
+    cin >> tid;
+
+    cout << "請輸入教師姓名：";
+    cin >> tname;
+
+    cout << "請輸入學生編號：";
+    cin >> sid;
+
+    cout << "請輸入學生姓名：";
+    cin >> sname;
+
+    // 建立 classroom 物件
+    classroom c1(tid, tname, sid, sname);
+
+    // 輸入課程資料
+    c1.data_input();
+
+    // 顯示資料
+    c1.show();
+
+    return 0;
+}
+
+//classroom.cpp
+#include "classroom.h"
+
+// 建構子
+classroom::classroom(int tid, string tname,
+                     int sid, string sname)
+    : teacher(tid, tname),
+      student(sid, sname)
+{
+}
+
+// 顯示資料
+void classroom::show()
+{
+    cout << "\n===== classroom 資料 =====" << endl;
+
+    cout << "課程編號：" << course_id << endl;
+    cout << "課程名稱：" << course_name << endl;
+    cout << "課程學分：" << course_credit << endl;
+
+    cout << "教師姓名：" << teacher::name << endl;
+    cout << "學生姓名：" << student::name << endl;
+}
+
+//classroom.h
+#ifndef CLASSROOM_H
+#define CLASSROOM_H
+
+#include "teacher.h"
+#include "student.h"
+
+// 多重繼承
+class classroom : public teacher, public student
+{
+public:
+    // 建構子
+    classroom(int, string, int, string);
+
+    // 顯示所有資料
+    void show();
+};
+
+#endif
+
+//teacher.cpp
+#include "teacher.h"
+
+// 建構子
+teacher::teacher(int i, string n)
+{
+    id = i;
+    name = n;
+}
+
+// 輸入課程資料
+void teacher::data_input()
+{
+    cout << "請輸入課程編號：";
+    cin >> course_id;
+
+    cout << "請輸入課程名稱：";
+    cin >> course_name;
+
+    cout << "請輸入課程學分：";
+    cin >> course_credit;
+}
+
+// 顯示教師資料
+void teacher::show_teacher()
+{
+    cout << "教師編號：" << id << endl;
+    cout << "教師姓名：" << name << endl;
+}
+
+//teacher.h
+#ifndef TEACHER_H
+#define TEACHER_H
+
+#include <iostream>
+#include <string>
+using namespace std;
+
+class teacher
+{
+protected:
+    int id;
+    string name;
+
+    int course_id;
+    string course_name;
+    int course_credit;
+
+public:
+    // 建構子
+    teacher(int, string);
+
+    // 輸入課程資料
+    void data_input();
+
+    // 顯示教師資料
+    void show_teacher();
+};
+
+#endif
+
+//student.cpp
+#include "student.h"
+
+// 建構子
+student::student(int i, string n)
+{
+    id = i;
+    name = n;
+}
+
+// 顯示學生資料
+void student::show_student()
+{
+    cout << "學生編號：" << id << endl;
+    cout << "學生姓名：" << name << endl;
+}
+
+//student.h
+#ifndef STUDENT_H
+#define STUDENT_H
+
+#include <iostream>
+#include <string>
+using namespace std;
+
+class student
+{
+protected:
+    int id;
+    string name;
+
+public:
+    // 建構子
+    student(int, string);
+
+    // 顯示學生資料
+    void show_student();
+};
+
+#endif
