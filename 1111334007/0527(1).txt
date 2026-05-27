@@ -1,0 +1,94 @@
+shap.h
+
+#ifndef SHAP_H
+#define SHAP_H
+
+class Shap {
+public:
+
+    virtual double Volume() const = 0;
+
+    virtual ~Shap();
+};
+
+class Cone : public Shap {
+private:
+    double radius;
+    double height;
+public:
+    Cone(double r, double h);
+    double Volume() const override;
+};
+
+class Ball : public Shap {
+private:
+    double radius;
+public:
+    Ball(double r);
+    double Volume() const override;
+};
+
+class Cylinder : public Shap {
+private:
+    double radius;
+    double height;
+public:
+    Cylinder(double r, double h);
+    double Volume() const override;
+};
+
+#endif
+
+shap.cpp
+
+#include "Shap.h"
+
+const double PI = 3.141592653589793;
+
+Shap::~Shap() {}
+
+Cone::Cone(double r, double h) : radius(r), height(h) {}
+
+double Cone::Volume() const {
+    return (1.0 / 3.0) * PI * radius * radius * height;
+}
+
+Ball::Ball(double r) : radius(r) {}
+
+double Ball::Volume() const {
+    return (4.0 / 3.0) * PI * radius * radius * radius;
+}
+
+Cylinder::Cylinder(double r, double h) : radius(r), height(h) {}
+
+double Cylinder::Volume() const {
+    return PI * radius * radius * height;
+}
+
+source.cpp
+
+#include <iostream>
+#include "Shap.h"
+using namespace std;
+
+int main() {
+
+    Cone coneObj(3.0, 5.0);
+    Ball ballObj(3.0); 
+    Cylinder cylObj(3.0, 5.0); 
+
+    Shap* a1 = nullptr;
+
+    cout << "--- 透過抽象類別指標 a1 展現多型特徵 ---" << endl;
+
+    a1 = &coneObj;
+    cout << "圓錐體體積 (Cone): " << a1->Volume() << endl;
+
+    a1 = &ballObj;
+    cout << "球體體積 (Ball): " << a1->Volume() << endl;
+
+    a1 = &cylObj;
+    cout << "圓柱體體積 (Cylinder): " << a1->Volume() << endl;
+
+    return 0;
+}
