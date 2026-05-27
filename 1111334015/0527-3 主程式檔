@@ -1,0 +1,27 @@
+#include <iostream>
+#include "Shape.h"
+
+using namespace std;
+
+int main()
+{
+    Shape* a1;
+
+    Cone c(3, 5);
+    Ball b(3);
+    Cylinder cy(3, 5);
+
+    a1 = &c;
+    cout << "Cone Volume = "
+        << a1->Volume() << endl;
+
+    a1 = &b;
+    cout << "Ball Volume = "
+        << a1->Volume() << endl;
+
+    a1 = &cy;
+    cout << "Cylinder Volume = "
+        << a1->Volume() << endl;
+
+    return 0;
+}
