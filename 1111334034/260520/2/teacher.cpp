@@ -1,0 +1,21 @@
+#include "teacher.h"
+
+// 設定教師資料
+teacher::teacher( )
+ {
+   cout << "教師編號:" ;
+   cin >> id;
+   cout << "教師姓名:" ;
+   cin >> name ;
+ }
+
+// 課程資料輸入
+void teacher::data_input( )
+ {
+   cout << "課程編號:" ;
+   cin >> course_id;
+   cout << "課程名稱:" ;
+   cin >> course_name;
+   cout << "課程學分:" ;
+   cin >> course_credit;
+ }

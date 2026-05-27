@@ -1,0 +1,11 @@
+#include "classroom.h"
+
+// 顯示課堂資料及課程資訊與教師和學生姓名
+void classroom::show()
+ {
+   cout << "課程編號:" << course_id << endl ;
+   cout << "課程名稱:" << course_name << endl ;
+   cout << "課程學分:" << course_credit << endl ;
+   cout << "教師姓名:" << teacher::name << endl ;
+   cout << "學生姓名:" << student::name << endl ;
+ }

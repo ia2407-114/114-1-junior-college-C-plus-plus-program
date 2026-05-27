@@ -1,0 +1,13 @@
+#include <iostream>
+#include <string>
+#include "cube.h"
+using namespace std ;
+
+int main()
+ {
+   cube cube1 ;
+   cube1.data_input() ;
+   cube1.area() ;
+  
+  return 0;
+ }

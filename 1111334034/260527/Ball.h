@@ -1,0 +1,14 @@
+#ifndef BALL_H
+#define BALL_H
+#include "Shap.h"
+
+class Ball : public Shap {
+private:
+    double radius;
+
+public:
+    Ball(double r);
+    double Volume() const override;
+};
+
+#endif

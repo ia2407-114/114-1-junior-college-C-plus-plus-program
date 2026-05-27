@@ -1,0 +1,10 @@
+#include "rectangle.h"
+
+// 輸入長方形的長與寬
+void rectangle::data_input()
+ {
+   cout << "輸入長方形的長:" ;
+   cin >> length ;
+   cout << "輸入長方形的寬:" ;
+   cin >> width ;
+ }

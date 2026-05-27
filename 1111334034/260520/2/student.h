@@ -1,0 +1,16 @@
+#ifndef STUDENT_H
+#define STUDENT_H
+#include <iostream>
+#include <string>
+using namespace std ;
+// 學生基本類別
+class student
+ {
+   protected:
+    int id;       // 編號
+    string name;  // 姓名
+
+   public:
+    student( ) ;
+ } ;
+#endif

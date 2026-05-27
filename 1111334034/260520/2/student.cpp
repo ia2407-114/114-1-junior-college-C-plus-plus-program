@@ -1,0 +1,10 @@
+#include "student.h"
+
+// 設定學生資料
+student::student( )
+ {
+   cout << "學生編號:" ;
+   cin >> id;
+   cout << "學生姓名:" ;
+   cin >> name ;
+ }
