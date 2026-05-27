@@ -1,0 +1,90 @@
+//main
+#include <iostream>
+#include <iomanip>
+#include "Shape.h"
+
+using namespace std;
+
+int main() {
+
+    Cone coneObj(3.0, 5.0);
+    Ball ballObj(4.0);
+    Cylinder cylObj(3.0, 5.0);
+
+    Shape* a1 = nullptr;
+
+    cout << "--- 幾何圖形體積計算 (多型測試) ---" << endl;
+
+    a1 = &coneObj;
+    cout << "圓錐體體積: " << a1->Volume() << endl;
+
+    a1 = &ballObj;
+    cout << "球體體積  : " << a1->Volume() << endl;
+
+    a1 = &cylObj;
+    cout << "圓柱體體積: " << a1->Volume() << endl;
+
+    return 0;
+}
+//shape.ccp
+#include "Shape.h"
+
+Cone::Cone(double r, double h) : radius(r), height(h) {}
+
+double Cone::Volume() const {
+    return (1.0 / 3.0) * PI * radius * radius * height;
+}
+
+Ball::Ball(double r) : radius(r) {}
+
+double Ball::Volume() const {
+    return (4.0 / 3.0) * PI * radius * radius * radius;
+}
+
+Cylinder::Cylinder(double r, double h) : radius(r), height(h) {}
+
+double Cylinder::Volume() const {
+    return PI * radius * radius * height;
+}
+//shape.h
+#ifndef SHAPE_H
+#define SHAPE_H
+
+#include <cmath>
+
+const double PI = 3.141592653589793;
+
+class Shape {
+public:
+    virtual ~Shape() {}
+
+    virtual double Volume() const = 0;
+};
+
+class Cone : public Shape {
+private:
+    double radius;
+    double height;
+public:
+    Cone(double r, double h);
+    double Volume() const override;
+};
+
+class Ball : public Shape {
+private:
+    double radius;
+public:
+    Ball(double r);
+    double Volume() const override;
+};
+
+class Cylinder : public Shape {
+private:
+    double radius;
+    double height;
+public:
+    Cylinder(double r, double h);
+    double Volume() const override;
+};
+
+#endif 
