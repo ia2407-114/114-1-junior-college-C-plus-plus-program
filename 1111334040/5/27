@@ -1,0 +1,57 @@
+#include <iostream>
+using namespace std;
+
+class Shape {
+public:
+    virtual double Volume() const = 0;
+};
+
+class Cone : public Shape {
+private:
+    double radius,height;
+
+public:
+    Cone(double r, double h) : radius(r) , height(h){}
+
+    double Volume() const override {
+        return 3.14159 * radius * radius* height/3.0;
+    }
+};
+
+class Ball : public Shape {
+private:
+    double radius;
+public:
+    Ball(double r) : radius(r) {}
+
+    double Volume() const override {
+        return 1.333*3.14159* radius * radius * radius;
+    }
+};
+
+class Cylinder : public Shape {
+private:
+    double radius, height;
+
+public:
+    Cylinder(double r, double h) : radius(r), height(h) {}
+
+    double Volume() const override {
+        return 3.14159 * radius * radius * height;
+    }
+};
+
+int main() {
+    Shape*al;
+    Cone c(4, 6);
+    Ball b(5);
+    Cylinder cy(4, 6);
+
+    al = &b;
+    cout << al->Volume() << endl;
+    al = &c;
+    cout << al->Volume() << endl;
+    al = &cy;
+    cout << al->Volume() << endl;
+    return 0;
+}
