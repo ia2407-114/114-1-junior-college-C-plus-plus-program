@@ -4,13 +4,14 @@ using namespace std;
 
 
 int main() {
-    Ball c(5);
-    Cone b(4, 6);
-    Cylinder cy(4, 6);
+    Shape* s;
+    s = new Ball(5);
+    cout << "圓錐體體積:" << s->Volume() << endl;
+    s = new Cone(4, 6);
+    cout << "球體體積:" << s->Volume() << endl;
+    s = new Cylinder(4, 6);
+    cout << "圓柱體體積:" << s->Volume() << endl;
 
-    cout << "圓錐體體積:" << c.Volume() << endl;
-    cout << "球體體積:" << b.Volume() << endl;
-    cout << "圓柱體體積:" << cy.Volume() << endl;
 
     return 0;
 }
