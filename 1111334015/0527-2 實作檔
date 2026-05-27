@@ -1,0 +1,38 @@
+#include "Shape.h"
+
+//Cone
+Cone::Cone(double r, double h)
+{
+    radius = r;
+    height = h;
+}
+
+double Cone::Volume() const
+{
+    return (PI * radius * radius * height) / 3;
+}
+
+
+//Ball
+Ball::Ball(double r)
+{
+    radius = r;
+}
+
+double Ball::Volume() const
+{
+    return (4.0 / 3.0) * PI * radius * radius * radius;
+}
+
+
+//Cylinder
+Cylinder::Cylinder(double r, double h)
+{
+    radius = r;
+    height = h;
+}
+
+double Cylinder::Volume() const
+{
+    return PI * radius * radius * height;
+}
