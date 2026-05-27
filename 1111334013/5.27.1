@@ -1,0 +1,20 @@
+class Shape {
+public:
+    virtual double Volume() const = 0; // 這就是純粹的介面
+};
+
+#ifndef CIRCLE_H
+#define CIRCLE_H
+
+#include "Shape.h" // 假設 Shape 也是獨立的標頭檔
+
+class Circle : public Shape {
+private:
+    double radius;
+
+public:
+    Circle(double r);          // 僅宣告建構子
+    double Volume() const override; // 僅宣告函數
+};
+
+#endif#pragma once
