@@ -1,0 +1,7 @@
+﻿#include "shape.h"
+
+// 顯示圖形的面積
+void shape::area()
+ {
+   cout << name << "的體積:" << shape_area << endl ;
+ }

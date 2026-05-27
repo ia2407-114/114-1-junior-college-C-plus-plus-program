@@ -1,0 +1,11 @@
+﻿#ifndef CLASSROOM_H
+#define CLASSROOM_H
+#include "teacher.h"
+#include "student.h"
+// 課堂類別
+class classroom:public teacher,public student
+ {
+   public:
+    void show() ;
+ } ;
+#endif

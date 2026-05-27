@@ -1,0 +1,11 @@
+﻿#include "cube.h"
+
+// 輸入長方體的高並計算體積
+void cube::data_input()
+ {
+   rectangle::data_input() ;
+   cout << "輸入長方體的高:" ;
+   cin >> height ;
+   name = "長方體" ;
+   shape_area = length * width * height ;
+ }
