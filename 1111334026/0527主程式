@@ -1,0 +1,16 @@
+#include <iostream>
+using namespace std;
+#include"shape.h"
+
+
+int main() {
+    Ball c(5);
+    Cone b(4, 6);
+    Cylinder cy(4, 6);
+
+    cout << "圓錐體體積:" << c.Volume() << endl;
+    cout << "球體體積:" << b.Volume() << endl;
+    cout << "圓柱體體積:" << cy.Volume() << endl;
+
+    return 0;
+}
