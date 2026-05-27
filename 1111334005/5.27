@@ -1,0 +1,91 @@
+題目1: 請根據第二個程式碼，基於"純虛擬函數"與"抽象類別"建立一個"Shap"類別與"體積"純虛擬函數Volume，並據此建立一個"物件指標"a1，透過這個指標a1，
+依序指向Shap的衍生類別"圓錐體體積"Cone、"球體體積"Ball、"圓柱體體積"Cylinder所建立的物件，分別印出他們的體積。
+
+_____________________________________________________________________________
+
+#include <iostream>
+using namespace std;
+
+// 抽象類別 Shape
+class Shape {
+public:
+    // 純虛擬函數：計算體積
+    virtual double Volume() const = 0;
+};
+
+// 圓錐體類別 Cone
+class Cone : public Shape {
+private:
+    double radius;
+    double height;
+
+public:
+    Cone(double r, double h) {
+        radius = r;
+        height = h;
+    }
+
+    // 覆寫 Volume()
+    double Volume() const override {
+        return (3.14159 * radius * radius * height) / 3;
+    }
+};
+
+// 球體類別 Ball
+class Ball : public Shape {
+private:
+    double radius;
+
+public:
+    Ball(double r) {
+        radius = r;
+    }
+
+    // 覆寫 Volume()
+    double Volume() const override {
+        return (4.0 / 3.0) * 3.14159 * radius * radius * radius;
+    }
+};
+
+// 圓柱體類別 Cylinder
+class Cylinder : public Shape {
+private:
+    double radius;
+    double height;
+
+public:
+    Cylinder(double r, double h) {
+        radius = r;
+        height = h;
+    }
+
+    // 覆寫 Volume()
+    double Volume() const override {
+        return 3.14159 * radius * radius * height;
+    }
+};
+
+int main() {
+
+    // 建立各物件
+    Cone cone(3, 5);
+    Ball ball(3);
+    Cylinder cylinder(3, 5);
+
+    // 建立 Shape 類別指標
+    Shape* a1;
+
+    // 指向圓錐體
+    a1 = &cone;
+    cout << "圓錐體體積: " << a1->Volume() << endl;
+
+    // 指向球體
+    a1 = &ball;
+    cout << "球體體積: " << a1->Volume() << endl;
+
+    // 指向圓柱體
+    a1 = &cylinder;
+    cout << "圓柱體體積: " << a1->Volume() << endl;
+
+    return 0;
+}
