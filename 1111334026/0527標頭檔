@@ -1,0 +1,38 @@
+
+#ifndef SHAPE_H
+#define SHAPE_H
+
+class Shape {
+public:
+    virtual double Volume() const = 0;
+};
+
+class Cone : public Shape {
+private:
+    double radius, height;
+
+public:
+    Cone(double r, double h);
+
+    double Volume() const override;
+};
+
+class Ball : public Shape {
+private:
+    double radius;
+public:
+    Ball(double r);
+
+    double Volume() const override;
+};
+
+class Cylinder : public Shape {
+private:
+    double radius, height;
+
+public:
+    Cylinder(double r, double h);
+
+    double Volume() const override;
+};
+#endif
