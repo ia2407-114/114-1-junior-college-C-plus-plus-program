@@ -1,0 +1,88 @@
+main.cpp
+#include <iostream>
+#include "Shape.h"
+using namespace std;
+int main()
+{
+    Cone c1(3, 5);
+    Ball b1(4);
+    Cylinder cy1(3, 7);
+    Shape* a1;
+    a1 = &c1;
+    cout << "Cone Volume = "
+        << a1->Volume() << endl;
+    a1 = &b1;
+    cout << "Ball Volume = "
+        << a1->Volume() << endl;
+    a1 = &cy1;
+    cout << "Cylinder Volume = "
+        << a1->Volume() << endl;
+    return 0;
+}
+shape.cpp
+#include <iostream>
+#include "Shape.h"
+using namespace std;
+Cone::Cone(double r, double h)
+{
+    radius = r;
+    height = h;
+}
+double Cone::Volume() const
+{
+    return 3.14159 * radius * radius * height / 3;
+}
+Ball::Ball(double r)
+{
+    radius = r;
+}
+double Ball::Volume() const
+{
+    return 4.0 / 3.0 * 3.14159 * radius * radius * radius;
+}
+Cylinder::Cylinder(double r, double h)
+{
+    radius = r;
+    height = h;
+}
+double Cylinder::Volume() const
+{
+    return 3.14159 * radius * radius * height;
+}
+shape.h
+#ifndef SHAPE_H
+#define SHAPE_H
+#include <iostream>
+using namespace std;
+class Shape
+{
+public:
+    virtual double Volume() const = 0;
+};
+class Cone : public Shape
+{
+private:
+    double radius;
+    double height;
+public:
+    Cone(double, double);
+    double Volume() const override;
+};
+class Ball : public Shape
+{
+private:
+    double radius;
+public:
+    Ball(double);
+    double Volume() const override;
+};
+class Cylinder : public Shape
+{
+private:
+    double radius;
+    double height;
+public:
+    Cylinder(double, double);
+    double Volume() const override;
+};
+#endif#pragma once
