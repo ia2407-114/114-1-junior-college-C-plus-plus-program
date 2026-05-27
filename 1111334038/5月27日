@@ -1,0 +1,108 @@
+標頭檔(Shape.h)
+#ifndef SHAPE_H
+#define SHAPE_H
+
+#include <iostream>
+using namespace std;
+
+
+class Shap {
+public:
+    virtual double Volume() = 0;
+};
+
+
+class Cone : public Shap {
+private:
+    double radius;
+    double height;
+
+public:
+    Cone(double r, double h);
+    double Volume();
+};
+
+
+class Ball : public Shap {
+private:
+    double radius;
+
+public:
+    Ball(double r);
+    double Volume();
+};
+
+class Cylinder : public Shap {
+private:
+    double radius;
+    double height;
+
+public:
+    Cylinder(double r, double h);
+    double Volume();
+};
+
+#endif
+
+實作檔(Shape.cpp)
+#include "Shape.h"
+
+
+Cone::Cone(double r, double h) {
+    radius = r;
+    height = h;
+}
+
+
+double Cone::Volume() {
+    return (3.14159 * radius * radius * height) / 3;
+}
+
+
+Ball::Ball(double r) {
+    radius = r;
+}
+
+
+double Ball::Volume() {
+    return (4.0 / 3) * 3.14159 * radius * radius * radius;
+}
+
+
+Cylinder::Cylinder(double r, double h) {
+    radius = r;
+    height = h;
+}
+
+
+double Cylinder::Volume() {
+    return 3.14159 * radius * radius * height;
+}
+
+主程式(Main.cpp)
+#include "Shape.h"
+
+int main() {
+
+
+    Cone c(3, 5);
+    Ball b(4);
+    Cylinder cy(3, 7);
+
+
+    Shap* a1;
+
+
+    a1 = &c;
+    cout << "Cone Volume = " << a1->Volume() << endl;
+
+
+    a1 = &b;
+    cout << "Ball Volume = " << a1->Volume() << endl;
+
+
+    a1 = &cy;
+    cout << "Cylinder Volume = " << a1->Volume() << endl;
+
+    return 0;
+}
