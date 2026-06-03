@@ -1,0 +1,20 @@
+﻿#include "bombplane.h"
+
+int main()
+ {
+   flight_object* flight1 ;
+   
+   airliner air1;
+   air1.create_flight_object("大型客機");
+   air1.create_airliner();
+   flight1 = &air1 ;
+   flight1->display();
+   
+   bombplane bomb1;
+   bomb1.create_flight_object("轟炸機");
+   bomb1.create_bombplane();
+   flight1 = &bomb1 ;
+   flight1->display();
+    
+   return 0;
+ }

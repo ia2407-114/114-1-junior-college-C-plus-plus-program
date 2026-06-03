@@ -1,0 +1,19 @@
+﻿#pragma once
+#include <iostream>
+#include <string>
+using namespace std;
+// 飛行物體類別,是一種抽象類別
+class flight_object
+{
+public:
+  string name;         // 飛行物名稱
+  int id;              // 飛行物編號
+  int pilot;           // 駕駛員人數
+  float kerosene;      // 煤油量(煤油是飛行物使用的燃料)
+  string manufacturer; // 製造者
+
+  // 建立飛行物的部分資料
+  void create_flight_object(string obj);
+
+  virtual void display() = 0;
+};
