@@ -1,0 +1,39 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+using namespace std;
+int main()
+ {  
+   // 宣告型態為ofstream的輸出串流物件變數appendfile
+   // 做為寫入檔案之用
+   ofstream appendfile;  
+  
+   cout << "開啟test.txt文字檔，並新增資料於檔尾\n" ;
+      
+   // 以寫入模式開啟test.txt檔案，並將新增的資料寫到檔案尾部
+   appendfile.open("test.txt", ios_base::app);
+   if (appendfile.fail())
+    {
+      cout << "test.txt檔案無法開啟!\n" ;          
+      exit(1) ;
+    }  
+  
+   string data;  
+   cout << "輸入(要新增的)資料，以Enter鍵作為結束:\n" ;  
+   getline(cin, data);
+   appendfile << data << '\n' ;
+   if (appendfile.fail())  // 資料寫入appendfile串流失敗時 
+    {
+       cout << "寫入失敗\n" ;
+       exit(1);
+    }
+  
+   appendfile.close();  
+   if (appendfile.fail())
+    {
+       cout << "test.txt檔案無法關閉!\n" ; 
+       exit(1) ;
+    }
+    
+   return 0 ;
+ }
