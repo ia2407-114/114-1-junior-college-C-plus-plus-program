@@ -1,0 +1,129 @@
+main.cpp
+#include "flight_object.h"
+int main()
+{
+    flight_object* flight1;
+    airliner air1;
+    air1.create_flight_object("大型客機");
+    air1.create_airliner();
+    flight1 = &air1;
+    flight1->display();
+    cout << "\n----------------------\n";
+    bombplane bomb1;
+    bomb1.create_flight_object("轟炸機");
+    bomb1.create_bombplane();
+    flight1 = &bomb1;
+    flight1->display();
+    return 0;
+}
+flight_object.cpp
+#include "flight_object.h"
+void flight_object::create_flight_object(string obj)
+{
+    cout << "建立飛行物的資料\n";
+    cout << "實作一架" << obj << endl;
+    cout << "名稱:";
+    cin >> name;
+    cout << "編號:";
+    cin >> id;
+    cout << "駕駛員人數:";
+    cin >> pilot;
+    cout << "煤油量(公升):";
+    cin >> kerosene;
+}
+void airliner::create_airliner()
+{
+    cout << "乘客人數:";
+    cin >> passenger;
+    cout << "服務人員的數目:";
+    cin >> service_person;
+    cout << "製造者:";
+    cin >> manufacturer;
+}
+void airliner::display()
+{
+    cout << "\n顯示大型客機的資料\n";
+    cout << "名稱:" << name << endl;
+    cout << "編號:" << id << endl;
+    cout << "駕駛員人數:" << pilot << endl;
+    cout << "煤油量(公升):" << kerosene << endl;
+    cout << "乘客人數:" << passenger << endl;
+    cout << "服務人員的數目:" << service_person << endl;
+    cout << "製造者:" << manufacturer << endl;
+}
+void battleplane::create_battleplane()
+{
+    cout << "製造者:";
+    cin >> manufacturer;
+}
+void battleplane::display()
+{
+    cout << "\n顯示衍生類別battleplane物件的資料\n";
+    cout << "戰鬥機名稱:" << name << endl;
+    cout << "編號:" << id << endl;
+    cout << "駕駛員人數:" << pilot << endl;
+    cout << "煤油量(公升):" << kerosene << endl;
+    cout << "武器名稱:" << weapon << endl;
+    cout << "製造者:" << manufacturer << endl;
+}
+void bombplane::create_bombplane()
+{
+    cout << "乘客人數:";
+    cin >> passenger;
+    cout << "武器名稱:";
+    cin >> weapon;
+    cout << "製造者:";
+    cin >> manufacturer;
+}
+void bombplane::display()
+{
+    cout << "\n顯示轟炸機的資料\n";
+    cout << "名稱:" << name << endl;
+    cout << "編號:" << id << endl;
+    cout << "駕駛員人數:" << pilot << endl;
+    cout << "煤油量(公升):" << kerosene << endl;
+    cout << "乘客人數:" << passenger << endl;
+    cout << "武器名稱:" << weapon << endl;
+    cout << "製造者:" << manufacturer << endl;
+}
+flight_object.h
+#ifndef FLIGHT_OBJECT_H
+#define FLIGHT_OBJECT_H
+#include <iostream>
+#include <string>
+using namespace std;
+class flight_object
+{
+public:
+    string name;
+    int id;
+    int pilot;
+    float kerosene;
+    string manufacturer;
+    void create_flight_object(string obj);
+    virtual void display() = 0;
+};
+class airliner : public virtual flight_object
+{
+protected:
+    int passenger;
+    int service_person;
+public:
+    void create_airliner();
+    void display();
+};
+class battleplane : public virtual flight_object
+{
+protected:
+    string weapon;
+public:
+    void create_battleplane();
+    void display();
+};
+class bombplane : public airliner, public battleplane
+{
+public:
+    void create_bombplane();
+    void display();
+};
+#endif#pragma once

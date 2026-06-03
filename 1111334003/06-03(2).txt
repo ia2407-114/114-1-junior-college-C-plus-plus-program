@@ -1,0 +1,83 @@
+main.cpp
+#include "FileIO.h"
+int main()
+{
+    FileIO file;
+    file.writeFile();
+    file.readFile();
+    return 0;
+}
+FileIO.cpp
+#include "FileIO.h"
+#include <cstdlib>
+void FileIO::writeFile()
+{
+    ofstream appendfile;
+    cout << "Open test.txt and append data." << endl;
+    appendfile.open("test.txt", ios_base::app);
+    if (appendfile.fail())
+    {
+        cout << "Cannot open test.txt !" << endl;
+        exit(1);
+    }
+    string data;
+    cout << "Enter data:" << endl;
+    getline(cin, data);
+    appendfile << data << '\n';
+    if (appendfile.fail())
+    {
+        cout << "Write failed!" << endl;
+        exit(1);
+    }
+    appendfile.close();
+    if (appendfile.fail())
+    {
+        cout << "Cannot close test.txt !" << endl;
+        exit(1);
+    }
+}
+void FileIO::readFile()
+{
+    ifstream readfile;
+    readfile.open("test.txt", ios_base::in);
+    if (readfile.fail())
+    {
+        cout << "Cannot open test.txt !" << endl;
+        exit(1);
+    }
+    char ch;
+    int filespace = 0;
+    cout << "\nContents of test.txt:\n";
+    while (1)
+    {
+        ch = readfile.get();
+        if (readfile.eof())
+            break;
+        cout << ch;
+        filespace++;
+    }
+    cout << "\n\nFile size = "
+        << filespace
+        << " bytes" << endl;
+    readfile.clear();
+    readfile.close();
+    if (readfile.fail())
+    {
+        cout << "Cannot close test.txt !" << endl;
+        exit(1);
+    }
+}
+FileIO.h
+#ifndef FILEIO_H
+#define FILEIO_H
+#include <iostream>
+#include <fstream>
+#include <string>
+using namespace std;
+class FileIO
+{
+public:
+    void writeFile();
+    void readFile();
+};
+#endif#pragma once
