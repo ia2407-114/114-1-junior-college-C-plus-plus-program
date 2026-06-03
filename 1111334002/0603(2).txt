@@ -1,0 +1,104 @@
+maun.cpp
+
+#include "FP.h"
+
+int main() {
+    FP f("test.txt"); 
+
+    f.in(); 
+    f.out();
+
+    return 0;
+}
+
+fp.h
+
+#ifndef FP_H
+#define FP_H
+
+#include <string>
+
+class FP {
+private:
+    std::string name; 
+
+public:
+
+    FP(std::string n = "test.txt");
+
+    void in();
+    void out();
+};
+
+#endif
+
+fp.cpp
+
+#include <iostream>
+#include <fstream>
+#include <string>
+#include "FP.h"
+
+using namespace std;
+
+FP::FP(string n) : name(n) {}
+
+void FP::in() {
+    ofstream file;
+    cout << "開啟" << name << "文字檔，並新增資料於檔尾\n";
+        file.open(name, ios_base::app);
+        if (file.fail()) {
+            cout << name << "檔案無法開啟!\n"; 
+                exit(1); 
+        }
+
+    string data;
+    cout << "輸入(要新增的)資料，以Enter鍵作為結束:\n";
+        getline(cin, data); 
+
+        file << data << '\n';
+        if (file.fail()) {
+            cout << "寫入失敗\n"; 
+                exit(1);
+        }
+
+    file.close();
+        if (file.fail()) {
+
+            cout << name << "檔案無法關閉!\n";
+                exit(1);
+        }
+    cout << "資料新增完成。\n\n";
+}
+
+void FP::out() {
+    ifstream file;
+    file.open(name, ios_base::in);
+        if (file.fail()) {
+
+            cout << name << "檔案無法開啟!\n";
+                exit(1);
+        }
+
+    char ch;
+    int space = 0;
+    cout << name << "文字檔內容為:\n";
+
+        while (1) {
+            ch = file.get();
+                if (file.eof())
+                    break;
+                    cout << ch; 
+                    space++; 
+        }
+    cout << '\n' << name << "文字檔所佔的空間為";
+        cout << space << "個位元組(包括換列字元)\n";
+
+        file.clear();
+        file.close(); 
+        if (file.fail()) {
+
+            cout << name << "檔案無法關閉!\n"; 
+                exit(1);
+        }
+}
