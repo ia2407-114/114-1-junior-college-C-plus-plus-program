@@ -1,0 +1,74 @@
+題目2: 請修改合併"17-範例2.cpp"與"17-範例3.cpp"兩個程式檔，先透過鍵盤輸入資料，再利用程式印出檔案內容與長度。
+#include <iostream>
+#include <fstream>
+#include <string>
+using namespace std;
+
+int main()
+{
+    // ====== 寫入檔案 ======
+    ofstream appendfile;
+
+    cout << "開啟test.txt文字檔，並新增資料於檔尾\n";
+
+    appendfile.open("test.txt", ios_base::app);
+
+    if (appendfile.fail())
+    {
+        cout << "test.txt檔案無法開啟!\n";
+        exit(1);
+    }
+
+    string data;
+
+    cout << "請輸入資料：";
+    getline(cin, data);
+
+    appendfile << data << '\n';
+
+    if (appendfile.fail())
+    {
+        cout << "寫入失敗!\n";
+        exit(1);
+    }
+
+    appendfile.close();
+
+    cout << "\n資料已成功寫入 test.txt\n\n";
+
+    // ====== 讀取檔案 ======
+    ifstream readfile;
+
+    readfile.open("test.txt", ios_base::in);
+
+    if (readfile.fail())
+    {
+        cout << "test.txt檔案無法開啟!\n";
+        exit(1);
+    }
+
+    char ch;
+    int filespace = 0;
+
+    cout << "===== test.txt檔案內容 =====\n";
+
+    while (1)
+    {
+        ch = readfile.get();
+
+        if (readfile.eof())
+            break;
+
+        cout << ch;
+        filespace++;
+    }
+
+    cout << "\n\n===== 檔案長度 =====\n";
+    cout << "test.txt共佔用 "
+        << filespace
+        << " 個位元組(Byte)\n";
+
+    readfile.close();
+
+    return 0;
+}
