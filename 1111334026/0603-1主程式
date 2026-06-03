@@ -1,0 +1,21 @@
+
+#include <iostream>
+#include <string>
+using namespace std;
+#include "fly.h"
+
+int main()
+{
+    flight_object* flight1;
+    airliner air1;
+    bombplane bomb1;
+    air1.create_flight_object("大型客機");
+    air1.create_airliner();
+    bomb1.create_flight_object("轟炸機");
+    bomb1.create_bombplane();
+    flight1 = &air1;
+    flight1->display();
+    flight1 = &bomb1;
+    flight1->display();
+    return 0;
+}
