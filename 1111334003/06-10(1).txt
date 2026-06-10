@@ -1,0 +1,84 @@
+main.cpp
+#include "AnimalFile.h"
+int main()
+{
+    AnimalFile animal;
+    animal.writeData();
+    animal.readData();
+    return 0;
+}
+AnimalFile.cpp
+#include "AnimalFile.h"
+#include <cstdlib>
+void AnimalFile::writeData()
+{
+    ofstream writefile;
+    writefile.open("animal.txt", ios_base::out);
+    if (writefile.fail())
+    {
+        cout << "animal.txt檔案無法開啟！" << endl;
+        exit(1);
+    }
+    writefile << "動物\t年齡\t身高\n";
+    string name;
+    int age;
+    int height;
+    cout << "請輸入動物名稱、年齡及身高(以空白鍵區隔)" << endl;
+    cout << "輸入完成後請按 Ctrl+Z 再按 Enter 結束輸入" << endl;
+    while (cin >> name >> age >> height)
+    {
+        writefile << name
+            << '\t'
+            << age
+            << '\t'
+            << height
+            << '\n';
+        if (writefile.fail())
+        {
+            cout << "資料寫入失敗！" << endl;
+            break;
+        }
+    }
+    writefile.close();
+    if (writefile.fail())
+    {
+        cout << "animal.txt檔案無法關閉！" << endl;
+        exit(1);
+    }
+}
+void AnimalFile::readData()
+{
+    ifstream readfile;
+    readfile.open("animal.txt", ios_base::in);
+    if (readfile.fail())
+    {
+        cout << "animal.txt檔案無法開啟！" << endl;
+        exit(1);
+    }
+    string line;
+    cout << "\n===== animal.txt 檔案內容 =====\n";
+    while (getline(readfile, line))
+    {
+        cout << line << endl;
+    }
+    readfile.close();
+    if (readfile.fail())
+    {
+        cout << "animal.txt檔案無法關閉！" << endl;
+        exit(1);
+    }
+}
+AnimalFile.h
+#ifndef ANIMALFILE_H
+#define ANIMALFILE_H
+#include <iostream>
+#include <fstream>
+#include <string>
+using namespace std;
+class AnimalFile
+{
+public:
+    void writeData();
+    void readData();
+};
+#endif#pragma once
