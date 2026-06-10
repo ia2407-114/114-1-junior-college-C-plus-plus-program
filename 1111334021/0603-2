@@ -1,0 +1,102 @@
+main.cpp
+#include <iostream>
+#include "FileTool.h"
+
+using namespace std;
+
+int main() {
+    const string targetFile = "test.txt";
+
+    
+    FileTool::appendToFile(targetFile);
+
+    cout << "------------------------------------------\n\n";
+
+   
+    FileTool::readFileAndCountSize(targetFile);
+
+    return 0;
+}
+------------
+FileTool.cpp
+#include "FileTool.h"
+#include <iostream>
+#include <fstream>
+#include <cstdlib> 
+
+using namespace std;
+
+void FileTool::appendToFile(const string& filename) {
+    ofstream appendfile;
+
+    cout << "開啟 " << filename << " 文字檔，並新增資料於檔尾...\n";
+
+    appendfile.open(filename, ios_base::app);
+    if (appendfile.fail()) {
+        cout << filename << " 檔案無法開啟(寫入模式)!\n";
+        exit(1);
+    }
+
+    string data;
+    cout << "輸入(要新增的)資料，以Enter鍵作為結束:\n";
+    getline(cin, data);
+    appendfile << data << '\n';
+    if (appendfile.fail()) {
+        cout << "寫入失敗\n";
+        exit(1);
+    }
+
+    appendfile.close();
+    if (appendfile.fail()) {
+        cout << filename << " 檔案無法關閉(寫入模式)!\n";
+        exit(1);
+    }
+
+    cout << "資料寫入成功！\n\n";
+}
+
+void FileTool::readFileAndCountSize(const string& filename) {
+    ifstream readfile;
+
+    readfile.open(filename, ios_base::in);
+    if (readfile.fail()) {
+        cout << filename << " 檔案無法開啟(讀取模式)!\n";
+        exit(1);
+    }
+
+    char ch;
+    int filespace = 0;
+    cout << filename << " 文字檔目前最新內容為:\n";
+    while (1) {
+        ch = readfile.get();
+
+        if (readfile.eof())
+            break;
+        cout << ch;
+        filespace++;
+    }
+    cout << '\n' << filename << " 文字檔所佔的空間為：";
+    cout << filespace << " 個位元組(包括換列字元)\n";
+
+    readfile.clear();
+    readfile.close();
+    if (readfile.fail()) {
+        cout << filename << " 檔案無法關閉(讀取模式)!\n";
+        exit(1);
+    }
+}
+-------------
+FileTool.h
+#ifndef FILE_TOOL_H
+#define FILE_TOOL_H
+
+#include <string>
+
+class FileTool {
+public:
+    static void appendToFile(const std::string& filename);
+
+    static void readFileAndCountSize(const std::string& filename);
+};
+
+#endif 
