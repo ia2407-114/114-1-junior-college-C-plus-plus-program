@@ -1,0 +1,207 @@
+題目2: 請結核病修改範例6.cpp、範例7.cpp程式碼，具有格式化輸入與輸出的功能，前半部先透過鍵盤輸入三種動物的年齡與身高，在格式化寫入到檔案中。後半部再次打開、讀取檔案，計算所有動物的平均身高與年齡，並將資料寫回檔案中。
+最後，將整個檔案內容讀取出來並列印到螢幕中。請利用介面/實作分離的程式設計方式完成。
+____________________________________________________________________________
+Animal.h（介面檔）
+#ifndef ANIMAL_H
+#define ANIMAL_H
+
+#include <iostream>
+#include <fstream>
+#include <string>
+using namespace std;
+
+class Animal
+{
+private:
+    string name;
+    int age;
+    int height;
+
+public:
+    Animal();
+
+    void inputData();
+    void writeToFile(ofstream &outFile);
+
+    string getName();
+    int getAge();
+    int getHeight();
+};
+
+#endif
+___________________________________________________________________________
+Animal.cpp（實作檔）
+#include "Animal.h"
+
+Animal::Animal()
+{
+    name = "";
+    age = 0;
+    height = 0;
+}
+
+void Animal::inputData()
+{
+    cin >> name >> age >> height;
+}
+
+void Animal::writeToFile(ofstream &outFile)
+{
+    outFile << name << '\t'
+            << age << '\t'
+            << height << '\n';
+}
+
+string Animal::getName()
+{
+    return name;
+}
+
+int Animal::getAge()
+{
+    return age;
+}
+
+int Animal::getHeight()
+{
+    return height;
+}
+_________________________________________________________________________
+main.cpp（主程式）
+#include "Animal.h"
+#include <iomanip>
+
+int main()
+{
+    // ======================
+    // 第一部分：輸入並寫入檔案
+    // ======================
+
+    ofstream writeFile("animal.txt");
+
+    if (writeFile.fail())
+    {
+        cout << "animal.txt檔案無法開啟！" << endl;
+        return 1;
+    }
+
+    writeFile << left
+              << setw(12) << "動物"
+              << setw(12) << "年齡"
+              << setw(12) << "身高"
+              << endl;
+
+    Animal a[3];
+
+    for (int i = 0; i < 3; i++)
+    {
+        cout << "請輸入第" << i + 1
+             << "種動物名稱、年齡、身高：";
+
+        a[i].inputData();
+        a[i].writeToFile(writeFile);
+    }
+
+    writeFile.close();
+
+    // ======================
+    // 第二部分：讀取檔案計算平均
+    // ======================
+
+    fstream rwFile;
+    rwFile.open("animal.txt",
+                ios::in | ios::out | ios::app);
+
+    if (rwFile.fail())
+    {
+        cout << "animal.txt檔案無法開啟！" << endl;
+        return 1;
+    }
+
+    ifstream readFile("animal.txt");
+
+    string title;
+    getline(readFile, title);
+
+    string name;
+    int age, height;
+
+    float totalAge = 0;
+    float totalHeight = 0;
+    int count = 0;
+
+    while (readFile >> name >> age >> height)
+    {
+        totalAge += age;
+        totalHeight += height;
+        count++;
+    }
+
+    readFile.close();
+
+    float avgAge = totalAge / count;
+    float avgHeight = totalHeight / count;
+
+    rwFile << fixed << setprecision(1);
+    rwFile << "\n平均年齡: "
+           << avgAge
+           << "\t平均身高: "
+           << avgHeight
+           << endl;
+
+    rwFile.close();
+
+    // ======================
+    // 第三部分：讀取整個檔案並顯示
+    // ======================
+
+    ifstream showFile("animal.txt");
+
+    if (showFile.fail())
+    {
+        cout << "檔案讀取失敗！" << endl;
+        return 1;
+    }
+
+    cout << "\n===== animal.txt內容 =====\n"
+         << endl;
+
+    string line;
+
+    while (getline(showFile, line))
+    {
+        cout << line << endl;
+    }
+
+    showFile.close();
+
+    return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
