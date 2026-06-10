@@ -1,0 +1,12 @@
+#include "animal.h"
+
+int main()
+{
+    writeAnimalFile();
+
+    avgAnimalFile();
+
+    readAnimalFile();
+
+    return 0;
+}
