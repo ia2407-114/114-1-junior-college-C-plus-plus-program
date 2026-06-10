@@ -1,0 +1,104 @@
+#include "Header.h"
+#include <iomanip>
+
+int main()
+{
+    Animal animal[3];
+
+    ofstream writefile("animal.txt");
+
+    if (writefile.fail())
+    {
+        cout << "檔案開啟失敗！" << endl;
+        return 1;
+    }
+
+    for (int i = 0; i < 3; i++)
+    {
+        cout << "\n第 " << i + 1 << " 筆資料\n";
+        animal[i].input();
+    }
+
+
+    cout << "\n=== 動物資料 ===\n";
+
+    cout << left
+        << setw(10) << "名稱"
+        << setw(10) << "年齡"
+        << setw(10) << "身高"
+        << endl;
+
+    for (int i = 0; i < 3; i++)
+    {
+        animal[i].output();
+    }
+
+    
+    writefile << left
+        << setw(10) << "名稱"
+        << setw(10) << "年齡"
+        << setw(10) << "身高"
+        << endl;
+
+    for (int i = 0; i < 3; i++)
+    {
+        animal[i].writeFile(writefile);
+    }
+
+    writefile.close();
+
+    return 0;
+}主程式
+#include "Header.h"
+#include <iomanip>
+
+void Animal::input()
+{
+    cout << "請輸入動物名稱：";
+    cin >> name;
+
+    cout << "請輸入年齡：";
+    cin >> age;
+
+    cout << "請輸入身高：";
+    cin >> height;
+}
+void Animal::output()
+{
+    cout << left
+        << setw(10) << name
+        << setw(10) << age
+        << setw(10) << height
+        << endl;
+}
+void Animal::writeFile(ofstream& outFile)
+{
+    outFile << left
+        << setw(10) << name
+        << setw(10) << age
+        << setw(10) << height
+        << endl;
+}實作
+#ifndef HEADER_H
+#define HEADER_H
+
+#include <iostream>
+#include <fstream>
+#include <string>
+using namespace std;
+
+class Animal
+{
+private:
+    string name;
+    int age;
+    int height;
+
+public:
+    void input();      
+    void output();     
+    void writeFile(ofstream& outFile); 
+};
+
+#endif
+介面

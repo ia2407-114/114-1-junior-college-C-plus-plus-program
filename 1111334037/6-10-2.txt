@@ -1,0 +1,171 @@
+#include "Header.h"
+#include <iomanip>
+
+int main()
+{
+    int n;
+
+    cout << "請輸入動物數量：";
+    cin >> n;
+
+    Animal* animal = new Animal[n];
+
+ 
+    ofstream writefile("animal.txt");
+
+    if (writefile.fail())
+    {
+        cout << "animal.txt檔案無法開啟!\n";
+        return 1;
+    }
+
+    writefile << left
+        << setw(15) << "動物"
+        << setw(10) << "年齡"
+        << setw(10) << "身高"
+        << endl;
+
+    for (int i = 0; i < n; i++)
+    {
+        cout << "\n第 " << i + 1 << " 種動物\n";
+        animal[i].input();
+        animal[i].writeFile(writefile);
+    }
+
+    writefile.close();
+
+
+    fstream read_writefile;
+
+    read_writefile.open("animal.txt", ios::in | ios::out);
+
+    if (read_writefile.fail())
+    {
+        cout << "animal.txt檔案無法開啟!\n";
+        return 1;
+    }
+
+    string title;
+    getline(read_writefile, title);
+
+    string name;
+    int age;
+    int height;
+
+    float total_age = 0;
+    float total_height = 0;
+
+    for (int i = 0; i < n; i++)
+    {
+        read_writefile >> name >> age >> height;
+
+        if (read_writefile.fail())
+            break;
+
+        total_age += age;
+        total_height += height;
+    }
+
+    float avg_age = total_age / n;
+    float avg_height = total_height / n;
+
+    read_writefile.clear();
+
+
+    read_writefile.seekp(0, ios::end);
+
+    read_writefile << endl;
+
+    read_writefile << fixed
+        << setprecision(1);
+
+    read_writefile << "平均年齡："
+        << avg_age
+        << "\t平均身高："
+        << avg_height
+        << endl;
+
+    read_writefile.close();
+
+    ifstream readfile("animal.txt");
+
+    if (readfile.fail())
+    {
+        cout << "animal.txt檔案無法開啟!\n";
+        return 1;
+    }
+
+    cout << "\n===== animal.txt內容 =====\n";
+
+    string line;
+
+    while (getline(readfile, line))
+    {
+        cout << line << endl;
+    }
+
+    readfile.close();
+
+    delete[] animal;
+
+    return 0;
+}主程式
+#include "Header.h"
+#include <iomanip>
+
+
+void Animal::input()
+{
+    cout << "請輸入動物名稱、年齡、身高：";
+    cin >> name >> age >> height;
+}
+
+
+void Animal::writeFile(ofstream& fout)
+{
+    fout << left
+        << setw(15) << name
+        << setw(10) << age
+        << setw(10) << height
+        << endl;
+}
+
+string Animal::getName()
+{
+    return name;
+}
+
+int Animal::getAge()
+{
+    return age;
+}
+
+int Animal::getHeight()
+{
+    return height;
+}實作
+#ifndef HEADER_H
+#define HEADER_H
+
+#include <iostream>
+#include <fstream>
+#include <string>
+using namespace std;
+
+class Animal
+{
+private:
+    string name;
+    int age;
+    int height;
+
+public:
+    void input();
+    void writeFile(ofstream& fout);
+
+    string getName();
+    int getAge();
+    int getHeight();
+};
+
+#endif介面
