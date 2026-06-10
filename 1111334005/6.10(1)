@@ -1,0 +1,141 @@
+題目1: 請修改範例6.cpp程式碼，具有格式化輸入(到檔案)與輸出(到螢幕)的功能，請利用介面/實作分離的程式設計方式完成。
+__________________________________________________________________
+Animal.h（介面檔）
+#ifndef ANIMAL_H
+#define ANIMAL_H
+
+#include <iostream>
+#include <fstream>
+#include <string>
+using namespace std;
+
+class Animal
+{
+private:
+    string name;
+    int age;
+    int height;
+
+public:
+    Animal();
+    void inputData();
+    void writeToFile(ofstream &outFile);
+    void display();
+};
+
+#endif
+_________________________________________________________________
+Animal.cpp（實作檔）
+#include "Animal.h"
+
+Animal::Animal()
+{
+    name = "";
+    age = 0;
+    height = 0;
+}
+
+void Animal::inputData()
+{
+    cin >> name >> age >> height;
+}
+
+void Animal::writeToFile(ofstream &outFile)
+{
+    outFile << name << '\t'
+            << age << '\t'
+            << height << '\n';
+}
+
+void Animal::display()
+{
+    cout << name << "\t"
+         << age << "\t"
+         << height << endl;
+}
+_______________________________________________________________
+main.cpp（主程式）
+#include "Animal.h"
+#include <iomanip>
+
+int main()
+{
+    ofstream writefile;
+
+    writefile.open("animal.txt", ios::out);
+
+    if (writefile.fail())
+    {
+        cout << "animal.txt檔案無法開啟!" << endl;
+        return 1;
+    }
+
+    writefile << "動物\t年齡\t身高\n";
+
+    Animal a[3];
+
+    for (int i = 0; i < 3; i++)
+    {
+        cout << "輸入第" << i + 1
+             << "種動物名稱，年齡及身高(以空白鍵作區隔):" << endl;
+
+        a[i].inputData();
+        a[i].writeToFile(writefile);
+    }
+
+    writefile.close();
+
+    // 從檔案讀取並格式化輸出到螢幕
+    ifstream readfile("animal.txt");
+
+    if (readfile.fail())
+    {
+        cout << "animal.txt檔案無法讀取!" << endl;
+        return 1;
+    }
+
+    string title;
+    getline(readfile, title);
+
+    cout << "\n===== 動物資料表 =====" << endl;
+    cout << left
+         << setw(10) << "動物"
+         << setw(10) << "年齡"
+         << setw(10) << "身高" << endl;
+
+    string name;
+    int age, height;
+
+    while (readfile >> name >> age >> height)
+    {
+        cout << left
+             << setw(10) << name
+             << setw(10) << age
+             << setw(10) << height
+             << endl;
+    }
+
+    readfile.close();
+
+    return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
