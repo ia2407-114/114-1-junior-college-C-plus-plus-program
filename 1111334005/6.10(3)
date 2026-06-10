@@ -1,0 +1,205 @@
+題目3: 呈上題，先建立動物檔animal 結構(變數)，建立二進位檔的存取程式，具有格式化輸入與輸出的功能，前半部先透過鍵盤輸入n種動物的年齡與身高，在格式化寫入到檔案中，直到不要繼續輸入為止。
+後半部再次打開、讀取檔案，計算所有動物的平均身高與年齡，並將資料寫回檔案中。最後，將整個檔案內容讀取出來並列印到螢幕中。請利用介面/實作分離的程式設計方式完成。
+______________________________________________________________________
+Animal.h（介面檔）
+#ifndef ANIMAL_H
+#define ANIMAL_H
+
+#include <iostream>
+#include <fstream>
+using namespace std;
+
+struct Animal
+{
+    char name[30];
+    int age;
+    int height;
+};
+
+class AnimalFile
+{
+public:
+    void inputAnimals();
+    void calculateAverage();
+    void displayFile();
+};
+
+#endif
+___________________________________________________________________
+Animal.cpp（實作檔）
+#include "Animal.h"
+#include <iomanip>
+#include <cstring>
+#include <string>
+
+void AnimalFile::inputAnimals()
+{
+    ofstream outFile("animal.dat", ios::binary);
+
+    if (!outFile)
+    {
+        cout << "檔案開啟失敗！" << endl;
+        return;
+    }
+
+    Animal a;
+    char choice;
+
+    do
+    {
+        cout << "請輸入動物名稱：";
+        cin >> a.name;
+
+        cout << "請輸入年齡：";
+        cin >> a.age;
+
+        cout << "請輸入身高：";
+        cin >> a.height;
+
+        outFile.write((char*)&a, sizeof(a));
+
+        cout << "是否繼續輸入(Y/N)? ";
+        cin >> choice;
+
+    } while(choice=='Y' || choice=='y');
+
+    outFile.close();
+}
+
+void AnimalFile::calculateAverage()
+{
+    fstream file("animal.dat",
+                 ios::in | ios::out | ios::binary);
+
+    if (!file)
+    {
+        cout << "檔案開啟失敗！" << endl;
+        return;
+    }
+
+    Animal a;
+
+    float totalAge = 0;
+    float totalHeight = 0;
+    int count = 0;
+
+    while(file.read((char*)&a,sizeof(a)))
+    {
+        totalAge += a.age;
+        totalHeight += a.height;
+        count++;
+    }
+
+    float avgAge = totalAge / count;
+    float avgHeight = totalHeight / count;
+
+    cout << fixed << setprecision(1);
+
+    cout << "\n平均年齡: "
+         << avgAge
+         << "\t平均身高: "
+         << avgHeight << endl;
+
+    file.close();
+
+    ofstream result("average.txt");
+
+    result << fixed << setprecision(1);
+    result << "平均年齡: "
+           << avgAge
+           << "\t平均身高: "
+           << avgHeight
+           << endl;
+
+    result.close();
+}
+
+void AnimalFile::displayFile()
+{
+    ifstream file("animal.dat", ios::binary);
+
+    if (!file)
+    {
+        cout << "檔案讀取失敗！" << endl;
+        return;
+    }
+
+    Animal a;
+
+    cout << "\n==========================" << endl;
+    cout << "動物資料列表" << endl;
+    cout << "==========================" << endl;
+
+    cout << left
+         << setw(15) << "名稱"
+         << setw(10) << "年齡"
+         << setw(10) << "身高"
+         << endl;
+
+    while(file.read((char*)&a,sizeof(a)))
+    {
+        cout << left
+             << setw(15) << a.name
+             << setw(10) << a.age
+             << setw(10) << a.height
+             << endl;
+    }
+
+    file.close();
+
+    ifstream avgFile("average.txt");
+
+    string line;
+
+    cout << "\n===== 平均資料 =====" << endl;
+
+    while(getline(avgFile,line))
+    {
+        cout << line << endl;
+    }
+
+    avgFile.close();
+}
+___________________________________________________________________________
+main.cpp
+#include "Animal.h"
+
+int main()
+{
+    AnimalFile af;
+
+    // 輸入資料並存成二進位檔
+    af.inputAnimals();
+
+    // 計算平均值
+    af.calculateAverage();
+
+    // 顯示所有資料
+    af.displayFile();
+
+    return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
