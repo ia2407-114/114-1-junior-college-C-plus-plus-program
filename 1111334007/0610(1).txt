@@ -1,0 +1,129 @@
+//main.cpp
+#include "Animal.h"
+#include <iomanip>
+
+int main()
+{
+    ofstream writeFile;
+
+    writeFile.open("animal.txt", ios::out);
+
+    if (writeFile.fail())
+    {
+        cout << "animal.txt檔案無法開啟!" << endl;
+        return 1;
+    }
+
+    Animal animal[3];
+
+    cout << "請輸入3種動物名稱、年齡及身高：\n";
+
+    for (int i = 0; i < 3; i++)
+    {
+        cout << "第" << i + 1
+             << "種動物(名稱 年齡 身高)：";
+
+        animal[i].inputData();
+        animal[i].writeData(writeFile);
+    }
+
+    writeFile.close();
+
+    readFileAndDisplay();
+
+    return 0;
+}
+
+//Animal.cpp
+#include "Animal.h"
+#include <iomanip>
+
+Animal::Animal()
+{
+    name = "";
+    age = 0;
+    height = 0;
+}
+
+void Animal::inputData()
+{
+    cin >> name >> age >> height;
+}
+
+void Animal::writeData(ofstream& outFile)
+{
+    outFile << left
+            << setw(10) << name
+            << setw(10) << age
+            << setw(10) << height
+            << endl;
+}
+
+void Animal::displayData()
+{
+    cout << left
+         << setw(10) << name
+         << setw(10) << age
+         << setw(10) << height
+         << endl;
+}
+
+void readFileAndDisplay()
+{
+    ifstream readFile;
+    readFile.open("animal.txt");
+
+    if (readFile.fail())
+    {
+        cout << "animal.txt檔案無法開啟!" << endl;
+        exit(1);
+    }
+
+    string name;
+    int age, height;
+
+    cout << "\n===== 動物資料 =====\n";
+    cout << left
+         << setw(10) << "動物"
+         << setw(10) << "年齡"
+         << setw(10) << "身高"
+         << endl;
+
+    while (readFile >> name >> age >> height)
+    {
+        cout << left
+             << setw(10) << name
+             << setw(10) << age
+             << setw(10) << height
+             << endl;
+    }
+
+    readFile.close();
+}
+
+//Animal.h
+#ifndef ANIMAL_H
+#define ANIMAL_H
+
+#include <iostream>
+#include <fstream>
+#include <string>
+using namespace std;
+
+class Animal
+{
+private:
+    string name;
+    int age;
+    int height;
+
+public:
+    Animal();
+    void inputData();
+    void writeData(ofstream& outFile);
+    void displayData();
+};
+
+void readFileAndDisplay();
+
+#endif

@@ -1,0 +1,177 @@
+Mal.h
+
+#ifndef MAL_H
+#define MAL_H
+
+#include <string>
+
+struct MalData {
+    char name[20];   
+    int age;      
+    int height;
+    bool isAverage;
+    float avgAge;   
+    float avgHeight; 
+};
+
+class Mal {
+private:
+    std::string filename; 
+    int total_records;    
+
+public:
+
+    Mal(const std::string& fname = "animal.bin");
+
+    void inputAndSaveBinary();
+
+    void calcAndAppendAverageBinary();
+
+    void printAllBinary();
+};
+
+#endif
+
+Mal.cpp
+
+#include "Mal.h"
+#include <iostream>
+#include <fstream>
+#include <iomanip>
+#include <cstdlib>
+#include <cstring>
+
+using namespace std;
+
+Mal::Mal(const string& fname) : filename(fname), total_records(0) {}
+
+void Mal::inputAndSaveBinary() {
+    ofstream out(filename, ios_base::out | ios_base::binary);
+    if (out.fail()) {
+        cerr << filename << " 無法開啟!\n";
+        exit(1);
+    }
+
+    MalData data;
+    char choice;
+    total_records = 0;
+
+    while (true) {
+        total_records++;
+        cout << "輸入第 " << total_records << " 種動物名稱: ";
+        string temp_name;
+        cin >> temp_name;
+
+        strncpy_s(data.name, sizeof(data.name), temp_name.c_str(), _TRUNCATE);
+        data.name[sizeof(data.name) - 1] = '\0';
+
+        cout << "輸入年齡及身高 (以空白鍵作區隔):\n";
+        cin >> data.age >> data.height;
+
+        data.isAverage = false;
+
+        out.write(reinterpret_cast<const char*>(&data), sizeof(MalData));
+
+        if (out.fail()) {
+            cout << "寫入失敗\n";
+            break;
+        }
+
+        cout << "是否繼續輸入下一筆？(y/n): ";
+        cin >> choice;
+        if (choice == 'n' || choice == 'N') break;
+        cout << "\n";
+    }
+
+    out.close();
+    cout << " 階段 1：成功寫入 " << total_records << " 筆二進位資料\n\n";
+}
+
+void Mal::calcAndAppendAverageBinary() {
+    fstream file(filename, ios_base::in | ios_base::out | ios_base::binary);
+    if (file.fail()) {
+        cerr << filename << " 檔案無法開啟!\n";
+        exit(1);
+    }
+
+    MalData data;
+    float total_age = 0, total_height = 0;
+
+    for (int i = 0; i < total_records; ++i) {
+        file.read(reinterpret_cast<char*>(&data), sizeof(MalData));
+        if (file.fail()) {
+            cout << "讀取失敗\n";
+            break;
+        }
+        total_age += data.age;
+        total_height += data.height;
+    }
+
+    MalData avgData;
+
+    strcpy_s(avgData.name, sizeof(avgData.name), "平均值");
+    avgData.isAverage = true; 
+    avgData.avgAge = total_age / total_records;
+    avgData.avgHeight = total_height / total_records;
+
+    file.seekp(0, ios::end);
+
+    file.write(reinterpret_cast<const char*>(&avgData), sizeof(MalData));
+
+    file.clear();
+    file.close();
+    cout << "階段 2：成功計算並將平均值追加至檔尾\n\n";
+}
+
+void Mal::printAllBinary() {
+    ifstream in(filename, ios_base::in | ios_base::binary);
+    if (in.fail()) {
+        cerr << filename << " 無法開啟!\n";
+        exit(1);
+    }
+
+    cout << "最終檔案內容\n";
+    cout << left << setw(15) << "動物" << setw(10) << "年齡" << setw(10) << "身高" << "\n";
+    cout << string(35, '-') << "\n";
+
+    cout.precision(1);
+    cout.setf(ios::fixed);
+
+    MalData data;
+
+    for (int i = 0; i < total_records + 1; ++i) {
+        in.read(reinterpret_cast<char*>(&data), sizeof(MalData));
+        if (in.eof()) break;
+
+        if (data.isAverage) {
+
+            cout << string(35, '-') << "\n";
+            cout << left << setw(15) << data.name
+                << setw(10) << data.avgAge
+                << setw(10) << data.avgHeight << "\n";
+        }
+        else {
+            cout << left << setw(15) << data.name
+                << setw(10) << data.age
+                << setw(10) << data.height << "\n";
+        }
+    }
+
+    in.close();
+}
+
+Source.cpp
+
+#include "Mal.h"
+
+int main() {
+    Mal file("animal.bin");
+
+    file.inputAndSaveBinary();
+
+    file.calcAndAppendAverageBinary();
+
+    file.printAllBinary();
+
+    return 0;
+}

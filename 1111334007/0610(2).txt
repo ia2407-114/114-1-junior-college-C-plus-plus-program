@@ -1,0 +1,137 @@
+Ani.h
+
+#ifndef ANI_H
+#define ANI_H
+
+#include <string>
+
+class Ani {
+private:
+    std::string filename;
+    int count;  
+
+public:
+
+    Ani(const std::string& fname = "animal.txt", int cnt = 3);
+
+    void inputAndSave();
+
+    void calcAndAppendAverage();
+
+    void printAll();
+};
+
+#endif#pragma once
+
+Ani.cpp
+
+#include "Ani.h"
+#include <iostream>
+#include <fstream>
+#include <iomanip>
+#include <cstdlib>
+
+using namespace std;
+
+Ani::Ani(const string& fname, int cnt) : filename(fname), count(cnt) {}
+
+void Ani::inputAndSave() {
+    ofstream out(filename, ios_base::out);
+    if (out.fail()) {
+        cerr << filename << " 無法開啟(寫入模式)!\n";
+        exit(1);
+    }
+
+    out << left << setw(15) << "動物" << setw(10) << "年齡" << setw(10) << "身高" << "\n";
+    out << string(35, '-') << "\n";
+
+    string name;
+    int age, height;
+
+    for (int i = 1; i <= count; ++i) {
+        cout << "輸入第 " << i << " 種動物名稱、年齡及身高 (以空白鍵作區隔):\n";
+        cin >> name >> age >> height;
+
+        out << left << setw(15) << name << setw(10) << age << setw(10) << height << "\n";
+
+        if (out.fail()) {
+            cerr << "寫入失敗\n";
+            break;
+        }
+    }
+    out.close();
+    cout << " 階段 1：成功寫入初始資料\n\n";
+}
+
+void Ani::calcAndAppendAverage() {
+    fstream file(filename, ios_base::in | ios_base::out);
+    if (file.fail()) {
+        cerr << filename << " 無法開啟(讀寫模式)!\n";
+        exit(1);
+    }
+
+    string name;
+    int age, height;
+    float total_age = 0, total_height = 0;
+
+    string dummy;
+    getline(file, dummy);
+    getline(file, dummy);
+
+    for (int i = 1; i <= count; ++i) {
+        file >> name >> age >> height;
+        if (file.fail()) {
+            cerr << "讀取失敗\n";
+            break;
+        }
+        total_age += age;
+        total_height += height;
+    }
+
+    file.seekg(0, ios::end);
+
+    file.precision(1);
+    file.setf(ios::fixed);
+
+    file << string(35, '-') << "\n";
+    file << left << setw(15) << "平均值"
+        << setw(10) << (total_age / count)
+        << setw(10) << (total_height / count) << "\n";
+
+    file.clear(); 
+    file.close();
+    cout << "階段 2：成功計算並將平均值追加至檔尾\n\n";
+}
+
+void Ani::printAll() {
+    ifstream in(filename, ios_base::in);
+    if (in.fail()) {
+        cerr << filename << " 無法開啟(讀取模式)!\n";
+        exit(1);
+    }
+
+    cout << "最終檔案內容 (螢幕輸出)\n";
+    string line;
+    while (getline(in, line)) {
+        cout << line << "\n";
+    }
+
+    in.close();
+}
+
+Source.cpp
+
+#include "Ani.h"
+
+int main() {
+
+    Ani file("animal.txt", 3);
+
+    file.inputAndSave();
+
+    file.calcAndAppendAverage();
+
+    file.printAll();
+
+    return 0;
+}
