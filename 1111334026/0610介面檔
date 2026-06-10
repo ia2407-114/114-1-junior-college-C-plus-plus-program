@@ -1,0 +1,8 @@
+#pragma once
+#ifndef ANIMALFILE_H
+#define ANIMALFILE_H
+
+void writeAnimalFile();
+void readAnimalFile();
+void avgAnimalFile();
+#endif
