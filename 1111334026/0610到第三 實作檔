@@ -1,0 +1,132 @@
+#include "animal.h"
+#include <iostream>
+#include <fstream>
+#include <cstring>
+
+using namespace std;
+
+void writeAnimalFile()
+{
+    ofstream outfile("animal.dat", ios::binary);
+
+    if (!outfile)
+    {
+        cout << "檔案開啟失敗\n";
+        return;
+    }
+
+    Animal a;
+    char ch;
+
+    do
+    {
+        string temp;
+
+        cout << "請輸入動物名稱：";
+        cin >> temp;
+
+        strcpy_s(a.name, temp.c_str());
+
+        cout << "請輸入年齡：";
+        cin >> a.age;
+
+        cout << "請輸入身高：";
+        cin >> a.height;
+
+        outfile.write(
+            reinterpret_cast<char*>(&a),
+            sizeof(Animal));
+
+        cout << "是否繼續輸入(Y/N)：";
+        cin >> ch;
+
+    } while (ch == 'Y' || ch == 'y');
+
+    outfile.close();
+}
+
+void avgAnimalFile()
+{
+    fstream file(
+        "animal.dat",
+        ios::binary | ios::in | ios::out);
+
+    if (!file)
+    {
+        cout << "檔案開啟失敗\n";
+        return;
+    }
+
+    Animal a;
+
+    float totalAge = 0;
+    float totalHeight = 0;
+    int count = 0;
+
+    while (file.read(
+        reinterpret_cast<char*>(&a),
+        sizeof(Animal)))
+    {
+        totalAge += a.age;
+        totalHeight += a.height;
+        count++;
+    }
+
+    if (count == 0)
+    {
+        file.close();
+        return;
+    }
+
+    Animal avg;
+
+    strcpy_s(avg.name, "Average");
+
+    avg.age = totalAge / count;
+    avg.height = totalHeight / count;
+
+    cout << "\n平均年齡：" << avg.age
+         << "\n平均身高：" << avg.height
+         << endl;
+
+    file.clear();
+
+    file.seekp(0, ios::end);
+
+    file.write(
+        reinterpret_cast<char*>(&avg),
+        sizeof(Animal));
+
+    file.close();
+}
+
+void readAnimalFile()
+{
+    ifstream infile("animal.dat", ios::binary);
+
+    if (!infile)
+    {
+        cout << "檔案開啟失敗\n";
+        return;
+    }
+
+    Animal a;
+
+    cout << "\n-----------------------------\n";
+    cout << "動物\t年齡\t身高\n";
+    cout << "-----------------------------\n";
+
+    while (infile.read(
+        reinterpret_cast<char*>(&a),
+        sizeof(Animal)))
+    {
+        cout << a.name
+             << '\t'
+             << a.age
+             << '\t'
+             << a.height
+             << endl;
+    }
+
+    infile.close();
+}
