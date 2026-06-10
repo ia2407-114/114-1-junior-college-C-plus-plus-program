@@ -1,0 +1,19 @@
+#ifndef ANIMAL_H
+#define ANIMAL_H
+
+#include <string>
+
+using namespace std;
+
+struct Animal
+{
+    char name[30];
+    int age;
+    int height;
+};
+
+void writeAnimalFile();
+void avgAnimalFile();
+void readAnimalFile();
+
+#endif
