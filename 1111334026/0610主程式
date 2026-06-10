@@ -1,0 +1,14 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+#include "animal.h"
+using namespace std;
+int main()
+{
+    writeAnimalFile();
+    readAnimalFile();
+    avgAnimalFile();
+
+    return 0;
+}
+   
