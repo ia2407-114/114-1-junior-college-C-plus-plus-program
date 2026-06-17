@@ -1,0 +1,60 @@
+main.cpp
+#include "File.h"
+int main()
+{
+    readMovie();
+    return 0;
+}
+File.cpp
+#include <iostream>
+#include <fstream>
+#include "File.h"
+using namespace std;
+void readMovie()
+{
+    cinema movie;
+    ifstream readbinaryfile;
+    readbinaryfile.open("movie.bin", ios::binary);
+    if (readbinaryfile.fail())
+    {
+        cout << "movie.bin檔案無法開啟!\n";
+        exit(1);
+    }
+    cout << "電影資料\n";
+    while (readbinaryfile.read((char*)&movie, sizeof(cinema)))
+    {
+        cout << movie.id << ". " << movie.name << endl;
+    }
+    readbinaryfile.clear();
+    int no;
+    cout << "\n請輸入要查看的資料編號:";
+    cin >> no;
+    readbinaryfile.seekg(sizeof(cinema) * (no - 1), ios::beg);
+    readbinaryfile.read((char*)&movie, sizeof(cinema));
+    if (!readbinaryfile.eof())
+    {
+        cout << "\n資料編號:" << movie.id << endl;
+        cout << "電影名稱:" << movie.name << endl;
+        cout << "上映日期:" << movie.date << endl;
+        cout << "上映廳處:" << movie.place << endl;
+        cout << "票價:" << movie.price << endl;
+    }
+    else
+    {
+        cout << "查無資料\n";
+    }
+    readbinaryfile.close();
+}
+File.h
+#ifndef FILE_H
+#define FILE_H
+struct cinema
+{
+    int id;
+    char name[20];
+    char date[9];
+    char place[10];
+    int price;
+};
+void readMovie();
+#endif#pragma once
