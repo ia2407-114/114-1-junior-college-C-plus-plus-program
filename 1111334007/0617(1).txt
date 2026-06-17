@@ -1,0 +1,92 @@
+movie.h
+
+#ifndef MOVIE_H
+#define MOVIE_H
+
+struct movie_data {
+    char name[10];
+    char date[9];
+    char place[7];
+    int price;
+};
+
+class Movie {
+public:
+    void write(const char* filename, int count);
+    void list(const char* filename);
+    void show(const char* filename, int no);
+};
+
+#endif
+
+movie.cpp
+
+#include <iostream>
+#include <fstream>
+#include "Movie.h"
+
+using namespace std;
+
+void Movie::write(const char* filename, int count) {
+    ofstream outFile(filename, ios::binary);
+    movie_data data;
+    for (int i = 0; i < count; i++) {
+        cout << "輸入第 " << i + 1 << " 筆資料:\n";
+        cout << "名稱: "; cin >> data.name;
+        cout << "日期: "; cin >> data.date;
+        cout << "廳處: "; cin >> data.place;
+        cout << "票價: "; cin >> data.price;
+        outFile.write((char*)&data, sizeof(movie_data));
+    }
+    outFile.close();
+}
+
+void Movie::list(const char* filename) {
+    ifstream inFile(filename, ios::binary);
+    movie_data data;
+    int i = 1;
+    cout << "\n電影清單\n";
+    while (inFile.read((char*)&data, sizeof(movie_data))) {
+        cout << i << ". " << data.name << endl;
+        i++;
+    }
+    inFile.close();
+}
+
+void Movie::show(const char* filename, int no) {
+    ifstream inFile(filename, ios::binary);
+    movie_data data;
+    inFile.seekg(sizeof(movie_data) * (no - 1), ios::beg);
+
+    if (inFile.read((char*)&data, sizeof(movie_data))) {
+        cout << "\n[第 " << no << " 筆完整資料]\n";
+        cout << "名稱: " << data.name << " | 日期: " << data.date
+            << " | 廳處: " << data.place << " | 票價: " << data.price << endl;
+    }
+    else {
+        cout << "查無此筆資料。\n";
+    }
+    inFile.close();
+}
+
+source.cpp
+
+#include <iostream>
+#include "Movie.h"
+
+using namespace std;
+
+int main() {
+    Movie m;
+    const char* filename = "movie.bin";
+
+    m.write(filename, 5);
+    m.list(filename);
+
+    int no;
+    cout << "\n請輸入要查看的序號 (1-5): ";
+    cin >> no;
+    m.show(filename, no);
+
+    return 0;
+}
