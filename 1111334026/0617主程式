@@ -1,0 +1,18 @@
+#include <iostream>
+#include <fstream>
+#include <cctype>
+#include <conio.h>
+#include "cinema.h"
+using namespace std;
+int main()
+{
+    const char* filename = "movie.bin";
+
+   
+    createMovieInfo(filename);
+
+    
+    listAllMovies(filename);
+
+    return 0;
+}
