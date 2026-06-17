@@ -1,0 +1,136 @@
+題目2. 將範例8、12程式碼內容整合後，建立一個C++程式，先從鍵盤讀取5筆資料後，將所有"資料編號"與"電影名稱" 逐一印出到螢幕中，
+再由畫面詢問要輸出第幾筆資料之後，印出該筆資料的完整內容，程式撰寫方式以介面/實作分離的方式呈現。
+
+____________________________________________________________
+Cinema.h
+#ifndef CINEMA_H
+#define CINEMA_H
+
+struct cinema
+{
+    int id;           // 資料編號
+    char name[20];    // 電影名稱
+    char date[10];    // 上映日期
+    char place[10];   // 上映廳處
+    int price;        // 票價
+};
+
+void writeMovie();
+void showMovieList();
+void showMovieDetail(int no);
+
+#endif
+_______________________________________________________________
+Cinema.cpp（實作檔）
+#include <iostream>
+#include <fstream>
+#include "Cinema.h"
+
+using namespace std;
+
+// 輸入5筆資料並寫入檔案
+void writeMovie()
+{
+    cinema movie;
+
+    ofstream fout("movie.bin", ios::binary);
+
+    for(int i=0;i<5;i++)
+    {
+        cout << "\n第 " << i+1 << " 筆資料\n";
+
+        movie.id = i + 1;
+
+        cout << "電影名稱:";
+        cin >> movie.name;
+
+        cout << "上映日期:";
+        cin >> movie.date;
+
+        cout << "上映廳處:";
+        cin >> movie.place;
+
+        cout << "票價:";
+        cin >> movie.price;
+
+        fout.write((char*)&movie,sizeof(cinema));
+    }
+
+    fout.close();
+}
+
+// 顯示所有編號與電影名稱
+void showMovieList()
+{
+    cinema movie;
+
+    ifstream fin("movie.bin", ios::binary);
+
+    cout << "\n===== 電影清單 =====\n";
+
+    while(fin.read((char*)&movie,sizeof(cinema)))
+    {
+        cout << "資料編號:" << movie.id
+             << "\t電影名稱:" << movie.name
+             << endl;
+    }
+
+    fin.close();
+}
+
+// 顯示指定資料
+void showMovieDetail(int no)
+{
+    cinema movie;
+
+    ifstream fin("movie.bin", ios::binary);
+
+    fin.seekg(sizeof(cinema)*(no-1),ios::beg);
+
+    fin.read((char*)&movie,sizeof(cinema));
+
+    if(!fin.fail())
+    {
+        cout << "\n===== 電影詳細資料 =====\n";
+
+        cout << "資料編號:" << movie.id << endl;
+        cout << "電影名稱:" << movie.name << endl;
+        cout << "上映日期:" << movie.date << endl;
+        cout << "上映廳處:" << movie.place << endl;
+        cout << "票價:" << movie.price << endl;
+    }
+    else
+    {
+        cout << "查無資料!" << endl;
+    }
+
+    fin.close();
+}
+__________________________________________________________
+main.cpp（主程式）
+#include <iostream>
+#include "Cinema.h"
+
+using namespace std;
+
+int main()
+{
+    int no;
+
+    // 輸入5筆資料
+    writeMovie();
+
+    // 顯示所有資料編號與電影名稱
+    showMovieList();
+
+    // 選擇查看哪一筆
+    cout << "\n請輸入要查看第幾筆資料:";
+    cin >> no;
+
+    // 顯示完整資料
+    showMovieDetail(no);
+
+    return 0;
+}
+
+
