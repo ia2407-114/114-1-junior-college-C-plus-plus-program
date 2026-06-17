@@ -1,0 +1,76 @@
+題目2: 承上提，修改範例程式8的主程式，先建立轟炸機的結構變數，將轟炸機的輸出資料，使用隨機檔的函數write（）read（）存入bomb.bin二進位檔案中，再從檔案中讀取列印出來
+#include <iostream>
+#include <fstream>
+using namespace std;
+
+// 轟炸機結構
+struct BombPlane
+{
+    char name[30];
+    int id;
+    int pilot;
+    float kerosene;
+    int passenger;
+    char weapon[30];
+    char manufacturer[30];
+};
+
+int main()
+{
+    BombPlane bomb1;
+
+    // 輸入資料
+    cout << "請輸入轟炸機資料\n";
+
+    cout << "名稱:";
+    cin >> bomb1.name;
+
+    cout << "編號:";
+    cin >> bomb1.id;
+
+    cout << "駕駛員人數:";
+    cin >> bomb1.pilot;
+
+    cout << "煤油量(公升):";
+    cin >> bomb1.kerosene;
+
+    cout << "乘客人數:";
+    cin >> bomb1.passenger;
+
+    cout << "武器名稱:";
+    cin >> bomb1.weapon;
+
+    cout << "製造者:";
+    cin >> bomb1.manufacturer;
+
+    // 寫入二進位檔
+    ofstream fout("bomb.bin", ios::binary);
+
+    fout.write((char*)&bomb1, sizeof(bomb1));
+
+    fout.close();
+
+    cout << "\n資料已寫入 bomb.bin\n";
+
+    // 讀取二進位檔
+    BombPlane bomb2;
+
+    ifstream fin("bomb.bin", ios::binary);
+
+    fin.read((char*)&bomb2, sizeof(bomb2));
+
+    fin.close();
+
+    // 顯示讀出的資料
+    cout << "\n===== 從 bomb.bin 讀出的資料 =====\n";
+
+    cout << "名稱:" << bomb2.name << endl;
+    cout << "編號:" << bomb2.id << endl;
+    cout << "駕駛員人數:" << bomb2.pilot << endl;
+    cout << "煤油量(公升):" << bomb2.kerosene << endl;
+    cout << "乘客人數:" << bomb2.passenger << endl;
+    cout << "武器名稱:" << bomb2.weapon << endl;
+    cout << "製造者:" << bomb2.manufacturer << endl;
+
+    return 0;
+}
