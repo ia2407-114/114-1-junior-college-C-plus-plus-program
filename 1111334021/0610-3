@@ -1,0 +1,178 @@
+main.cpp
+#include "Animal.h"
+
+int main()
+{
+    AnimalFile af;
+
+    af.writeBinaryFile();
+
+    af.calculateAverage();
+
+    af.displayFile();
+
+    return 0;
+}
+----------
+Animal.cpp
+#include "Animal.h"
+#include <iomanip>
+#include <cstring>
+
+void AnimalFile::writeBinaryFile()
+{
+    ofstream file("animal.dat", ios::binary);
+
+    if (!file)
+    {
+        cout << "檔案開啟失敗!\n";
+        return;
+    }
+
+    Animal a;
+    char choice = 'Y';
+
+    while (choice == 'Y' || choice == 'y')
+    {
+        cout << "輸入動物名稱：";
+        cin >> a.name;
+
+        cout << "輸入年齡：";
+        cin >> a.age;
+
+        cout << "輸入身高：";
+        cin >> a.height;
+
+        file.write(reinterpret_cast<char*>(&a),
+            sizeof(Animal));
+
+        cout << "是否繼續輸入(Y/N)? ";
+        cin >> choice;
+    }
+
+    file.close();
+}
+
+void AnimalFile::calculateAverage()
+{
+    fstream file("animal.dat",
+        ios::binary |
+        ios::in |
+        ios::out);
+
+    if (!file)
+    {
+        cout << "檔案開啟失敗!\n";
+        return;
+    }
+
+    Animal a;
+
+    int totalAge = 0;
+    int totalHeight = 0;
+    int count = 0;
+
+    while (file.read(reinterpret_cast<char*>(&a),
+        sizeof(Animal)))
+    {
+        totalAge += a.age;
+        totalHeight += a.height;
+        count++;
+    }
+
+    double avgAge =
+        static_cast<double>(totalAge) / count;
+
+    double avgHeight =
+        static_cast<double>(totalHeight) / count;
+
+    cout << fixed << setprecision(2);
+
+    cout << "\n平均年齡："
+        << avgAge
+        << endl;
+
+    cout << "平均身高："
+        << avgHeight
+        << endl;
+
+    file.clear();
+
+    file.seekp(0, ios::end);
+
+    Animal avg;
+
+    strcpy_s(avg.name, "Average");
+
+    avg.age =
+        static_cast<int>(avgAge);
+
+    avg.height =
+        static_cast<int>(avgHeight);
+
+    file.write(reinterpret_cast<char*>(&avg),
+        sizeof(Animal));
+
+    file.close();
+}
+
+void AnimalFile::displayFile()
+{
+    ifstream file("animal.dat",
+        ios::binary);
+
+    if (!file)
+    {
+        cout << "檔案開啟失敗!\n";
+        return;
+    }
+
+    Animal a;
+
+    cout << "\n=================================\n";
+
+    cout << left
+        << setw(15) << "動物"
+        << setw(10) << "年齡"
+        << setw(10) << "身高"
+        << endl;
+
+    cout << "=================================\n";
+
+    while (file.read(reinterpret_cast<char*>(&a),
+        sizeof(Animal)))
+    {
+        cout << left
+            << setw(15) << a.name
+            << setw(10) << a.age
+            << setw(10) << a.height
+            << endl;
+    }
+
+    file.close();
+}
+-----------
+Animal.h
+#ifndef ANIMAL_H
+#define ANIMAL_H
+
+#include <iostream>
+#include <fstream>
+using namespace std;
+
+struct Animal
+{
+    char name[30];
+    int age;
+    int height;
+};
+
+class AnimalFile
+{
+public:
+    void writeBinaryFile();
+    void calculateAverage();
+    void displayFile();
+};
+
+#endif
