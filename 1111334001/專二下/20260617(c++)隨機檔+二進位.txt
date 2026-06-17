@@ -1,0 +1,121 @@
+主檔(main.cpp)
+
+#include <iostream>
+#include <fstream>
+#include <cctype>
+#include <conio.h>
+#include"mv.h"
+using namespace std;
+int main()
+{
+    struct cinema movie;
+
+
+    ofstream writebinaryfile;
+
+    writebinaryfile.open("movie.bin", ios_base::out | ios_base::binary);
+    if (writebinaryfile.fail())
+    {
+        cout << "movie.bin檔案無法開啟!\n";
+        exit(1);
+    }
+
+    cout << "建立電影資訊:";
+    for(int i=1;i<=5;i++)
+    {
+        cout << "\n電影名稱:";
+        cin >> movie.name;
+        cout << "上映日期:";
+        cin >> movie.date;
+        cout << "上映廳處:";
+        cin >> movie.place;
+        cout << "票價:";
+        cin >> movie.price;
+
+        writebinaryfile.write((char*)&movie, sizeof(struct cinema));
+    }
+
+    cout << '\n';
+
+    writebinaryfile.close();
+    if (writebinaryfile.fail())
+    {
+        cout << "movie.bin檔案無法關閉!\n";
+        exit(1);
+    }
+
+
+
+    ifstream readbinaryfile;
+
+
+    readbinaryfile.open("movie.bin", ios_base::in | ios_base::binary);
+    if (readbinaryfile.fail())
+    {
+        cout << "movie.bin檔案無法開啟!\n";
+        exit(1);
+    }
+    cout << "電影資訊:\n";
+    int i = 1;
+
+
+    while (1)
+    {
+  
+        readbinaryfile.read((char*)&movie, sizeof(struct cinema));
+
+        if (!readbinaryfile.eof())
+            cout << i << ".電影名稱:" << movie.name << '\n';
+        else
+            break;
+        i++;
+    }
+
+
+    readbinaryfile.clear();
+
+    cout << "輸入要看的電影名稱之序號:";
+    int no;  
+    cin >> no;
+
+
+    readbinaryfile.seekg(sizeof(struct cinema) * (no - 1), ios::beg);
+
+    readbinaryfile.read((char*)&movie, sizeof(struct cinema));
+
+    if (!readbinaryfile.eof())
+        cout << "電影名稱:" << movie.name << '\t'
+        << "上映日期:" << movie.date << '\n'
+        << "上映廳處:" << movie.place << '\t'
+        << "票價:" << movie.price << '\n';
+    else
+        cout << "查無電影資料:\n";
+
+
+    readbinaryfile.clear();
+
+    readbinaryfile.close();
+    if (readbinaryfile.fail())
+    {
+        cout << "movie.bin檔案無法關閉!\n";
+        exit(1);
+    }
+
+
+    return 0;
+}
+--------------------------------------------------------------------------
+標頭檔(mv.h)
+#include <iostream>
+#include <fstream>
+#include <cctype>
+#include <conio.h>
+using namespace std;
+
+struct cinema
+{
+    char name[10];
+    char date[9];
+    char place[7];
+    int price;
+};
