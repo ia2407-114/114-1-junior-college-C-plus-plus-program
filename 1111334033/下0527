@@ -1,3 +1,6 @@
+/*題目1: 請根據第二個程式碼，基於"純虛擬函數"與"抽象類別"建立一個"Shap"類別與"體積"純虛擬函數Volume
+，並據此建立一個"物件指標"a1，透過這個指標a1，依序指向Shap的衍生類別"圓錐體體積"Cone、"球體體積"Ball
+、"圓柱體體積"Cylinder所建立的物件，分別印出他們的體積。*/
 main.cpp
 #include <iostream>
 #include "Shape.h"
