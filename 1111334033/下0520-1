@@ -1,3 +1,8 @@
+/*題目1:（多層繼承）寫一程式，定義一shape類別，且其成員變數名稱name與圖形的面積shape_area，
+及顯示圖形的面積area()。接著定義shape的衍生類別rectangle，其成員變數分別表示長方形的長length與寬width，
+及輸入長方形的長與寬data_input()。接著定義rectangle的衍生類別cube，其成員變數分別表示長方體的高height及
+data_input()輸入長方體的高並計算體積。請將類別以介面檔與實作檔分開設計，程式執行時，輸入長方體形的長、
+寬及高，輸出長方體的體積。*/
 main.cpp
 #include "Cube.h"
 
