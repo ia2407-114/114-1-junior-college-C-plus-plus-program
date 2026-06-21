@@ -1,3 +1,5 @@
+/*題目1. 修改上述檔案(fig09_22.cpp)中的類別Count成為介面與實作檔的格式，
+另建立一個類別printDate設定為friend class，再使用此類別(物件)的函數印出物件Count的x內容。*/
 main.cpp
 #include <iostream>
 #include "Count.h"
