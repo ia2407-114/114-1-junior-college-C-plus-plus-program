@@ -1,3 +1,9 @@
+/*題目2:（多重繼承）寫一程式，定義類別student，其成員變數有編號id、
+姓名name(使用建構子函數輸入)。再定義類別teacher，其成員變數有編號id
+、姓名name(使用建構子函數輸入)、課程編號course_id、課程名稱course_name
+與學分course_credit，及成員函式data_input( )作為教師的課程編號、課程名稱
+與學分輸入之用。最後定義同時繼承teacher及student的衍生類別classroom，且其
+成員函式為show()，用來顯示此classroom內的課程資料、課程名稱與學分，以及教師與學生的姓名。*/
 main.cpp
 #include <iostream>
 #include "Classroom.h"
