@@ -1,0 +1,99 @@
+main.cpp
+#include <iostream>
+#include <fstream>
+#include "BombPlane.h"
+
+using namespace std;
+
+int main()
+{
+    BombPlane bomb1;
+    BombPlane bomb2;
+
+    cout << "建立轟炸機資料\n";
+    inputBombPlane(bomb1);
+
+    // 寫入二進位檔
+    fstream file("bomb.bin",ios::out | ios::binary);
+
+    file.write(reinterpret_cast<char*>(&bomb1),sizeof(BombPlane));
+
+    file.close();
+
+    // 讀取二進位檔
+    file.open("bomb.bin",ios::in | ios::binary);
+
+    file.read(reinterpret_cast<char*>(&bomb2),sizeof(BombPlane));
+
+    file.close();
+
+    displayBombPlane(bomb2);
+
+    return 0;
+}
+--------------------
+BombPlane.cpp
+#include <iostream>
+#include "BombPlane.h"
+
+using namespace std;
+
+// 輸入資料
+void inputBombPlane(BombPlane& bomb)
+{
+    cout << "名稱:";
+    cin >> bomb.name;
+
+    cout << "編號:";
+    cin >> bomb.id;
+
+    cout << "駕駛員人數:";
+    cin >> bomb.pilot;
+
+    cout << "煤油量(公升):";
+    cin >> bomb.kerosene;
+
+    cout << "乘客人數:";
+    cin >> bomb.passenger;
+
+    cout << "武器名稱:";
+    cin >> bomb.weapon;
+
+    cout << "製造者:";
+    cin >> bomb.manufacturer;
+}
+
+// 顯示資料
+void displayBombPlane(const BombPlane& bomb)
+{
+    cout << "\n轟炸機資料\n";
+
+    cout << "名稱:" << bomb.name << endl;
+    cout << "編號:" << bomb.id << endl;
+    cout << "駕駛員人數:" << bomb.pilot << endl;
+    cout << "煤油量(公升):" << bomb.kerosene << endl;
+    cout << "乘客人數:" << bomb.passenger << endl;
+    cout << "武器名稱:" << bomb.weapon << endl;
+    cout << "製造者:" << bomb.manufacturer << endl;
+}
+---------------
+BombPlane.h
+#ifndef BOMBPLANE_H
+#define BOMBPLANE_H
+
+struct BombPlane
+{
+    char name[30];
+    int id;
+    int pilot;
+    float kerosene;
+    int passenger;
+    char weapon[30];
+    char manufacturer[30];
+};
+
+// 函式宣告
+void inputBombPlane(BombPlane& bomb);
+void displayBombPlane(const BombPlane& bomb);
+
+#endif
