@@ -1,3 +1,8 @@
+/*題目2.請建立一個飛行器(aircraft)類別，具有翼展、升限、名稱、編號等私有資料成員，
+以及建構子與解構子分別接受(初始)飛行器資料，再建立一個public成員函數，用來印出飛行器資料。
+另外，再建立兩個衍生類別airliner與fightJet繼承aircraft類別，並且具有自身特色的資料成員(參考上課的舉例或自行想像)，
+例如:武器、飛彈、推力、乘客數量，飛行速度(馬赫)，廁所數量等。再建立個別的一個public成員函數，
+用來印出airliner與flightJet的資料。(必須以介面/實作分離的方式撰寫)*/
 flightJet.h
 #ifndef FLIGHTJET_H
 #define FLIGHTJET_H
