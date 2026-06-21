@@ -1,3 +1,4 @@
+/*題目2: 請修改合併"17-範例2.cpp"與"17-範例3.cpp"兩個程式檔，先透過鍵盤輸入資料，再利用程式印出檔案內容與長度*/
 main.cpp
 #include <iostream>
 #include "FileTool.h"
