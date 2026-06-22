@@ -1,3 +1,6 @@
+/*題目2: 承上提，修改範例程式8的主程式，先建立轟炸機的結構變數，
+將轟炸機的輸出資料，使用隨機檔的函數write（）read（）存入bomb.bin
+二進位檔案中，再從檔案中讀取列印出來*/
 main.cpp
 #include <iostream>
 #include <fstream>
